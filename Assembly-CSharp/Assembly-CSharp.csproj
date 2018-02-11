@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{DAE2E35F-AC8A-4C93-BE35-69667656EE8E}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="PlayerIOUnity3DClient">
+      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\PlayerIOUnity3DClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\System.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Aimer.cs" />
+    <Compile Include="AnimatedDirectionArrows.cs" />
+    <Compile Include="AnimatedSpark.cs" />
+    <Compile Include="ApparatusHologram.cs" />
+    <Compile Include="Appendage.cs" />
+    <Compile Include="AppendageBundle.cs" />
+    <Compile Include="ApproachPoint.cs" />
+    <Compile Include="AssetLoadManager.cs" />
+    <Compile Include="AutomaticSlidingDoor.cs" />
+    <Compile Include="AutoSpinner.cs" />
+    <Compile Include="AutoText.cs" />
+    <Compile Include="Bag.cs" />
+    <Compile Include="BagContent.cs" />
+    <Compile Include="BagData.cs" />
+    <Compile Include="BagTile.cs" />
+    <Compile Include="BagUI.cs" />
+    <Compile Include="BGM.cs" />
+    <Compile Include="BondageApparatus.cs" />
+    <Compile Include="BondagePoint.cs" />
+    <Compile Include="Bones.cs" />
+    <Compile Include="Bridge.cs" />
+    <Compile Include="ButtBugDetector.cs" />
+    <Compile Include="CameraFacingBillboard.cs" />
+    <Compile Include="Centrifuge.cs" />
+    <Compile Include="ChangingFloor.cs" />
+    <Compile Include="CharacterBundle.cs" />
+    <Compile Include="CharacterData.cs" />
+    <Compile Include="CharacterDataFloatProperty.cs" />
+    <Compile Include="CharacterManager.cs" />
+    <Compile Include="CharacterModel.cs" />
+    <Compile Include="CharactersData.cs" />
+    <Compile Include="ChemGunSelection.cs" />
+    <Compile Include="ChemicalCompound.cs" />
+    <Compile Include="ChemicalCounters.cs" />
+    <Compile Include="ChemicalData.cs" />
+    <Compile Include="ChemicalGunSteam.cs" />
+    <Compile Include="chemicalHexUI.cs" />
+    <Compile Include="ChemicalManufacturingTable.cs" />
+    <Compile Include="Chemicals.cs" />
+    <Compile Include="CloseupParticles.cs" />
+    <Compile Include="ClothingIcon.cs" />
+    <Compile Include="ClothingReferenceData.cs" />
+    <Compile Include="ClothingSlots.cs" />
+    <Compile Include="CollisionCondition.cs" />
+    <Compile Include="CollisionData.cs" />
+    <Compile Include="CollisionListener.cs" />
+    <Compile Include="CollisionPrinter.cs" />
+    <Compile Include="ColorAltDefinition.cs" />
+    <Compile Include="ColorDefinition.cs" />
+    <Compile Include="ColorPicker.cs" />
+    <Compile Include="Confidence.cs" />
+    <Compile Include="ConfidenceValue.cs" />
+    <Compile Include="contextEvent.cs" />
+    <Compile Include="ContextTrigger.cs" />
+    <Compile Include="ControlPanelMonitor.cs" />
+    <Compile Include="CullMethod.cs" />
+    <Compile Include="Cum.cs" />
+    <Compile Include="CumDot.cs" />
+    <Compile Include="CumEmitter.cs" />
+    <Compile Include="CursorPositioner.cs" />
+    <Compile Include="CustomDepthTextureMode.cs" />
+    <Compile Include="Decal.cs" />
+    <Compile Include="DecalType.cs" />
+    <Compile Include="DeliveredBoxes.cs" />
+    <Compile Include="DemoUI.cs" />
+    <Compile Include="Dialogue.cs" />
+    <Compile Include="DialogueNode.cs" />
+    <Compile Include="DialogueResponse.cs" />
+    <Compile Include="DialogueTree.cs" />
+    <Compile Include="Drone.cs" />
+    <Compile Include="DroneFan.cs" />
+    <Compile Include="DynamicDecals.cs" />
+    <Compile Include="DynamicDecalSettings.cs" />
+    <Compile Include="DynamicLight.cs" />
+    <Compile Include="Elevator.cs" />
+    <Compile Include="EmbellishmentColorGradientPoint.cs" />
+    <Compile Include="EmbellishmentLayer.cs" />
+    <Compile Include="EmbellishmentPackage.cs" />
+    <Compile Include="EmbellishmentPackageManager.cs" />
+    <Compile Include="Emotes.cs" />
+    <Compile Include="Eraser.cs" />
+    <Compile Include="FacialExpression.cs" />
+    <Compile Include="FadeMethod.cs" />
+    <Compile Include="FadingCheckbox.cs" />
+    <Compile Include="Fekel.cs" />
+    <Compile Include="Fetishes.cs" />
+    <Compile Include="FetishPref.cs" />
+    <Compile Include="FileHex.cs" />
+    <Compile Include="FixedUpdateListener.cs" />
+    <Compile Include="Flash.cs" />
+    <Compile Include="FrontDoorDetector.cs" />
+    <Compile Include="Furniture.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="GameID.cs" />
+    <Compile Include="GameModeButton.cs" />
+    <Compile Include="GeneratorWeight.cs" />
+    <Compile Include="GlobalFollower.cs" />
+    <Compile Include="GlobalFollowerPoint.cs" />
+    <Compile Include="GlossType.cs" />
+    <Compile Include="GradientEditor.cs" />
+    <Compile Include="GradientEditorDot.cs" />
+    <Compile Include="HairAddonColorMenu.cs" />
+    <Compile Include="HairLayer.cs" />
+    <Compile Include="hexOption.cs" />
+    <Compile Include="HexOptionSystem.cs" />
+    <Compile Include="HologramMonitor.cs" />
+    <Compile Include="HypotheticalItem.cs" />
+    <Compile Include="IndustrialRailing.cs" />
+    <Compile Include="InlineDialogue.cs" />
+    <Compile Include="Interaction.cs" />
+    <Compile Include="InteractionTrigger.cs" />
+    <Compile Include="Inventory.cs" />
+    <Compile Include="InventoryData.cs" />
+    <Compile Include="ItemOrder.cs" />
+    <Compile Include="LabDoor.cs" />
+    <Compile Include="LabItemData.cs" />
+    <Compile Include="LabItemDefinition.cs" />
+    <Compile Include="LabItemEquipmentSlot.cs" />
+    <Compile Include="LabItemGroupDefinition.cs" />
+    <Compile Include="LabItemInWorld.cs" />
+    <Compile Include="LabItemPlacementSurface.cs" />
+    <Compile Include="LayoutData.cs" />
+    <Compile Include="LayoutItem.cs" />
+    <Compile Include="LayoutItemSpecialProperties.cs" />
+    <Compile Include="LayoutManager.cs" />
+    <Compile Include="LightingModel.cs" />
+    <Compile Include="LittleColorPicker.cs" />
+    <Compile Include="Localization.cs" />
+    <Compile Include="LocalizationData.cs" />
+    <Compile Include="Locker.cs" />
+    <Compile Include="MainCam.cs" />
+    <Compile Include="MainGarageDoor.cs" />
+    <Compile Include="ManifestPiece.cs" />
+    <Compile Include="MaskButton.cs" />
+    <Compile Include="MaskMethod.cs" />
+    <Compile Include="MenuOption.cs" />
+    <Compile Include="NewsAndVersionData.cs" />
+    <Compile Include="NPC.cs" />
+    <Compile Include="NPCAssignment.cs" />
+    <Compile Include="Objective.cs" />
+    <Compile Include="Objectives.cs" />
+    <Compile Include="OmniDecal.cs" />
+    <Compile Include="OrderStatusDisplay.cs" />
+    <Compile Include="ParticleCollisionPrinter.cs" />
+    <Compile Include="Pattern.cs" />
+    <Compile Include="patternDefinitionData.cs" />
+    <Compile Include="PatternIcons.cs" />
+    <Compile Include="PenisDetector.cs" />
+    <Compile Include="Phrases.cs" />
+    <Compile Include="PlanarRealtimeReflection.cs" />
+    <Compile Include="PlayerIOAuth.cs" />
+    <Compile Include="PlayerScreenFX.cs" />
+    <Compile Include="PoolInstance.cs" />
+    <Compile Include="PoolItem.cs" />
+    <Compile Include="Positioner.cs" />
+    <Compile Include="Printer.cs" />
+    <Compile Include="PrinterOverlap.cs" />
+    <Compile Include="PrintParent.cs" />
+    <Compile Include="PrintSelection.cs" />
+    <Compile Include="ProcessingStatusIndicator.cs" />
+    <Compile Include="ProgressBarFill.cs" />
+    <Compile Include="ProgressHexes.cs" />
+    <Compile Include="Projection.cs" />
+    <Compile Include="ProjectionBlocker.cs" />
+    <Compile Include="ProjectionMask.cs" />
+    <Compile Include="ProjectionPool.cs" />
+    <Compile Include="ProjectionType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RackCamera.cs" />
+    <Compile Include="RackCharacter.cs" />
+    <Compile Include="RackCharacterReference.cs" />
+    <Compile Include="RacknetCache.cs" />
+    <Compile Include="RacknetMP_Lobby.cs" />
+    <Compile Include="RacknetMultiplayer.cs" />
+    <Compile Include="RandomCharacterGenerator.cs" />
+    <Compile Include="RawTextureLoader.cs" />
+    <Compile Include="RayCollisionPrinter.cs" />
+    <Compile Include="RayPositioner.cs" />
+    <Compile Include="RayPrinter.cs" />
+    <Compile Include="RealtimeMirrors.cs" />
+    <Compile Include="RealtimeReflections.cs" />
+    <Compile Include="RelativePositionMaintainer.cs" />
+    <Compile Include="RenderCam.cs" />
+    <Compile Include="RenderingMethod.cs" />
+    <Compile Include="ResearchGrid.cs" />
+    <Compile Include="ResearchList.cs" />
+    <Compile Include="ResearchPad.cs" />
+    <Compile Include="ResearchTask.cs" />
+    <Compile Include="ResearchTaskDefinition.cs" />
+    <Compile Include="ResistanceMeter.cs" />
+    <Compile Include="RoomLayout.cs" />
+    <Compile Include="RotateAround.cs" />
+    <Compile Include="RotationSource.cs" />
+    <Compile Include="SaveFile.cs" />
+    <Compile Include="ScienceTextAnimator.cs" />
+    <Compile Include="ScrollIndicator.cs" />
+    <Compile Include="SelectableMenuItem.cs" />
+    <Compile Include="SelectableMenuManager.cs" />
+    <Compile Include="SelfLoadingObject.cs" />
+    <Compile Include="SettingsData.cs" />
+    <Compile Include="SexToy.cs" />
+    <Compile Include="SexToySlots.cs" />
+    <Compile Include="SexualPreference.cs" />
+    <Compile Include="SexualPreferences.cs" />
+    <Compile Include="SexualPreferenceValue.cs" />
+    <Compile Include="Shop.cs" />
+    <Compile Include="Shower.cs" />
+    <Compile Include="Sink.cs" />
+    <Compile Include="SizeDifferencePositionAdjuster.cs" />
+    <Compile Include="Slider.cs" />
+    <Compile Include="SliderTicks.cs" />
+    <Compile Include="SpeciesPref.cs" />
+    <Compile Include="SSAOPro.cs" />
+    <Compile Include="TestingRoom.cs" />
+    <Compile Include="TextureLayer.cs" />
+    <Compile Include="TextureLayerMask.cs" />
+    <Compile Include="TextureLayerUI.cs" />
+    <Compile Include="TextureScale.cs" />
+    <Compile Include="TextureScaler.cs" />
+    <Compile Include="Toast.cs" />
+    <Compile Include="ToolbarItem.cs" />
+    <Compile Include="ToolMode.cs" />
+    <Compile Include="Tooltip.cs" />
+    <Compile Include="TooltipButton.cs" />
+    <Compile Include="ToyMaterials.cs" />
+    <Compile Include="TransparencyType.cs" />
+    <Compile Include="TriggerListener.cs" />
+    <Compile Include="Tutorials.cs" />
+    <Compile Include="TutorialTooltip.cs" />
+    <Compile Include="UIGrid.cs" />
+    <Compile Include="UISFX.cs" />
+    <Compile Include="UISwitch.cs" />
+    <Compile Include="UserSettings.cs" />
+    <Compile Include="UserVar.cs" />
+    <Compile Include="Visibility.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
