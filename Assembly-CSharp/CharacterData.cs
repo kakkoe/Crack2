@@ -74,6 +74,12 @@ public class CharacterData
 	[XmlElement("baseColor")]
 	public Color baseColor;
 
+	[XmlElement("furType")]
+	public string furType;
+
+	[XmlElement("skinType")]
+	public string skinType = "skin";
+
 	[XmlElement("rightHanded")]
 	public bool rightHanded = true;
 
@@ -107,6 +113,9 @@ public class CharacterData
 	[XmlArray("hairAddons")]
 	[XmlArrayItem("hairAddon")]
 	public List<HairLayer> hairAddons = new List<HairLayer>();
+
+	[XmlElement("furLength")]
+	public float furLength = 0.1f;
 
 	[XmlElement("growerShower")]
 	public float growerShower = 0.2f;
@@ -196,8 +205,7 @@ public class CharacterData
 	[XmlArrayItem("tailFurSize")]
 	public List<float> tailFurSizes = new List<float>();
 
-	[XmlElement("tailLength")]
-	public float tailLength = 0.7f;
+	public float tailLength = 1f;
 
 	[XmlElement("tailStiffness")]
 	public float tailStiffness = 0.3f;

@@ -38,7 +38,7 @@ public class Localization
 		WWW www = new WWW(url + "?refresh=" + Guid.NewGuid());
 		yield return (object)www;
 		/*Error: Unable to find new state assignment for yield return*/;
-        if (www.error != string.Empty)
+        if (!string.IsNullOrEmpty(www.error))
         {
             Debug.Log("Failed to load new localization");
         }
@@ -47,8 +47,24 @@ public class Localization
             Debug.Log("Saving new translations");
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(LocalizationData));
             Localization.data = (xmlSerializer.Deserialize(new StringReader(www.text)) as LocalizationData);
-            new FileInfo(Game.persistentDataPath + "/translation/").Directory.Create();
-            StreamWriter streamWriter = new StreamWriter(Game.persistentDataPath + "/translation/Localization.xml", false, new UTF8Encoding(false));
+            new FileInfo(string.Concat(new object[]
+            {
+            Game.persistentDataPath,
+            string.Empty,
+            Game.PathDirectorySeparatorChar,
+            "translation",
+            Game.PathDirectorySeparatorChar,
+            string.Empty
+            })).Directory.Create();
+            StreamWriter streamWriter = new StreamWriter(string.Concat(new object[]
+            {
+            Game.persistentDataPath,
+            string.Empty,
+            Game.PathDirectorySeparatorChar,
+            "translation",
+            Game.PathDirectorySeparatorChar,
+            "Localization.xml"
+            }), false, new UTF8Encoding(false));
             streamWriter.Write(www.text);
             streamWriter.Close();
             Localization.convertDataToDictionary();
@@ -101,6 +117,7 @@ public class Localization
 		if (text.Length == 0)
 		{
 			Localization.missingPhrase = phraseName;
+			Debug.Log("Missing phrase: '" + Localization.missingPhrase + "'");
 			if (language != "english")
 			{
 				return Localization.getPhrase(phraseName, "english");
@@ -121,15 +138,16 @@ public class Localization
 
 	public static IEnumerator loadLocalizationData()
 	{
-		if (!File.Exists(Game.persistentDataPath + "/translation/Localization.xml"))
+		if (!File.Exists(Game.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "translation" + Game.PathDirectorySeparatorChar + "Localization.xml"))
 		{
 			UserSettings.rebuildGameAssets();
 		}
-		WWW www = new WWW("file:///" + Game.persistentDataPath + "/translation/Localization.xml?refresh=" + Guid.NewGuid());
+		WWW www = new WWW("file:///" + Game.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "translation" + Game.PathDirectorySeparatorChar + "Localization.xml");
 		yield return (object)www;
 		/*Error: Unable to find new state assignment for yield return*/;
-        if (www.error != string.Empty)
+        if (!string.IsNullOrEmpty(www.error))
         {
+            Debug.Log("failed to load translations: " + www.error);
             Localization.data = new LocalizationData();
         }
         else
@@ -176,7 +194,7 @@ public class Localization
 
 	public static void save()
 	{
-		new FileInfo(Game.persistentDataPath + "/translate/").Directory.Create();
-		Game.saveDataToXML(Game.persistentDataPath + "/translation/Localization.xml", typeof(LocalizationData), Localization.data);
+		new FileInfo(Game.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "translate" + Game.PathDirectorySeparatorChar + string.Empty).Directory.Create();
+		Game.saveDataToXML(Game.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "translation" + Game.PathDirectorySeparatorChar + "Localization.xml", typeof(LocalizationData), Localization.data);
 	}
 }

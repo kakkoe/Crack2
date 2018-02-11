@@ -95,8 +95,7 @@ public class BGM
             }
             yield return (object)www;
             /*Error: Unable to find new state assignment for yield return*/
-            ;
-            if (!(www.error != string.Empty))
+            if (string.IsNullOrEmpty(www.error))
             {
                 if (BGM.currentPlayer == 0)
                 {
@@ -113,10 +112,10 @@ public class BGM
                 BGM.nextSongReady = true;
             }
         }
-		IL_0152:
+		IL_014d:
 		yield break;
-		IL_015b:
-		/*Error near IL_015c: Unexpected return in MoveNext()*/;
+		IL_0156:
+		/*Error near IL_0157: Unexpected return in MoveNext()*/;
 	}
 
 	public static void play(string songName, bool fullPathGiven = false)

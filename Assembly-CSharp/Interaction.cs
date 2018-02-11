@@ -220,18 +220,18 @@ public class Interaction
 		{
 			int num2 = default(int);
 			if (performingNode != null)
-            {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>(10);
-				dictionary.Add("footl", 0);
-				dictionary.Add("footr", 1);
-				dictionary.Add("balls", 2);
-				dictionary.Add("clit", 3);
-				dictionary.Add("penis", 4);
-				dictionary.Add("vagina", 5);
-				dictionary.Add("breastl", 6);
-				dictionary.Add("breastr", 7);
-				dictionary.Add("mouth", 8);
-				dictionary.Add("tailhole", 9);
+			{
+					Dictionary<string, int> dictionary = new Dictionary<string, int>(10);
+					dictionary.Add("footl", 0);
+					dictionary.Add("footr", 1);
+					dictionary.Add("balls", 2);
+					dictionary.Add("clit", 3);
+					dictionary.Add("penis", 4);
+					dictionary.Add("vagina", 5);
+					dictionary.Add("breastl", 6);
+					dictionary.Add("breastr", 7);
+					dictionary.Add("mouth", 8);
+					dictionary.Add("tailhole", 9);
 				if (dictionary.TryGetValue(performingNode, out num2))
 				{
 					switch (num2)
@@ -350,8 +350,8 @@ public class Interaction
 				}
 			}
 			if (targetNode != null)
-            {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>(10);
+			{
+				Dictionary<string, int> dictionary = new Dictionary<string, int>(10);
 				dictionary.Add("footl", 0);
 				dictionary.Add("footr", 1);
 				dictionary.Add("balls", 2);
@@ -755,8 +755,8 @@ public class Interaction
 		pref3 = string.Empty;
 		pref4 = string.Empty;
 		if (interaction != null)
-        {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(32);
+		{
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(32);
 			dictionary.Add("rubcocktipwithfingers_performing", 1);
 			dictionary.Add("rubcocktipwithfingers_receiving", 2);
 			dictionary.Add("handjob_performing", 3);
@@ -942,6 +942,7 @@ public class Interaction
 		Interaction.addToolMode("penis", "mouth", "fuckmouth");
 		Interaction.addCompatiblePose("UpsideDown.facefuck", -1);
 		Interaction.addCompatiblePose("TableStraps.facefuck", -1);
+		Interaction.addCompatiblePose("Stocks.facefuck", -1);
 		Interaction.addToolMode("vagina", "penis", "vaginalridedick");
 		Interaction.addCompatiblePose("RackChair.riding", -1);
 		Interaction.addCompatiblePose("TableStraps.missionary", -1);
@@ -1142,8 +1143,8 @@ public class Interaction
 			}
 			string text = this.type;
 			if (text != null)
-            {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>(17);
+			{
+				Dictionary<string, int> dictionary = new Dictionary<string, int>(17);
 				dictionary.Add("rubcocktipwithfingers", 0);
 				dictionary.Add("clitrub", 1);
 				dictionary.Add("handjob", 2);
@@ -2174,9 +2175,10 @@ public class Interaction
 			this.targetCharacter.stretchPenis(1f + this.pushingThroughResistance * (1f - this.performingCharacter.currentTailholeTightness * 0.8f) * 2f);
 			break;
 		case 1:
+			this.performingCharacter.grindRoot(-25f);
 			this.performingCharacter.rollRoot(Game.cap(this.performingCharacter.interactionMX + this.performingCharacter.interactionMY - 1f, -0.5f, 0.5f) * -24f);
 			this.performingCharacter.archBack(Game.cap(this.performingCharacter.interactionMX + this.performingCharacter.interactionMY - 1f, -0.5f, 0.5f) * 2f);
-			this.performingCharacter.stimulate(this.targetCharacter.interactionVigor * 0.21f * num2);
+			this.performingCharacter.stimulate(this.targetCharacter.interactionVigor * 1f * num2);
 			this.performingCharacter.arouse(this.targetCharacter.interactionVigor * 0.1f * num2);
 			if (this.howFarInWorldUnits > -0.01f)
 			{

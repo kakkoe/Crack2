@@ -330,4 +330,7 @@ public class SettingsData
 
 	[XmlElement("selectedChemicalCompound")]
 	public string selectedChemicalCompound = string.Empty;
+
+	[XmlElement("globalSensitivity")]
+	public float globalSensitivity = 0.5f;
 }

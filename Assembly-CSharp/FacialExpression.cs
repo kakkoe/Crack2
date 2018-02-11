@@ -5,8 +5,8 @@ public class FacialExpression
 	public static int get(string expressionName)
 	{
 		if (expressionName != null)
-        {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(26);
+		{
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(26);
 			dictionary.Add("angry", 0);
 			dictionary.Add("concerned", 1);
 			dictionary.Add("confused", 2);

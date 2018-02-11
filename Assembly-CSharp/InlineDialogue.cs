@@ -78,8 +78,8 @@ public class InlineDialogue
 			}
 		}
 		else if (quip != null)
-        {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(71);
+		{
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(71);
 			dictionary.Add("greet", 0);
 			dictionary.Add("be_right_back", 1);
 			dictionary.Add("goodbye_friendly", 2);
@@ -1090,8 +1090,8 @@ public class InlineDialogue
 			subject = top;
 		}
 		if (subOption != null)
-        {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(33);
+		{
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(33);
 			dictionary.Add("inline_arouse.comment_on_interaction", 0);
 			dictionary.Add("inline_arouse.comment_on_experience", 1);
 			dictionary.Add("inline_arouse.comment_on_attraction", 2);

@@ -16,7 +16,7 @@ public class PatternIcons
 		WWW www = new WWW("file:///" + Application.persistentDataPath + "/characterTextures/_definitions.xml");
 		yield return (object)www;
 		/*Error: Unable to find new state assignment for yield return*/;
-        if (www.error != string.Empty)
+        if (!string.IsNullOrEmpty(www.error))
         {
             Debug.Log("Error loading pattern definitions!");
             Debug.Log(www.error);
@@ -30,11 +30,11 @@ public class PatternIcons
             {
                 PatternIcons.data.patterns[i].searchWords = PatternIcons.data.patterns[i].keywords.Split(new char[]
                 {
-                    ','
+                ','
                 });
                 PatternIcons.data.patterns[i].allRequiredParts = PatternIcons.data.patterns[i].requiredPartString.Split(new char[]
                 {
-                    ','
+                ','
                 });
             }
         }

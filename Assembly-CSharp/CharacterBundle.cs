@@ -138,13 +138,21 @@ public class CharacterBundle
                 yield return (object)www;
                 /*Error: Unable to find new state assignment for yield return*/
                 ;
-                if (www.error != string.Empty)
+                if (!string.IsNullOrEmpty(www.error))
                 {
                     Game.gameInstance.popup("IMPORTANT_ASSET_MISSING", true, false);
                     Game.trace("Asset load fail message: " + www.error);
                     UserSettings.data.needDirectoryRebuild = true;
                     UserSettings.saveSettings();
-                    throw new System.Exception("Error downloading character assets for '" + this.id + "': " + www.error);
+                    throw new System.Exception(string.Concat(new string[]
+                    {
+                "Error downloading character assets for '",
+                this.id,
+                "' - '",
+                this.asseturl,
+                "': ",
+                www.error
+                    }));
                 }
                 this.bundle = www.assetBundle;
                 CharacterBundle.headTypes = new List<string>();
@@ -189,8 +197,8 @@ public class CharacterBundle
             }
 		}
 		yield break;
-		IL_055f:
-		/*Error near IL_0560: Unexpected return in MoveNext()*/;
-		IL_0556:;
+		IL_0582:
+		/*Error near IL_0583: Unexpected return in MoveNext()*/;
+		IL_0579:;
 	}
 }

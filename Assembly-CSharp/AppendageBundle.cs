@@ -39,7 +39,7 @@ public class AppendageBundle
                 }
                 yield return (object)www;
                 /*Error: Unable to find new state assignment for yield return*/
-                if (www.error != string.Empty)
+                if (!string.IsNullOrEmpty(www.error))
                 {
                     this.loaded = false;
                     throw new System.Exception("Error downloading appendage bundle " + this.url + ": " + www.error);
@@ -49,8 +49,8 @@ public class AppendageBundle
             }
 		}
 		yield break;
-		IL_01ac:
-		/*Error near IL_01ad: Unexpected return in MoveNext()*/;
-		IL_01a3:;
+		IL_01a7:
+		/*Error near IL_01a8: Unexpected return in MoveNext()*/;
+		IL_019e:;
 	}
 }

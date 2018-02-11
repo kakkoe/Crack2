@@ -848,6 +848,7 @@ public class RacknetMultiplayer
         WWW texIMG = new WWW(url);
         yield return (object)texIMG;
         /*Error: Unable to find new state assignment for yield return*/
+        ;
         if (texIMG.error == null || texIMG.error == string.Empty)
         {
             Texture2D texture = new Texture2D(128, 128);
@@ -1489,17 +1490,18 @@ public class RacknetMultiplayer
         WWW www = new WWW(url);
         yield return (object)www;
         /*Error: Unable to find new state assignment for yield return*/
+        ;
         RacknetMultiplayer.previewCharacter = new RackCharacter(RacknetMultiplayer.game, CharacterManager.deserializeCharacterData(www.text, url), false, null, 0f, string.Empty);
         RacknetMultiplayer.previewCharacter.isPreviewCharacter = true;
         RacknetMultiplayer.previewCharacter.racknetAccountID = url.Split(new char[]
         {
-            '/'
+        '/'
         })[url.Split(new char[]
         {
-            '/'
+        '/'
         }).Length - 1].Split(new char[]
         {
-            '.'
+        '.'
         })[0];
         RacknetMultiplayer.game.addCharacter(RacknetMultiplayer.previewCharacter);
         RacknetMultiplayer.needToMovePreviewCharacterToPreviewBox = true;
@@ -1649,7 +1651,7 @@ public class RacknetMultiplayer
                 RacknetMultiplayer.finishedUploadingCustomTexture();
             }
         }
-        yield break;
+        ;
     }
 
     public static void finishedUploadingCustomTexture()
@@ -1742,6 +1744,7 @@ public class RacknetMultiplayer
         UnityWebRequest w = UnityWebRequest.Post("http://fekrack.net/upload_rack2_character_xml.php", form);
         yield return (object)w.Send();
         /*Error: Unable to find new state assignment for yield return*/
+        ;
         if (w.isNetworkError)
         {
             Debug.Log("Error uploading XML: " + w.error);
@@ -1786,7 +1789,6 @@ public class RacknetMultiplayer
                 RacknetMultiplayer.checkAvatarAndXMLUpload();
             }
         }
-        yield break;
     }
 
     public static IEnumerator UploadAvatar()
@@ -1829,6 +1831,7 @@ public class RacknetMultiplayer
             }
         }
         yield break;
+        ;
     }
 
     public static void uploadCharacterInfoToBigDB()
