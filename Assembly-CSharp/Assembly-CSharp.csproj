@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{DAE2E35F-AC8A-4C93-BE35-69667656EE8E}</ProjectGuid>
@@ -26,29 +26,24 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="UnityEngine">
-      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Core">
-      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\System.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\System.Drawing.dll</HintPath>
-    </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>lib\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="PlayerIOUnity3DClient">
-      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\PlayerIOUnity3DClient.dll</HintPath>
+      <HintPath>lib\PlayerIOUnity3DClient.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml">
-      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\System.Xml.dll</HintPath>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <HintPath>lib\System.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System">
-      <HintPath>F:\Rack2 v0.2.2\Rack 2 v0.2.2_Data\Managed\System.dll</HintPath>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>lib\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +282,9 @@
     <Compile Include="UserSettings.cs" />
     <Compile Include="UserVar.cs" />
     <Compile Include="Visibility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UnityEngine.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
