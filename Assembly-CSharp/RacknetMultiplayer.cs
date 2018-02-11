@@ -847,8 +847,6 @@ public class RacknetMultiplayer
     {
         WWW texIMG = new WWW(url);
         yield return (object)texIMG;
-        /*Error: Unable to find new state assignment for yield return*/
-        ;
         if (texIMG.error == null || texIMG.error == string.Empty)
         {
             Texture2D texture = new Texture2D(128, 128);
@@ -1489,8 +1487,6 @@ public class RacknetMultiplayer
     {
         WWW www = new WWW(url);
         yield return (object)www;
-        /*Error: Unable to find new state assignment for yield return*/
-        ;
         RacknetMultiplayer.previewCharacter = new RackCharacter(RacknetMultiplayer.game, CharacterManager.deserializeCharacterData(www.text, url), false, null, 0f, string.Empty);
         RacknetMultiplayer.previewCharacter.isPreviewCharacter = true;
         RacknetMultiplayer.previewCharacter.racknetAccountID = url.Split(new char[]
@@ -1623,7 +1619,6 @@ public class RacknetMultiplayer
         form.AddBinaryData("file", File.ReadAllBytes(existingFilename), fileName2, "image/png");
         UnityWebRequest w = UnityWebRequest.Post("http://fekrack.net/upload_rack2_character_texture.php", form);
         yield return (object)w.Send();
-        /*Error: Unable to find new state assignment for yield return*/
         if (w.isNetworkError)
         {
             Debug.Log("Error uploading custom tex '" + existingFilename + "': " + w.error);
@@ -1743,8 +1738,6 @@ public class RacknetMultiplayer
         form.AddBinaryData("file", uploadData, fileName, "text/xml");
         UnityWebRequest w = UnityWebRequest.Post("http://fekrack.net/upload_rack2_character_xml.php", form);
         yield return (object)w.Send();
-        /*Error: Unable to find new state assignment for yield return*/
-        ;
         if (w.isNetworkError)
         {
             Debug.Log("Error uploading XML: " + w.error);
@@ -1802,7 +1795,6 @@ public class RacknetMultiplayer
         form.AddBinaryData("file", RacknetMultiplayer.avatarBytes, fileName, "image/png");
         UnityWebRequest w = UnityWebRequest.Post("http://fekrack.net/upload_rack2_character_avatar.php", form);
         yield return (object)w.Send();
-        /*Error: Unable to find new state assignment for yield return*/
         if (w.isNetworkError)
         {
             Debug.Log("Error uploading avatar: " + w.error);
@@ -1831,7 +1823,6 @@ public class RacknetMultiplayer
             }
         }
         yield break;
-        ;
     }
 
     public static void uploadCharacterInfoToBigDB()

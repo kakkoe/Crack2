@@ -107,7 +107,6 @@ public class CharacterBundle
 			{
 				Thread.Sleep(25);
 				yield return (object)null;
-				/*Error: Unable to find new state assignment for yield return*/;
 			}
 			if (!File.Exists(this.asseturl))
 			{
@@ -132,12 +131,8 @@ public class CharacterBundle
                     Thread.Sleep(25);
                     Game.gameInstance.recentThinking = 1f;
                     yield return (object)null;
-                    /*Error: Unable to find new state assignment for yield return*/
-                    ;
                 }
                 yield return (object)www;
-                /*Error: Unable to find new state assignment for yield return*/
-                ;
                 if (!string.IsNullOrEmpty(www.error))
                 {
                     Game.gameInstance.popup("IMPORTANT_ASSET_MISSING", true, false);
@@ -197,8 +192,5 @@ public class CharacterBundle
             }
 		}
 		yield break;
-		IL_0582:
-		/*Error near IL_0583: Unexpected return in MoveNext()*/;
-		IL_0579:;
 	}
 }

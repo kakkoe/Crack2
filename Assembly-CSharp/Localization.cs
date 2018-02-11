@@ -37,7 +37,6 @@ public class Localization
 	{
 		WWW www = new WWW(url + "?refresh=" + Guid.NewGuid());
 		yield return (object)www;
-		/*Error: Unable to find new state assignment for yield return*/;
         if (!string.IsNullOrEmpty(www.error))
         {
             Debug.Log("Failed to load new localization");
@@ -144,7 +143,6 @@ public class Localization
 		}
 		WWW www = new WWW("file:///" + Game.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "translation" + Game.PathDirectorySeparatorChar + "Localization.xml");
 		yield return (object)www;
-		/*Error: Unable to find new state assignment for yield return*/;
         if (!string.IsNullOrEmpty(www.error))
         {
             Debug.Log("failed to load translations: " + www.error);

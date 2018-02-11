@@ -2630,7 +2630,6 @@ public class RackCharacter
 	{
 		WWW www = new WWW(url);
 		yield return (object)www;
-		/*Error: Unable to find new state assignment for yield return*/;
         character.data = CharacterManager.deserializeCharacterData(www.text, url);
         character.createManifest();
         yield break;
