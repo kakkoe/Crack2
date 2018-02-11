@@ -32,12 +32,18 @@
     <Reference Include="PlayerIOUnity3DClient">
       <HintPath>lib\PlayerIOUnity3DClient.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>lib\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core">
       <HintPath>lib\System.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing">
+      <HintPath>lib\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>lib\System.Xml.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\UnityEngine.dll</HintPath>
