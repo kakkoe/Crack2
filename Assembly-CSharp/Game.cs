@@ -1986,7 +1986,6 @@ public class Game : MonoBehaviour
         this.originalNewsLocation = this.newsWindow.transform.localPosition;
         WWW www = new WWW("http://fek.onl/_r2ckversioninfo.xml?refresh=" + Guid.NewGuid());
         yield return (object)www;
-        /*Error: Unable to find new state assignment for yield return*/
         if (www.error == string.Empty)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(NewsAndVersionData));
@@ -9986,7 +9985,6 @@ public class Game : MonoBehaviour
     {
         WWW www = new WWW(url + "?refresh=" + Guid.NewGuid());
         yield return (object)www;
-        /*Error: Unable to find new state assignment for yield return*/
         if (www.error != string.Empty)
         {
             UnityEngine.Debug.Log("Failed to load patrons");

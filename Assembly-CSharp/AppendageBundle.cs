@@ -22,7 +22,6 @@ public class AppendageBundle
 			if (!Caching.ready)
 			{
 				yield return (object)null;
-				/*Error: Unable to find new state assignment for yield return*/;
 			}
 			if (!File.Exists(this.url))
 			{
@@ -34,11 +33,8 @@ public class AppendageBundle
                 {
                     Game.gameInstance.recentThinking = 1f;
                     yield return (object)null;
-                    /*Error: Unable to find new state assignment for yield return*/
-                    ;
                 }
                 yield return (object)www;
-                /*Error: Unable to find new state assignment for yield return*/
                 if (www.error != string.Empty)
                 {
                     this.loaded = false;
@@ -49,8 +45,5 @@ public class AppendageBundle
             }
 		}
 		yield break;
-		IL_01ac:
-		/*Error near IL_01ad: Unexpected return in MoveNext()*/;
-		IL_01a3:;
 	}
 }
