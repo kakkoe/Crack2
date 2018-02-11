@@ -8,18 +8,18 @@ public class CharacterManager
 {
 	public class UpdatedEmbellishments
 	{
-		[XmlArray("embellishmentLayers")]
 		[XmlArrayItem("embellishmentLayer")]
+		[XmlArray("embellishmentLayers")]
 		public List<EmbellishmentLayer> layers;
 	}
 
 	public static CharactersData data;
 
-	public static List<string> species = new List<string>();
+	public static List<string> species;
 
-	public static List<string> corruptCharacterFiles = new List<string>();
+	public static List<string> corruptCharacterFiles;
 
-	public static bool waitingForDefinitionUpdaterUtilityCharacterToInit = false;
+	public static bool waitingForDefinitionUpdaterUtilityCharacterToInit;
 
 	public static RackCharacter definitionUpdateUtilityCharacter;
 
@@ -81,6 +81,15 @@ public class CharacterManager
 
 	public static string serializeCharacter(RackCharacter character)
 	{
+		if (character.hasPissed)
+		{
+			character.data.cumVolume = character.backupCumVolume;
+			character.data.cumSpurtStrength = character.backupCumSpurtStrength;
+			character.data.cumSpurtFrequency = character.backupCumSpurtFrequency;
+			character.data.orgasmDuration = character.backupOrgasmDuration;
+			character.isPissing = false;
+			character.hasPissed = false;
+		}
 		XmlSerializer xmlSerializer = new XmlSerializer(typeof(CharacterData));
 		StringWriter stringWriter = new StringWriter();
 		character.data.colorDefinitions = new List<ColorDefinition>();
@@ -284,11 +293,27 @@ public class CharacterManager
 					i--;
 				}
 			}
+			if (Game.gameInstance.PC().hasPissed)
+			{
+				Game.gameInstance.PC().data.cumVolume = Game.gameInstance.PC().backupCumVolume;
+				Game.gameInstance.PC().data.cumSpurtStrength = Game.gameInstance.PC().backupCumSpurtStrength;
+				Game.gameInstance.PC().data.cumSpurtFrequency = Game.gameInstance.PC().backupCumSpurtFrequency;
+				Game.gameInstance.PC().data.orgasmDuration = Game.gameInstance.PC().backupOrgasmDuration;
+				Game.gameInstance.PC().isPissing = false;
+				Game.gameInstance.PC().hasPissed = false;
+			}
 			Game.saveDataToXML(UserSettings.saveDataDirectory + UserSettings.data.activeUser + ".rackCharacterData", typeof(CharactersData), CharacterManager.data);
 		}
 		catch
 		{
 			Debug.Log("Failed to save character data because a save is already in progress.");
 		}
+	}
+
+	static CharacterManager()
+	{
+		CharacterManager.species = new List<string>();
+		CharacterManager.corruptCharacterFiles = new List<string>();
+		CharacterManager.waitingForDefinitionUpdaterUtilityCharacterToInit = false;
 	}
 }

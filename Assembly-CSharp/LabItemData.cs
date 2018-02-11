@@ -4,11 +4,11 @@ using System.Xml.Serialization;
 [XmlRoot("LabItems")]
 public class LabItemData
 {
-	[XmlArray("items")]
 	[XmlArrayItem("item")]
+	[XmlArray("items")]
 	public List<LabItemDefinition> items = new List<LabItemDefinition>();
 
-	[XmlArray("groups")]
 	[XmlArrayItem("group")]
+	[XmlArray("groups")]
 	public List<LabItemGroupDefinition> groups = new List<LabItemGroupDefinition>();
 }

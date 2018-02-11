@@ -8,27 +8,27 @@ using UnityEngine;
 
 public class RandomCharacterGenerator
 {
-	public static List<GeneratorWeight> weights = new List<GeneratorWeight>();
+	public static List<GeneratorWeight> weights;
 
-	public static string forceSpecies = string.Empty;
+	public static string forceSpecies;
 
-	public static string randColClass = string.Empty;
+	public static string randColClass;
 
-	public static List<UnityEngine.Color> naturalEyeColors = new List<UnityEngine.Color>();
+	public static List<UnityEngine.Color> naturalEyeColors;
 
-	public static List<string> baseLayers = new List<string>();
+	public static List<string> baseLayers;
 
-	public static List<string> lightLayers = new List<string>();
+	public static List<string> lightLayers;
 
-	public static List<string> darkLayers = new List<string>();
+	public static List<string> darkLayers;
 
-	public static List<string> accentLayers = new List<string>();
+	public static List<string> accentLayers;
 
-	public static List<string> accentTextures = new List<string>();
+	public static List<string> accentTextures;
 
 	public static int selectedOddity;
 
-	public static bool glowAccents = false;
+	public static bool glowAccents;
 
 	public static UnityEngine.Color accentColor;
 
@@ -40,7 +40,7 @@ public class RandomCharacterGenerator
 
 	public static BitmapData bitmapData;
 
-	public static Bitmap image = null;
+	public static Bitmap image;
 
 	public static int bytesPerPixel;
 
@@ -431,75 +431,52 @@ public class RandomCharacterGenerator
 	public static void determineSexualCharacteristics(CharacterData cData)
 	{
 		string genResult = cData.genResult;
-		for (int i = 0; i < 100; i++)
+		UserSettings.data.mod_rngRanges.negativeExperienceModifier.getValue(ref cData.negativeExperienceModifier, -4f);
+		UserSettings.data.mod_rngRanges.height.getValue(ref cData.height, 0f);
+		UserSettings.data.mod_rngRanges.breastSize.getValue(ref cData.breastSize, 0f);
+		UserSettings.data.mod_rngRanges.growerShower.getValue(ref cData.growerShower, -0.1f);
+		UserSettings.data.mod_rngRanges.penisCurveX.getValue(ref cData.penisCurveX, -0.5f);
+		UserSettings.data.mod_rngRanges.penisCurveY.getValue(ref cData.penisCurveY, -0.5f);
+		UserSettings.data.mod_rngRanges.penisLength.getValue(ref cData.penisLength, 0f);
+		UserSettings.data.mod_rngRanges.penisGirth.getValue(ref cData.penisGirth, -0.5f);
+		UserSettings.data.mod_rngRanges.penisSize.getValue(ref cData.penisSize, -0.5f);
+		UserSettings.data.mod_rngRanges.ballSize.getValue(ref cData.ballSize, -0.5f);
+		UserSettings.data.mod_rngRanges.tailholeTightness.getValue(ref cData.tailholeTightness, -0.5f);
+		UserSettings.data.mod_rngRanges.vaginalTightness.getValue(ref cData.vaginalTightness, -0.3f);
+		UserSettings.data.mod_rngRanges.scrotumLength.getValue(ref cData.scrotumLength, -0.5f);
+		UserSettings.data.mod_rngRanges.breastPerk.getValue(ref cData.breastPerk, -0.1f);
+		UserSettings.data.mod_rngRanges.nippleSize.getValue(ref cData.nippleSize, -0.1f);
+		UserSettings.data.mod_rngRanges.vaginaPlumpness.getValue(ref cData.vaginaPlumpness, -0.3f);
+		UserSettings.data.mod_rngRanges.vaginaShape.getValue(ref cData.vaginaShape, -0.2f);
+		UserSettings.data.mod_rngRanges.wetnessThreshold.getValue(ref cData.wetnessThreshold, -0.4f);
+		UserSettings.data.mod_rngRanges.squirtAmount.getValue(ref cData.squirtAmount, -0.2f);
+		UserSettings.data.mod_rngRanges.clitSize.getValue(ref cData.clitSize, -0.2f);
+		UserSettings.data.mod_rngRanges.cumVolume.getValue(ref cData.cumVolume, -0.9f);
+		UserSettings.data.mod_rngRanges.cumSpurtStrength.getValue(ref cData.cumSpurtStrength, -1.2f);
+		UserSettings.data.mod_rngRanges.cumSpurtRatio.getValue(ref cData.mod_cumSpurtRatio, -0.5f);
+		UserSettings.data.mod_rngRanges.cumSpurtFrequency.getValue(ref cData.cumSpurtFrequency, -1f);
+		UserSettings.data.mod_rngRanges.precumThreshold.getValue(ref cData.precumThreshold, -0.8f);
+		UserSettings.data.mod_rngRanges.stamina.getValue(ref cData.stamina, -1f);
+		UserSettings.data.mod_rngRanges.orgasmDuration.getValue(ref cData.orgasmDuration, -1f);
+		UserSettings.data.mod_rngRanges.orgasmAnticipationFactor.getValue(ref cData.orgasmAnticipationFactor, -0.2f);
+		UserSettings.data.mod_rngRanges.refractoryDuration.getValue(ref cData.refractoryDuration, -1f);
+		UserSettings.data.mod_rngRanges.orgasmSensitivity.getValue(ref cData.orgasmSensitivity, -0.2f);
+		UserSettings.data.mod_rngRanges.refractorySensitivity.getValue(ref cData.refractorySensitivity, -3f);
+		UserSettings.data.mod_rngRanges.sensitivity.getValue(ref cData.sensitivity, -1f);
+		UserSettings.data.mod_rngRanges.proximitySensitivity.getValue(ref cData.proximitySensitivity, -0.1f);
+		UserSettings.data.mod_rngRanges.analPleasure.getValue(ref cData.analPleasure, -1f);
+		if (!(genResult == "female"))
 		{
-			cData.negativeExperienceModifier = 1f + Mathf.Pow(UnityEngine.Random.value, 3f) * 9f;
-			cData.growerShower = 0.1f + Mathf.Pow(UnityEngine.Random.value, 2f) * 0.9f;
-			cData.penisCurveX = 0.5f + Mathf.Pow(UnityEngine.Random.value, 6f) * 0.3f * (float)RandomCharacterGenerator.randDir();
-			cData.penisCurveY = 0.5f + Mathf.Pow(UnityEngine.Random.value, 4f) * 0.2f * (float)RandomCharacterGenerator.randDir();
-			cData.penisLength = 0.5f + Mathf.Pow(UnityEngine.Random.value, 3f) * 0.5f * (float)RandomCharacterGenerator.randDir();
-			cData.penisGirth = 0.5f + Mathf.Pow(UnityEngine.Random.value, 3f) * 0.5f * (float)RandomCharacterGenerator.randDir();
-			cData.penisSize = 0.5f + Mathf.Pow(UnityEngine.Random.value, 3f) * 0.5f * (float)RandomCharacterGenerator.randDir();
-			cData.ballSize = 0.5f + Mathf.Pow(UnityEngine.Random.value, 4f) * 0.35f * (float)RandomCharacterGenerator.randDir();
-			cData.tailholeTightness = 0.5f + Mathf.Pow(UnityEngine.Random.value, 3f) * 0.5f * (float)RandomCharacterGenerator.randDir();
-			cData.vaginalTightness = 0.3f + Mathf.Pow(UnityEngine.Random.value, 3f) * 0.3f * (float)RandomCharacterGenerator.randDir();
-			cData.scrotumLength = Mathf.Pow(UnityEngine.Random.value, 3f);
-			cData.breastPerk = Mathf.Pow(UnityEngine.Random.value, 3f);
-			cData.nippleSize = Mathf.Pow(UnityEngine.Random.value, 3f);
-			cData.vaginaPlumpness = UnityEngine.Random.value;
-			cData.vaginaShape = UnityEngine.Random.value;
-			cData.squirtAmount = Mathf.Pow(UnityEngine.Random.value, 2f);
-			cData.wetnessThreshold = 0.4f + Mathf.Pow(UnityEngine.Random.value, 2f) * 0.3f * (float)RandomCharacterGenerator.randDir();
-			cData.clitSize = Mathf.Pow(UnityEngine.Random.value, 3f);
-			cData.cumVolume = 0.9f + Mathf.Pow(UnityEngine.Random.value, 2f) * 0.2f * (float)RandomCharacterGenerator.randDir();
-			cData.cumSpurtStrength = 1.2f + Mathf.Pow(UnityEngine.Random.value, 2f) * 0.4f * (float)RandomCharacterGenerator.randDir();
-			cData.cumSpurtFrequency = 1f + Mathf.Pow(UnityEngine.Random.value, 2f) * 0.3f * (float)RandomCharacterGenerator.randDir();
-			cData.precumThreshold = 0.8f + Mathf.Pow(UnityEngine.Random.value, 2f) * 0.2f * (float)RandomCharacterGenerator.randDir();
-			cData.stamina = 1f + Mathf.Pow(UnityEngine.Random.value, 2f) * 0.7f * (float)RandomCharacterGenerator.randDir();
-			cData.orgasmDuration = 1f + Mathf.Pow(UnityEngine.Random.value, 2f) * 0.3f * (float)RandomCharacterGenerator.randDir();
-			cData.orgasmAnticipationFactor = Mathf.Pow(UnityEngine.Random.value, 3f) * 0.9f;
-			cData.refractoryDuration = 1f + Mathf.Pow(UnityEngine.Random.value, 5f) * 0.9f * (float)RandomCharacterGenerator.randDir();
-			cData.orgasmSensitivity = UnityEngine.Random.value * 2f;
-			cData.refractorySensitivity = (1f - Mathf.Pow(UnityEngine.Random.value, 2f)) * 4f;
-			cData.sensitivity = 1f + Mathf.Pow(UnityEngine.Random.value, 2f) * 0.3f * (float)RandomCharacterGenerator.randDir();
-			cData.proximitySensitivity = Mathf.Pow(UnityEngine.Random.value, 2f);
-			cData.analPleasure = 1f + Mathf.Pow(UnityEngine.Random.value, 2f) * 0.7f * (float)RandomCharacterGenerator.randDir();
-		}
-		if (genResult != null)
-		{
-			Dictionary<string, int> dictionary = new Dictionary<string, int>(7);
-			dictionary.Add("male", 0);
-			dictionary.Add("female", 1);
-			dictionary.Add("cboy", 2);
-			dictionary.Add("dgirl", 3);
-			dictionary.Add("fherm", 4);
-			dictionary.Add("mherm", 5);
-			dictionary.Add("eun", 6);
-			int num = default(int);
-			if (dictionary.TryGetValue(genResult, out num))
+			if (genResult == "cboy")
 			{
-				switch (num)
-				{
-				case 0:
-					break;
-				case 3:
-					break;
-				case 4:
-					break;
-				case 5:
-					break;
-				case 6:
-					break;
-				case 1:
-					cData.refractoryDuration *= 0.1f;
-					cData.analPleasure *= 0.1f;
-					break;
-				case 2:
-					cData.refractoryDuration *= 0.1f;
-					cData.analPleasure *= 0.1f;
-					break;
-				}
+				cData.refractoryDuration *= 0.1f;
+				cData.analPleasure *= 0.1f;
 			}
+		}
+		else
+		{
+			cData.refractoryDuration *= 0.1f;
+			cData.analPleasure *= 0.1f;
 		}
 	}
 
@@ -1218,5 +1195,110 @@ public class RandomCharacterGenerator
 			}
 		}
 		return RandomCharacterGenerator.weights[num3].id.Split('_')[1];
+	}
+
+	static RandomCharacterGenerator()
+	{
+		RandomCharacterGenerator.weights = new List<GeneratorWeight>();
+		RandomCharacterGenerator.forceSpecies = string.Empty;
+		RandomCharacterGenerator.randColClass = string.Empty;
+		RandomCharacterGenerator.naturalEyeColors = new List<UnityEngine.Color>();
+		RandomCharacterGenerator.baseLayers = new List<string>();
+		RandomCharacterGenerator.lightLayers = new List<string>();
+		RandomCharacterGenerator.darkLayers = new List<string>();
+		RandomCharacterGenerator.accentLayers = new List<string>();
+		RandomCharacterGenerator.accentTextures = new List<string>();
+		RandomCharacterGenerator.glowAccents = false;
+		RandomCharacterGenerator.image = null;
+	}
+
+	public static string buildStatString(RackCharacter character)
+	{
+		string empty = string.Empty;
+		string text = empty;
+		empty = text + "_sensitivity: " + Mathf.Round(character.data.sensitivity * 100f) + "\r\n";
+		text = empty;
+		empty = text + "_stamina: " + Mathf.Round(character.data.stamina * 100f) + "\r\n";
+		empty += "\r\n";
+		text = empty;
+		empty = text + "_proximitySensitivity: " + Mathf.Round(character.data.proximitySensitivity * 100f) + "\r\n";
+		text = empty;
+		empty = text + "_orgasmDuration: " + Mathf.Round(character.data.orgasmDuration * 100f) + "\r\n";
+		text = empty;
+		empty = text + "_orgasmAnticipationFactor: " + Mathf.Round(character.data.orgasmAnticipationFactor * 100f) + "\r\n";
+		text = empty;
+		empty = text + "_orgasmSensitivity: " + Mathf.Round(character.data.orgasmSensitivity * 100f) + "\r\n";
+		empty += "\r\n";
+		if (character.data.genitalType == 0 || character.data.genitalType == 3)
+		{
+			text = empty;
+			empty = text + "_refractoryDuration: " + Mathf.Round(character.data.refractoryDuration * 100f) + "\r\n";
+		}
+		if (character.data.genitalType == 0 || character.data.genitalType == 3)
+		{
+			text = empty;
+			empty = text + "_refractorySensitivity: " + Mathf.Round(character.data.refractorySensitivity * 100f) + "\r\n";
+		}
+		empty += "\r\n";
+		if (character.data.breastSize > RackCharacter.breastThreshhold)
+		{
+			text = empty;
+			empty = text + "_breastPerk: " + Mathf.Round(character.data.breastPerk * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_nippleSize: " + Mathf.Round(character.data.nippleSize * 100f) + "\r\n";
+			empty += "\r\n";
+		}
+		if (character.data.genitalType == 0 || character.data.genitalType == 3)
+		{
+			text = empty;
+			empty = text + "_penisSize: " + Mathf.Round(character.data.penisSize * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_penisLength: " + Mathf.Round(character.data.penisLength * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_penisGirth: " + Mathf.Round(character.data.penisGirth * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_growerShower: " + Mathf.Round(character.data.growerShower * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_penisCurveX: " + Mathf.Round(character.data.penisCurveX * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_penisCurveY: " + Mathf.Round(character.data.penisCurveY * 100f) + "\r\n";
+			empty += "\r\n";
+			text = empty;
+			empty = text + "_ballSize: " + Mathf.Round(character.data.ballSize * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_scrotumLength: " + Mathf.Round(character.data.scrotumLength * 100f) + "\r\n";
+			empty += "\r\n";
+			text = empty;
+			empty = text + "_cumVolume: " + Mathf.Round(character.data.cumVolume * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_cumSpurtStrength: " + Mathf.Round(character.data.cumSpurtStrength * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_cumSpurtFrequency: " + Mathf.Round(character.data.cumSpurtFrequency * 100f) + "\r\n";
+			text = empty;
+			if (UserSettings.data.mod_altCumStyle)
+			{
+				empty = text + "mod_cumSpurtRatio: " + Mathf.Round(character.data.mod_cumSpurtRatio * 100f) + "\r\n";
+				text = empty;
+			}
+			empty = text + "_precumThreshold: " + Mathf.Round(character.data.precumThreshold * 100f) + "\r\n";
+			empty += "\r\n";
+		}
+		if (character.data.genitalType == 1 || character.data.genitalType == 3)
+		{
+			text = empty;
+			empty = text + "_vaginalTightness: " + Mathf.Round(character.data.vaginalTightness * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_vaginaPlumpness: " + Mathf.Round(character.data.vaginaPlumpness * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_vaginaShape: " + Mathf.Round(character.data.vaginaShape * 100f) + "\r\n";
+			text = empty;
+			empty = text + "_clitSize: " + Mathf.Round(character.data.clitSize * 100f) + "\r\n";
+			empty += "\r\n";
+		}
+		text = empty;
+		empty = text + "_tailholeTightness: " + Mathf.Round(character.data.tailholeTightness * 100f) + "\r\n";
+		text = empty;
+		empty = text + "_analPleasure: " + Mathf.Round(character.data.analPleasure * 100f) + "\r\n";
+		return empty + "\r\n";
 	}
 }

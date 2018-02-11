@@ -22,12 +22,12 @@ public class SettingsData
 	[XmlArrayItem("tutorialFlag")]
 	public List<string> tutorialFlags = new List<string>();
 
-	[XmlArray("userVars")]
 	[XmlArrayItem("userVar")]
+	[XmlArray("userVars")]
 	public List<UserVar> userVars = new List<UserVar>();
 
-	[XmlArray("cachedTextures")]
 	[XmlArrayItem("cachedTexture")]
+	[XmlArray("cachedTextures")]
 	public List<string> cachedTextures = new List<string>();
 
 	[XmlElement("KEY_TOGGLE_AUTO")]
@@ -330,4 +330,109 @@ public class SettingsData
 
 	[XmlElement("selectedChemicalCompound")]
 	public string selectedChemicalCompound = string.Empty;
+
+	[XmlElement("mod_fixNpcCum")]
+	public bool mod_fixNpcCum = true;
+
+	[XmlElement("mod_nudeNpcs")]
+	public bool mod_nudeNpcs = true;
+
+	[XmlElement("mod_inheritRng")]
+	public bool mod_inheritRng = true;
+
+	[XmlElement("mod_rngStatColor")]
+	public Color mod_rngStatColor = Color.magenta;
+
+	[XmlElement("mod_sexToyPotency")]
+	public float mod_sexToyPotency = 0.75f;
+
+	[XmlElement("mod_extraCommands")]
+	public bool mod_extraCommands = true;
+
+	[XmlElement("mod_altCumStyle")]
+	public bool mod_altCumStyle;
+
+	[XmlElement("mod_cumLife")]
+	public int mod_cumLife = 40;
+
+	[XmlElement("mod_hideLoadScreens")]
+	public bool mod_hideLoadScreens;
+
+	[XmlIgnore]
+	public bool modx_noCumException = true;
+
+	[XmlIgnore]
+	public bool modx_alwaysHaveBalls;
+
+	[XmlElement("mod_logErrors")]
+	public bool mod_logErrors = true;
+
+	[XmlElement("mod_rngRanges")]
+	public RNGPrefs mod_rngRanges = new RNGPrefs();
+
+	[XmlElement("mod_ballsMoveOnCum")]
+	public float mod_ballsMoveOnCum = 1f;
+
+	[XmlElement("mod_ballsScaleOnCum")]
+	public float mod_ballsScaleOnCum = 1f;
+
+	[XmlElement("mod_AleksMods")]
+	public bool mod_AleksMods = true;
+
+	[XmlElement("KEY_MOD_PLEASURE_SELF")]
+	public KeyCode KEY_MOD_PLEASURE_SELF = KeyCode.F5;
+
+	[XmlElement("KEY_MOD_HANDJOB_OTHER")]
+	public KeyCode KEY_MOD_HANDJOB_OTHER = KeyCode.F6;
+
+	[XmlElement("KEY_MOD_ORAL_OTHER")]
+	public KeyCode KEY_MOD_ORAL_OTHER = KeyCode.F7;
+
+	[XmlElement("KEY_MOD_RIDE_OTHER")]
+	public KeyCode KEY_MOD_RIDE_OTHER = KeyCode.F8;
+
+	[XmlElement("KEY_MOD_FINGER_OTHER")]
+	public KeyCode KEY_MOD_FINGER_OTHER = KeyCode.F9;
+
+	[XmlElement("KEY_MOD_FUCK_OTHER")]
+	public KeyCode KEY_MOD_FUCK_OTHER = KeyCode.F10;
+
+	[XmlElement("KEY_MOD_PISS_SELF")]
+	public KeyCode KEY_MOD_PISS_SELF = KeyCode.F11;
+
+	[XmlElement("KEY_MOD_PISS_OTHER")]
+	public KeyCode KEY_MOD_PISS_OTHER = KeyCode.F12;
+
+	[XmlElement("KEY_MOD_TOOL_PREVIOUS")]
+	public KeyCode KEY_MOD_TOOL_PREVIOUS = KeyCode.Equals;
+
+	[XmlElement("KEY_MOD_TOOL_NEXT")]
+	public KeyCode KEY_MOD_TOOL_NEXT = KeyCode.Minus;
+
+	[XmlElement("KEY_MOD_STOP_LAST_INTERACTION")]
+	public KeyCode KEY_MOD_STOP_LAST_INTERACTION = KeyCode.Delete;
+
+	[XmlElement("KEY_MOD_STOP_ALL_INTERACTIONS")]
+	public KeyCode KEY_MOD_STOP_ALL_INTERACTIONS = KeyCode.End;
+
+	[XmlElement("KEY_MOD_ORGASM_SELF")]
+	public KeyCode KEY_MOD_ORGASM_SELF = KeyCode.LeftBracket;
+
+	[XmlElement("KEY_MOD_ORGASM_OTHER")]
+	public KeyCode KEY_MOD_ORGASM_OTHER = KeyCode.RightBracket;
+
+	[XmlElement("KEY_MOD_CONTROL_OTHER")]
+	public KeyCode KEY_MOD_CONTROL_OTHER = KeyCode.Insert;
+
+	[XmlElement("KEY_MOD_CONTROL_SELF")]
+	public KeyCode KEY_MOD_CONTROL_SELF = KeyCode.Home;
+
+	[XmlElement("KEY_MOD_AROUSE_ALL")]
+	public KeyCode KEY_MOD_AROUSE_ALL = KeyCode.PageUp;
+
+	[XmlElement("KEY_MOD_UNAROUSE_ALL")]
+	public KeyCode KEY_MOD_UNAROUSE_ALL = KeyCode.PageDown;
+
+	[XmlElement("KEY_MOD_CLEAN_UP_CUM")]
+	public KeyCode KEY_MOD_CLEAN_UP_CUM = KeyCode.Slash;
 }

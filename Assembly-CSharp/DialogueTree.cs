@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 [XmlRoot("DialogueTree")]
 public class DialogueTree
 {
-	[XmlArray("nodes")]
 	[XmlArrayItem("node")]
+	[XmlArray("nodes")]
 	public List<DialogueNode> nodes = new List<DialogueNode>();
 }

@@ -9,8 +9,8 @@ public class Chemicals
 	{
 		Chemicals.doseDuration = 30f;
 		if (chemical != null)
-        {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(9);
+		{
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(9);
 			dictionary.Add("Chemical.ChemicalNeutralizer", 1);
 			dictionary.Add("Chemical.OrgasmInhibitor", 2);
 			dictionary.Add("Chemical.OrgasmInhibitor!", 3);

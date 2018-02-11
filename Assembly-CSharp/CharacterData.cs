@@ -43,20 +43,20 @@ public class CharacterData
 	[XmlElement("subjectType")]
 	public int subjectType;
 
-	[XmlArray("headMorphs")]
 	[XmlArrayItem("headMorphs")]
+	[XmlArray("headMorphs")]
 	public List<CharacterDataFloatProperty> headMorphs = new List<CharacterDataFloatProperty>();
 
-	[XmlArray("colorDefinitions")]
 	[XmlArrayItem("colorDefinition")]
+	[XmlArray("colorDefinitions")]
 	public List<ColorDefinition> colorDefinitions = new List<ColorDefinition>();
 
-	[XmlArray("colorDefinitionAlts")]
 	[XmlArrayItem("colorDefinitionAlt")]
+	[XmlArray("colorDefinitionAlts")]
 	public List<ColorAltDefinition> colorDefinitionAlts = new List<ColorAltDefinition>();
 
-	[XmlArray("textureLayers")]
 	[XmlArrayItem("textureLayer")]
+	[XmlArray("textureLayers")]
 	public List<TextureLayer> textureLayers = new List<TextureLayer>();
 
 	[XmlArray("embellishmentLayers")]
@@ -104,8 +104,8 @@ public class CharacterData
 	[XmlElement("hairColor")]
 	public int hairColor;
 
-	[XmlArray("hairAddons")]
 	[XmlArrayItem("hairAddon")]
+	[XmlArray("hairAddons")]
 	public List<HairLayer> hairAddons = new List<HairLayer>();
 
 	[XmlElement("growerShower")]
@@ -304,11 +304,14 @@ public class CharacterData
 	[XmlElement("analPleasure")]
 	public float analPleasure = 1f;
 
-	[XmlArray("preferences")]
 	[XmlArrayItem("preference")]
+	[XmlArray("preferences")]
 	public List<SexualPreferenceValue> preferences = new List<SexualPreferenceValue>();
 
-	[XmlArray("confidences")]
 	[XmlArrayItem("confidence")]
+	[XmlArray("confidences")]
 	public List<ConfidenceValue> confidences = new List<ConfidenceValue>();
+
+	[XmlElement("mod_cumSpurtRatio")]
+	public float mod_cumSpurtRatio = 0.5f;
 }

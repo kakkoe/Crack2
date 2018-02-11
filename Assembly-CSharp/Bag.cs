@@ -98,20 +98,20 @@ public class Bag
 	public static List<Vector2> tilesPossessedByItem(LabItemDefinition item, int posX, int posY)
 	{
 		List<Vector2> list = new List<Vector2>();
-		if (item == null)
+		if (item != null && item.bagData != null && item.bagData.slots != null)
 		{
-			return list;
-		}
-		string[] array = item.bagData.slots.Split(' ');
-		for (int i = 0; i < array.Length; i++)
-		{
-			string[] array2 = array[i].Split(',');
-			int num = 0;
-			if (int.Parse(array2[1]) % 2 == 1 && posY % 2 == 1)
+			string[] array = item.bagData.slots.Split(' ');
+			for (int i = 0; i < array.Length; i++)
 			{
-				num = 1;
+				string[] array2 = array[i].Split(',');
+				int num = 0;
+				if (int.Parse(array2[1]) % 2 == 1 && posY % 2 == 1)
+				{
+					num = 1;
+				}
+				list.Add(new Vector2((float)(posX + int.Parse(array2[0]) + num), (float)(posY + int.Parse(array2[1]))));
 			}
-			list.Add(new Vector2((float)(posX + int.Parse(array2[0]) + num), (float)(posY + int.Parse(array2[1]))));
+			return list;
 		}
 		return list;
 	}

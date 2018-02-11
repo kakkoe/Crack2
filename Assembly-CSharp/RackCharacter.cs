@@ -71,9 +71,9 @@ public class RackCharacter
 
 	public bool gameObjectsBuilt;
 
-	public static List<string> charactersReboned = new List<string>();
+	public static List<string> charactersReboned;
 
-	public static List<string> allSpecies = new List<string>();
+	public static List<string> allSpecies;
 
 	public int mostRecentMeshModificationTime;
 
@@ -389,7 +389,7 @@ public class RackCharacter
 
 	public Vector3[] lastPenisbonePos = new Vector3[5];
 
-	public static Quaternion[] originalPenisRotations = new Quaternion[5];
+	public static Quaternion[] originalPenisRotations;
 
 	public float cockTwitch;
 
@@ -683,7 +683,7 @@ public class RackCharacter
 
 	public float loadStepsCompleted;
 
-	public static int totalLoadSteps = 12;
+	public static int totalLoadSteps;
 
 	public string loadProgressString = string.Empty;
 
@@ -693,9 +693,9 @@ public class RackCharacter
 
 	private UnityEngine.Color[][] canvasPixels = new UnityEngine.Color[6][];
 
-	public static List<UnityEngine.Color[]> layerPixels = new List<UnityEngine.Color[]>();
+	public static List<UnityEngine.Color[]> layerPixels;
 
-	public static List<string> layerIDs = new List<string>();
+	public static List<string> layerIDs;
 
 	private UnityEngine.Color[] curLayerPixels;
 
@@ -777,9 +777,9 @@ public class RackCharacter
 
 	public bool waitingForTextureBuilder;
 
-	public static bool TextureBuilderBusy = false;
+	public static bool TextureBuilderBusy;
 
-	public static bool showTextureBuildTimes = false;
+	public static bool showTextureBuildTimes;
 
 	private bool queueTextureBuild;
 
@@ -869,7 +869,7 @@ public class RackCharacter
 
 	private static Vector3[] originalEarPositions;
 
-	private static Vector3[] earStartingAngles = new Vector3[12];
+	private static Vector3[] earStartingAngles;
 
 	private Collider[] earColliders = new Collider[12];
 
@@ -937,9 +937,9 @@ public class RackCharacter
 
 	private Transform[] boobbones = new Transform[2];
 
-	private static Vector3[] boobOriginalRotations = new Vector3[2];
+	private static Vector3[] boobOriginalRotations;
 
-	private static Vector3[] boobOriginalPositions = new Vector3[2];
+	private static Vector3[] boobOriginalPositions;
 
 	private static Vector3[] originalBoobAnchors;
 
@@ -1001,7 +1001,7 @@ public class RackCharacter
 
 	public static Quaternion originalAnusRotation;
 
-	public static List<Quaternion> originalButtRotations = new List<Quaternion>();
+	public static List<Quaternion> originalButtRotations;
 
 	private ConfigurableJoint[] buttJoints = new ConfigurableJoint[2];
 
@@ -1011,7 +1011,7 @@ public class RackCharacter
 
 	private Vector3[] lastHipPosition = new Vector3[2];
 
-	public static bool gotOriginalButtStuff = false;
+	public static bool gotOriginalButtStuff;
 
 	public static Vector3[] originalBallPositions;
 
@@ -1511,7 +1511,7 @@ public class RackCharacter
 
 	public float forcedPleasure;
 
-	public static float targetStimulationGlobalAdjustment = 1.25f;
+	public static float targetStimulationGlobalAdjustment;
 
 	public float cumIntensity;
 
@@ -1679,13 +1679,13 @@ public class RackCharacter
 
 	public float buryTarDistance;
 
-	public static float positionAlongPenetratorPenisStructureCutoff0 = 0.1f;
+	public static float positionAlongPenetratorPenisStructureCutoff0;
 
-	public static float positionAlongPenetratorPenisStructureCutoff1 = 0.3f;
+	public static float positionAlongPenetratorPenisStructureCutoff1;
 
-	public static float positionAlongPenetratorPenisStructureCutoff2 = 0.5f;
+	public static float positionAlongPenetratorPenisStructureCutoff2;
 
-	public static float positionAlongPenetratorPenisStructureCutoff3 = 0.7f;
+	public static float positionAlongPenetratorPenisStructureCutoff3;
 
 	private Vector3 dap;
 
@@ -1737,13 +1737,13 @@ public class RackCharacter
 
 	private float fingerSpreadR = 0.5f;
 
-	public static Vector3 FKToFirstKnuckleL = new Vector3(-100.4f, 361.3f, 74.8f);
+	public static Vector3 FKToFirstKnuckleL;
 
-	public static Vector3 FKToFirstKnuckleR = new Vector3(259.3f, 361.3f, 106.6f);
+	public static Vector3 FKToFirstKnuckleR;
 
 	public static string ApplicationpersistentDataPath;
 
-	public static List<string> customTexturesWeNeedToCheckForZeroLength = new List<string>();
+	public static List<string> customTexturesWeNeedToCheckForZeroLength;
 
 	public bool needsRandomDecals;
 
@@ -1769,7 +1769,7 @@ public class RackCharacter
 
 	public Vector3 headOffsetFromTarget = default(Vector3);
 
-	public static bool allowWrongSubjectHotspots = false;
+	public static bool allowWrongSubjectHotspots;
 
 	public Vector3 velocityFromKinematicMovement = Vector3.zero;
 
@@ -1803,7 +1803,7 @@ public class RackCharacter
 
 	public float naturalWrithe;
 
-	public static bool testingWrithe = false;
+	public static bool testingWrithe;
 
 	public float higherWritheFactor;
 
@@ -1909,7 +1909,7 @@ public class RackCharacter
 
 	private float boobForceIn;
 
-	public static float breastThreshhold = 0.2f;
+	public static float breastThreshhold;
 
 	private float swap;
 
@@ -2033,7 +2033,7 @@ public class RackCharacter
 
 	public static bool windowsOS;
 
-	public static List<string> existingTextures = new List<string>();
+	public static List<string> existingTextures;
 
 	public List<string> loadingClothes = new List<string>();
 
@@ -2041,7 +2041,7 @@ public class RackCharacter
 
 	private List<GameObject> clothingCollisionMeshes = new List<GameObject>();
 
-	public static List<clothingRefVertDefinition> clothingRefDefinitions = new List<clothingRefVertDefinition>();
+	public static List<clothingRefVertDefinition> clothingRefDefinitions;
 
 	private Vector3 lastMTPosition = default(Vector3);
 
@@ -2413,9 +2413,9 @@ public class RackCharacter
 
 	private AudioSource SFX;
 
-	public static List<AudioClip> characterSounds = new List<AudioClip>();
+	public static List<AudioClip> characterSounds;
 
-	public static List<string> characterSoundNames = new List<string>();
+	public static List<string> characterSoundNames;
 
 	private int lastFootstep = -1;
 
@@ -2523,11 +2523,25 @@ public class RackCharacter
 
 	private float slitOutAmount;
 
-	public static List<string> clipFixRegionNames = new List<string>();
+	public static List<string> clipFixRegionNames;
 
 	public Dictionary<string, float> clipFixes = new Dictionary<string, float>();
 
 	public bool dying;
+
+	public int fallDelay;
+
+	public float backupCumVolume;
+
+	public float backupCumSpurtStrength;
+
+	public float backupCumSpurtFrequency;
+
+	public float backupOrgasmDuration;
+
+	public bool isPissing;
+
+	public bool hasPissed;
 
 	public RackCharacter(Game _game, CharacterData characterDefinition, bool playerControlled = false, object _spawnPoint = null, float spawnAngle = 0f, string buildFromURL = "")
 	{
@@ -3459,8 +3473,8 @@ public class RackCharacter
 	public static int headTypeIndex(string hT)
 	{
 		if (hT != null)
-        {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(12);
+		{
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(12);
 			dictionary.Add("canine", 1);
 			dictionary.Add("feline", 2);
 			dictionary.Add("lizard", 3);
@@ -3511,8 +3525,8 @@ public class RackCharacter
 	public static float getTongueLengthForHeadType(string hT)
 	{
 		if (hT != null)
-        {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(11);
+		{
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(11);
 			dictionary.Add("human", 1);
 			dictionary.Add("bovine", 2);
 			dictionary.Add("canine", 3);
@@ -4415,8 +4429,8 @@ public class RackCharacter
 			this.SmartIgnoreCollision(this.movementTarget.gameObject.GetComponent<Collider>(), this.colliders[i], true);
 			string name = this.colliders[i].name;
 			if (name != null)
-            {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>(25);
+			{
+				Dictionary<string, int> dictionary = new Dictionary<string, int>(25);
 				dictionary.Add("Tail0", 0);
 				dictionary.Add("Tail1", 0);
 				dictionary.Add("Tail2", 1);
@@ -6093,7 +6107,7 @@ public class RackCharacter
 			dictionary.Add("TAILHOLE", 9);
 			dictionary.Add("HEX_TAILHOLE", 9);
 			dictionary.Add("VAGINA", 10);
-            dictionary.Add("HEX_VAGINA", 10);
+			dictionary.Add("HEX_VAGINA", 10);
 			int num = default(int);
 			if (dictionary.TryGetValue(n, out num))
 			{
@@ -7942,9 +7956,7 @@ public class RackCharacter
 				Transform root2 = this.bones.Root;
 				root2.position += this.furnitureRoot.position - this.bones.Root.position + zero * this.furnitureRootSnap;
 				this.v3 = this.GO.transform.eulerAngles;
-				ref Vector3 val = ref this.v3;
-				Vector3 eulerAngles = this.furniture.transform.eulerAngles;
-				val.y = eulerAngles.y;
+				this.v3.y = this.furniture.transform.eulerAngles.y;
 				this.GO.transform.eulerAngles = this.v3;
 			}
 			else if (this.controlledByPlayer)
@@ -7960,7 +7972,7 @@ public class RackCharacter
 						this.mirrorSwitchDelay -= Time.deltaTime;
 					}
 				}
-				if (this.controlledByPlayer && !this.autoWalking && this.game.customizingCharacter)
+				if (this.controlledByPlayer && !this.autoWalking && this.game.customizingCharacter && this.game.PC() == this.game.OC())
 				{
 					if (Game.gameInstance.customizeCharacterPage == 4 || Game.gameInstance.customizeCharacterPage == 51)
 					{
@@ -8013,43 +8025,175 @@ public class RackCharacter
 		this.faceControlledByAnimation = false;
 		this.allowLimitedEyeMovement = false;
 		this.feetInAir = false;
-		this.game.lockedPosition = (this.controlledByPlayer && (this.game.waitingOnPostCustomizationSnapshot || RacknetMultiplayer.anyRacknetUIopen || this.game.characterSelectorOpen || this.game.lightingControlPanelOpen || (this.game.inventoryOpen && this.game.interactingWithBags.Count > 0) || this.game.preferencesMenuOpen || this.game.anythingLoading || this.game.characterSelectorOpen || this.game.PC().interactionSubject != null || this.game.creditsOpen || this.game.shopOpen || this.game.chemicalSynthesisMenuOpen));
+		this.game.lockedPosition = (this.controlledByPlayer && (this.game.waitingOnPostCustomizationSnapshot || RacknetMultiplayer.anyRacknetUIopen || this.game.characterSelectorOpen || this.game.lightingControlPanelOpen || (this.game.inventoryOpen && this.game.interactingWithBags.Count > 0) || this.game.preferencesMenuOpen || (this.game.anythingLoading && !UserSettings.data.mod_hideLoadScreens) || this.game.characterSelectorOpen || this.game.PC().interactionSubject != null || this.game.creditsOpen || this.game.shopOpen || this.game.chemicalSynthesisMenuOpen));
 		if (this.controlledByPlayer && Inventory.getCharVar("startingStuffGiven") == 0f && Inventory.getCharVar("secretaryGreeted") == 1f)
 		{
 			this.game.lockedPosition = true;
 		}
-		if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Sit") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("Suspended"))
+		AnimatorStateInfo currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+		if (!currentAnimatorStateInfo.IsName("Sit"))
 		{
-			this.game.lockedPosition = true;
-			this.feetInAir = true;
+			currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+			if (currentAnimatorStateInfo.IsName("Suspended"))
+			{
+				goto IL_0716;
+			}
+			goto IL_0729;
 		}
-		if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("PhotoSmirk"))
+		goto IL_0716;
+		IL_08d2:
+		currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+		if (!currentAnimatorStateInfo.IsName("Showering1"))
+		{
+			currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+			if (currentAnimatorStateInfo.IsName("Showering1Spread"))
+			{
+				goto IL_0908;
+			}
+			goto IL_0914;
+		}
+		goto IL_0908;
+		IL_0716:
+		this.game.lockedPosition = true;
+		this.feetInAir = true;
+		goto IL_0729;
+		IL_0882:
+		this.game.lockedPosition = true;
+		this.faceControlledByAnimation = true;
+		currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+		int num;
+		if (!currentAnimatorStateInfo.IsName("ShoweringLegLift"))
+		{
+			currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+			num = (currentAnimatorStateInfo.IsName("ShoweringOpenWide") ? 1 : 0);
+		}
+		else
+		{
+			num = 1;
+		}
+		this.allowLimitedEyeMovement = ((byte)num != 0);
+		goto IL_08d2;
+		IL_0914:
+		if (!this.game.customizingCharacter)
+		{
+			currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+			if (!currentAnimatorStateInfo.IsName("Showering0"))
+			{
+				currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+				if (!currentAnimatorStateInfo.IsName("Showering0_mirror"))
+				{
+					currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+					if (!currentAnimatorStateInfo.IsName("Showering1"))
+					{
+						currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+						if (!currentAnimatorStateInfo.IsName("Showering1Spread"))
+						{
+							currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+							if (!currentAnimatorStateInfo.IsName("ShoweringLegLift"))
+							{
+								currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+								if (currentAnimatorStateInfo.IsName("ShoweringOpenWide"))
+								{
+									goto IL_09c9;
+								}
+								goto IL_09d4;
+							}
+						}
+					}
+				}
+			}
+			goto IL_09c9;
+		}
+		goto IL_09d4;
+		IL_0908:
+		this.game.lockedPosition = true;
+		goto IL_0914;
+		IL_0729:
+		currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+		if (currentAnimatorStateInfo.IsName("PhotoSmirk"))
 		{
 			this.game.lockedPosition = true;
 			this.faceControlledByAnimation = true;
 			this.allowLimitedEyeMovement = true;
 		}
-		if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("RackChair") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("Sideways") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("Stocks") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("FacedownSwing") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("TableStraps") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("UpsideDown"))
+		currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+		if (!currentAnimatorStateInfo.IsName("RackChair"))
 		{
-			this.game.lockedPosition = true;
-			this.feetInAir = true;
+			currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+			if (!currentAnimatorStateInfo.IsName("Sideways"))
+			{
+				currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+				if (!currentAnimatorStateInfo.IsName("Stocks"))
+				{
+					currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+					if (!currentAnimatorStateInfo.IsName("FacedownSwing"))
+					{
+						currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+						if (!currentAnimatorStateInfo.IsName("TableStraps"))
+						{
+							currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+							if (currentAnimatorStateInfo.IsName("UpsideDown"))
+							{
+								goto IL_0803;
+							}
+							goto IL_0816;
+						}
+					}
+				}
+			}
 		}
-		if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Showering0") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("Showering0_mirror") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("ShoweringLegLift") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("ShoweringOpenWide"))
+		goto IL_0803;
+		IL_0816:
+		currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+		if (!currentAnimatorStateInfo.IsName("Showering0"))
 		{
-			this.game.lockedPosition = true;
-			this.faceControlledByAnimation = true;
-			this.allowLimitedEyeMovement = (this.animator.GetCurrentAnimatorStateInfo(0).IsName("ShoweringLegLift") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("ShoweringOpenWide"));
+			currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+			if (!currentAnimatorStateInfo.IsName("Showering0_mirror"))
+			{
+				currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+				if (!currentAnimatorStateInfo.IsName("ShoweringLegLift"))
+				{
+					currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+					if (currentAnimatorStateInfo.IsName("ShoweringOpenWide"))
+					{
+						goto IL_0882;
+					}
+					goto IL_08d2;
+				}
+			}
 		}
-		if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Showering1") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("Showering1Spread"))
+		goto IL_0882;
+		IL_09c9:
+		this.setPose("Idle");
+		goto IL_09d4;
+		IL_0803:
+		this.game.lockedPosition = true;
+		this.feetInAir = true;
+		goto IL_0816;
+		IL_09d4:
+		currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+		int num2;
+		if (!currentAnimatorStateInfo.IsName("Idle"))
 		{
-			this.game.lockedPosition = true;
+			currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+			num2 = (currentAnimatorStateInfo.IsName("IdlePlantigrade") ? 1 : 0);
 		}
-		if (!this.game.customizingCharacter && (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Showering0") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("Showering0_mirror") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("Showering1") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("Showering1Spread") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("ShoweringLegLift") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("ShoweringOpenWide")))
+		else
 		{
-			this.setPose("Idle");
+			num2 = 1;
 		}
-		this.idleAnimation = (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("IdlePlantigrade"));
-		this.animationPaused = (this.animationPauseTime > 0 && this.animator.GetCurrentAnimatorStateInfo(0).IsName("ArmsOutForEditing"));
+		this.idleAnimation = ((byte)num2 != 0);
+		int num3;
+		if (this.animationPauseTime > 0)
+		{
+			currentAnimatorStateInfo = this.animator.GetCurrentAnimatorStateInfo(0);
+			num3 = (currentAnimatorStateInfo.IsName("ArmsOutForEditing") ? 1 : 0);
+		}
+		else
+		{
+			num3 = 0;
+		}
+		this.animationPaused = ((byte)num3 != 0);
 		if (this.animationPauseTime > 0)
 		{
 			this.animationPauseTime--;
@@ -8179,11 +8323,11 @@ public class RackCharacter
 		{
 			if (this.interactionSubject != null && this.distFromCamera < 20f)
 			{
-				goto IL_003d;
+				goto IL_002e;
 			}
 			if (this.controlledByPlayer)
 			{
-				goto IL_003d;
+				goto IL_002e;
 			}
 			if ((this.isInteractionSubject || this.interactionSubject != null || this.controlledByPlayer) && this.distFromCamera < 40f)
 			{
@@ -8194,13 +8338,17 @@ public class RackCharacter
 			{
 				this.solveIK(Mathf.RoundToInt(2f * UserSettings.data.IKquality));
 			}
+			else if (UserSettings.data.mod_fixNpcCum && this.distFromCamera < 20f)
+			{
+				this.solveIK(Mathf.RoundToInt(UserSettings.data.IKquality));
+			}
 			else if (!this.faceControlledByAnimation)
 			{
 				this.processEyesAndFocus(this.currentlyUsingMouth);
 			}
 		}
 		return;
-		IL_003d:
+		IL_002e:
 		this.solveIK(Mathf.RoundToInt(6f * UserSettings.data.IKquality));
 	}
 
@@ -8315,12 +8463,8 @@ public class RackCharacter
 
 	public void turnCollidersOn(bool becauseWeAreRebuildingList = false)
 	{
-		if (this.initted && !this.rebuilding && this.colliders != null && (becauseWeAreRebuildingList || (!this.hidden && (this.controlledByPlayer || this.interactionSubject != null || this.isInteractionSubject))))
+		if (this.initted && !this.rebuilding && this.colliders != null && (becauseWeAreRebuildingList || (!this.hidden && (this.controlledByPlayer || this.interactionSubject != null || this.isInteractionSubject || UserSettings.data.mod_fixNpcCum))) && (!this.collidersWereOn | becauseWeAreRebuildingList))
 		{
-			if (this.collidersWereOn && !becauseWeAreRebuildingList)
-			{
-				return;
-			}
 			this.needColliderRebuild = false;
 			for (int i = 0; i < this.colliders.Length; i++)
 			{
@@ -10989,6 +11133,15 @@ public class RackCharacter
 			if (this.orgasming < 0f)
 			{
 				this.orgasming = 0f;
+				if (this.hasPissed)
+				{
+					this.data.cumVolume = this.backupCumVolume;
+					this.data.cumSpurtStrength = this.backupCumSpurtStrength;
+					this.data.cumSpurtFrequency = this.backupCumSpurtFrequency;
+					this.data.orgasmDuration = this.backupOrgasmDuration;
+					this.isPissing = false;
+					this.hasPissed = false;
+				}
 			}
 		}
 		else if (this.refractory > 0f)
@@ -11087,11 +11240,19 @@ public class RackCharacter
 			{
 				this.playSound("cum" + this.nextCumSFX, Mathf.Pow(this.orgasming / this.currentOrgasmDuration, 3f), false);
 				this.nextCumSFX = (this.nextCumSFX + 1) % 3;
-				this.currentCumSpurt = (0.1f + this.cumIntensity) * this.data.cumSpurtFrequency * 0.25f;
+				if (!UserSettings.data.mod_altCumStyle)
+				{
+					this.currentCumSpurt = (0.1f + this.cumIntensity) * this.data.cumSpurtFrequency * 0.25f;
+					this.cumSpurtDelay += 1f + (this.data.cumSpurtFrequency - 1f) * 0.5f;
+				}
+				else
+				{
+					this.currentCumSpurt = this.cap(this.data.mod_cumSpurtRatio * 0.1f * this.cumIntensity + 0.1f + (this.cumIntensity + 0.1f) * this.data.cumSpurtFrequency * 0.25f, 0.02f, 9999f);
+					this.cumSpurtDelay += this.cap(1.25f - this.data.mod_cumSpurtRatio + (1f - this.orgasming / this.currentOrgasmDuration) + (this.data.cumSpurtFrequency - 1f) * 0.25f, 0.1f, 2.1f);
+				}
 				this.cumSpurtTrimStart = this.currentCumSpurt * 0.3f;
 				this.squirtSpurtTrimStart = this.currentCumSpurt * (0.3f + (0.7f - 0.7f * this.data.squirtAmount));
 				this.cumWobbleFactor = 1f;
-				this.cumSpurtDelay += 1f + (this.data.cumSpurtFrequency - 1f) * 0.5f;
 				if (this.currentPrecumDot != null)
 				{
 					this.currentPrecumDot.stillAttached = false;
@@ -11169,17 +11330,17 @@ public class RackCharacter
 						{
 							switch (this.penisBurialOrifice)
 							{
-							case 0:
-								this.penisBurialTarget.cumInAnus += this.currentCumEmitThickness * this.data.cumVolume;
-								this.penisBurialTarget.cumInAnusColor = this.col;
+							case 2:
+								this.penisBurialTarget.cumInMouth += this.currentCumEmitThickness * this.data.cumVolume;
+								this.penisBurialTarget.cumInMouthColor = this.col;
 								break;
 							case 1:
 								this.penisBurialTarget.cumInVagina += this.currentCumEmitThickness * this.data.cumVolume;
 								this.penisBurialTarget.cumInVaginaColor = this.col;
 								break;
-							case 2:
-								this.penisBurialTarget.cumInMouth += this.currentCumEmitThickness * this.data.cumVolume;
-								this.penisBurialTarget.cumInMouthColor = this.col;
+							case 0:
+								this.penisBurialTarget.cumInAnus += this.currentCumEmitThickness * this.data.cumVolume;
+								this.penisBurialTarget.cumInAnusColor = this.col;
 								break;
 							}
 						}
@@ -12215,14 +12376,17 @@ public class RackCharacter
 
 	public Vector3 penisTip(bool afterIK = false)
 	{
-		if (afterIK)
+		if (afterIK && this.aikPenisTip != Vector3.zero && UserSettings.data.mod_fixNpcCum)
 		{
-			return this.aikPenisTip;
+			goto IL_0030;
 		}
-		Vector3 position = this.bones.Penis4.position;
-		Vector3 a = this.bones.Penis4.right * 0.1856f;
-		Vector3 localScale = this.bones.Penis4.localScale;
-		return position - a * localScale.x;
+		if (afterIK && !UserSettings.data.mod_fixNpcCum)
+		{
+			goto IL_0030;
+		}
+		return this.bones.Penis4.position - this.bones.Penis4.right * 0.1856f * this.bones.Penis4.localScale.x;
+		IL_0030:
+		return this.aikPenisTip;
 	}
 
 	public void pollPenisGirth(bool force = false)
@@ -17511,19 +17675,21 @@ public class RackCharacter
 			}
 			this.wasProcessingBalls = 1;
 		}
-		Vector3 position = this.ballbones[0].position;
-		if (float.IsNaN(position.x))
+		if (float.IsNaN(this.ballbones[0].position.x))
 		{
 			this.resetBalls();
 		}
+		Vector3 vector;
 		for (int k = 0; k < this.ballbones.Length; k++)
 		{
-			if (this.ballRigidbodies[k].velocity.magnitude > 100f)
+			vector = this.ballRigidbodies[k].velocity;
+			if (vector.magnitude > 100f)
 			{
 				this.resetBalls();
 			}
 		}
-		if ((this.ballbones[2].position - this.bones.Pubic.position).magnitude > 1f)
+		vector = this.ballbones[2].position - this.bones.Pubic.position;
+		if (vector.magnitude > 1f)
 		{
 			this.resetBalls();
 		}
@@ -17543,9 +17709,8 @@ public class RackCharacter
 		}
 		this.bones.Sheath.localScale = this.v3;
 		this.bones.Sheath.position = this.bones.Penis0.position;
-		float magnitude = (this.bones.LowerLeg_L.position - this.bones.LowerLeg_R.position).magnitude;
-		Vector3 localScale = this.GO.transform.localScale;
-		float num = this.cap((1.4f - magnitude / localScale.x) / 0.94f, 0f, 1f);
+		vector = this.bones.LowerLeg_L.position - this.bones.LowerLeg_R.position;
+		float num = this.cap((1.4f - vector.magnitude / this.GO.transform.localScale.x) / 0.94f, 0f, 1f);
 		num = 1f - Mathf.Pow(1f - num, 2f);
 		num += this.moveSpeed;
 		this.v3.x = 0.49f - 0.03f * num;
@@ -17564,8 +17729,8 @@ public class RackCharacter
 		}
 		else
 		{
-			Vector3 normalized = this.BallsackOrigin.InverseTransformPoint(this.bones.Ballsack1.position).normalized;
-			this.ballDragDownAmount = 0f - normalized.y;
+			vector = this.BallsackOrigin.InverseTransformPoint(this.bones.Ballsack1.position);
+			this.ballDragDownAmount = 0f - vector.normalized.y;
 			this.ballUpsideDownRetract = this.cap((0f - this.ballDragDownAmount) * 1.5f, 0f, 1f);
 			this.ballDragDownAmount = this.cap(this.ballDragDownAmount, 0f, 1f);
 			this.ballDragUpAmount = this.ballDragDownAmount * (0f - this.arousal);
@@ -17609,14 +17774,17 @@ public class RackCharacter
 				}
 				this.ballRetract = this.cap(this.ballRetract, 0f, 1f);
 				float num2 = this.ballSize_act;
-				float d = Mathf.Pow(this.scrotumLength_act, 2f) * (1f - this.ballRetract * 0.8f);
+				float num3 = Mathf.Pow(this.scrotumLength_act, 2f) * (1f - this.ballRetract * 0.8f);
 				this.v3 = Vector3.one * num2;
+				if (UserSettings.data.mod_ballsMoveOnCum != 0f)
+				{
+					num3 *= UserSettings.data.mod_ballsMoveOnCum * (1f - this.orgasmSoftPulse * 0.4f / (1f + (this.data.cumSpurtFrequency - 1f) * 0.25f));
+				}
 				this.ballbones[1].localScale = this.v3;
 				this.ballbones[2].localScale = this.v3;
 				if (this.ballStickCheckDelay <= 0)
 				{
-					Vector3 vector = this.bones.Root.InverseTransformPoint(this.bones.Ballsack1.position);
-					this.invertedBallZ = vector.z;
+					this.invertedBallZ = this.bones.Root.InverseTransformPoint(this.bones.Ballsack1.position).z;
 					this.ballStickCheckDelay += 10;
 				}
 				else
@@ -17632,27 +17800,27 @@ public class RackCharacter
 					this.unstickingBalls -= Time.deltaTime * 5f;
 				}
 				this.unstickingBalls = this.cap(this.unstickingBalls, 0f, 1f);
-				for (int num3 = 0; num3 < this.ballColliders.Length; num3++)
+				for (int num4 = 0; num4 < this.ballColliders.Length; num4++)
 				{
-					this.ballColliders[num3].radius = 0.06f * num2 * (1f - this.unstickingBalls);
+					this.ballColliders[num4].radius = 0.06f * num2 * (1f - this.unstickingBalls);
 				}
-				for (int num4 = 0; num4 < this.ballJoints.Length; num4++)
+				for (int num5 = 0; num5 < this.ballJoints.Length; num5++)
 				{
-					if (num4 == 0 || num4 == 4)
+					if (num5 == 0 || num5 == 4)
 					{
-						this.ballJoints[num4].connectedAnchor = RackCharacter.originalBallAnchors[num4] * d;
+						this.ballJoints[num5].connectedAnchor = RackCharacter.originalBallAnchors[num5] * num3;
 					}
 					else
 					{
-						this.ballJoints[num4].connectedAnchor = RackCharacter.originalBallAnchors[num4];
+						this.ballJoints[num5].connectedAnchor = RackCharacter.originalBallAnchors[num5];
 					}
 				}
 				this.v3 = this.lastPubicPosition - this.bones.Pubic.position + this.amountMovedHorizontal;
-				for (int num5 = 1; num5 < this.ballRigidbodies.Length; num5++)
+				for (int num6 = 1; num6 < this.ballRigidbodies.Length; num6++)
 				{
-					if (!(this.moveSpeed > 0.05f) && !(this.jumpY > 0f) && this.v3.magnitude < 2f)
+					if (this.moveSpeed <= 0.05f && this.jumpY <= 0f && this.v3.magnitude < 2f)
 					{
-						this.ballRigidbodies[num5].AddForce(this.v3 * 200f, ForceMode.Impulse);
+						this.ballRigidbodies[num6].AddForce(this.v3 * 200f, ForceMode.Impulse);
 					}
 				}
 			}
@@ -17954,6 +18122,10 @@ public class RackCharacter
 			this.showVagina = true;
 			break;
 		}
+		if (UserSettings.data.modx_alwaysHaveBalls)
+		{
+			this.showBalls = true;
+		}
 		this.showWings = (this.data.wingType != 0);
 		this.data.hasSheath = (this.data.ballsType == 1);
 		this.penisSize_act = 1f + (this.data.penisSize - 0.5f) * 0.45f;
@@ -17990,12 +18162,12 @@ public class RackCharacter
 		}
 		this.totalPenisSize = this.penisSize_act * (this.penisLength_act + this.penisGirth_act);
 		this.totalBallSize = this.penisSize_act * (this.ballSize_act + this.scrotumLength_act * 0.2f);
-		this.artificialSizeChange = this.cap(this.artificialSizeChange, -1.5f, 1.5f);
-		this.height_act = 0.8f + this.cap(this.data.height + this.artificialSizeChange, -0.1f, 1.4f) * 0.5f;
+		this.artificialSizeChange = this.modCap(this.artificialSizeChange, -1.5f, 1.5f);
+		this.height_act = 0.8f + this.modCap(this.data.height + this.artificialSizeChange, -0.1f, 1.4f) * 0.5f;
 		this.muscle_act = this.data.muscle;
 		this.adiposity_act = this.data.adiposity;
-		this.bodyMass_act = this.cap(this.data.bodyMass - (this.height_act - 1f) * 0.2f + this.adiposity_act * 0.7f, 0f, 1f);
-		this.belly_act = this.cap(this.data.belly + this.adiposity_act * 0.2f, 0f, 1f);
+		this.bodyMass_act = this.modCap(this.data.bodyMass - (this.height_act - 1f) * 0.2f + this.adiposity_act * 0.7f, 0f, 1f);
+		this.belly_act = this.modCap(this.data.belly + this.adiposity_act * 0.2f, 0f, 1f);
 		switch (this.data.genitalType)
 		{
 		case 0:
@@ -18211,37 +18383,37 @@ public class RackCharacter
 			{
 				this.bodyPiece.SetBlendShapeWeight(this.bodyPiece.sharedMesh.GetBlendShapeIndex("ClothingReduction_" + RackCharacter.clipFixRegionNames[i]), this.clipFixes[RackCharacter.clipFixRegionNames[i]]);
 			}
-			this.setBodyBlend("Feminine", this.cap(this.bodyFemininity_act, 0f, 1f) * 100f);
-			this.setBodyBlend("Breasts", this.cap(this.breastSize_act, 0f, 1f) * 100f);
-			this.setBodyBlend("Breasts2", this.cap(this.breastSize_act - 1f, 0f, 1f) * 100f);
-			this.setBodyBlend("Breasts3", this.cap(this.breastSize_act - 2f, 0f, 1f) * 100f);
+			this.setBodyBlend("Feminine", this.modCap(this.bodyFemininity_act, 0f, 1f) * 100f);
+			this.setBodyBlend("Breasts", this.modCap(this.breastSize_act, 0f, 1f) * 100f);
+			this.setBodyBlend("Breasts2", this.modCap(this.breastSize_act - 1f, 0f, 1f) * 100f);
+			this.setBodyBlend("Breasts3", this.modCap(this.breastSize_act - 2f, 0f, 1f) * 100f);
 			if (this.breastsCoveredByClothing)
 			{
 				this.setBodyBlend("Nipples", 0f);
 			}
 			else
 			{
-				this.setBodyBlend("Nipples", this.cap(this.nippleSize_act, 0f, 1f) * 100f);
+				this.setBodyBlend("Nipples", this.modCap(this.nippleSize_act, 0f, 1f) * 100f);
 			}
-			this.setBodyBlend("Muscular", this.cap(this.muscle_act, 0f, 1f) * 100f);
-			this.setBodyBlend("Fat", this.cap(this.adiposity_act, 0f, 1f) * 100f);
-			this.setBodyBlend("Hips", this.cap(this.hipWidth_act, 0f, 1f) * 100f);
-			this.setBodyBlend("Butt", this.cap(this.buttSize_act, 0f, 1f) * 100f);
-			this.setBodyBlend("Belly", this.cap(this.belly_act, 0f, 1f) * 100f);
+			this.setBodyBlend("Muscular", this.modCap(this.muscle_act, 0f, 1f) * 100f);
+			this.setBodyBlend("Fat", this.modCap(this.adiposity_act, 0f, 1f) * 100f);
+			this.setBodyBlend("Hips", this.modCap(this.hipWidth_act, 0f, 1f) * 100f);
+			this.setBodyBlend("Butt", this.modCap(this.buttSize_act, 0f, 1f) * 100f);
+			this.setBodyBlend("Belly", this.modCap(this.belly_act, 0f, 1f) * 100f);
 			if (this.bodyMass_act >= 0.5f)
 			{
 				this.setBodyBlend("Lithe", 0f);
-				this.setBodyBlend("Bulky", (this.cap(this.bodyMass_act, 0f, 1f) - 0.5f) / 0.5f * 100f);
+				this.setBodyBlend("Bulky", (this.modCap(this.bodyMass_act, 0f, 1f) - 0.5f) / 0.5f * 100f);
 			}
 			else
 			{
 				this.setBodyBlend("Bulky", 0f);
-				this.setBodyBlend("Lithe", (0.5f - this.cap(this.bodyMass_act, 0f, 1f)) / 0.5f * 100f);
+				this.setBodyBlend("Lithe", (0.5f - this.modCap(this.bodyMass_act, 0f, 1f)) / 0.5f * 100f);
 			}
-			this.feetPiece.SetBlendShapeWeight(this.feetPiece.sharedMesh.GetBlendShapeIndex("Bulk"), this.cap(this.bodyMass_act - 0.5f, 0f, 1f) * 200f);
+			this.feetPiece.SetBlendShapeWeight(this.feetPiece.sharedMesh.GetBlendShapeIndex("Bulk"), this.modCap(this.bodyMass_act - 0.5f, 0f, 1f) * 200f);
 			for (int j = 0; j < this.clothingPiecesEquipped.Count; j++)
 			{
-				this.clothingPiecesEquipped[j].GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(this.clothingPiecesEquipped[j].GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeIndex("Bulk"), this.cap(this.bodyMass_act - 0.5f, 0f, 1f) * 200f);
+				this.clothingPiecesEquipped[j].GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(this.clothingPiecesEquipped[j].GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeIndex("Bulk"), this.modCap(this.bodyMass_act - 0.5f, 0f, 1f) * 200f);
 			}
 			if (this.data.specialFoot == "hooved" && this.feetPiece.sharedMesh.GetBlendShapeIndex("SmallHooves") != -1)
 			{
@@ -18265,12 +18437,12 @@ public class RackCharacter
 			if (this.headFemininity_act >= 0.5f)
 			{
 				this.headPiece.SetBlendShapeWeight(this.headPiece.sharedMesh.GetBlendShapeIndex("Masculine"), 0f);
-				this.headPiece.SetBlendShapeWeight(this.headPiece.sharedMesh.GetBlendShapeIndex("Feminine"), (this.cap(this.headFemininity_act, 0f, 1f) - 0.5f) / 0.5f * 100f);
+				this.headPiece.SetBlendShapeWeight(this.headPiece.sharedMesh.GetBlendShapeIndex("Feminine"), (this.modCap(this.headFemininity_act, 0f, 1f) - 0.5f) / 0.5f * 100f);
 			}
 			else
 			{
 				this.headPiece.SetBlendShapeWeight(this.headPiece.sharedMesh.GetBlendShapeIndex("Feminine"), 0f);
-				this.headPiece.SetBlendShapeWeight(this.headPiece.sharedMesh.GetBlendShapeIndex("Masculine"), (0.5f - this.cap(this.headFemininity_act, 0f, 1f)) / 0.5f * 100f);
+				this.headPiece.SetBlendShapeWeight(this.headPiece.sharedMesh.GetBlendShapeIndex("Masculine"), (0.5f - this.modCap(this.headFemininity_act, 0f, 1f)) / 0.5f * 100f);
 			}
 			float num = 0f;
 			for (int k = 0; k < this.data.headMorphs.Count; k++)
@@ -18320,8 +18492,8 @@ public class RackCharacter
 			{
 				this.vaginaPiece.SetBlendShapeWeight(this.vaginaPiece.sharedMesh.GetBlendShapeIndex("Ghost"), 0f);
 			}
-			this.vaginaPiece.SetBlendShapeWeight(this.vaginaPiece.sharedMesh.GetBlendShapeIndex("Plump"), this.cap(this.vaginaPlumpness_act, 0f, 1f) * 100f);
-			this.vaginaPiece.SetBlendShapeWeight(this.vaginaPiece.sharedMesh.GetBlendShapeIndex("LabiaMinora"), this.cap(this.vaginaShape_act, 0f, 1f) * 100f);
+			this.vaginaPiece.SetBlendShapeWeight(this.vaginaPiece.sharedMesh.GetBlendShapeIndex("Plump"), this.modCap(this.vaginaPlumpness_act, 0f, 1f) * 100f);
+			this.vaginaPiece.SetBlendShapeWeight(this.vaginaPiece.sharedMesh.GetBlendShapeIndex("LabiaMinora"), this.modCap(this.vaginaShape_act, 0f, 1f) * 100f);
 			if (this.data.genitalType == 3)
 			{
 				this.vaginaPiece.SetBlendShapeWeight(this.vaginaPiece.sharedMesh.GetBlendShapeIndex("Herm"), 100f);
@@ -18558,5 +18730,43 @@ public class RackCharacter
 		}
 		this.initted = false;
 		UnityEngine.Object.Destroy(this.GO);
+	}
+
+	static RackCharacter()
+	{
+		RackCharacter.charactersReboned = new List<string>();
+		RackCharacter.allSpecies = new List<string>();
+		RackCharacter.originalPenisRotations = new Quaternion[5];
+		RackCharacter.totalLoadSteps = 12;
+		RackCharacter.layerPixels = new List<UnityEngine.Color[]>();
+		RackCharacter.layerIDs = new List<string>();
+		RackCharacter.TextureBuilderBusy = false;
+		RackCharacter.showTextureBuildTimes = false;
+		RackCharacter.earStartingAngles = new Vector3[12];
+		RackCharacter.boobOriginalRotations = new Vector3[2];
+		RackCharacter.boobOriginalPositions = new Vector3[2];
+		RackCharacter.originalButtRotations = new List<Quaternion>();
+		RackCharacter.gotOriginalButtStuff = false;
+		RackCharacter.targetStimulationGlobalAdjustment = 1.25f;
+		RackCharacter.positionAlongPenetratorPenisStructureCutoff0 = 0.1f;
+		RackCharacter.positionAlongPenetratorPenisStructureCutoff1 = 0.3f;
+		RackCharacter.positionAlongPenetratorPenisStructureCutoff2 = 0.5f;
+		RackCharacter.positionAlongPenetratorPenisStructureCutoff3 = 0.7f;
+		RackCharacter.FKToFirstKnuckleL = new Vector3(-100.4f, 361.3f, 74.8f);
+		RackCharacter.FKToFirstKnuckleR = new Vector3(259.3f, 361.3f, 106.6f);
+		RackCharacter.customTexturesWeNeedToCheckForZeroLength = new List<string>();
+		RackCharacter.allowWrongSubjectHotspots = false;
+		RackCharacter.testingWrithe = false;
+		RackCharacter.breastThreshhold = 0.2f;
+		RackCharacter.existingTextures = new List<string>();
+		RackCharacter.clothingRefDefinitions = new List<clothingRefVertDefinition>();
+		RackCharacter.characterSounds = new List<AudioClip>();
+		RackCharacter.characterSoundNames = new List<string>();
+		RackCharacter.clipFixRegionNames = new List<string>();
+	}
+
+	public float modCap(float value, float min = 0f, float max = 1f)
+	{
+		return value;
 	}
 }

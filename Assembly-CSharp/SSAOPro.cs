@@ -1,10 +1,10 @@
 using UnityEngine;
 
-[ImageEffectAllowedInSceneView]
-[HelpURL("http://www.thomashourdel.com/ssaopro/doc/")]
 [ExecuteInEditMode]
-[AddComponentMenu("Image Effects/SSAO Pro")]
+[ImageEffectAllowedInSceneView]
 [RequireComponent(typeof(Camera))]
+[HelpURL("http://www.thomashourdel.com/ssaopro/doc/")]
+[AddComponentMenu("Image Effects/SSAO Pro")]
 public class SSAOPro : MonoBehaviour
 {
 	public enum BlurMode

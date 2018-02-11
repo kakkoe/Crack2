@@ -16,7 +16,8 @@ public class UserSettings
     public static bool doesCharacterNeedRedraw(RackCharacter character)
     {
         bool flag = UserSettings.data.cachedTextures.Contains(character.data.uid);
-        if (flag)
+        bool flag2 = flag;
+        if (flag2)
         {
             flag = (flag && File.Exists(string.Concat(new object[]
             {
@@ -96,7 +97,8 @@ public class UserSettings
                 character.data.uid,
                 "-wingFX.png"
             })));
-            if (!flag)
+            bool flag3 = !flag;
+            if (flag3)
             {
                 Debug.Log("Uncaching " + character.data.name + " because one or more of their cached textures is missing.");
             }

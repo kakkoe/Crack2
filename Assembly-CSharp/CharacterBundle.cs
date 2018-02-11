@@ -133,54 +133,76 @@ public class CharacterBundle
                     yield return (object)null;
                 }
                 yield return (object)www;
-                if (www.error != string.Empty)
+                bool flag7 = !string.IsNullOrEmpty(www.error);
+                if (flag7)
                 {
                     Game.gameInstance.popup("IMPORTANT_ASSET_MISSING", true, false);
                     Game.trace("Asset load fail message: " + www.error);
                     UserSettings.data.needDirectoryRebuild = true;
                     UserSettings.saveSettings();
-                    throw new System.Exception("Error downloading character assets for '" + this.id + "': " + www.error);
+                    throw new System.Exception(string.Concat(new string[]
+                    {
+                    "Error downloading character assets for '",
+                    this.id,
+                    "' - '",
+                    this.asseturl,
+                    "': ",
+                    www.error
+                    }));
                 }
                 this.bundle = www.assetBundle;
                 CharacterBundle.headTypes = new List<string>();
                 GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(this.bundle.LoadAsset(this.bundle.GetAllAssetNames()[0]));
-                for (int i = 0; i < gameObject.transform.childCount; i++)
+                int num;
+                for (int i = 0; i < gameObject.transform.childCount; i = num + 1)
                 {
-                    if (gameObject.transform.GetChild(i).name.IndexOf("HEAD_") != -1)
+                    bool flag8 = gameObject.transform.GetChild(i).name.IndexOf("HEAD_") != -1;
+                    if (flag8)
                     {
                         CharacterBundle.headTypes.Add(gameObject.transform.GetChild(i).name.Split(new string[]
                         {
                         "HEAD_"
                         }, System.StringSplitOptions.None)[1]);
                     }
+                    num = i;
                 }
                 UnityEngine.Object.Destroy(gameObject);
                 RackCharacter.allPieces = (UnityEngine.Object.Instantiate(this.bundle.LoadAsset("basemodel.fbx")) as GameObject);
                 RackCharacter.allPieces.name = "AllPieces";
-                for (int j = 0; j < RackCharacter.allPieces.transform.childCount; j++)
+                for (int j = 0; j < RackCharacter.allPieces.transform.childCount; j = num + 1)
                 {
                     Transform child = RackCharacter.allPieces.transform.GetChild(j);
-                    if (child.name != "Armature")
+                    bool flag9 = child.name != "Armature";
+                    if (flag9)
                     {
                         child.name = child.name.ToLower();
                     }
+                    child = null;
+                    num = j;
                 }
                 RackCharacter.allPieces.SetActive(false);
-                for (int k = 0; k < RackCharacter.allPieces.transform.childCount; k++)
+                for (int k = 0; k < RackCharacter.allPieces.transform.childCount; k = num + 1)
                 {
-                    if (RackCharacter.allPieces.transform.GetChild(k).name == "body_universal")
+                    bool flag10 = RackCharacter.allPieces.transform.GetChild(k).name == "body_universal";
+                    if (flag10)
                     {
                         this.bodyVerts = RackCharacter.allPieces.transform.GetChild(k).GetComponent<SkinnedMeshRenderer>().sharedMesh.vertices;
                         this.bodyNormals = RackCharacter.allPieces.transform.GetChild(k).GetComponent<SkinnedMeshRenderer>().sharedMesh.normals;
                     }
-                    else if (RackCharacter.allPieces.transform.GetChild(k).name != "Armature")
+                    else
                     {
-                        this.pieceVerts.Add(RackCharacter.allPieces.transform.GetChild(k).name, RackCharacter.allPieces.transform.GetChild(k).GetComponent<SkinnedMeshRenderer>().sharedMesh.vertices);
-                        this.pieceNormals.Add(RackCharacter.allPieces.transform.GetChild(k).name, RackCharacter.allPieces.transform.GetChild(k).GetComponent<SkinnedMeshRenderer>().sharedMesh.normals);
+                        bool flag11 = RackCharacter.allPieces.transform.GetChild(k).name != "Armature";
+                        if (flag11)
+                        {
+                            this.pieceVerts.Add(RackCharacter.allPieces.transform.GetChild(k).name, RackCharacter.allPieces.transform.GetChild(k).GetComponent<SkinnedMeshRenderer>().sharedMesh.vertices);
+                            this.pieceNormals.Add(RackCharacter.allPieces.transform.GetChild(k).name, RackCharacter.allPieces.transform.GetChild(k).GetComponent<SkinnedMeshRenderer>().sharedMesh.normals);
+                        }
                     }
+                    num = k;
                 }
                 this.seamFixThread = new Thread(new ThreadStart(this.fixSeams));
                 this.seamFixThread.Start();
+                gameObject = null;
             }
 		}
 		yield break;

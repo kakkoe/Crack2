@@ -4,8 +4,8 @@ using System.Xml.Serialization;
 [XmlRoot("RacknetCache")]
 public class RacknetCache
 {
-	[XmlArray("racknetCharacterCache")]
 	[XmlArrayItem("racknetCharacter")]
+	[XmlArray("racknetCharacterCache")]
 	public List<string> racknetCharacterCache = new List<string>();
 
 	[XmlElement("racknetCacheTimestamp")]

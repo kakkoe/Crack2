@@ -1202,7 +1202,7 @@ public class BondageApparatus : MonoBehaviour
 		string text = this.poseName + "." + pose;
 		if (text != null)
 		{
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(20);
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(20);
 			dictionary.Add("RackChair.default", 0);
 			dictionary.Add("RackChair.lifted", 1);
 			dictionary.Add("RackChair.eyelevel", 2);
@@ -1402,8 +1402,8 @@ public class BondageApparatus : MonoBehaviour
 		this.backBendFromPerformance += (0.3f * Game.cap(performer.interactionMX + performer.interactionMY - 1f, -0.5f, 0.5f) - this.backBendFromPerformance) * BondageApparatus.cap(Time.deltaTime * 2f, 0f, 1f);
 		string text = this.poseName + "." + pose;
 		if (text != null)
-        {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(19);
+		{
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(19);
 			dictionary.Add("TableStraps.default", 1);
 			dictionary.Add("TableStraps.riding", 2);
 			dictionary.Add("TableStraps.sixtynine", 3);

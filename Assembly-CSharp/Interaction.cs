@@ -220,8 +220,8 @@ public class Interaction
 		{
 			int num2 = default(int);
 			if (performingNode != null)
-            {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>(10);
+			{
+				Dictionary<string, int> dictionary = new Dictionary<string, int>(10);
 				dictionary.Add("footl", 0);
 				dictionary.Add("footr", 1);
 				dictionary.Add("balls", 2);
@@ -350,8 +350,8 @@ public class Interaction
 				}
 			}
 			if (targetNode != null)
-            {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>(10);
+			{
+				Dictionary<string, int> dictionary = new Dictionary<string, int>(10);
 				dictionary.Add("footl", 0);
 				dictionary.Add("footr", 1);
 				dictionary.Add("balls", 2);
@@ -755,8 +755,8 @@ public class Interaction
 		pref3 = string.Empty;
 		pref4 = string.Empty;
 		if (interaction != null)
-        {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(32);
+		{
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(32);
 			dictionary.Add("rubcocktipwithfingers_performing", 1);
 			dictionary.Add("rubcocktipwithfingers_receiving", 2);
 			dictionary.Add("handjob_performing", 3);
@@ -1142,8 +1142,8 @@ public class Interaction
 			}
 			string text = this.type;
 			if (text != null)
-            {
-                Dictionary<string, int> dictionary = new Dictionary<string, int>(17);
+			{
+				Dictionary<string, int> dictionary = new Dictionary<string, int>(17);
 				dictionary.Add("rubcocktipwithfingers", 0);
 				dictionary.Add("clitrub", 1);
 				dictionary.Add("handjob", 2);

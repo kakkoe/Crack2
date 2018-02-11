@@ -20,8 +20,8 @@ public class LayoutItem
 	[XmlElement("rotation")]
 	public Vector3 rotation;
 
-	[XmlArray("children")]
 	[XmlArrayItem("child")]
+	[XmlArray("children")]
 	public List<string> children = new List<string>();
 
 	[XmlElement("customProperties")]

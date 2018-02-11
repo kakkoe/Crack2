@@ -92,9 +92,11 @@ public class BGM
                 yield return (object)null;
             }
             yield return (object)www;
-            if (!(www.error != string.Empty))
+            bool flag3 = string.IsNullOrEmpty(www.error);
+            if (flag3)
             {
-                if (BGM.currentPlayer == 0)
+                bool flag4 = BGM.currentPlayer == 0;
+                if (flag4)
                 {
                     BGM.player0.clip = www.GetAudioClip(false);
                     BGM.player0.Play();

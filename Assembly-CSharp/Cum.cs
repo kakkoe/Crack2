@@ -4,23 +4,23 @@ using UnityEngine.Rendering;
 
 public class Cum
 {
-	public static List<CumDot> cumDots = new List<CumDot>();
+	public static List<CumDot> cumDots;
 
-	public static List<CumDot> pooledCumDots = new List<CumDot>();
+	public static List<CumDot> pooledCumDots;
 
-	public static List<CumDot> dripDots = new List<CumDot>();
+	public static List<CumDot> dripDots;
 
-	public static List<CumDot> pooledDripDots = new List<CumDot>();
+	public static List<CumDot> pooledDripDots;
 
-	public static float interpolationFrequency = 0.1f;
+	public static float interpolationFrequency;
 
 	public static GameObject CumTemplate;
 
 	public static GameObject CumContainer;
 
-	public static float tScale = 0.8f;
+	public static float tScale;
 
-	public static float cumTravelSpeed = 0.9f;
+	public static float cumTravelSpeed;
 
 	public static float oldY;
 
@@ -34,9 +34,9 @@ public class Cum
 
 	public static float consolidationRange;
 
-	public static int msk = -99;
+	public static int msk;
 
-	public static float maxCumLife = 40f;
+	public static float maxCumLife;
 
 	public static Vector3 v3;
 
@@ -150,7 +150,7 @@ public class Cum
 					dot.lastPos = dot.position;
 				}
 				dot.position += dot.velocity * Time.deltaTime * Cum.cumTravelSpeed * Cum.tScale;
-				if (dot.raycastDelay <= 0f && isCum)
+				if (dot.raycastDelay <= 0f & isCum)
 				{
 					Cum.v3 = Cum.detectCollision(dot);
 					dot.raycastDelay = 1f;
@@ -171,14 +171,14 @@ public class Cum
 				}
 				else if (isCum)
 				{
-					dot.velocity.y -= Time.deltaTime * Cum.cumTravelSpeed * 25f * Cum.tScale;
+					dot.velocity.y = dot.velocity.y - Time.deltaTime * Cum.cumTravelSpeed * 25f * Cum.tScale;
 					dot.head.position = dot.position;
 				}
 				dot.raycastDelay -= Time.deltaTime;
 			}
 			if (dot.finishedTraveling)
 			{
-				dot.life -= Time.deltaTime * Cum.tScale * 10f;
+				dot.life -= Time.deltaTime * Cum.tScale * 1f;
 			}
 			else
 			{
@@ -198,6 +198,7 @@ public class Cum
 					dot.link = null;
 				}
 			}
+			Vector3 vector;
 			if ((Object)dot.link != (Object)null)
 			{
 				dot.tail.position = dot.link.position;
@@ -216,7 +217,8 @@ public class Cum
 						dot.head.LookAt(dot.tail, dot.velocity);
 						dot.head.Rotate(90f, 0f, 0f);
 					}
-					if ((dot.tail.position - dot.head.position).magnitude > 0.35f)
+					vector = dot.tail.position - dot.head.position;
+					if (vector.magnitude > 0.35f)
 					{
 						if (isCum)
 						{
@@ -302,10 +304,10 @@ public class Cum
 				}
 				else
 				{
-					dot.tailvelocity.y -= Time.deltaTime * Cum.cumTravelSpeed * 0.5f * Cum.tScale;
+					dot.tailvelocity.y = dot.tailvelocity.y - Time.deltaTime * Cum.cumTravelSpeed * 0.5f * Cum.tScale;
 					if (!dot.stillAttached)
 					{
-						dot.velocity.y -= Time.deltaTime * Cum.cumTravelSpeed * 0.5f * Cum.tScale;
+						dot.velocity.y = dot.velocity.y - Time.deltaTime * Cum.cumTravelSpeed * 0.5f * Cum.tScale;
 						Transform head2 = dot.head;
 						head2.position += dot.velocity;
 					}
@@ -321,7 +323,10 @@ public class Cum
 					dot.tailvelocity -= dot.tailvelocity * Game.cap(Time.deltaTime * 2f, 0f, 1f);
 					Transform tail = dot.tail;
 					tail.position += dot.tailvelocity;
-					if (Physics.Raycast(dot.lastTailPos, dot.tail.position - dot.lastTailPos, out Cum.hInfo, (dot.tail.position - dot.lastTailPos).magnitude * 1.15f, LayerMask.GetMask("Ignore Raycast")))
+					Vector3 lastTailPos = dot.lastTailPos;
+					Vector3 direction = dot.tail.position - dot.lastTailPos;
+					vector = dot.tail.position - dot.lastTailPos;
+					if (Physics.Raycast(lastTailPos, direction, out Cum.hInfo, vector.magnitude * 1.15f, LayerMask.GetMask("Ignore Raycast")))
 					{
 						if (Cum.hInfo.collider.gameObject.name.IndexOf("Penis") == -1)
 						{
@@ -354,14 +359,13 @@ public class Cum
 					head3.localScale += (Vector3.one * 0.009f - dot.head.localScale) * Game.cap(Time.deltaTime * 3f, 0f, 1f);
 					Transform tail3 = dot.tail;
 					tail3.localScale += (dot.head.localScale * dot.thickness * 2f - dot.tail.localScale) * Game.cap(Time.deltaTime * 3f, 0f, 1f);
-					Vector3 position = dot.tail.position;
-					if (position.y < -10f)
+					if (dot.tail.position.y < -10f)
 					{
 						dot.life = 0f;
 					}
 				}
 			}
-			if (dot.life < Cum.maxCumLife * 0.1f && isCum)
+			if (dot.life < Cum.maxCumLife * 0.1f & isCum)
 			{
 				dot.head.localScale = Vector3.one * 0.07f * dot.thickness * (dot.life / (Cum.maxCumLife * 0.1f));
 			}
@@ -404,14 +408,19 @@ public class Cum
 		}
 		cd.parent = null;
 		Cum.cv = Vector3.zero;
-		if (Physics.Raycast(cd.lastPos, cd.position - cd.lastPos, out Cum.hInfo, (cd.position - cd.lastPos).magnitude, Cum.msk))
+		Vector3 lastPos = cd.lastPos;
+		Vector3 direction = cd.position - cd.lastPos;
+		Vector3 vector = cd.position - cd.lastPos;
+		if (Physics.Raycast(lastPos, direction, out Cum.hInfo, vector.magnitude, Cum.msk))
 		{
 			cd.parent = Cum.hInfo.collider.transform;
 			cd.GO.transform.SetParent(cd.parent);
 			if (Cum.hInfo.collider.transform.gameObject.layer != 2)
 			{
 				Cum.cv = Cum.hInfo.point;
-				Cum.cv += (cd.lastPos - Cum.cv).normalized * 0.05f;
+				Vector3 a = Cum.cv;
+				vector = cd.lastPos - Cum.cv;
+				Cum.cv = a + vector.normalized * 0.05f;
 				Cum.consolidationRange = 0.03f;
 			}
 			else
@@ -419,14 +428,33 @@ public class Cum
 				Cum.cv = Cum.hInfo.point;
 				if (Cum.hInfo.collider.name.Substring(0, 4) != "Tail")
 				{
-					Cum.characterReference = Cum.FindArmature(cd.parent).parent.gameObject.GetComponent<RackCharacterReference>().reference;
-					if ((Cum.hInfo.point - Cum.characterReference.bones.Eye_L.position).magnitude < 0.12f)
+					if (!UserSettings.data.modx_noCumException)
 					{
-						Cum.characterReference.cumInEye(false, cd.life);
+						Cum.characterReference = Cum.FindArmature(cd.parent).parent.gameObject.GetComponent<RackCharacterReference>().reference;
+						vector = Cum.hInfo.point - Cum.characterReference.bones.Eye_L.position;
+						if (vector.magnitude < 0.12f)
+						{
+							Cum.characterReference.cumInEye(false, cd.life);
+						}
+						vector = Cum.hInfo.point - Cum.characterReference.bones.Eye_R.position;
+						if (vector.magnitude < 0.12f)
+						{
+							Cum.characterReference.cumInEye(true, cd.life);
+						}
 					}
-					if ((Cum.hInfo.point - Cum.characterReference.bones.Eye_R.position).magnitude < 0.12f)
+					else if ((Object)Cum.FindArmature(cd.parent) != (Object)null)
 					{
-						Cum.characterReference.cumInEye(true, cd.life);
+						Cum.characterReference = Cum.FindArmature(cd.parent).parent.gameObject.GetComponent<RackCharacterReference>().reference;
+						vector = Cum.hInfo.point - Cum.characterReference.bones.Eye_L.position;
+						if (vector.magnitude < 0.12f)
+						{
+							Cum.characterReference.cumInEye(false, cd.life);
+						}
+						vector = Cum.hInfo.point - Cum.characterReference.bones.Eye_R.position;
+						if (vector.magnitude < 0.12f)
+						{
+							Cum.characterReference.cumInEye(true, cd.life);
+						}
 					}
 				}
 				Cum.consolidationRange = 0f;
@@ -438,11 +466,15 @@ public class Cum
 			}
 			for (int i = 0; i < Cum.cumDots.Count; i++)
 			{
-				if (Cum.cumDots[i] != cd && Cum.cumDots[i].life > 0f && (Object)Cum.cumDots[i].head != (Object)null && Cum.cumDots[i].finishedTraveling && (Cum.hInfo.point - Cum.cumDots[i].head.position).magnitude < Cum.consolidationRange)
+				if (Cum.cumDots[i] != cd && Cum.cumDots[i].life > 0f && (Object)Cum.cumDots[i].head != (Object)null && Cum.cumDots[i].finishedTraveling)
 				{
-					Cum.cumDots[i].thickness += cd.thickness * 0.2f;
-					Cum.cumDots[i].head.localScale = Vector3.one * 0.07f * Cum.cumDots[i].thickness * Game.cap(Cum.cumDots[i].life / (Cum.maxCumLife * 0.1f), 0f, 1f);
-					cd.life = 0f;
+					vector = Cum.hInfo.point - Cum.cumDots[i].head.position;
+					if (vector.magnitude < Cum.consolidationRange)
+					{
+						Cum.cumDots[i].thickness += cd.thickness * 0.2f;
+						Cum.cumDots[i].head.localScale = Vector3.one * 0.07f * Cum.cumDots[i].thickness * Game.cap(Cum.cumDots[i].life / (Cum.maxCumLife * 0.1f), 0f, 1f);
+						cd.life = 0f;
+					}
 				}
 			}
 			cd.impactNormal = Cum.hInfo.normal;
@@ -533,5 +565,18 @@ public class Cum
 		Cum.cumDots.Add(Cum.pooledCumDots[0]);
 		Cum.pooledCumDots.RemoveAt(0);
 		return Cum.cumDots[Cum.cumDots.Count - 1];
+	}
+
+	static Cum()
+	{
+		Cum.cumDots = new List<CumDot>();
+		Cum.pooledCumDots = new List<CumDot>();
+		Cum.dripDots = new List<CumDot>();
+		Cum.pooledDripDots = new List<CumDot>();
+		Cum.interpolationFrequency = 0.1f;
+		Cum.tScale = 0.8f;
+		Cum.cumTravelSpeed = 0.9f;
+		Cum.msk = -99;
+		Cum.maxCumLife = 40f;
 	}
 }

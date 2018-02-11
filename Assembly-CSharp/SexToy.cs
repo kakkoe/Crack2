@@ -485,25 +485,25 @@ public class SexToy
 		this.v32 = this.originalRotation;
 		if (this.on)
 		{
-			this.v3.x += (-0.5f + Random.value) * this.power * 0.006f;
-			this.v3.y += (-0.5f + Random.value) * this.power * 0.006f;
-			this.v3.z += (-0.5f + Random.value) * this.power * 0.006f;
-			this.v32.x += (-0.5f + Random.value) * this.power * 5f;
-			this.v32.y += (-0.5f + Random.value) * this.power * 5f;
-			this.v32.z += (-0.5f + Random.value) * this.power * 5f;
+			this.v3.x = this.v3.x + (-0.5f + Random.value) * this.power * 0.006f;
+			this.v3.y = this.v3.y + (-0.5f + Random.value) * this.power * 0.006f;
+			this.v3.z = this.v3.z + (-0.5f + Random.value) * this.power * 0.006f;
+			this.v32.x = this.v32.x + (-0.5f + Random.value) * this.power * 5f;
+			this.v32.y = this.v32.y + (-0.5f + Random.value) * this.power * 5f;
+			this.v32.z = this.v32.z + (-0.5f + Random.value) * this.power * 5f;
 			this.parent.Rotate(this.v32 * Time.deltaTime * 0.35f);
 			switch (this.slot)
 			{
-			case "shaft":
-				this.subject.stimulate(0.1f + this.power * 0.2f);
-				this.subject.arouse(0.05f + this.power * 0.05f);
+			case "penis":
+				this.subject.stimulate(0.2f + this.power * 2f * UserSettings.data.mod_sexToyPotency);
+				this.subject.arouse(0.05f + this.power * 1.8f * UserSettings.data.mod_sexToyPotency);
 				this.subject.triggerSensation("sextoy_general", 0.1f);
 				this.subject.triggerSensation("sextoy_penis", 0.1f);
 				this.subject.triggerSensation("vibration", 0.1f);
 				break;
-			case "penis":
-				this.subject.stimulate(0.2f + this.power * 0.8f);
-				this.subject.arouse(0.05f + this.power * 0.05f);
+			case "shaft":
+				this.subject.stimulate(0.1f + this.power * 1.8f * UserSettings.data.mod_sexToyPotency);
+				this.subject.arouse(0.05f + this.power * 1.6f * UserSettings.data.mod_sexToyPotency);
 				this.subject.triggerSensation("sextoy_general", 0.1f);
 				this.subject.triggerSensation("sextoy_penis", 0.1f);
 				this.subject.triggerSensation("vibration", 0.1f);
@@ -616,5 +616,9 @@ public class SexToy
 			this.subject.clearFingerTargets();
 		}
 		this.needInit = true;
+	}
+
+	static SexToy()
+	{
 	}
 }

@@ -59,26 +59,26 @@ public class LabItemDefinition
 	[XmlArrayItem("region")]
 	public List<string> clipFixes = new List<string>();
 
-	[XmlArray("equipSlots")]
 	[XmlArrayItem("slot")]
+	[XmlArray("equipSlots")]
 	public List<LabItemEquipmentSlot> equipSlots = new List<LabItemEquipmentSlot>();
 
-	[XmlArray("sexToySlots")]
 	[XmlArrayItem("slot")]
+	[XmlArray("sexToySlots")]
 	public List<string> sexToySlots = new List<string>();
 
 	[XmlElement("requiresResearch")]
 	public bool requiresResearch = true;
 
-	[XmlArray("shops")]
 	[XmlArrayItem("shop")]
+	[XmlArray("shops")]
 	public List<string> shops = new List<string>();
 
-	[XmlArray("components")]
 	[XmlArrayItem("component")]
+	[XmlArray("components")]
 	public List<string> components = new List<string>();
 
-	[XmlArray("chemicalcosts")]
 	[XmlArrayItem("chemicalcost")]
+	[XmlArray("chemicalcosts")]
 	public List<int> chemicalcosts = new List<int>();
 }

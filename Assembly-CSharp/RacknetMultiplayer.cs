@@ -847,14 +847,17 @@ public class RacknetMultiplayer
     {
         WWW texIMG = new WWW(url);
         yield return (object)texIMG;
-        if (texIMG.error == null || texIMG.error == string.Empty)
+        bool flag = texIMG.error == null || texIMG.error == string.Empty;
+        if (flag)
         {
             Texture2D texture = new Texture2D(128, 128);
             texIMG.LoadImageIntoTexture(texture);
-            if (rawImage != null)
+            bool flag2 = rawImage != null;
+            if (flag2)
             {
                 rawImage.texture = texture;
             }
+            texture = null;
         }
         yield break;
     }
@@ -1491,18 +1494,19 @@ public class RacknetMultiplayer
         RacknetMultiplayer.previewCharacter.isPreviewCharacter = true;
         RacknetMultiplayer.previewCharacter.racknetAccountID = url.Split(new char[]
         {
-            '/'
+        '/'
         })[url.Split(new char[]
         {
-            '/'
+        '/'
         }).Length - 1].Split(new char[]
         {
-            '.'
+        '.'
         })[0];
         RacknetMultiplayer.game.addCharacter(RacknetMultiplayer.previewCharacter);
         RacknetMultiplayer.needToMovePreviewCharacterToPreviewBox = true;
         RacknetMultiplayer.updatePreviewCharacterPreferences();
-        if (RacknetMultiplayer.previewCamera != null)
+        bool flag = RacknetMultiplayer.previewCamera != null;
+        if (flag)
         {
             RacknetMultiplayer.previewCamera.SetActive(true);
         }
@@ -1619,31 +1623,38 @@ public class RacknetMultiplayer
         form.AddBinaryData("file", File.ReadAllBytes(existingFilename), fileName2, "image/png");
         UnityWebRequest w = UnityWebRequest.Post("http://fekrack.net/upload_rack2_character_texture.php", form);
         yield return (object)w.Send();
-        if (w.isNetworkError)
+        bool isNetworkError = w.isNetworkError;
+        if (isNetworkError)
         {
             Debug.Log("Error uploading custom tex '" + existingFilename + "': " + w.error);
             RacknetMultiplayer.waitingForCustomTexUpload = false;
             RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
             RacknetMultiplayer.checkAvatarAndXMLUpload();
         }
-        else if (w.isDone)
+        else
         {
-            yield return new WaitForSeconds(1f);
-            RacknetMultiplayer.uploadedAvatarFilename = "http://fekrack.net/rack2/characters/customtextures/" + fileName2;
-            RacknetMultiplayer.customTextureURLs.Add(RacknetMultiplayer.uploadedAvatarFilename);
-            WWW w2 = new WWW("http://fekrack.net/rack2/characters/customtextures/" + fileName2);
-            yield return w2;
-            if (w2.error != null && w2.error != string.Empty)
+            bool isDone = w.isDone;
+            if (isDone)
             {
-                Debug.Log("Error confirming upload:");
-                Debug.Log(w2.error);
-                RacknetMultiplayer.waitingForCustomTexUpload = false;
-                RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
-                RacknetMultiplayer.checkAvatarAndXMLUpload();
-            }
-            else
-            {
-                RacknetMultiplayer.finishedUploadingCustomTexture();
+                yield return new WaitForSeconds(1f);
+                RacknetMultiplayer.uploadedAvatarFilename = "http://fekrack.net/rack2/characters/customtextures/" + fileName2;
+                RacknetMultiplayer.customTextureURLs.Add(RacknetMultiplayer.uploadedAvatarFilename);
+                WWW w2 = new WWW("http://fekrack.net/rack2/characters/customtextures/" + fileName2);
+                yield return w2;
+                bool flag2 = w2.error != null && w2.error != string.Empty;
+                if (flag2)
+                {
+                    Debug.Log("Error confirming upload:");
+                    Debug.Log(w2.error);
+                    RacknetMultiplayer.waitingForCustomTexUpload = false;
+                    RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
+                    RacknetMultiplayer.checkAvatarAndXMLUpload();
+                }
+                else
+                {
+                    RacknetMultiplayer.finishedUploadingCustomTexture();
+                }
+                w2 = null;
             }
         }
         yield break;
@@ -1738,48 +1749,60 @@ public class RacknetMultiplayer
         form.AddBinaryData("file", uploadData, fileName, "text/xml");
         UnityWebRequest w = UnityWebRequest.Post("http://fekrack.net/upload_rack2_character_xml.php", form);
         yield return (object)w.Send();
-        if (w.isNetworkError)
+        bool isNetworkError = w.isNetworkError;
+        if (isNetworkError)
         {
             Debug.Log("Error uploading XML: " + w.error);
             RacknetMultiplayer.waitingForXMLUpload = false;
             RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
             RacknetMultiplayer.checkAvatarAndXMLUpload();
         }
-        else if (w.isDone)
+        else
         {
-            yield return new WaitForSeconds(1f);
-            RacknetMultiplayer.uploadedXMLfilename = "http://fekrack.net/rack2/characters/xml/" + fileName;
-            WWW w2 = new WWW("http://fekrack.net/rack2/characters/xml/" + fileName);
-            yield return w2;
-            if (w2.error != null && w2.error != string.Empty)
+            bool isDone = w.isDone;
+            if (isDone)
             {
-                Debug.Log("Error confirming upload:");
-                Debug.Log(w2.error);
-                RacknetMultiplayer.waitingForXMLUpload = false;
-                RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
-                RacknetMultiplayer.checkAvatarAndXMLUpload();
-            }
-            else if (w2.text != null && w2.text != string.Empty)
-            {
-                if (w2.text.Contains("<CharacterData") && w2.text.Contains("</CharacterData>"))
+                yield return new WaitForSeconds(1f);
+                RacknetMultiplayer.uploadedXMLfilename = "http://fekrack.net/rack2/characters/xml/" + fileName;
+                WWW w2 = new WWW("http://fekrack.net/rack2/characters/xml/" + fileName);
+                yield return w2;
+                bool flag = w2.error != null && w2.error != string.Empty;
+                if (flag)
                 {
-                    RacknetMultiplayer.waitingForXMLUpload = false;
-                    RacknetMultiplayer.checkAvatarAndXMLUpload();
-                }
-                else
-                {
-                    Debug.Log("Error: Character File " + fileName + " is Invalid");
+                    Debug.Log("Error confirming upload:");
+                    Debug.Log(w2.error);
                     RacknetMultiplayer.waitingForXMLUpload = false;
                     RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
                     RacknetMultiplayer.checkAvatarAndXMLUpload();
                 }
-            }
-            else
-            {
-                Debug.Log("Error: Character File " + fileName + " is Empty");
-                RacknetMultiplayer.waitingForXMLUpload = false;
-                RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
-                RacknetMultiplayer.checkAvatarAndXMLUpload();
+                else
+                {
+                    bool flag2 = w2.text != null && w2.text != string.Empty;
+                    if (flag2)
+                    {
+                        bool flag3 = w2.text.Contains("<CharacterData") && w2.text.Contains("</CharacterData>");
+                        if (flag3)
+                        {
+                            RacknetMultiplayer.waitingForXMLUpload = false;
+                            RacknetMultiplayer.checkAvatarAndXMLUpload();
+                        }
+                        else
+                        {
+                            Debug.Log("Error: Character File " + fileName + " is Invalid");
+                            RacknetMultiplayer.waitingForXMLUpload = false;
+                            RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
+                            RacknetMultiplayer.checkAvatarAndXMLUpload();
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Error: Character File " + fileName + " is Empty");
+                        RacknetMultiplayer.waitingForXMLUpload = false;
+                        RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
+                        RacknetMultiplayer.checkAvatarAndXMLUpload();
+                    }
+                }
+                w2 = null;
             }
         }
         yield break;
@@ -1796,31 +1819,38 @@ public class RacknetMultiplayer
         form.AddBinaryData("file", RacknetMultiplayer.avatarBytes, fileName, "image/png");
         UnityWebRequest w = UnityWebRequest.Post("http://fekrack.net/upload_rack2_character_avatar.php", form);
         yield return (object)w.Send();
-        if (w.isNetworkError)
+        bool isNetworkError = w.isNetworkError;
+        if (isNetworkError)
         {
             Debug.Log("Error uploading avatar: " + w.error);
             RacknetMultiplayer.waitingForAvatarUpload = false;
             RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
             RacknetMultiplayer.checkAvatarAndXMLUpload();
         }
-        else if (w.isDone)
+        else
         {
-            yield return new WaitForSeconds(1f);
-            RacknetMultiplayer.uploadedAvatarFilename = "http://fekrack.net/rack2/characters/png/" + fileName;
-            WWW w2 = new WWW("http://fekrack.net/rack2/characters/png/" + fileName);
-            yield return w2;
-            if (w2.error != null && w2.error != string.Empty)
+            bool isDone = w.isDone;
+            if (isDone)
             {
-                Debug.Log("Error confirming upload:");
-                Debug.Log(w2.error);
-                RacknetMultiplayer.waitingForAvatarUpload = false;
-                RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
-                RacknetMultiplayer.checkAvatarAndXMLUpload();
-            }
-            else
-            {
-                RacknetMultiplayer.waitingForAvatarUpload = false;
-                RacknetMultiplayer.checkAvatarAndXMLUpload();
+                yield return new WaitForSeconds(1f);
+                RacknetMultiplayer.uploadedAvatarFilename = "http://fekrack.net/rack2/characters/png/" + fileName;
+                WWW w2 = new WWW("http://fekrack.net/rack2/characters/png/" + fileName);
+                yield return w2;
+                bool flag = w2.error != null && w2.error != string.Empty;
+                if (flag)
+                {
+                    Debug.Log("Error confirming upload:");
+                    Debug.Log(w2.error);
+                    RacknetMultiplayer.waitingForAvatarUpload = false;
+                    RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
+                    RacknetMultiplayer.checkAvatarAndXMLUpload();
+                }
+                else
+                {
+                    RacknetMultiplayer.waitingForAvatarUpload = false;
+                    RacknetMultiplayer.checkAvatarAndXMLUpload();
+                }
+                w2 = null;
             }
         }
         yield break;

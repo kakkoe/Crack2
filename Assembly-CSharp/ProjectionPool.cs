@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectionPool
 {
-	private static ProjectionPool defaultPool;
+	public static ProjectionPool defaultPool;
 
 	private PoolInstance instance;
 
@@ -46,7 +46,7 @@ public class ProjectionPool
 	{
 		get
 		{
-			return this.instance.limits[QualitySettings.GetQualityLevel()];
+			return this.instance.limits[QualitySettings.GetQualityLevel()] * (int)(0.05 + (double)(UserSettings.data.mod_cumLife * UserSettings.data.mod_cumLife) / 100.0);
 		}
 	}
 
@@ -116,25 +116,26 @@ public class ProjectionPool
 		{
 			this.activePool = new List<PoolItem>();
 		}
-		if (this.inactivePool != null && this.inactivePool.Count > 0)
+		this.RemoveOverflow();
+		if (this.activePool.Count >= this.Limit)
 		{
-			PoolItem poolItem = this.inactivePool[0];
-			this.inactivePool.RemoveAt(0);
+			PoolItem poolItem = this.activePool[0];
+			this.activePool.RemoveAt(0);
 			this.activePool.Add(poolItem);
 			poolItem.Reset(Type);
 			return poolItem.Projection;
 		}
-		if (this.activePool.Count < this.Limit)
+		if (this.inactivePool != null && this.inactivePool.Count > 0)
 		{
-			PoolItem poolItem2 = new PoolItem(this);
-			poolItem2.Reset(Type);
+			PoolItem poolItem2 = this.inactivePool[0];
+			this.inactivePool.RemoveAt(0);
 			this.activePool.Add(poolItem2);
+			poolItem2.Reset(Type);
 			return poolItem2.Projection;
 		}
-		PoolItem poolItem3 = this.activePool[0];
-		this.activePool.RemoveAt(0);
-		this.activePool.Add(poolItem3);
+		PoolItem poolItem3 = this.NewPoolItem();
 		poolItem3.Reset(Type);
+		this.activePool.Add(poolItem3);
 		return poolItem3.Projection;
 	}
 
@@ -185,5 +186,30 @@ public class ProjectionPool
 			Item.GameObject.SetActive(false);
 		}
 		this.inactivePool.Add(Item);
+	}
+
+	public void RemoveOverflow()
+	{
+		if (ProjectionPool.defaultPool == null)
+		{
+			ProjectionPool.defaultPool = this;
+		}
+		for (int num = this.activePool.Count - 1; num >= this.Limit; num--)
+		{
+			this.Return(this.activePool[num]);
+		}
+	}
+
+	public void RemoveAll()
+	{
+		for (int num = this.activePool.Count - 1; num >= 0; num--)
+		{
+			this.Return(this.activePool[num]);
+		}
+	}
+
+	public PoolItem NewPoolItem()
+	{
+		return new PoolItem(this);
 	}
 }

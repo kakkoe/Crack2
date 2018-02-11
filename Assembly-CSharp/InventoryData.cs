@@ -20,8 +20,8 @@ public class InventoryData
 	[XmlElement("totalSpecimen")]
 	public float totalSpecimen;
 
-	[XmlArray("chemicals")]
 	[XmlArrayItem("chemical")]
+	[XmlArray("chemicals")]
 	public float[] chemicals = new float[6];
 
 	[XmlElement("secondsPlayed")]
@@ -42,34 +42,34 @@ public class InventoryData
 	[XmlElement("labReputation")]
 	public float labReputation;
 
-	[XmlArray("NPCs")]
 	[XmlArrayItem("NPC")]
+	[XmlArray("NPCs")]
 	public List<NPCAssignment> NPCs;
 
-	[XmlArray("charVars")]
 	[XmlArrayItem("charVar")]
+	[XmlArray("charVars")]
 	public List<UserVar> charVars = new List<UserVar>();
 
 	[XmlArray("bags")]
 	[XmlArrayItem("bag")]
 	public List<Bag> bags = new List<Bag>();
 
-	[XmlArray("subjectbags")]
 	[XmlArrayItem("subjectbag")]
+	[XmlArray("subjectbags")]
 	public List<string> subjectbags = new List<string>();
 
 	public string draggingItem = string.Empty;
 
-	[XmlArray("hotkeyItems")]
 	[XmlArrayItem("hotkeyItem")]
+	[XmlArray("hotkeyItems")]
 	public List<string> hotkeyItems = new List<string>();
 
-	[XmlArray("favoriteCharacters")]
 	[XmlArrayItem("favoriteCharacter")]
+	[XmlArray("favoriteCharacters")]
 	public List<string> favoriteCharacters;
 
-	[XmlArray("researchTasks")]
 	[XmlArrayItem("researchTask")]
+	[XmlArray("researchTasks")]
 	public List<ResearchTask> researchTasks;
 
 	[XmlElement("researchCompletion")]
@@ -79,7 +79,7 @@ public class InventoryData
 	[XmlArrayItem("order")]
 	public List<ItemOrder> orders = new List<ItemOrder>();
 
-	[XmlArray("chemicalcompounds")]
 	[XmlArrayItem("chemicalcompound")]
+	[XmlArray("chemicalcompounds")]
 	public List<ChemicalCompound> chemicalcompounds = new List<ChemicalCompound>();
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-	public static bool NPCsAllowed = true;
+	public static bool NPCsAllowed;
 
 	public RackCharacter character;
 
@@ -29,7 +29,7 @@ public class NPC : MonoBehaviour
 
 	public static bool buildingAnNPC;
 
-	public static string curNPCbuild = string.Empty;
+	public static string curNPCbuild;
 
 	public GameObject NPCparent;
 
@@ -49,11 +49,11 @@ public class NPC : MonoBehaviour
 
 	public static int tourProgress;
 
-	public static string clientManagerName = "Client Manager";
+	public static string clientManagerName;
 
-	public static string chemistName = "Chemist";
+	public static string chemistName;
 
-	public static string requisitionsOfficerName = "Requisitions Officer";
+	public static string requisitionsOfficerName;
 
 	public static RackCharacter requisitionsOfficer;
 
@@ -328,19 +328,12 @@ public class NPC : MonoBehaviour
 		}
 	}
 
-	private void postBuildSetup()
+	public void postBuildSetup()
 	{
 		if (this.needRandomize)
 		{
 			switch (this.handle)
 			{
-			default:
-				RandomCharacterGenerator.wipe();
-				RandomCharacterGenerator.addSpecies("fox", 100f);
-				RandomCharacterGenerator.addSpecies("deer", 100f);
-				RandomCharacterGenerator.addSpecies("lynx", 100f);
-				RandomCharacterGenerator.addSpecies("mouse", 100f);
-				break;
 			case "receptionist":
 				RandomCharacterGenerator.wipe();
 				RandomCharacterGenerator.addSpecies("fox", 100f);
@@ -384,14 +377,18 @@ public class NPC : MonoBehaviour
 				RandomCharacterGenerator.setGenderWeights(100f, 10f, 5f, 5f, 5f, 5f, 0f);
 				RandomCharacterGenerator.setBodyTypeWeights(100f, 5f, 0f, 20f, 10f, 30f, 10f, 0f, 40f, 30f, 5f, 0f);
 				break;
+			default:
+				RandomCharacterGenerator.wipe();
+				RandomCharacterGenerator.addSpecies("fox", 100f);
+				RandomCharacterGenerator.addSpecies("deer", 100f);
+				RandomCharacterGenerator.addSpecies("lynx", 100f);
+				RandomCharacterGenerator.addSpecies("mouse", 100f);
+				break;
 			}
 			RandomCharacterGenerator.randomize(this.character);
 			List<string> list = new List<string>();
 			switch (this.handle)
 			{
-			default:
-				list.Add("Subject #" + (1000 + Mathf.FloorToInt(Random.value * 7000f)).ToString());
-				break;
 			case "receptionist":
 				if (!this.character.data.identifiesMale)
 				{
@@ -557,6 +554,9 @@ public class NPC : MonoBehaviour
 					list.Add("Benz");
 				}
 				break;
+			default:
+				list.Add("Subject #" + (1000 + Mathf.FloorToInt(Random.value * 7000f)).ToString());
+				break;
 			}
 			int index = Mathf.FloorToInt(Random.value * (float)list.Count);
 			this.character.data.name = list[index];
@@ -575,6 +575,10 @@ public class NPC : MonoBehaviour
 		else
 		{
 			string[] array = this.startingClothes.Split(',');
+			if (UserSettings.data.mod_nudeNpcs)
+			{
+				array = new string[0];
+			}
 			this.character.breastsCoveredByClothing = false;
 			this.character.crotchCoveredByClothing = false;
 			for (int i = 0; i < array.Length; i++)
@@ -609,5 +613,14 @@ public class NPC : MonoBehaviour
 			this.postBuildSetupComplete = true;
 			NPC.buildingAnNPC = false;
 		}
+	}
+
+	static NPC()
+	{
+		NPC.NPCsAllowed = true;
+		NPC.curNPCbuild = string.Empty;
+		NPC.clientManagerName = "Client Manager";
+		NPC.chemistName = "Chemist";
+		NPC.requisitionsOfficerName = "Requisitions Officer";
 	}
 }

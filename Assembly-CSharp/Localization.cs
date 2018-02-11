@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -37,7 +36,8 @@ public class Localization
 	{
 		WWW www = new WWW(url + "?refresh=" + Guid.NewGuid());
 		yield return (object)www;
-        if (www.error != string.Empty)
+        bool flag = !string.IsNullOrEmpty(www.error);
+        if (flag)
         {
             Debug.Log("Failed to load new localization");
         }
@@ -46,11 +46,29 @@ public class Localization
             Debug.Log("Saving new translations");
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(LocalizationData));
             Localization.data = (xmlSerializer.Deserialize(new StringReader(www.text)) as LocalizationData);
-            new FileInfo(Game.persistentDataPath + "/translation/").Directory.Create();
-            StreamWriter streamWriter = new StreamWriter(Game.persistentDataPath + "/translation/Localization.xml", false, new UTF8Encoding(false));
+            new FileInfo(string.Concat(new object[]
+            {
+            Game.persistentDataPath,
+            string.Empty,
+            Game.PathDirectorySeparatorChar,
+            "translation",
+            Game.PathDirectorySeparatorChar,
+            string.Empty
+            })).Directory.Create();
+            StreamWriter streamWriter = new StreamWriter(string.Concat(new object[]
+            {
+            Game.persistentDataPath,
+            string.Empty,
+            Game.PathDirectorySeparatorChar,
+            "translation",
+            Game.PathDirectorySeparatorChar,
+            "Localization.xml"
+            }), false, new System.Text.UTF8Encoding(false));
             streamWriter.Write(www.text);
             streamWriter.Close();
             Localization.convertDataToDictionary();
+            xmlSerializer = null;
+            streamWriter = null;
         }
         yield break;
     }
@@ -126,14 +144,17 @@ public class Localization
 		}
 		WWW www = new WWW("file:///" + Game.persistentDataPath + "/translation/Localization.xml?refresh=" + Guid.NewGuid());
 		yield return (object)www;
-        if (www.error != string.Empty)
+        bool flag2 = !string.IsNullOrEmpty(www.error);
+        if (flag2)
         {
+            Debug.Log("failed to load translations: " + www.error);
             Localization.data = new LocalizationData();
         }
         else
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(LocalizationData));
             Localization.data = (xmlSerializer.Deserialize(new StringReader(www.text)) as LocalizationData);
+            xmlSerializer = null;
         }
         Localization.convertDataToDictionary();
         Localization.initted = true;

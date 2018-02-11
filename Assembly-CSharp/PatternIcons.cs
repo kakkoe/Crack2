@@ -15,7 +15,8 @@ public class PatternIcons
 		}
 		WWW www = new WWW("file:///" + Application.persistentDataPath + "/characterTextures/_definitions.xml");
 		yield return (object)www;
-        if (www.error != string.Empty)
+        bool flag2 = !string.IsNullOrEmpty(www.error);
+        if (flag2)
         {
             Debug.Log("Error loading pattern definitions!");
             Debug.Log(www.error);
@@ -25,17 +26,20 @@ public class PatternIcons
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(patternDefinitionData));
             PatternIcons.data = (xmlSerializer.Deserialize(new StringReader(www.text)) as patternDefinitionData);
-            for (int i = 0; i < PatternIcons.data.patterns.Count; i++)
+            int num;
+            for (int i = 0; i < PatternIcons.data.patterns.Count; i = num + 1)
             {
                 PatternIcons.data.patterns[i].searchWords = PatternIcons.data.patterns[i].keywords.Split(new char[]
                 {
-                    ','
+                ','
                 });
                 PatternIcons.data.patterns[i].allRequiredParts = PatternIcons.data.patterns[i].requiredPartString.Split(new char[]
                 {
-                    ','
+                ','
                 });
+                num = i;
             }
+            xmlSerializer = null;
         }
         yield break;
     }

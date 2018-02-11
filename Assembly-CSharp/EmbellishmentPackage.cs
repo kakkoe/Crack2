@@ -7,8 +7,8 @@ public class EmbellishmentPackage
 	[XmlElement("name")]
 	public string name;
 
-	[XmlArray("requiredParts")]
 	[XmlArrayItem("requiredPart")]
+	[XmlArray("requiredParts")]
 	public List<string> requiredParts = new List<string>();
 
 	[XmlArray("embellishments")]

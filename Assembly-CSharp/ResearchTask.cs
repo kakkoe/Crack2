@@ -12,8 +12,8 @@ public class ResearchTask
 	[XmlAttribute("fetish")]
 	public string fetish;
 
-	[XmlArray("solutionPoints")]
 	[XmlArrayItem("solutionPoint")]
+	[XmlArray("solutionPoints")]
 	public List<int> solutionPoints = new List<int>(128);
 
 	[XmlArray("guesses")]

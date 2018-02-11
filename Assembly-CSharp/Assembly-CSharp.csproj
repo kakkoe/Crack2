@@ -243,6 +243,8 @@
     <Compile Include="ResearchTask.cs" />
     <Compile Include="ResearchTaskDefinition.cs" />
     <Compile Include="ResistanceMeter.cs" />
+    <Compile Include="RNGPrefs.cs" />
+    <Compile Include="RNGRange.cs" />
     <Compile Include="RoomLayout.cs" />
     <Compile Include="RotateAround.cs" />
     <Compile Include="RotationSource.cs" />
@@ -288,6 +290,8 @@
     <Compile Include="UserSettings.cs" />
     <Compile Include="UserVar.cs" />
     <Compile Include="Visibility.cs" />
+    <Compile Include="__0__-PrivateImplementationDetails-.cs" />
+    <Compile Include="__1__-PrivateImplementationDetails-.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="UnityEngine.dll" />

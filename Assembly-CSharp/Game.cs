@@ -37,19 +37,19 @@ public class Game : MonoBehaviour
 
     public static Game gameInstance;
 
-    public static int gameVersion = 2002;
+    public static int gameVersion;
 
-    public static int wipeVersion = 2001;
+    public static int wipeVersion;
 
     public int konamiStep;
 
-    public static bool reloadedFromGame = false;
+    public static bool reloadedFromGame;
 
     public static string characterAssetDirectory;
 
     public static string persistentDataPath;
 
-    public static bool freeplay = false;
+    public static bool freeplay;
 
     public bool anythingLoading;
 
@@ -65,7 +65,7 @@ public class Game : MonoBehaviour
 
     public float interactionZoom = 0.5f;
 
-    public static bool VRmode = false;
+    public static bool VRmode;
 
     public GameObject mainCam;
 
@@ -133,7 +133,7 @@ public class Game : MonoBehaviour
 
     public string curDialogue = string.Empty;
 
-    public static RackCharacter dialoguePartner = null;
+    public static RackCharacter dialoguePartner;
 
     public int curDialogueNode;
 
@@ -199,9 +199,9 @@ public class Game : MonoBehaviour
 
     public List<float> threadSoundsQueued_pitch = new List<float>();
 
-    public static List<AudioClip> uiSounds = new List<AudioClip>();
+    public static List<AudioClip> uiSounds;
 
-    public static List<string> uiSoundNames = new List<string>();
+    public static List<string> uiSoundNames;
 
     public GameObject audioListener;
 
@@ -253,7 +253,7 @@ public class Game : MonoBehaviour
 
     public bool hoveringOverTerminateButton;
 
-    public static string pausePage = string.Empty;
+    public static string pausePage;
 
     public bool creditsOpen;
 
@@ -261,7 +261,7 @@ public class Game : MonoBehaviour
 
     private bool manualFPSset;
 
-    public static bool thereHasBeenAtLeastOneFixedUpdate = false;
+    public static bool thereHasBeenAtLeastOneFixedUpdate;
 
     private bool showThoughtGauge;
 
@@ -277,7 +277,7 @@ public class Game : MonoBehaviour
 
     public List<GameObject> commandPanels = new List<GameObject>();
 
-    public static float framerate = 0f;
+    public static float framerate;
 
     public float timeScale = 1f;
 
@@ -517,9 +517,9 @@ public class Game : MonoBehaviour
 
     public float dialogueAnimationProgress;
 
-    public static bool doneAnimatingDialogue = false;
+    public static bool doneAnimatingDialogue;
 
-    public static int curDialogueBreakStep = 0;
+    public static int curDialogueBreakStep;
 
     public float dialogueCameraDisplacementAmount = 4.5f;
 
@@ -601,7 +601,7 @@ public class Game : MonoBehaviour
 
     public float materialGridHeight;
 
-    public static Vector3 locationOfNearestLabItemV3 = default(Vector3);
+    public static Vector3 locationOfNearestLabItemV3;
 
     private float labEditScroll;
 
@@ -649,7 +649,7 @@ public class Game : MonoBehaviour
 
     public bool preferencesMenuOpen;
 
-    public static bool waitingForDialogueContinue = false;
+    public static bool waitingForDialogueContinue;
 
     public GameObject DialogueEditorCheatSheet;
 
@@ -703,17 +703,17 @@ public class Game : MonoBehaviour
 
     public float dialogueEditorResponseWindowHeight;
 
-    public static bool loadingAnyCharacters = false;
+    public static bool loadingAnyCharacters;
 
     public float justTeleportedToHallway;
 
-    public static bool daddyCummyCheat = false;
+    public static bool daddyCummyCheat;
 
-    public static bool bigHeadCheat = false;
+    public static bool bigHeadCheat;
 
-    public static bool rainbowJizzCheat = false;
+    public static bool rainbowJizzCheat;
 
-    public static bool autoCamSpin = false;
+    public static bool autoCamSpin;
 
     public Transform testHand;
 
@@ -729,7 +729,7 @@ public class Game : MonoBehaviour
 
     public List<RackCharacter> randomCharactersForSelection = new List<RackCharacter>();
 
-    public static int maxCharactersForSelector = 6;
+    public static int maxCharactersForSelector;
 
     public int characterSelector_currentSelected;
 
@@ -787,19 +787,19 @@ public class Game : MonoBehaviour
 
     public bool editingDialogue;
 
-    public static List<string> consoleLines = new List<string>();
+    public static List<string> consoleLines;
 
-    public static int updatingEmbellishmentSpeciesID = 0;
+    public static int updatingEmbellishmentSpeciesID;
 
-    public static bool allowHandPositioning = true;
+    public static bool allowHandPositioning;
 
-    public static bool allowIK = true;
+    public static bool allowIK;
 
-    public static bool enjoymentDebugging = false;
+    public static bool enjoymentDebugging;
 
-    public static bool allowShiftSphere = false;
+    public static bool allowShiftSphere;
 
-    public static bool allowCum = true;
+    public static bool allowCum;
 
     public List<Toast> toasts = new List<Toast>();
 
@@ -915,7 +915,7 @@ public class Game : MonoBehaviour
 
     public int chemicalSynthesis_selectedChemicalQuantity;
 
-    public static bool selectedChemicalWasJustForciblyChanged = false;
+    public static bool selectedChemicalWasJustForciblyChanged;
 
     private bool inittedChemicalCompoundUI;
 
@@ -1135,7 +1135,7 @@ public class Game : MonoBehaviour
 
     public int customizeCharacterPage;
 
-    public static bool needEmbellishmentPackageMenuRebuild = true;
+    public static bool needEmbellishmentPackageMenuRebuild;
 
     public string originalCharacterDataString = string.Empty;
 
@@ -1337,19 +1337,19 @@ public class Game : MonoBehaviour
 
     public int lastQSSpeciesSelected = -1;
 
-    public static List<Color> speciesDefinitionColors = new List<Color>();
+    public static List<Color> speciesDefinitionColors;
 
-    public static List<string> speciesDefinitionColorNames = new List<string>();
+    public static List<string> speciesDefinitionColorNames;
 
-    public static List<Color> speciesDefinitionColorReplacements = new List<Color>();
+    public static List<Color> speciesDefinitionColorReplacements;
 
-    public static List<int> speciesDefinitionColorRefs = new List<int>();
+    public static List<int> speciesDefinitionColorRefs;
 
-    public static List<float> speciesDefinitionColorRefOffsets_hue = new List<float>();
+    public static List<float> speciesDefinitionColorRefOffsets_hue;
 
-    public static List<float> speciesDefinitionColorRefOffsets_sat = new List<float>();
+    public static List<float> speciesDefinitionColorRefOffsets_sat;
 
-    public static List<float> speciesDefinitionColorRefOffsets_val = new List<float>();
+    public static List<float> speciesDefinitionColorRefOffsets_val;
 
     public bool startingGenderIdentityDDpicked;
 
@@ -1421,7 +1421,7 @@ public class Game : MonoBehaviour
 
     public static SkinnedMeshRenderer[] embellishmentBrushMeshes;
 
-    public static int curEmbellishmentBrushMesh = 0;
+    public static int curEmbellishmentBrushMesh;
 
     public int embellishmentSliderMeshRebuildDelay;
 
@@ -1543,7 +1543,7 @@ public class Game : MonoBehaviour
 
     public bool needPauseRebuild = true;
 
-    public static Vector3 scrollV3 = default(Vector3);
+    public static Vector3 scrollV3;
 
     private bool inittingControls;
 
@@ -1633,7 +1633,7 @@ public class Game : MonoBehaviour
 
     public bool justOpenedDeleteConfirmation;
 
-    public static bool hasFocus = true;
+    public static bool hasFocus;
 
     public List<NFDelegate> nextFrameTasks = new List<NFDelegate>();
 
@@ -1779,12 +1779,24 @@ public class Game : MonoBehaviour
 
     public int forcedCamera;
 
+    public string lastError;
+
+    public Application.LogCallback cachedLogDelegate;
+
+    public bool swapped;
+
     private void Start()
     {
         Game.PathDirectorySeparatorChar = Path.DirectorySeparatorChar;
         Game.characterAssetDirectory = Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterParts" + Game.PathDirectorySeparatorChar + string.Empty;
         Game.persistentDataPath = Application.persistentDataPath;
         Game.gameInstance = this;
+        if (this.cachedLogDelegate == null)
+        {
+            File.Delete("error-log.txt");
+            this.cachedLogDelegate = this.HandleLog;
+            Application.logMessageReceived += this.cachedLogDelegate;
+        }
         this.initSettings();
         this.initCharacterSystem();
         RackCharacter.initWetnessMaps();
@@ -1893,6 +1905,17 @@ public class Game : MonoBehaviour
         }
         this.labDoors = this.World.GetComponentsInChildren<LabDoor>();
         this.helperDrone = ((UnityEngine.Component)this.World.transform.Find("HelperDrone")).GetComponent<Drone>();
+        if (UserSettings.data.mod_fixNpcCum)
+        {
+            for (int j = 0; j < 6; j++)
+            {
+                GameObject.Find("stasisTube" + j).layer = 10;
+            }
+        }
+        if (UserSettings.data.KEY_SCREENSHOT == KeyCode.F12 && UserSettings.data.KEY_MOD_PISS_OTHER == KeyCode.F12)
+        {
+            UserSettings.data.KEY_SCREENSHOT = KeyCode.P;
+        }
     }
 
     public void initPhysics()
@@ -1986,23 +2009,28 @@ public class Game : MonoBehaviour
         this.originalNewsLocation = this.newsWindow.transform.localPosition;
         WWW www = new WWW("http://fek.onl/_r2ckversioninfo.xml?refresh=" + Guid.NewGuid());
         yield return (object)www;
-        if (www.error == string.Empty)
+        bool flag = string.IsNullOrEmpty(www.error);
+        if (flag)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(NewsAndVersionData));
             TextReader textReader = new StringReader(www.text);
             Game.newsData = (xmlSerializer.Deserialize(textReader) as NewsAndVersionData);
             this.newsWindow.transform.Find("txtHeader").GetComponent<Text>().text = Game.newsData.newsTitle;
             this.newsWindow.transform.Find("Scroll View").Find("Viewport").Find("txtContent").GetComponent<Text>().text = Game.newsData.newsContent;
-            if (Game.newsData.newsTitle == string.Empty && Game.newsData.latestVersion <= Game.gameVersion)
+            bool flag2 = Game.newsData.newsTitle == string.Empty && Game.newsData.latestVersion <= Game.gameVersion;
+            if (flag2)
             {
                 this.newsWindow.transform.Find("txtHeader").GetComponent<Text>().text = "No news!";
                 this.newsWindow.transform.Find("Scroll View").Find("Viewport").Find("txtContent").GetComponent<Text>().text = "Enjoy the game. :3";
                 this.toggleNews();
             }
-            if (Game.newsData.latestVersion <= Game.gameVersion)
+            bool flag3 = Game.newsData.latestVersion <= Game.gameVersion;
+            if (flag3)
             {
                 this.newsWindow.transform.Find("NewVersionIndicator").gameObject.SetActive(false);
             }
+            xmlSerializer = null;
+            textReader = null;
         }
         else
         {
@@ -2034,10 +2062,19 @@ public class Game : MonoBehaviour
 
     public void previewOrgasm()
     {
-        this.PC().refractory = 0f;
-        this.PC().arousal = 1f;
-        this.PC().orgasming = 0f;
-        this.PC().pleasure = 10f;
+        if (this.OC().hasPissed)
+        {
+            this.OC().data.cumVolume = this.OC().backupCumVolume;
+            this.OC().data.cumSpurtStrength = this.OC().backupCumSpurtStrength;
+            this.OC().data.cumSpurtFrequency = this.OC().backupCumSpurtFrequency;
+            this.OC().data.orgasmDuration = this.OC().backupOrgasmDuration;
+            this.OC().isPissing = false;
+            this.OC().hasPissed = false;
+        }
+        this.OC().refractory = 0f;
+        this.OC().arousal = 1f;
+        this.OC().orgasming = 0f;
+        this.OC().pleasure = 10f;
         ((UnityEngine.Component)this.UI.transform.Find("CustomizationCamControls").Find("previewArousal")).GetComponent<Slider>().val = 1f;
     }
 
@@ -2071,6 +2108,191 @@ public class Game : MonoBehaviour
         ((UnityEngine.Component)this.UI.transform.Find("PauseScreen").Find("cmdPatchNotes")).GetComponent<MenuOption>().callback = this.pauseMenuItemClicked;
         ((UnityEngine.Component)this.UI.transform.Find("PauseScreen").Find("cmdBugs")).GetComponent<MenuOption>().callback = this.pauseMenuItemClicked;
         ((UnityEngine.Component)this.UI.transform.Find("PauseScreen").Find("cmdCredits")).GetComponent<MenuOption>().callback = this.pauseMenuItemClicked;
+        this.optionsPageInitting = true;
+        GameObject gameObject = this.UI.transform.FindChild("PauseScreen").FindChild("cmdSupport").gameObject;
+        GameObject gameObject2 = UnityEngine.Object.Instantiate(gameObject, gameObject.transform.position, Quaternion.identity, this.UI.transform.FindChild("PauseScreen"));
+        gameObject2.transform.name = "cmdMods";
+        gameObject2.transform.Translate(0f, 0.2f, 0f);
+        Localization.translatedPhrases[UserSettings.data.language + "..Select Mods"] = "Select Mods";
+        ((UnityEngine.Component)gameObject2.transform.FindChild("Text")).GetComponent<Text>().text = "Select Mods";
+        ((UnityEngine.Component)gameObject2.transform.FindChild("Text")).GetComponent<Text>().color = Color.yellow;
+        ((UnityEngine.Component)gameObject2.transform).GetComponent<MenuOption>().callback = this.pauseMenuItemClicked;
+        ((UnityEngine.Component)this.UI.transform.FindChild("PauseScreen").FindChild("cmdCredits")).GetComponent<MenuOption>().callback = this.pauseMenuItemClicked;
+        GameObject gameObject3 = this.UI.transform.FindChild("OptionsMenu").gameObject;
+        GameObject gameObject4 = UnityEngine.Object.Instantiate(gameObject3, gameObject3.transform.position, Quaternion.identity, this.UI.transform);
+        for (int num = gameObject4.transform.childCount - 1; num >= 0; num--)
+        {
+            GameObject gameObject5 = gameObject4.transform.GetChild(num).gameObject;
+            if (gameObject5.name != "header" && gameObject5.name != "bg")
+            {
+                UnityEngine.Object.Destroy(gameObject4.transform.GetChild(num).gameObject);
+            }
+        }
+        gameObject4.transform.name = "ModsMenu";
+        gameObject4.transform.SetSiblingIndex(gameObject3.transform.GetSiblingIndex() + 1);
+        ((UnityEngine.Component)gameObject4.transform.FindChild("header")).GetComponent<Text>().text = "Select Mods";
+        GameObject gameObject6 = this.UI.transform.FindChild("OptionsMenu").FindChild("CameraSmoothing").gameObject;
+        GameObject gameObject7 = UnityEngine.Object.Instantiate(gameObject6, gameObject6.transform.position, Quaternion.identity, gameObject4.transform);
+        gameObject7.transform.name = "cumLife";
+        Cum.maxCumLife = (float)UserSettings.data.mod_cumLife;
+        gameObject7.GetComponent<Slider>().val = (float)UserSettings.data.mod_cumLife / 100f;
+        Localization.translatedPhrases[UserSettings.data.language + "..Cum Lifespan"] = "Cum Lifespan";
+        Localization.translatedPhrases[UserSettings.data.language + "..Low"] = "Low";
+        Localization.translatedPhrases[UserSettings.data.language + "..High"] = "High";
+        gameObject7.GetComponent<Slider>().phrase = "Cum Lifespan";
+        gameObject7.GetComponent<Slider>().lowPhrase = "Low";
+        gameObject7.GetComponent<Slider>().highPhrase = "High";
+        gameObject7.GetComponent<Slider>().onChange = this.modSliderChanged;
+        gameObject7.GetComponentsInChildren<Image>()[1].enabled = false;
+        GameObject gameObject8 = UnityEngine.Object.Instantiate(gameObject7, gameObject7.transform.position + 1f * Vector3.right, Quaternion.identity, gameObject4.transform);
+        gameObject8.transform.name = "sexToyPotency";
+        gameObject8.GetComponent<Slider>().val = UserSettings.data.mod_sexToyPotency;
+        Localization.translatedPhrases[UserSettings.data.language + "..Sex Toy Potency"] = "Sex Toy Potency";
+        gameObject8.GetComponent<Slider>().phrase = "Sex Toy Potency";
+        gameObject8.GetComponent<Slider>().lowPhrase = "Low";
+        gameObject8.GetComponent<Slider>().highPhrase = "High";
+        gameObject8.GetComponent<Slider>().onChange = this.modSliderChanged;
+        string text = "";
+        GameObject gameObject9 = gameObject3.transform.FindChild("chkHideTails").gameObject;
+        GameObject gameObject10 = UnityEngine.Object.Instantiate(gameObject9, gameObject9.transform.position, Quaternion.identity, gameObject4.transform);
+        gameObject10.transform.name = "chkNudeNpcs";
+        Localization.translatedPhrases[UserSettings.data.language + "..Nude NPCs"] = "Nude NPCs";
+        gameObject10.GetComponentsInChildren<Text>()[0].text = "Nude NPCs";
+        ((UnityEngine.Component)gameObject10.transform).GetComponent<Toggle>().isOn = UserSettings.data.mod_nudeNpcs;
+        ((UnityEngine.Component)gameObject10.transform).GetComponent<Toggle>().onValueChanged.AddListener(this.modValueChanged);
+        Transform transform = this.UI.transform.FindChild("PreferencesMenu").FindChild("clipboard").FindChild("tooltip");
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            text = text + transform.GetChild(i).ToString() + " (" + transform.GetChild(i).name + ")" + Environment.NewLine;
+        }
+        text += Environment.NewLine;
+        UnityEngine.Component[] componentsInChildren = this.UI.transform.FindChild("PreferencesMenu").FindChild("clipboard").GetComponentsInChildren(typeof(UnityEngine.Component));
+        for (int num2 = componentsInChildren.Length - 1; num2 >= 0; num2--)
+        {
+            text = text + componentsInChildren[num2].GetType().ToString() + " (" + componentsInChildren[num2].name + ")" + Environment.NewLine;
+        }
+        text = "";
+        if (text != "")
+        {
+            this.HandleLog(text, "", LogType.Warning);
+        }
+        GameObject gameObject11 = UnityEngine.Object.Instantiate(gameObject9, gameObject9.transform.position + 0.1f * Vector3.down, Quaternion.identity, gameObject4.transform);
+        gameObject11.transform.name = "chkFixNpcCum";
+        Localization.translatedPhrases[UserSettings.data.language + "..NPC cum fix"] = "NPC cum fix";
+        gameObject11.GetComponentsInChildren<Text>()[0].text = "NPC cum fix";
+        ((UnityEngine.Component)gameObject11.transform).GetComponent<Toggle>().isOn = UserSettings.data.mod_fixNpcCum;
+        ((UnityEngine.Component)gameObject11.transform).GetComponent<Toggle>().onValueChanged.AddListener(this.modValueChanged);
+        GameObject gameObject12 = UnityEngine.Object.Instantiate(gameObject9, gameObject9.transform.position + 0.2f * Vector3.down, Quaternion.identity, gameObject4.transform);
+        gameObject12.transform.name = "chkExtraCommands";
+        Localization.translatedPhrases[UserSettings.data.language + "..Extra console commands"] = "Extra console commands";
+        gameObject12.GetComponentsInChildren<Text>()[0].text = "Extra console commands";
+        ((UnityEngine.Component)gameObject12.transform).GetComponent<Toggle>().isOn = UserSettings.data.mod_extraCommands;
+        ((UnityEngine.Component)gameObject12.transform).GetComponent<Toggle>().onValueChanged.AddListener(this.modValueChanged);
+        GameObject gameObject13 = UnityEngine.Object.Instantiate(gameObject9, gameObject9.transform.position + 0.3f * Vector3.down, Quaternion.identity, gameObject4.transform);
+        gameObject13.transform.name = "chkInheritRng";
+        Localization.translatedPhrases[UserSettings.data.language + "..RNG speciesdata inheritance"] = "RNG speciesdata inheritance";
+        gameObject13.GetComponentsInChildren<Text>()[0].text = "RNG speciesdata inheritance";
+        ((UnityEngine.Component)gameObject13.transform).GetComponent<Toggle>().isOn = UserSettings.data.mod_inheritRng;
+        ((UnityEngine.Component)gameObject13.transform).GetComponent<Toggle>().onValueChanged.AddListener(this.modValueChanged);
+        GameObject gameObject14 = UnityEngine.Object.Instantiate(gameObject9, gameObject9.transform.position + 0.4f * Vector3.down, Quaternion.identity, gameObject4.transform);
+        gameObject14.transform.name = "chkAltCumStyle";
+        Localization.translatedPhrases[UserSettings.data.language + "..Alternate orgasm style"] = "Alternate orgasm style";
+        gameObject14.GetComponentsInChildren<Text>()[0].text = "Alternate orgasm style";
+        ((UnityEngine.Component)gameObject14.transform).GetComponent<Toggle>().isOn = UserSettings.data.mod_altCumStyle;
+        ((UnityEngine.Component)gameObject14.transform).GetComponent<Toggle>().onValueChanged.AddListener(this.modValueChanged);
+        GameObject gameObject15 = UnityEngine.Object.Instantiate(gameObject9, gameObject9.transform.position + 0.5f * Vector3.down, Quaternion.identity, gameObject4.transform);
+        gameObject15.transform.name = "chkHideLoadScreens";
+        Localization.translatedPhrases[UserSettings.data.language + "..Hide Load Screens"] = "Hide Load Screens";
+        gameObject15.GetComponentsInChildren<Text>()[0].text = "Hide Load Screens";
+        ((UnityEngine.Component)gameObject15.transform).GetComponent<Toggle>().isOn = UserSettings.data.mod_hideLoadScreens;
+        ((UnityEngine.Component)gameObject15.transform).GetComponent<Toggle>().onValueChanged.AddListener(this.modValueChanged);
+        GameObject gameObject16 = UnityEngine.Object.Instantiate(gameObject9, gameObject9.transform.position + 0.6f * Vector3.down, Quaternion.identity, gameObject4.transform);
+        gameObject16.transform.name = "chkLogErrors";
+        Localization.translatedPhrases[UserSettings.data.language + "..Log Errors"] = "Log Errors";
+        gameObject16.GetComponentsInChildren<Text>()[0].text = "Log Errors";
+        ((UnityEngine.Component)gameObject16.transform).GetComponent<Toggle>().isOn = UserSettings.data.mod_logErrors;
+        ((UnityEngine.Component)gameObject16.transform).GetComponent<Toggle>().onValueChanged.AddListener(this.modValueChanged);
+        GameObject gameObject17 = UnityEngine.Object.Instantiate(gameObject9, gameObject9.transform.position + 0.7f * Vector3.down, Quaternion.identity, gameObject4.transform);
+        gameObject17.transform.name = "chkAleksMods";
+        Localization.translatedPhrases[UserSettings.data.language + "..AleksMods"] = "Alek's Mods";
+        gameObject17.GetComponentsInChildren<Text>()[0].text = "AleksMods";
+        ((UnityEngine.Component)gameObject17.transform).GetComponent<Toggle>().isOn = UserSettings.data.mod_AleksMods;
+        ((UnityEngine.Component)gameObject17.transform).GetComponent<Toggle>().onValueChanged.AddListener(this.modValueChanged);
+        if (!UserSettings.data.mod_logErrors)
+        {
+            File.Delete("error-log.txt");
+            Application.logMessageReceived -= this.cachedLogDelegate;
+        }
+        GameObject gameObject18 = this.UI.transform.FindChild("PreferencesMenu").FindChild("clipboard").FindChild("tooltip")
+            .gameObject;
+        gameObject18.transform.SetParent(gameObject4.transform);
+        GameObject gameObject19 = UnityEngine.Object.Instantiate(gameObject18, gameObject18.transform.position, Quaternion.identity, gameObject4.transform);
+        gameObject19.transform.SetParent(gameObject4.transform);
+        gameObject19.transform.localPosition = gameObject10.transform.localPosition;
+        Transform transform2 = gameObject19.transform;
+        transform2.position += Vector3.right * 0.1f + Vector3.down * 0.2f;
+        Transform transform3 = gameObject19.transform;
+        transform3.localScale *= 2f;
+        gameObject18.transform.SetParent(this.UI.transform.FindChild("PreferencesMenu").FindChild("clipboard"));
+        Localization.translatedPhrases[UserSettings.data.language + "..MOD_DESC_NPC"] = "Removes clothes from NPCs; will require restart to take effect";
+        ((UnityEngine.Component)gameObject19.transform.FindChild("txt")).GetComponent<Text>().text = "MOD_DESC_NPC";
+        GameObject gameObject20 = UnityEngine.Object.Instantiate(gameObject19, gameObject19.transform.position, Quaternion.identity, gameObject4.transform);
+        gameObject20.transform.SetParent(gameObject4.transform);
+        gameObject20.transform.localPosition = gameObject10.transform.localPosition;
+        Transform transform4 = gameObject20.transform;
+        transform4.position += Vector3.right * 0.1f + Vector3.down * 0.3f;
+        Localization.translatedPhrases[UserSettings.data.language + "..MOD_DESC_FIX"] = "Allows NPCs and Tube clients to produce cum when holding B (may slow down game)";
+        ((UnityEngine.Component)gameObject20.transform.FindChild("txt")).GetComponent<Text>().text = "MOD_DESC_FIX";
+        GameObject gameObject21 = UnityEngine.Object.Instantiate(gameObject19, gameObject19.transform.position, Quaternion.identity, gameObject4.transform);
+        gameObject21.transform.SetParent(gameObject4.transform);
+        gameObject21.transform.localPosition = gameObject10.transform.localPosition;
+        Transform transform5 = gameObject21.transform;
+        transform5.position += Vector3.right * 0.1f + Vector3.down * 0.4f;
+        Localization.translatedPhrases[UserSettings.data.language + "..MOD_DESC_COM"] = "Adds a few new commands; check them by entering 'help' in the console";
+        ((UnityEngine.Component)gameObject21.transform.FindChild("txt")).GetComponent<Text>().text = "MOD_DESC_COM";
+        GameObject gameObject22 = UnityEngine.Object.Instantiate(gameObject19, gameObject19.transform.position, Quaternion.identity, gameObject4.transform);
+        gameObject22.transform.SetParent(gameObject4.transform);
+        gameObject22.transform.localPosition = gameObject10.transform.localPosition;
+        Transform transform6 = gameObject22.transform;
+        transform6.position += Vector3.right * 0.1f + Vector3.down * 0.5f;
+        Localization.translatedPhrases[UserSettings.data.language + "..MOD_DESC_INH"] = "Passes through species file data to the RNG tube generator. The full list of supported tags is the same as the rackCharacterData file";
+        ((UnityEngine.Component)gameObject22.transform.FindChild("txt")).GetComponent<Text>().text = "MOD_DESC_INH";
+        GameObject gameObject23 = UnityEngine.Object.Instantiate(gameObject19, gameObject19.transform.position, Quaternion.identity, gameObject4.transform);
+        gameObject23.transform.SetParent(gameObject4.transform);
+        gameObject23.transform.localPosition = gameObject10.transform.localPosition;
+        Transform transform7 = gameObject23.transform;
+        transform7.position += Vector3.right * 0.1f + Vector3.down * 0.6f;
+        Localization.translatedPhrases[UserSettings.data.language + "..MOD_DESC_ALT"] = "Orgasms will have varied on/off timings for cum spurts, determined by a cumSpurtRatio variable";
+        ((UnityEngine.Component)gameObject23.transform.FindChild("txt")).GetComponent<Text>().text = "MOD_DESC_ALT";
+        GameObject gameObject24 = UnityEngine.Object.Instantiate(gameObject19, gameObject19.transform.position, Quaternion.identity, gameObject4.transform);
+        gameObject24.transform.SetParent(gameObject4.transform);
+        gameObject24.transform.localPosition = gameObject10.transform.localPosition;
+        Transform transform8 = gameObject24.transform;
+        transform8.position += Vector3.right * 0.1f + Vector3.down * 0.7f;
+        Localization.translatedPhrases[UserSettings.data.language + "..MOD_DESC_LOAD"] = "Allows you to move during loading screens";
+        ((UnityEngine.Component)gameObject24.transform.FindChild("txt")).GetComponent<Text>().text = "MOD_DESC_LOAD";
+        GameObject gameObject25 = UnityEngine.Object.Instantiate(gameObject19, gameObject19.transform.position, Quaternion.identity, gameObject4.transform);
+        gameObject25.transform.SetParent(gameObject4.transform);
+        gameObject25.transform.localPosition = gameObject10.transform.localPosition;
+        Transform transform9 = gameObject25.transform;
+        transform9.position += Vector3.right * 0.1f + Vector3.down * 0.8f;
+        Localization.translatedPhrases[UserSettings.data.language + "..MOD_DESC_LOG"] = "Writes error messages to 'error-log.txt' in Fek folder and to the console";
+        ((UnityEngine.Component)gameObject25.transform.FindChild("txt")).GetComponent<Text>().text = "MOD_DESC_LOG";
+        GameObject gameObject26 = UnityEngine.Object.Instantiate(gameObject19, gameObject19.transform.position, Quaternion.identity, gameObject4.transform);
+        gameObject26.transform.SetParent(gameObject4.transform);
+        gameObject26.transform.localPosition = gameObject10.transform.localPosition;
+        Transform transform10 = gameObject26.transform;
+        transform10.position += Vector3.right * 0.2f + Vector3.down * 1.5f;
+        Localization.translatedPhrases[UserSettings.data.language + "..MOD_DESC_OP1"] = "Check the user.rackSettings file for other values that will modify the game's behavior";
+        ((UnityEngine.Component)gameObject26.transform.FindChild("txt")).GetComponent<Text>().text = "MOD_DESC_OP1";
+        GameObject gameObject27 = UnityEngine.Object.Instantiate(gameObject20, gameObject20.transform.position, Quaternion.identity, gameObject4.transform);
+        gameObject27.transform.SetParent(gameObject4.transform);
+        gameObject27.transform.localPosition = gameObject10.transform.localPosition;
+        Transform transform11 = gameObject27.transform;
+        transform11.position += Vector3.right * 0.1f + Vector3.down * 0.9f;
+        Localization.translatedPhrases[UserSettings.data.language + "..MOD_DESC_ALEK"] = "Adds in Alek's hotkey mods";
+        ((UnityEngine.Component)gameObject27.transform.FindChild("txt")).GetComponent<Text>().text = "MOD_DESC_ALEK";
+        this.optionsPageInitting = false;
         Game.fadedCol = Color.white;
         Game.fadedCol.a = 0.2f;
         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationSaveCancel").Find("cmdSave")).GetComponent<MenuOption>().fullHover = true;
@@ -2156,9 +2378,9 @@ public class Game : MonoBehaviour
             this.toolbarPops.Add(0f);
             this.toolSexToys.Add(null);
         }
-        ((UnityEngine.Component)this.UI.transform.Find("TerminateConfirm").Find("cmdOkay")).GetComponent<MenuOption>().callback = this.confirmTermination;
+            ((UnityEngine.Component)this.UI.transform.Find("TerminateConfirm").Find("cmdOkay")).GetComponent<MenuOption>().callback = this.confirmTermination;
         ((UnityEngine.Component)this.UI.transform.Find("TerminateConfirm").Find("cmdCancel")).GetComponent<MenuOption>().callback = this.simulateESC;
-        for (int i = 0; i < 6; i++)
+        for (int j = 0; j < 6; j++)
         {
             this.sexPoseHover.Add(false);
         }
@@ -2167,24 +2389,24 @@ public class Game : MonoBehaviour
         ((UnityEngine.Component)this.UI.transform.Find("SatisfactionResults").Find("cmdOkay")).GetComponent<MenuOption>().callback = this.closeSatisfaction;
         this.patronTextColor = new Color(1f, 0.7607843f, 0.403921574f);
         this.SpecimenCapacityWarning = this.UI.transform.Find("SpecimenCapacityWarning");
-        for (int j = 0; j < 6; j++)
+        for (int k = 0; k < 6; k++)
         {
-            this.chemicalWindowChems[j] = this.UI.transform.Find("ChemicalWindow").Find("chemical" + j);
-            this.chemicalWindowChemTexts[j] = ((UnityEngine.Component)this.chemicalWindowChems[j].Find("txt")).GetComponent<Text>();
+            this.chemicalWindowChems[k] = this.UI.transform.Find("ChemicalWindow").Find("chemical" + k);
+            this.chemicalWindowChemTexts[k] = ((UnityEngine.Component)this.chemicalWindowChems[k].Find("txt")).GetComponent<Text>();
         }
         this.ToolMenu = this.UI.transform.Find("ToolMenu");
         this.ToolMenuCurTool = this.ToolMenu.Find("curTool");
         this.ToolMenuCurToolChemicalDisplay = this.ToolMenuCurTool.Find("chemical");
         this.ToolMenuCurToolChemicalDisplayDoseText = ((UnityEngine.Component)this.ToolMenuCurToolChemicalDisplay.Find("txtDose")).GetComponent<Text>();
         this.ToolMenuCurToolChemicalDisplayDoseTextFraction = ((UnityEngine.Component)this.ToolMenuCurToolChemicalDisplay.Find("txtDoseFraction")).GetComponent<Text>();
-        for (int k = 0; k < 6; k++)
+        for (int l = 0; l < 6; l++)
         {
-            this.ToolMenuModeMenuMode[k] = this.ToolMenu.Find("ModeMenu").Find("Mode" + k);
-            this.ToolMenuModeMenuModeTxt[k] = ((UnityEngine.Component)this.ToolMenuModeMenuMode[k].Find("Text")).GetComponent<Text>();
+            this.ToolMenuModeMenuMode[l] = this.ToolMenu.Find("ModeMenu").Find("Mode" + l);
+            this.ToolMenuModeMenuModeTxt[l] = ((UnityEngine.Component)this.ToolMenuModeMenuMode[l].Find("Text")).GetComponent<Text>();
         }
-        for (int l = 0; l < 10; l++)
+        for (int m = 0; m < 10; m++)
         {
-            this.ToolMenuHotkeys[l] = this.ToolMenu.Find("hotkey (" + l + ")");
+            this.ToolMenuHotkeys[m] = this.ToolMenu.Find("hotkey (" + m + ")");
         }
         this.initTutorials();
     }
@@ -2231,65 +2453,70 @@ public class Game : MonoBehaviour
     {
         Game.pausePage = string.Empty;
         string name = menuOption.name;
-        if (name != null)
+        if (name == "cmdPreferences")
         {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(11);
-            dictionary.Add("cmdPreferences", 0);
-            dictionary.Add("cmdOptions", 1);
-            dictionary.Add("cmdControls", 2);
-            dictionary.Add("cmdGraphics", 3);
-            dictionary.Add("cmdSupport", 4);
-            dictionary.Add("cmdPatchNotes", 5);
-            dictionary.Add("cmdBugs", 6);
-            dictionary.Add("cmdTranslate", 7);
-            dictionary.Add("cmdQuit", 8);
-            dictionary.Add("cmdCredits", 9);
-            dictionary.Add("cmdShowers", 10);
-            int num = default(int);
-            if (dictionary.TryGetValue(name, out num))
+            Game.pausePage = "preferences";
+            this.openPreferencesInterface();
+            return true;
+        }
+        if (name == "cmdOptions")
+        {
+            Game.pausePage = "options";
+            return true;
+        }
+        if (name == "cmdControls")
+        {
+            Game.pausePage = "controls";
+            return true;
+        }
+        if (name == "cmdGraphics")
+        {
+            Game.pausePage = "graphics";
+            return true;
+        }
+        if (name == "cmdSupport")
+        {
+            this.gotoPatreon();
+            return true;
+        }
+        if (name == "cmdPatchNotes")
+        {
+            this.openPatchNotes();
+            return true;
+        }
+        if (name == "cmdBugs")
+        {
+            Application.OpenURL("http://furry.science/reportabug");
+            return true;
+        }
+        if (name == "cmdTranslate")
+        {
+            this.openTranslationDoc();
+            return true;
+        }
+        if (name == "cmdMods")
+        {
+            Game.pausePage = "mods";
+            return true;
+        }
+        if (name == "cmdQuit")
+        {
+            this.quit();
+            return true;
+        }
+        if (name == "cmdCredits")
+        {
+            this.openCredits();
+            return true;
+        }
+        if (name == "cmdShowers")
+        {
+            if (this.PC() != null)
             {
-                switch (num)
-                {
-                    case 0:
-                        Game.pausePage = "preferences";
-                        this.openPreferencesInterface();
-                        return true;
-                    case 1:
-                        Game.pausePage = "options";
-                        return true;
-                    case 2:
-                        Game.pausePage = "controls";
-                        return true;
-                    case 3:
-                        Game.pausePage = "graphics";
-                        return true;
-                    case 4:
-                        this.gotoPatreon();
-                        return true;
-                    case 5:
-                        this.openPatchNotes();
-                        return true;
-                    case 6:
-                        Application.OpenURL("http://furry.science/reportabug");
-                        return true;
-                    case 7:
-                        this.openTranslationDoc();
-                        return true;
-                    case 8:
-                        this.quit();
-                        return true;
-                    case 9:
-                        this.openCredits();
-                        return true;
-                    case 10:
-                        if (this.PC() != null)
-                        {
-                            this.PC().teleport(-23f, 11f, -89f, -999f, false);
-                            this.pauseOpen = false;
-                        }
-                        return true;
-                }
+                this.PC().teleport(-23f, 11f, -89f, -999f, false);
+                this.pauseOpen = false;
             }
+            return true;
         }
         return true;
     }
@@ -2635,15 +2862,15 @@ public class Game : MonoBehaviour
                     {
                         this.autoDialogueOptions[3] = new string[9]
                         {
-                                                    "inline_ask.ask_about_secrets",
-                                                    "inline_encourage.encourage_fetishes",
-                                                    "inline_arouse.comment_on_interaction",
-                                                    "inline_arouse.comment_on_experience",
-                                                    "inline_encourage.compliment_body",
-                                                    "inline_encourage.compliment_genitals",
-                                                    "inline_ask.ask_what_they_like",
-                                                    "inline_arouse.comment_on_attraction",
-                                                    "inline_ask.ask_what_they_dislike"
+                                                        "inline_ask.ask_about_secrets",
+                                                        "inline_encourage.encourage_fetishes",
+                                                        "inline_arouse.comment_on_interaction",
+                                                        "inline_arouse.comment_on_experience",
+                                                        "inline_encourage.compliment_body",
+                                                        "inline_encourage.compliment_genitals",
+                                                        "inline_ask.ask_what_they_like",
+                                                        "inline_arouse.comment_on_attraction",
+                                                        "inline_ask.ask_what_they_dislike"
                         };
                     }
                     this.subject.autoDialogueFamiliarity += 0.3f;
@@ -2655,14 +2882,14 @@ public class Game : MonoBehaviour
                     {
                         this.autoDialogueOptions[2] = new string[8]
                         {
-                                                    "inline_encourage.encourage_fetishes",
-                                                    "inline_arouse.comment_on_interaction",
-                                                    "inline_arouse.comment_on_experience",
-                                                    "inline_encourage.compliment_body",
-                                                    "inline_encourage.compliment_genitals",
-                                                    "inline_ask.ask_what_they_like",
-                                                    "inline_arouse.comment_on_attraction",
-                                                    "inline_ask.ask_what_they_dislike"
+                                                        "inline_encourage.encourage_fetishes",
+                                                        "inline_arouse.comment_on_interaction",
+                                                        "inline_arouse.comment_on_experience",
+                                                        "inline_encourage.compliment_body",
+                                                        "inline_encourage.compliment_genitals",
+                                                        "inline_ask.ask_what_they_like",
+                                                        "inline_arouse.comment_on_attraction",
+                                                        "inline_ask.ask_what_they_dislike"
                         };
                     }
                     this.subject.autoDialogueFamiliarity += 0.3f;
@@ -2674,13 +2901,13 @@ public class Game : MonoBehaviour
                     {
                         this.autoDialogueOptions[1] = new string[7]
                         {
-                                                    "inline_arouse.comment_on_interaction",
-                                                    "inline_arouse.comment_on_experience",
-                                                    "inline_encourage.compliment_body",
-                                                    "inline_encourage.compliment_genitals",
-                                                    "inline_ask.ask_what_they_like",
-                                                    "inline_arouse.comment_on_attraction",
-                                                    "inline_ask.ask_what_they_dislike"
+                                                        "inline_arouse.comment_on_interaction",
+                                                        "inline_arouse.comment_on_experience",
+                                                        "inline_encourage.compliment_body",
+                                                        "inline_encourage.compliment_genitals",
+                                                        "inline_ask.ask_what_they_like",
+                                                        "inline_arouse.comment_on_attraction",
+                                                        "inline_ask.ask_what_they_dislike"
                         };
                     }
                     this.subject.autoDialogueFamiliarity += 0.3f;
@@ -2692,9 +2919,9 @@ public class Game : MonoBehaviour
                     {
                         this.autoDialogueOptions[0] = new string[3]
                         {
-                                                    "inline_encourage.compliment_body",
-                                                    "inline_encourage.compliment_genitals",
-                                                    "inline_ask.ask_what_they_like"
+                                                        "inline_encourage.compliment_body",
+                                                        "inline_encourage.compliment_genitals",
+                                                        "inline_ask.ask_what_they_like"
                         };
                     }
                     this.subject.autoDialogueFamiliarity += 0.3f;
@@ -2734,69 +2961,69 @@ public class Game : MonoBehaviour
                 this.inlineDialogueSubmenuOptionColors.Add(new Color(1f, 0.2509804f, 0.545098066f));
                 this.inlineDialogueSubmenuSubOptions.Add(new string[3]
                 {
-                                            "inline_arouse.comment_on_interaction",
-                                            "inline_arouse.comment_on_experience",
-                                            "inline_arouse.comment_on_attraction"
+                                                "inline_arouse.comment_on_interaction",
+                                                "inline_arouse.comment_on_experience",
+                                                "inline_arouse.comment_on_attraction"
                 });
                 this.inlineDialogueSubmenuOptions.Add("encourage");
                 this.inlineDialogueSubmenuOptionColors.Add(new Color(0.2509804f, 1f, 0.533333361f));
                 this.inlineDialogueSubmenuSubOptions.Add(new string[6]
                 {
-                                            "inline_encourage.compliment_body",
-                                            "inline_encourage.compliment_genitals",
-                                            "inline_encourage.encourage_fetishes",
-                                            "inline_encourage.empower",
-                                            "inline_encourage.relax",
-                                            "inline_encourage.encourage_obedience"
+                                                "inline_encourage.compliment_body",
+                                                "inline_encourage.compliment_genitals",
+                                                "inline_encourage.encourage_fetishes",
+                                                "inline_encourage.empower",
+                                                "inline_encourage.relax",
+                                                "inline_encourage.encourage_obedience"
                 });
                 this.inlineDialogueSubmenuOptions.Add("ask");
                 this.inlineDialogueSubmenuOptionColors.Add(new Color(0.2509804f, 0.6901961f, 1f));
                 this.inlineDialogueSubmenuSubOptions.Add(new string[3]
                 {
-                                            "inline_ask.ask_what_they_like",
-                                            "inline_ask.ask_about_secrets",
-                                            "inline_ask.ask_what_they_dislike"
+                                                "inline_ask.ask_what_they_like",
+                                                "inline_ask.ask_about_secrets",
+                                                "inline_ask.ask_what_they_dislike"
                 });
                 this.inlineDialogueSubmenuOptions.Add("converse");
                 this.inlineDialogueSubmenuOptionColors.Add(new Color(1f, 1f, 1f));
                 this.inlineDialogueSubmenuSubOptions.Add(new string[4]
                 {
-                                            "inline_converse.greet",
-                                            "inline_converse.be_right_back",
-                                            "inline_converse.goodbye_friendly",
-                                            "inline_converse.goodbye_unfriendly"
+                                                "inline_converse.greet",
+                                                "inline_converse.be_right_back",
+                                                "inline_converse.goodbye_friendly",
+                                                "inline_converse.goodbye_unfriendly"
                 });
                 this.inlineDialogueSubmenuOptions.Add("reprimand");
                 this.inlineDialogueSubmenuOptionColors.Add(new Color(1f, 0.3882353f, 0.2509804f));
                 this.inlineDialogueSubmenuSubOptions.Add(new string[5]
                 {
-                                            "inline_reprimand.speaking",
-                                            "inline_reprimand.failure_to_use_title",
-                                            "inline_reprimand.cumming",
-                                            "inline_reprimand.disobedience",
-                                            "inline_reprimand.rudeness"
+                                                "inline_reprimand.speaking",
+                                                "inline_reprimand.failure_to_use_title",
+                                                "inline_reprimand.cumming",
+                                                "inline_reprimand.disobedience",
+                                                "inline_reprimand.rudeness"
                 });
                 this.inlineDialogueSubmenuOptions.Add("demean");
                 this.inlineDialogueSubmenuOptionColors.Add(new Color(1f, 0.7019608f, 0.2509804f));
                 this.inlineDialogueSubmenuSubOptions.Add(new string[4]
                 {
-                                            "inline_demean.insult_body",
-                                            "inline_demean.insult_genitals",
-                                            "inline_demean.insult_fetishes",
-                                            "inline_demean.demean"
+                                                "inline_demean.insult_body",
+                                                "inline_demean.insult_genitals",
+                                                "inline_demean.insult_fetishes",
+                                                "inline_demean.demean"
                 });
                 this.inlineDialogueSubmenuOptions.Add("order");
                 this.inlineDialogueSubmenuOptionColors.Add(new Color(0.623529434f, 0.384313732f, 0.917647064f));
                 this.inlineDialogueSubmenuSubOptions.Add(new string[8]
                 {
-                                            "inline_order.less_talking",
-                                            "inline_order.use_your_mouth",
-                                            "inline_order.stop_squirming",
-                                            "inline_order.beg",
-                                            "inline_order.demean_self",
-                                            "inline_order.order_to_cum",
-                                            "inline_order.order_to_not_cum",
-                                            "inline_order.use_dom_name"
+                                                "inline_order.less_talking",
+                                                "inline_order.use_your_mouth",
+                                                "inline_order.stop_squirming",
+                                                "inline_order.beg",
+                                                "inline_order.demean_self",
+                                                "inline_order.order_to_cum",
+                                                "inline_order.order_to_not_cum",
+                                                "inline_order.use_dom_name"
                 });
                 for (int i = 0; i < this.inlineDialogueSubmenuOptions.Count; i++)
                 {
@@ -3187,23 +3414,31 @@ public class Game : MonoBehaviour
         {
             this.hideClimaxMenuForTutorialReasons = false;
         }
-        if (this.inATestinRoom && !this.pauseOpen && !this.confirmingTerminate && !this.inventoryOpen && !this.shopOpen && !TestingRoom.editingMode && !this.hideClimaxMenuForTutorialReasons)
+        if ((this.inATestinRoom || UserSettings.data.mod_AleksMods) && !this.pauseOpen && !this.confirmingTerminate && !this.inventoryOpen && !this.shopOpen && !TestingRoom.editingMode && !this.hideClimaxMenuForTutorialReasons)
         {
-            goto IL_007d;
+            goto IL_006b;
         }
         if (this.PC().interactingWithSelf)
         {
-            goto IL_007d;
+            goto IL_006b;
         }
         this.playerClimaxTransition -= Game.cap(Time.deltaTime * 1.45f, 0f, 1f);
         if (this.playerClimaxTransition < 0f)
         {
             this.playerClimaxTransition = 0f;
         }
-        goto IL_013a;
-    IL_013a:
+        goto IL_011f;
+        IL_006b:
+        this.playerClimaxTransition += Game.cap(Time.deltaTime * 1.45f, 0f, 1f);
+        if (this.playerClimaxTransition > 1f)
+        {
+            this.playerClimaxTransition = 1f;
+        }
+        ((UnityEngine.Component)this.UI.transform.Find("ClimaxMenu").Find("bar")).GetComponentInChildren<ProgressBarFill>().val = this.PC().proximityToOrgasm;
+        goto IL_011f;
+        IL_011f:
         this.v3 = Vector3.zero;
-        this.v3.x -= 325f * Mathf.Pow(1f - this.playerClimaxTransition, 3f);
+        this.v3.x = this.v3.x - 325f * Mathf.Pow(1f - this.playerClimaxTransition, 3f);
         this.UI.transform.Find("ClimaxMenu").Find("bar").localPosition = this.v3;
         this.climaxColor = Color.white;
         this.playerClimaxPulse += 3f + 20f * Mathf.Pow(((UnityEngine.Component)this.UI.transform.Find("ClimaxMenu").Find("bar")).GetComponentInChildren<ProgressBarFill>().val, 4f);
@@ -3245,15 +3480,6 @@ public class Game : MonoBehaviour
                 .localScale = Vector3.zero;
             this.UI.transform.Find("CustomizationCamControls").Find("cmdPleasureSelf").gameObject.SetActive(false);
         }
-        return;
-    IL_007d:
-        this.playerClimaxTransition += Game.cap(Time.deltaTime * 1.45f, 0f, 1f);
-        if (this.playerClimaxTransition > 1f)
-        {
-            this.playerClimaxTransition = 1f;
-        }
-                                ((UnityEngine.Component)this.UI.transform.Find("ClimaxMenu").Find("bar")).GetComponentInChildren<ProgressBarFill>().val = this.PC().proximityToOrgasm;
-        goto IL_013a;
     }
 
     public void showWarning(string warning, float time = 2.5f)
@@ -4112,7 +4338,7 @@ public class Game : MonoBehaviour
             goto IL_0ff8;
         }
         return;
-    IL_0ff8:
+        IL_0ff8:
         if (Input.GetMouseButton(1))
         {
             ref Vector2 val = ref this.interactionAngle;
@@ -4133,10 +4359,10 @@ public class Game : MonoBehaviour
         }
         this.processInteractionReticle();
         return;
-    IL_0a43:
+        IL_0a43:
         this.v3.x -= 110f;
         goto IL_0a76;
-    IL_0a76:
+        IL_0a76:
         if (this.mY < 0.5f)
         {
             this.v3.y -= 45f;
@@ -4168,7 +4394,7 @@ public class Game : MonoBehaviour
         this.hotspotLines = new List<GameObject>();
         BagUI.drawScienceLine(this.hotspotLines, this.UI.transform.Find("InteractionOverlay").Find("LineContainer"), endpoint2, this.UI.transform.Find("InteractionOverlay").Find("hoverBubble").localPosition);
         goto IL_0e55;
-    IL_0e55:
+        IL_0e55:
         this.UI.transform.Find("InteractionOverlay").Find("hoverBubble").gameObject.SetActive(true);
         this.v3 = this.UI.transform.Find("InteractionOverlay").Find("hoverBubble").localScale;
         if (this.v3.x < this.hotspotIconSize)
@@ -4362,18 +4588,24 @@ public class Game : MonoBehaviour
             return "handL";
         }
         goto IL_0081;
-    IL_0081:
+        IL_0081:
         return Game.gameInstance.PC().selectedSexToy.itemID;
     }
 
     public void beginInteraction(RackCharacter subject, string node, string tool, int toolMode, float delay = 0f)
     {
+        RackCharacter rackCharacter = this.PC();
+        if (this.swapped)
+        {
+            rackCharacter = subject;
+            subject = this.PC();
+        }
         if (delay <= 0f)
         {
             this.currentInteraction = Interaction.addInteraction(subject, node, Interaction.getModeName(tool, node, toolMode));
             if (this.currentInteraction != null)
             {
-                this.currentInteraction.claim(this.PC(), Game.getSpecificPerformingNodeFromSelectedTool(tool));
+                this.currentInteraction.claim(rackCharacter, Game.getSpecificPerformingNodeFromSelectedTool(tool));
                 if (!Interaction.modeEligibleWithInteraction(this.currentInteraction, toolMode, out this.toolModeRequiredPose, false))
                 {
                     this.showWarning(Localization.getPhrase(Interaction.ineligibleReason, string.Empty), 2.5f);
@@ -4386,22 +4618,22 @@ public class Game : MonoBehaviour
                     {
                         if (this.toolModeRequiredPose == "default")
                         {
-                            this.PC().setSexPose(0);
+                            rackCharacter.setSexPose(0);
                         }
                         else
                         {
                             for (int i = 0; i < this.PC().interactionApparatus.poseNames.Count; i++)
                             {
-                                if (this.PC().interactionApparatus.poseNames[i] == this.toolModeRequiredPose)
+                                if (rackCharacter.interactionApparatus.poseNames[i] == this.toolModeRequiredPose)
                                 {
-                                    this.PC().setSexPose(i + 1);
+                                    rackCharacter.setSexPose(i + 1);
                                 }
                             }
                         }
                     }
                     else
                     {
-                        this.PC().setSexPose(this.PC().curSexPose);
+                        rackCharacter.setSexPose(rackCharacter.curSexPose);
                     }
                     UISFX.clickSFX(string.Empty);
                 }
@@ -4535,7 +4767,7 @@ public class Game : MonoBehaviour
                         goto IL_0865;
                     }
                     continue;
-                IL_0865:
+                    IL_0865:
                     if (this.curDialogueNode == 0)
                     {
                         this.selectDialogueOption(i);
@@ -5477,9 +5709,9 @@ public class Game : MonoBehaviour
             }
         }
         goto IL_0450;
-    IL_0450:
+        IL_0450:
         return true;
-    IL_0256:
+        IL_0256:
         this.freeCam = UserSettings.data.defaultToFreeCam;
         goto IL_0450;
     }
@@ -7169,13 +7401,13 @@ public class Game : MonoBehaviour
         }
         if (this.customizingCharacter)
         {
-            if (this.PC().interactingWithSelf)
+            if (this.OC().interactingWithSelf)
             {
-                ((UnityEngine.Component)this.UI.transform.Find("CustomizationCamControls").Find("previewArousal")).GetComponent<Slider>().val += (this.PC().arousal - ((UnityEngine.Component)this.UI.transform.Find("CustomizationCamControls").Find("previewArousal")).GetComponent<Slider>().val) * Time.deltaTime * 10f;
+                ((UnityEngine.Component)this.UI.transform.Find("CustomizationCamControls").Find("previewArousal")).GetComponent<Slider>().val += (this.OC().arousal - ((UnityEngine.Component)this.UI.transform.Find("CustomizationCamControls").Find("previewArousal")).GetComponent<Slider>().val) * Time.deltaTime * 10f;
             }
             else
             {
-                this.PC().arousal += (((UnityEngine.Component)this.UI.transform.Find("CustomizationCamControls").Find("previewArousal")).GetComponent<Slider>().val - this.PC().arousal) * Time.deltaTime * 10f;
+                this.OC().arousal += (((UnityEngine.Component)this.UI.transform.Find("CustomizationCamControls").Find("previewArousal")).GetComponent<Slider>().val - this.OC().arousal) * Time.deltaTime * 10f;
             }
         }
         NPC.queuedNPCsToBuild = 0;
@@ -7302,6 +7534,166 @@ public class Game : MonoBehaviour
         {
             Game.bigHeadCheat = true;
             Game.rainbowJizzCheat = true;
+        }
+        if (UserSettings.data.mod_AleksMods)
+        {
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_PLEASURE_SELF))
+            {
+                this.ableToPleasureSelf = true;
+                this.pleasureSelf();
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_HANDJOB_OTHER))
+            {
+                if (this.PC().interactionSubject != null)
+                {
+                    this.pleasureOther(this.PC().interactionSubject, "penis", "hand");
+                }
+                else if (Game.dialoguePartner != null)
+                {
+                    this.pleasureOther(Game.dialoguePartner, "penis", "hand");
+                }
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_ORAL_OTHER))
+            {
+                if (this.PC().interactionSubject != null)
+                {
+                    this.pleasureOther(this.PC().interactionSubject, "penis", "mouth");
+                }
+                else if (Game.dialoguePartner != null)
+                {
+                    this.pleasureOther(Game.dialoguePartner, "penis", "mouth");
+                }
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_RIDE_OTHER))
+            {
+                if (this.PC().interactionSubject != null)
+                {
+                    this.pleasureOther(this.PC().interactionSubject, "penis", "butt");
+                }
+                else if (Game.dialoguePartner != null)
+                {
+                    this.pleasureOther(Game.dialoguePartner, "penis", "butt");
+                }
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_FINGER_OTHER))
+            {
+                if (this.PC().interactionSubject != null)
+                {
+                    this.pleasureOther(this.PC().interactionSubject, "tailhole", "hand");
+                }
+                else if (Game.dialoguePartner != null)
+                {
+                    this.pleasureOther(Game.dialoguePartner, "tailhole", "hand");
+                }
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_FUCK_OTHER))
+            {
+                if (this.PC().interactionSubject != null)
+                {
+                    this.pleasureOther(this.PC().interactionSubject, "tailhole", "penis");
+                }
+                else if (Game.dialoguePartner != null)
+                {
+                    this.pleasureOther(Game.dialoguePartner, "tailhole", "penis");
+                }
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_PISS_SELF))
+            {
+                this.Piss(this.PC());
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_PISS_OTHER))
+            {
+                if (this.PC().interactionSubject != null)
+                {
+                    this.Piss(this.PC().interactionSubject);
+                }
+                else if (Game.dialoguePartner != null)
+                {
+                    this.Piss(Game.dialoguePartner);
+                }
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_CONTROL_SELF))
+            {
+                this.PC().controlledByPlayer = !this.PC().controlledByPlayer;
+                this.swapped = !this.swapped;
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_CONTROL_OTHER) && this.currentTestSubjects.Count == 0)
+            {
+                if (this.PC().interactionSubject != null)
+                {
+                    this.PC().interactionSubject.controlledByPlayer = !this.PC().interactionSubject.controlledByPlayer;
+                }
+                else if (Game.dialoguePartner != null)
+                {
+                    Game.dialoguePartner.controlledByPlayer = !Game.dialoguePartner.controlledByPlayer;
+                }
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_TOOL_PREVIOUS) && this.curToolMode > 0)
+            {
+                this.curToolMode--;
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_TOOL_NEXT) && this.curToolMode < 2)
+            {
+                this.curToolMode++;
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_ORGASM_SELF))
+            {
+                this.previewOrgasm(this.PC());
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_ORGASM_OTHER))
+            {
+                if (this.PC().interactionSubject != null)
+                {
+                    this.previewOrgasm(this.PC().interactionSubject);
+                }
+                else if (Game.dialoguePartner != null)
+                {
+                    this.previewOrgasm(Game.dialoguePartner);
+                }
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_STOP_LAST_INTERACTION))
+            {
+                this.interactions[this.interactions.Count - 1].alive = false;
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_STOP_ALL_INTERACTIONS))
+            {
+                this.endSessions();
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_AROUSE_ALL))
+            {
+                for (int j = 0; j < this.characters.Count; j++)
+                {
+                    this.characters[j].arousal += 0.2f;
+                    this.characters[j].stimulation += 0.2f;
+                    this.characters[j].anticipation += 0.2f;
+                }
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_UNAROUSE_ALL))
+            {
+                for (int k = 0; k < this.characters.Count; k++)
+                {
+                    this.characters[k].arousal = 0f;
+                    this.characters[k].stimulation = 0f;
+                    this.characters[k].anticipation = 0f;
+                }
+            }
+            if (Input.GetKeyDown(UserSettings.data.KEY_MOD_CLEAN_UP_CUM))
+            {
+                for (int l = 0; l < Cum.cumDots.Count; l++)
+                {
+                    Cum.cumDots[l].life = 0f;
+                }
+                if (ProjectionPool.defaultPool != null)
+                {
+                    ProjectionPool.defaultPool.RemoveAll();
+                }
+            }
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.O))
+            {
+                this.customizeCharacterPage = 1;
+                this.originalCharacterDataString = CharacterManager.serializeCharacter(this.OC());
+                this.customizingCharacter = !this.customizingCharacter;
+            }
         }
     }
 
@@ -7770,7 +8162,7 @@ public class Game : MonoBehaviour
                     }
                 }
             }
-            if (this.characterSelectorOpen && this.randomCharactersForSelection.Count == Game.maxCharactersForSelector)
+            if (this.characterSelectorOpen && (this.randomCharactersForSelection.Count == Game.maxCharactersForSelector || UserSettings.data.mod_hideLoadScreens))
             {
                 this.showCurrency = true;
                 this.showBackButton = true;
@@ -8089,6 +8481,7 @@ public class Game : MonoBehaviour
                                                             ((UnityEngine.Component)this.UI.transform.Find("CharacterSelector").Find("RightPanel").Find("txtID")).GetComponent<ScienceTextAnimator>().setText(this.randomCharactersForSelection[this.characterSelector_currentSelected].data.uid, 7f, 1.3f, false);
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterSelector").Find("RightPanel").Find("txtName")).GetComponent<ScienceTextAnimator>().setText(this.randomCharactersForSelection[this.characterSelector_currentSelected].data.name, 0f, 1.1f, false);
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterSelector").Find("RightPanel").Find("txtSpecies")).GetComponent<ScienceTextAnimator>().setText(Localization.getPhrase("SPECIES_" + this.randomCharactersForSelection[this.characterSelector_currentSelected].data.species, string.Empty), 3.5f, 0.6f, false);
+                    this.SetStatsColor();
                     if (this.randomCharactersForSelection[this.characterSelector_currentSelected].data.genitalType == 0)
                     {
                         if (this.randomCharactersForSelection[this.characterSelector_currentSelected].data.identifiesMale)
@@ -8126,22 +8519,21 @@ public class Game : MonoBehaviour
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterSelector").Find("RightPanel").Find("txtGender")).GetComponent<ScienceTextAnimator>().setText(Localization.getPhrase("EXOTIC_GENDER", string.Empty), 2.8f, 0.9f, false);
                     }
                 }
-                goto IL_3618;
+                goto IL_362a;
             }
             this.UI.transform.Find("CharacterSelector").gameObject.SetActive(false);
             if (!this.wasCharacterSelectorOpen)
             {
-                goto IL_3611;
+                goto IL_3623;
             }
-            goto IL_3611;
+            goto IL_3623;
         }
-        goto IL_3618;
-    IL_3618:
-        this.wasCharacterSelectorOpen = (this.characterSelectorOpen && this.randomCharactersForSelection.Count == Game.maxCharactersForSelector);
-        return;
-    IL_3611:
+        goto IL_362a;
+        IL_3623:
         this.characterSelector_currentSelected_last = -1;
-        goto IL_3618;
+        goto IL_362a;
+        IL_362a:
+        this.wasCharacterSelectorOpen = (this.characterSelectorOpen && this.randomCharactersForSelection.Count == Game.maxCharactersForSelector);
     }
 
     public void cleanUpFavorites()
@@ -8296,7 +8688,7 @@ public class Game : MonoBehaviour
             }
         }
         goto IL_00a7;
-    IL_00a7:
+        IL_00a7:
         if (Input.GetKey(UserSettings.data.KEY_SCREENSHOT))
         {
             new FileInfo(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "screenshots" + Game.PathDirectorySeparatorChar + string.Empty).Directory.Create();
@@ -8404,7 +8796,6 @@ public class Game : MonoBehaviour
         {
             Game.consoleLines.RemoveAt(0);
         }
-        UnityEngine.Debug.Log(str);
     }
 
     public void consoleCommand(string command)
@@ -8547,7 +8938,7 @@ public class Game : MonoBehaviour
                                 list[i] = list[i].Split(Game.PathDirectorySeparatorChar)[list[i].Split(Game.PathDirectorySeparatorChar).Length - 1];
                                 list[i] = list[i].Split(new string[1]
                                 {
-                                                                                                                                                                                                                                                                                                                            ".png"
+                                                                                                                                                                                                                                                                                                                                ".png"
                                 }, StringSplitOptions.None)[0];
                             }
                             for (int j = 0; j < 4; j++)
@@ -8803,6 +9194,10 @@ public class Game : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 this.consoleCommand(((UnityEngine.Component)this.devConsole.transform.Find("txtIn")).GetComponent<InputField>().text);
+                if (UserSettings.data.mod_extraCommands)
+                {
+                    this.consoleCommand2(((UnityEngine.Component)this.devConsole.transform.FindChild("txtIn")).GetComponent<InputField>().text);
+                }
                 ((UnityEngine.Component)this.devConsole.transform.Find("txtIn")).GetComponent<InputField>().text = string.Empty;
             }
         }
@@ -8810,7 +9205,7 @@ public class Game : MonoBehaviour
         if (this.titleOpen || this.anythingLoading || this.showingChemicalSelectionMenu || this.pauseOpen || this.popupOpen || this.inResearchMode || this.shopOpen || this.chemicalSynthesisMenuOpen || this.curDialogue != string.Empty || this.characterSelectorOpen || TestingRoom.editingMode || this.lightingControlPanelOpen || RacknetMultiplayer.anyRacknetUIopen)
         {
             this.UIinUse = true;
-            this.inventoryOpen = (false || this.selectingComponents);
+            this.inventoryOpen = this.selectingComponents;
         }
         else if (Input.GetKeyDown(UserSettings.data.KEY_INTERFACE))
         {
@@ -9962,7 +10357,7 @@ public class Game : MonoBehaviour
     {
         this.patreonSupporters = this.rawPatreonData.Split(new string[1]
         {
-                                                                                                                                                                                                                                                                                                                                " ♠ "
+                                                                                                                                                                                                                                                                                                                                    " ♠ "
         }, StringSplitOptions.None);
         for (int i = 0; i < this.patreonSupporters.Length; i++)
         {
@@ -9985,7 +10380,8 @@ public class Game : MonoBehaviour
     {
         WWW www = new WWW(url + "?refresh=" + Guid.NewGuid());
         yield return (object)www;
-        if (www.error != string.Empty)
+        bool flag = !string.IsNullOrEmpty(www.error);
+        if (flag)
         {
             UnityEngine.Debug.Log("Failed to load patrons");
         }
@@ -10264,7 +10660,7 @@ public class Game : MonoBehaviour
         }
         if (this.fadingToBlack)
         {
-            this.UI.transform.Find("blacker").gameObject.SetActive(true);
+            this.UI.transform.Find("blacker").gameObject.SetActive(!UserSettings.data.mod_hideLoadScreens);
             this.blackAmount += (1.05f - this.blackAmount) * Game.cap(Time.deltaTime * 7f, 0f, 1f);
             this.blackerColor.a = Game.cap(this.blackAmount, 0f, 1f);
             ((UnityEngine.Component)this.UI.transform.Find("blacker")).GetComponent<Image>().color = this.blackerColor;
@@ -10280,21 +10676,21 @@ public class Game : MonoBehaviour
         }
         else if (this.characterSelectorOpen && (this.randomCharactersForSelection.Count < Game.maxCharactersForSelector || this.anyRandomCharsStillInitting))
         {
-            this.UI.transform.Find("blacker").gameObject.SetActive(true);
+            this.UI.transform.Find("blacker").gameObject.SetActive(!UserSettings.data.mod_hideLoadScreens);
             this.blackAmount += (1.05f - this.blackAmount) * Game.cap(Time.deltaTime * 7f, 0f, 1f);
             this.blackerColor.a = Game.cap(this.blackAmount, 0f, 1f);
             ((UnityEngine.Component)this.UI.transform.Find("blacker")).GetComponent<Image>().color = this.blackerColor;
         }
         else if (NPC.waitingForBlackoutElevator)
         {
-            this.UI.transform.Find("blacker").gameObject.SetActive(true);
+            this.UI.transform.Find("blacker").gameObject.SetActive(!UserSettings.data.mod_hideLoadScreens);
             this.blackAmount += (1.05f - this.blackAmount) * Game.cap(Time.deltaTime * 7f, 0f, 1f);
             this.blackerColor.a = Game.cap(this.blackAmount, 0f, 1f);
             ((UnityEngine.Component)this.UI.transform.Find("blacker")).GetComponent<Image>().color = this.blackerColor;
         }
         else if (this.firstCustomizationSpeciesSelection || this.stillThinkingAfterFirstSpeciesSelection || this.justTeleportedToHallway > 0f || this.renderingHeadshot || this.waitingOnPostCustomizationSnapshot || (this.PC() == null && !this.titleOpen && this.loadTransition > 0.9f))
         {
-            this.UI.transform.Find("blacker").gameObject.SetActive(true);
+            this.UI.transform.Find("blacker").gameObject.SetActive(!UserSettings.data.mod_hideLoadScreens);
             if (this.PC() == null || this.firstCustomizationSpeciesSelection)
             {
                 this.blackAmount = 1.05f;
@@ -11396,16 +11792,16 @@ public class Game : MonoBehaviour
                             this.sextoyPickupsActive[num12] = true;
                         }
                         goto IL_1189;
-                    IL_10d6:
+                        IL_10d6:
                         this.sextoyPickupsActive[num12] = (rackCharacter.breastSize_act >= RackCharacter.breastThreshhold);
                         goto IL_1189;
-                    IL_10f9:
+                        IL_10f9:
                         this.sextoyPickupsActive[num12] = (rackCharacter.showBalls && rackCharacter.data.ballsType != 2);
                         goto IL_1189;
-                    IL_112c:
+                        IL_112c:
                         this.sextoyPickupsActive[num12] = rackCharacter.showPenis;
                         goto IL_1189;
-                    IL_1189:
+                        IL_1189:
                         this.UI.transform.Find("InventoryScreen").Find("SubjectMenu").GetChild(num12)
                             .gameObject.SetActive(this.sextoyPickupsActive[num12]);
                         this.UI.transform.Find("InventoryScreen").Find("SubjectMenu").GetChild(num12)
@@ -11448,19 +11844,19 @@ public class Game : MonoBehaviour
                             .localScale) * Game.cap(Time.deltaTime * 21f, 0f, 1f);
                         num12++;
                         continue;
-                    IL_1073:
+                        IL_1073:
                         this.sextoyPickupsActive[num12] = (rackCharacter.breastSize_act < RackCharacter.breastThreshhold);
                         goto IL_1189;
-                    IL_1170:
+                        IL_1170:
                         this.sextoyPickupsActive[num12] = rackCharacter.showVagina;
                         goto IL_1189;
-                    IL_1145:
+                        IL_1145:
                         this.sextoyPickupsActive[num12] = (rackCharacter.showVagina && !rackCharacter.showPenis);
                         goto IL_1189;
-                    IL_1093:
+                        IL_1093:
                         this.sextoyPickupsActive[num12] = (rackCharacter.breastSize_act < RackCharacter.breastThreshhold);
                         goto IL_1189;
-                    IL_10b3:
+                        IL_10b3:
                         this.sextoyPickupsActive[num12] = (rackCharacter.breastSize_act >= RackCharacter.breastThreshhold);
                         goto IL_1189;
                     }
@@ -12162,6 +12558,8 @@ public class Game : MonoBehaviour
 
     public void beginCustomization()
     {
+        this.PC().interactionSubject = null;
+        Game.dialoguePartner = null;
         this.customizingCharacter = true;
         Bag bagByName = Inventory.getBagByName("CLOTHING");
         List<int> list = new List<int>();
@@ -12232,24 +12630,24 @@ public class Game : MonoBehaviour
 
     public void exitCharacterCustomization()
     {
-        if (this.PC().interactingWithSelf)
+        if (this.OC().interactingWithSelf)
         {
-            for (int i = 0; i < this.PC().currentInteractions.Count; i++)
+            for (int i = 0; i < this.OC().currentInteractions.Count; i++)
             {
-                if (this.PC().currentInteractions[i].selfInteraction)
+                if (this.OC().currentInteractions[i].selfInteraction)
                 {
-                    this.PC().currentInteractions[i].alive = false;
+                    this.OC().currentInteractions[i].alive = false;
                 }
             }
         }
         this.waitingOnPostCustomizationSnapshot = true;
         this.customizingCharacter = false;
-        this.PC().updateClothingBasedOnInventory();
+        this.OC().updateClothingBasedOnInventory();
         this.customizationCamRot = 0f;
         this.customizationCamElevation = 0f;
         this.justChangedCustomizationPageAndNeedRecenter = true;
         this.colorPickerOpen = false;
-        this.PC().setPose("Idle");
+        this.OC().setPose("Idle");
         if ((UnityEngine.Object)this.embellishmentBrush != (UnityEngine.Object)null)
         {
             this.embellishmentBrush.SetActive(false);
@@ -12260,14 +12658,14 @@ public class Game : MonoBehaviour
         {
             ((UnityEngine.Component)this.World.transform.Find("Connector").Find("Showers").Find("MiddleShower")).GetComponent<Shower>().toggleShower();
         }
-        CharacterManager.updateCharacter(this.PC().data.uid, this.PC().data);
+        CharacterManager.updateCharacter(this.OC().data.uid, this.OC().data);
         CharacterManager.saveCharacterData();
         this.setCurTool(0, true, false, KeyCode.Escape);
     }
 
     public bool saveCustomization(MenuOption mo)
     {
-        if (!this.PC().autoWalking)
+        if (!this.PC().autoWalking && this.PC() == this.OC())
         {
             CharacterManager.data.playerCharacter = this.PC().data.uid;
             CharacterManager.saveCharacterData();
@@ -12280,6 +12678,12 @@ public class Game : MonoBehaviour
                 this.volUI = 0f;
                 this.needTeleportToHallway = true;
             }
+        }
+        else
+        {
+            this.exitCharacterCustomization();
+            CharacterManager.exportCharacter(this.OC(), "NPC." + Inventory.data.characterName + "." + this.OC().npcData.handle);
+            this.waitingOnPostCustomizationSnapshot = false;
         }
         return true;
     }
@@ -12298,7 +12702,7 @@ public class Game : MonoBehaviour
 
     public bool cancelCustomization(MenuOption mo)
     {
-        CharacterManager.deserializeCharacter(this.originalCharacterDataString, this.PC(), string.Empty);
+        CharacterManager.deserializeCharacter(this.originalCharacterDataString, this.OC(), string.Empty);
         this.saveCustomization(mo);
         return true;
     }
@@ -12462,19 +12866,19 @@ public class Game : MonoBehaviour
             this.characterRedrawDelay--;
             if (this.characterRedrawDelay <= 0)
             {
-                this.PC().buildTexture();
+                this.OC().buildTexture();
             }
         }
         if (this.characterRebuildDelay > 0)
         {
-            if (this.characterRebuildDelay > 1000 && !this.PC().animationPaused)
+            if (this.characterRebuildDelay > 1000 && !this.OC().animationPaused)
             {
                 this.characterRebuildDelay = 2;
             }
             this.characterRebuildDelay--;
             if (this.characterRebuildDelay <= 0)
             {
-                this.PC().rebuildCharacter();
+                this.OC().rebuildCharacter();
                 this.editingExistingEmbellishment = false;
             }
         }
@@ -12482,7 +12886,7 @@ public class Game : MonoBehaviour
         {
             this.showBackButton = true;
         }
-        if (this.customizingCharacter && !this.PC().autoWalking)
+        if (this.customizingCharacter && !this.OC().autoWalking)
         {
             if (Input.anyKey)
             {
@@ -12522,7 +12926,7 @@ public class Game : MonoBehaviour
                 ((UnityEngine.Component)this.UI.transform.Find("CustomizationCamControls").Find("cmdShowerOn")).GetComponent<Image>().color = Game.fadedCol;
                 ((UnityEngine.Component)this.UI.transform.Find("CustomizationCamControls").Find("cmdShowerOff")).GetComponent<Image>().color = Color.white;
             }
-            if (this.PC().showPenis)
+            if (this.OC().showPenis)
             {
                 this.setAlphaRecursive(this.UI.transform.Find("CustomizationCamControls").Find("previewArousal"), 1f);
             }
@@ -12533,7 +12937,7 @@ public class Game : MonoBehaviour
             if (this.needInitialValues)
             {
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("GenitalOptions")).GetComponent<HexOptionSystem>().clearAll();
-                switch (this.PC().data.genitalType)
+                switch (this.OC().data.genitalType)
                 {
                     case 0:
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("GenitalOptions")
@@ -12553,44 +12957,44 @@ public class Game : MonoBehaviour
                         break;
                 }
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallOptions")).GetComponent<HexOptionSystem>().clearAll();
-                switch (this.PC().data.ballsType)
+                switch (this.OC().data.ballsType)
                 {
-                    case 0:
+                    case 2:
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallOptions")
-                            .Find("NO_SHEATH")).GetComponent<hexOption>().selected = true;
+                            .Find("SLIT")).GetComponent<hexOption>().selected = true;
                         break;
                     case 1:
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallOptions")
                             .Find("SHEATH")).GetComponent<hexOption>().selected = true;
                         break;
-                    case 2:
+                    case 0:
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallOptions")
-                            .Find("SLIT")).GetComponent<hexOption>().selected = true;
+                            .Find("NO_SHEATH")).GetComponent<hexOption>().selected = true;
                         break;
                 }
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("KnotOptions")).GetComponent<HexOptionSystem>().clearAll();
-                switch (this.PC().data.hasKnot)
+                switch (this.OC().data.hasKnot)
                 {
+                    default:
+                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("KnotOptions")
+                            .Find("KNOTTED")).GetComponent<hexOption>().selected = true;
+                        break;
                     case false:
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("KnotOptions")
                             .Find("NO_KNOT")).GetComponent<hexOption>().selected = true;
                         break;
-                    case true:
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("KnotOptions")
-                            .Find("KNOTTED")).GetComponent<hexOption>().selected = true;
-                        break;
                 }
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisOptions")).GetComponent<HexOptionSystem>().clearAll();
-                switch (this.PC().data.identifiesMale)
+                switch (this.OC().data.identifiesMale)
                 {
+                    default:
+                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ddIdentity")).GetComponent<Dropdown>().value = 0;
+                        break;
                     case false:
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ddIdentity")).GetComponent<Dropdown>().value = 1;
                         break;
-                    case true:
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ddIdentity")).GetComponent<Dropdown>().value = 0;
-                        break;
                 }
-                switch (this.PC().data.penisType)
+                switch (this.OC().data.penisType)
                 {
                     case 0:
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisOptions")
@@ -12613,129 +13017,129 @@ public class Game : MonoBehaviour
                             .Find("EQUINE")).GetComponent<hexOption>().selected = true;
                         break;
                 }
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BreastSlider")).GetComponent<Slider>().val = this.PC().data.breastSize / Game.maxBreastSize;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BreastPerkSlider")).GetComponent<Slider>().val = this.PC().data.breastPerk;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisGrowerShowerSlider")).GetComponent<Slider>().val = this.PC().data.growerShower;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeSlider")).GetComponent<Slider>().val = this.PC().data.penisSize;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ClitSlider")).GetComponent<Slider>().val = this.PC().data.clitSize;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeGrid")).GetComponent<UIGrid>().valX = this.PC().data.penisLength;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeGrid")).GetComponent<UIGrid>().valY = this.PC().data.penisGirth;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("VaginaGrid")).GetComponent<UIGrid>().valX = this.PC().data.vaginaShape;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("VaginaGrid")).GetComponent<UIGrid>().valY = this.PC().data.vaginaPlumpness;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisCurveGrid")).GetComponent<UIGrid>().valX = this.PC().data.penisCurveX;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisCurveGrid")).GetComponent<UIGrid>().valY = this.PC().data.penisCurveY;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallSlider")).GetComponent<Slider>().val = this.PC().data.ballSize;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ScrotumSlider")).GetComponent<Slider>().val = this.PC().data.scrotumLength;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("NippleSlider")).GetComponent<Slider>().val = this.PC().data.nippleSize;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("SizeGrid")).GetComponent<UIGrid>().valX = this.PC().data.bodyMass;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("SizeGrid")).GetComponent<UIGrid>().valY = this.PC().data.height;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FeminitySlider")).GetComponent<Slider>().val = this.PC().data.bodyFemininity;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FaceFeminitySlider")).GetComponent<Slider>().val = this.PC().data.headFemininity;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("MuscleSlider")).GetComponent<Slider>().val = this.PC().data.muscle;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FatSlider")).GetComponent<Slider>().val = this.PC().data.adiposity;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("BellySlider")).GetComponent<Slider>().val = this.PC().data.belly;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("HipSlider")).GetComponent<Slider>().val = this.PC().data.hipWidth;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("ButtSlider")).GetComponent<Slider>().val = this.PC().data.buttSize;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BreastSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.breastSize, 0f, 4f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BreastPerkSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.breastPerk, 0f, 1f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisGrowerShowerSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.growerShower, 0f, 1f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.penisSize, -1f, 2f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ClitSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.clitSize, -1f, 2f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeGrid")).GetComponent<UIGrid>().valX = this.modSlideRangeIn(this.OC().data.penisLength, -1f, 4f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeGrid")).GetComponent<UIGrid>().valY = this.modSlideRangeIn(this.OC().data.penisGirth, -1f, 2f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("VaginaGrid")).GetComponent<UIGrid>().valX = this.modSlideRangeIn(this.OC().data.vaginaShape, -1f, 2f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("VaginaGrid")).GetComponent<UIGrid>().valY = this.modSlideRangeIn(this.OC().data.vaginaPlumpness, -1f, 2f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisCurveGrid")).GetComponent<UIGrid>().valX = this.modSlideRangeIn(this.OC().data.penisCurveX, -1f, 2f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisCurveGrid")).GetComponent<UIGrid>().valY = this.modSlideRangeIn(this.OC().data.penisCurveY, -1f, 2f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.ballSize, -1f, 2f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ScrotumSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.scrotumLength, -1f, 2f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("NippleSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.nippleSize, 0f, 1f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("SizeGrid")).GetComponent<UIGrid>().valX = this.modSlideRangeIn(this.OC().data.bodyMass, 0f, 1f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("SizeGrid")).GetComponent<UIGrid>().valY = this.modSlideRangeIn(this.OC().data.height, -1f, 2f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FeminitySlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.bodyFemininity, 0f, 1f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FaceFeminitySlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.headFemininity, 0f, 1f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("MuscleSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.muscle, 0f, 1f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FatSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.adiposity, -1f, 2f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("BellySlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.belly, 0f, 1f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("HipSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.hipWidth, 0f, 1f);
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("ButtSlider")).GetComponent<Slider>().val = this.modSlideRangeIn(this.OC().data.buttSize, 0f, 1f);
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")).GetComponent<HexOptionSystem>().clearAll();
-                if (this.PC().data.specialFoot == "hooved")
+                if (this.OC().data.specialFoot == "hooved")
                 {
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                         .Find("DIGITIGRADE_HOOVED")).GetComponent<hexOption>().selected = true;
                 }
-                else if (this.PC().data.specialFoot == "slender")
+                else if (this.OC().data.specialFoot == "slender")
                 {
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                         .Find("DIGITIGRADE_SLENDER")).GetComponent<hexOption>().selected = true;
                 }
-                else if (this.PC().data.specialFoot == "meaty_d")
+                else if (this.OC().data.specialFoot == "meaty_d")
                 {
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                         .Find("DIGITIGRADE_MEATY")).GetComponent<hexOption>().selected = true;
                 }
-                else if (this.PC().data.specialFoot == "meaty_p")
+                else if (this.OC().data.specialFoot == "meaty_p")
                 {
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                         .Find("PLANTIGRADE_MEATY")).GetComponent<hexOption>().selected = true;
                 }
-                else if (this.PC().data.specialFoot == "webbed")
+                else if (this.OC().data.specialFoot == "webbed")
                 {
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                         .Find("DIGITIGRADE_WEBBED")).GetComponent<hexOption>().selected = true;
                 }
                 else
                 {
-                    switch (this.PC().data.legType)
+                    switch (this.OC().data.legType)
                     {
-                        case 0:
-                            ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
-                                .Find("DIGITIGRADE_" + this.PC().data.numToes + "TOE")).GetComponent<hexOption>().selected = true;
-                            break;
                         case 1:
                             ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
-                                .Find("PLANTIGRADE_" + this.PC().data.numToes + "TOE")).GetComponent<hexOption>().selected = true;
+                                .Find("PLANTIGRADE_" + this.OC().data.numToes + "TOE")).GetComponent<hexOption>().selected = true;
+                            break;
+                        case 0:
+                            ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
+                                .Find("DIGITIGRADE_" + this.OC().data.numToes + "TOE")).GetComponent<hexOption>().selected = true;
                             break;
                     }
                 }
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HandOptions")).GetComponent<HexOptionSystem>().clearAll();
-                if (this.PC().data.specialHands == "webbed")
+                if (this.OC().data.specialHands == "webbed")
                 {
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HandOptions")
                         .Find("HAND_WEBBED")).GetComponent<hexOption>().selected = true;
                 }
-                else if (this.PC().data.specialHands == "meaty")
+                else if (this.OC().data.specialHands == "meaty")
                 {
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HandOptions")
                         .Find("HAND_MEATY")).GetComponent<hexOption>().selected = true;
                 }
                 else
                 {
-                    switch (this.PC().data.numFingers)
+                    switch (this.OC().data.numFingers)
                     {
-                        case 3:
+                        case 5:
                             ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HandOptions")
-                                .Find("HAND_3FINGER")).GetComponent<hexOption>().selected = true;
+                                .Find("HAND_5FINGER")).GetComponent<hexOption>().selected = true;
                             break;
                         case 4:
                             ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HandOptions")
                                 .Find("HAND_4FINGER")).GetComponent<hexOption>().selected = true;
                             break;
-                        case 5:
+                        case 3:
                             ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HandOptions")
-                                .Find("HAND_5FINGER")).GetComponent<hexOption>().selected = true;
+                                .Find("HAND_3FINGER")).GetComponent<hexOption>().selected = true;
                             break;
                     }
                 }
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingOptions")).GetComponent<HexOptionSystem>().clearAll();
-                switch (this.PC().data.wingType)
+                switch (this.OC().data.wingType)
                 {
-                    case 0:
+                    case 2:
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingOptions")
-                            .Find("WING_NONE")).GetComponent<hexOption>().selected = true;
+                            .Find("WING_LEATHERY")).GetComponent<hexOption>().selected = true;
                         break;
                     case 1:
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingOptions")
                             .Find("WING_FEATHERY")).GetComponent<hexOption>().selected = true;
                         break;
-                    case 2:
+                    case 0:
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingOptions")
-                            .Find("WING_LEATHERY")).GetComponent<hexOption>().selected = true;
+                            .Find("WING_NONE")).GetComponent<hexOption>().selected = true;
                         break;
                 }
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkWag")).GetComponent<Toggle>().isOn = this.PC().data.tailWag;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkTwitch")).GetComponent<Toggle>().isOn = this.PC().data.tailFlick;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkCurl")).GetComponent<Toggle>().isOn = this.PC().data.tailTuck;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailCurlGrid")).GetComponent<UIGrid>().valX = this.PC().data.tailCurlX;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailCurlGrid")).GetComponent<UIGrid>().valY = this.PC().data.tailCurlY;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valX = this.PC().data.tailTaper;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valY = this.PC().data.tailThickness;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailLengthSlider")).GetComponent<Slider>().val = this.PC().data.tailLength;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailStiffnessSlider")).GetComponent<Slider>().val = this.PC().data.tailStiffness;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailSizeSlider")).GetComponent<Slider>().val = this.PC().data.tailSize;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingSizeSlider")).GetComponent<Slider>().val = this.PC().data.wingSize;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailLiftSlider")).GetComponent<Slider>().val = this.PC().data.tailLift;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkWag")).GetComponent<Toggle>().isOn = this.OC().data.tailWag;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkTwitch")).GetComponent<Toggle>().isOn = this.OC().data.tailFlick;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkCurl")).GetComponent<Toggle>().isOn = this.OC().data.tailTuck;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailCurlGrid")).GetComponent<UIGrid>().valX = this.OC().data.tailCurlX;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailCurlGrid")).GetComponent<UIGrid>().valY = this.OC().data.tailCurlY;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valX = this.OC().data.tailTaper;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valY = this.OC().data.tailThickness;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailLengthSlider")).GetComponent<Slider>().val = this.OC().data.tailLength;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailStiffnessSlider")).GetComponent<Slider>().val = this.OC().data.tailStiffness;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailSizeSlider")).GetComponent<Slider>().val = this.OC().data.tailSize;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingSizeSlider")).GetComponent<Slider>().val = this.OC().data.wingSize;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailLiftSlider")).GetComponent<Slider>().val = this.OC().data.tailLift;
                 for (int i = 0; i < ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().options.Count; i++)
                 {
-                    if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().options[i].text == this.PC().data.headType)
+                    if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().options[i].text == this.OC().data.headType)
                     {
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().value = i;
                     }
@@ -12743,7 +13147,7 @@ public class Game : MonoBehaviour
                 this.needInitialValues = false;
             }
             this.UI.transform.Find("CharacterCustomizationUI").gameObject.SetActive(!this.texturePatternMenuOpen && !this.embellishmentMenuOpen);
-            this.UI.transform.Find("CharacterCustomizationSaveCancel").gameObject.SetActive(!this.texturePatternMenuOpen && !this.embellishmentMenuOpen && !this.showBackButton && this.blackAmount <= 0.3f && !this.PC().interactingWithSelf);
+            this.UI.transform.Find("CharacterCustomizationSaveCancel").gameObject.SetActive(!this.texturePatternMenuOpen && !this.embellishmentMenuOpen && !this.showBackButton && this.blackAmount <= 0.3f && !this.OC().interactingWithSelf);
             this.UI.transform.Find("CustomizationCamControls").gameObject.SetActive(this.blackAmount <= 0.3f);
             this.UI.transform.Find("CharacterCustomizationSaveCancel").Find("cmdCancel").gameObject.SetActive(Inventory.getCharVar("startingStuffGiven") == 1f);
             this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").gameObject.SetActive(this.customizeCharacterPage != 0);
@@ -12764,23 +13168,8 @@ public class Game : MonoBehaviour
                 case 4:
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("EMBELLISHMENTS", string.Empty);
                     break;
-                case 31:
-                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("EMBELLISHMENT_COLORS", string.Empty);
-                    break;
-                case 21:
-                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("TAIL_FUR", string.Empty);
-                    break;
                 case 5:
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("COLOR_AND_MARKINGS", string.Empty);
-                    break;
-                case 42:
-                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("EXPORT", string.Empty);
-                    break;
-                case 41:
-                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("IMPORT", string.Empty);
-                    break;
-                case 51:
-                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("DECALS", string.Empty);
                     break;
                 case 6:
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("SEXUAL_CHARACTERISTICS", string.Empty);
@@ -12788,18 +13177,33 @@ public class Game : MonoBehaviour
                 case 7:
                     ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("SEXUAL_PREFERENCES", string.Empty);
                     break;
+                case 51:
+                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("DECALS", string.Empty);
+                    break;
+                case 31:
+                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("EMBELLISHMENT_COLORS", string.Empty);
+                    break;
+                case 21:
+                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("TAIL_FUR", string.Empty);
+                    break;
+                case 42:
+                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("EXPORT", string.Empty);
+                    break;
+                case 41:
+                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("categoryMenu").Find("txtHeader")).GetComponent<Text>().text = Localization.getPhrase("IMPORT", string.Empty);
+                    break;
             }
             this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").gameObject.SetActive(this.customizeCharacterPage == 1);
             if (this.customizeCharacterPage == 1)
             {
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ddIdentity")).GetComponent<Dropdown>().options[0].text = Localization.getPhrase("MALE", string.Empty);
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ddIdentity")).GetComponent<Dropdown>().options[1].text = Localization.getPhrase("FEMALE", string.Empty);
-                this.PC().data.identifiesMale = (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ddIdentity")).GetComponent<Dropdown>().value == 0);
-                if (this.PC().showPenis)
+                this.OC().data.identifiesMale = (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ddIdentity")).GetComponent<Dropdown>().value == 0);
+                if (this.OC().showPenis)
                 {
                     this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisOptions"), 1f);
                     this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeSlider"), 1f);
-                    if (!this.PC().data.hasSheath)
+                    if (!this.OC().data.hasSheath)
                     {
                         this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisGrowerShowerSlider"), 1f);
                     }
@@ -12820,7 +13224,7 @@ public class Game : MonoBehaviour
                     this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisCurveGrid"), 0.25f);
                     this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("KnotOptions"), 0.25f);
                 }
-                if (this.PC().showBalls)
+                if (this.OC().showBalls)
                 {
                     this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallSlider"), 1f);
                     this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallOptions"), 1f);
@@ -12830,7 +13234,7 @@ public class Game : MonoBehaviour
                     this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallSlider"), 0.25f);
                     this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallOptions"), 0.25f);
                 }
-                if (this.PC().showVagina)
+                if (this.OC().showVagina)
                 {
                     this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("VaginaGrid"), 1f);
                 }
@@ -12838,7 +13242,7 @@ public class Game : MonoBehaviour
                 {
                     this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("VaginaGrid"), 0.25f);
                 }
-                if (this.PC().showVagina && !this.PC().showPenis)
+                if (this.OC().showVagina && !this.OC().showPenis)
                 {
                     this.setAlphaRecursive(this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ClitSlider"), 1f);
                 }
@@ -12849,165 +13253,165 @@ public class Game : MonoBehaviour
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("KnotOptions")
                     .Find("NO_KNOT")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.hasKnot = false;
+                    this.OC().data.hasKnot = false;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("KnotOptions")
                     .Find("KNOTTED")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.hasKnot = true;
+                    this.OC().data.hasKnot = true;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallOptions")
                     .Find("NO_SHEATH")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.ballsType = 0;
+                    this.OC().data.ballsType = 0;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallOptions")
                     .Find("SHEATH")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.ballsType = 1;
+                    this.OC().data.ballsType = 1;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallOptions")
                     .Find("SLIT")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.ballsType = 2;
+                    this.OC().data.ballsType = 2;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("GenitalOptions")
                     .Find("PENIS")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.genitalType = 0;
+                    this.OC().data.genitalType = 0;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("GenitalOptions")
                     .Find("VAGINA")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.genitalType = 1;
+                    this.OC().data.genitalType = 1;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("GenitalOptions")
                     .Find("NEUTER")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.genitalType = 2;
+                    this.OC().data.genitalType = 2;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("GenitalOptions")
                     .Find("HERMAPHRODITE")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.genitalType = 3;
-                    this.PC().data.ballsType = 0;
+                    this.OC().data.genitalType = 3;
+                    this.OC().data.ballsType = 0;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisOptions")
                     .Find("HUMANOID")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.penisType = 0;
+                    this.OC().data.penisType = 0;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisOptions")
                     .Find("HUMANOID_UNCUT")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.penisType = 1;
+                    this.OC().data.penisType = 1;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisOptions")
                     .Find("CANINE")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.penisType = 2;
+                    this.OC().data.penisType = 2;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisOptions")
                     .Find("TAPERED")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.penisType = 3;
+                    this.OC().data.penisType = 3;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisOptions")
                     .Find("EQUINE")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.penisType = 4;
+                    this.OC().data.penisType = 4;
                 }
-                this.PC().data.breastSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BreastSlider")).GetComponent<Slider>().val * Game.maxBreastSize;
-                this.PC().data.breastPerk = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BreastPerkSlider")).GetComponent<Slider>().val;
-                this.PC().data.growerShower = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisGrowerShowerSlider")).GetComponent<Slider>().val;
-                this.PC().data.penisSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeSlider")).GetComponent<Slider>().val;
-                this.PC().data.clitSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ClitSlider")).GetComponent<Slider>().val;
-                this.PC().data.ballSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallSlider")).GetComponent<Slider>().val;
-                this.PC().data.scrotumLength = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ScrotumSlider")).GetComponent<Slider>().val;
-                this.PC().data.penisLength = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeGrid")).GetComponent<UIGrid>().valX;
-                this.PC().data.penisGirth = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeGrid")).GetComponent<UIGrid>().valY;
-                this.PC().data.penisCurveX = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisCurveGrid")).GetComponent<UIGrid>().valX;
-                this.PC().data.penisCurveY = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisCurveGrid")).GetComponent<UIGrid>().valY;
-                this.PC().data.nippleSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("NippleSlider")).GetComponent<Slider>().val;
-                this.PC().data.vaginaShape = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("VaginaGrid")).GetComponent<UIGrid>().valX;
-                this.PC().data.vaginaPlumpness = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("VaginaGrid")).GetComponent<UIGrid>().valY;
+                this.OC().data.breastSize = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BreastSlider")).GetComponent<Slider>().val, 0f, 4f);
+                this.OC().data.breastPerk = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BreastPerkSlider")).GetComponent<Slider>().val, 0f, 1f);
+                this.OC().data.growerShower = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisGrowerShowerSlider")).GetComponent<Slider>().val, 0f, 1f);
+                this.OC().data.penisSize = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeSlider")).GetComponent<Slider>().val, -1f, 2f);
+                this.OC().data.clitSize = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ClitSlider")).GetComponent<Slider>().val, -1f, 2f);
+                this.OC().data.ballSize = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("BallSlider")).GetComponent<Slider>().val, -1f, 2f);
+                this.OC().data.scrotumLength = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("ScrotumSlider")).GetComponent<Slider>().val, -1f, 2f);
+                this.OC().data.penisLength = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeGrid")).GetComponent<UIGrid>().valX, -1f, 4f);
+                this.OC().data.penisGirth = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisSizeGrid")).GetComponent<UIGrid>().valY, -1f, 2f);
+                this.OC().data.penisCurveX = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisCurveGrid")).GetComponent<UIGrid>().valX, -1f, 2f);
+                this.OC().data.penisCurveY = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("PenisCurveGrid")).GetComponent<UIGrid>().valY, -1f, 2f);
+                this.OC().data.nippleSize = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("NippleSlider")).GetComponent<Slider>().val, 0f, 1f);
+                this.OC().data.vaginaShape = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("VaginaGrid")).GetComponent<UIGrid>().valX, -1f, 2f);
+                this.OC().data.vaginaPlumpness = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("Genitals").Find("VaginaGrid")).GetComponent<UIGrid>().valY, -1f, 2f);
             }
             this.UI.transform.Find("CharacterCustomizationUI").Find("QuickStart").gameObject.SetActive(this.customizeCharacterPage == 0);
             this.processQuickStart();
             this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").gameObject.SetActive(this.customizeCharacterPage == 2);
             if (this.customizeCharacterPage == 2)
             {
-                this.PC().data.bodyMass = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("SizeGrid")).GetComponent<UIGrid>().valX;
-                this.PC().data.height = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("SizeGrid")).GetComponent<UIGrid>().valY;
-                this.PC().data.bodyFemininity = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FeminitySlider")).GetComponent<Slider>().val;
-                this.PC().data.headFemininity = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FaceFeminitySlider")).GetComponent<Slider>().val;
-                this.PC().data.muscle = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("MuscleSlider")).GetComponent<Slider>().val;
-                this.PC().data.adiposity = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FatSlider")).GetComponent<Slider>().val;
-                this.PC().data.belly = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("BellySlider")).GetComponent<Slider>().val;
-                this.PC().data.hipWidth = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("HipSlider")).GetComponent<Slider>().val;
-                this.PC().data.buttSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("ButtSlider")).GetComponent<Slider>().val;
+                this.OC().data.bodyMass = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("SizeGrid")).GetComponent<UIGrid>().valX, -1f, 2f);
+                this.OC().data.height = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("SizeGrid")).GetComponent<UIGrid>().valY, -1f, 2f);
+                this.OC().data.bodyFemininity = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FeminitySlider")).GetComponent<Slider>().val, 0f, 1f);
+                this.OC().data.headFemininity = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FaceFeminitySlider")).GetComponent<Slider>().val, 0f, 1f);
+                this.OC().data.muscle = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("MuscleSlider")).GetComponent<Slider>().val, 0f, 1f);
+                this.OC().data.adiposity = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("FatSlider")).GetComponent<Slider>().val, -1f, 2f);
+                this.OC().data.belly = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("BellySlider")).GetComponent<Slider>().val, 0f, 1f);
+                this.OC().data.hipWidth = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("HipSlider")).GetComponent<Slider>().val, 0f, 1f);
+                this.OC().data.buttSize = this.modSlideRangeOut(((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("BodyType").Find("ButtSlider")).GetComponent<Slider>().val, 0f, 1f);
             }
             this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").gameObject.SetActive(this.customizeCharacterPage == 3);
             if (this.customizeCharacterPage == 3)
             {
-                this.PC().data.specialFoot = string.Empty;
+                this.OC().data.specialFoot = string.Empty;
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                     .Find("DIGITIGRADE_HOOVED")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.legType = 0;
-                    this.PC().data.specialFoot = "hooved";
+                    this.OC().data.legType = 0;
+                    this.OC().data.specialFoot = "hooved";
                 }
                 else if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                     .Find("DIGITIGRADE_SLENDER")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.legType = 0;
-                    this.PC().data.specialFoot = "slender";
+                    this.OC().data.legType = 0;
+                    this.OC().data.specialFoot = "slender";
                 }
                 else if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                     .Find("DIGITIGRADE_MEATY")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.legType = 0;
-                    this.PC().data.specialFoot = "meaty_d";
+                    this.OC().data.legType = 0;
+                    this.OC().data.specialFoot = "meaty_d";
                 }
                 else if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                     .Find("PLANTIGRADE_MEATY")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.legType = 1;
-                    this.PC().data.specialFoot = "meaty_p";
+                    this.OC().data.legType = 1;
+                    this.OC().data.specialFoot = "meaty_p";
                 }
                 else if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                     .Find("DIGITIGRADE_WEBBED")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.legType = 0;
-                    this.PC().data.specialFoot = "webbed";
+                    this.OC().data.legType = 0;
+                    this.OC().data.specialFoot = "webbed";
                 }
                 for (int j = 3; j <= 5; j++)
                 {
                     if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                         .Find("DIGITIGRADE_" + j + "TOE")).GetComponent<hexOption>().selected)
                     {
-                        this.PC().data.legType = 0;
-                        this.PC().data.numToes = j;
+                        this.OC().data.legType = 0;
+                        this.OC().data.numToes = j;
                     }
                     if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")
                         .Find("PLANTIGRADE_" + j + "TOE")).GetComponent<hexOption>().selected)
                     {
-                        this.PC().data.legType = 1;
-                        this.PC().data.numToes = j;
+                        this.OC().data.legType = 1;
+                        this.OC().data.numToes = j;
                     }
                 }
-                this.PC().data.specialHands = string.Empty;
+                this.OC().data.specialHands = string.Empty;
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HandOptions")
                     .Find("HAND_MEATY")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.numFingers = 5;
-                    this.PC().data.specialHands = "meaty";
+                    this.OC().data.numFingers = 5;
+                    this.OC().data.specialHands = "meaty";
                 }
                 else if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HandOptions")
                     .Find("HAND_WEBBED")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.numFingers = 5;
-                    this.PC().data.specialHands = "webbed";
+                    this.OC().data.numFingers = 5;
+                    this.OC().data.specialHands = "webbed";
                 }
                 else
                 {
@@ -13016,45 +13420,45 @@ public class Game : MonoBehaviour
                         if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HandOptions")
                             .Find("HAND_" + k + "FINGER")).GetComponent<hexOption>().selected)
                         {
-                            this.PC().data.numFingers = k;
+                            this.OC().data.numFingers = k;
                         }
                     }
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingOptions")
                     .Find("WING_NONE")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.wingType = 0;
+                    this.OC().data.wingType = 0;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingOptions")
                     .Find("WING_FEATHERY")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.wingType = 1;
+                    this.OC().data.wingType = 1;
                 }
                 if (((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingOptions")
                     .Find("WING_LEATHERY")).GetComponent<hexOption>().selected)
                 {
-                    this.PC().data.wingType = 2;
+                    this.OC().data.wingType = 2;
                 }
-                this.PC().data.tailWag = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkWag")).GetComponent<Toggle>().isOn;
-                this.PC().data.tailFlick = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkTwitch")).GetComponent<Toggle>().isOn;
-                this.PC().data.tailTuck = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkCurl")).GetComponent<Toggle>().isOn;
-                this.PC().data.tailCurlX = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailCurlGrid")).GetComponent<UIGrid>().valX;
-                this.PC().data.tailCurlY = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailCurlGrid")).GetComponent<UIGrid>().valY;
-                this.PC().data.tailTaper = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valX;
-                this.PC().data.tailThickness = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valY;
-                this.PC().data.tailLength = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailLengthSlider")).GetComponent<Slider>().val;
-                this.PC().data.tailStiffness = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailStiffnessSlider")).GetComponent<Slider>().val;
-                this.PC().data.tailSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailSizeSlider")).GetComponent<Slider>().val;
-                this.PC().data.wingSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingSizeSlider")).GetComponent<Slider>().val;
-                this.PC().data.tailLift = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailLiftSlider")).GetComponent<Slider>().val;
-                if (this.PC().data.headType != ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().options[((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().value].text)
+                this.OC().data.tailWag = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkWag")).GetComponent<Toggle>().isOn;
+                this.OC().data.tailFlick = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkTwitch")).GetComponent<Toggle>().isOn;
+                this.OC().data.tailTuck = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("chkCurl")).GetComponent<Toggle>().isOn;
+                this.OC().data.tailCurlX = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailCurlGrid")).GetComponent<UIGrid>().valX;
+                this.OC().data.tailCurlY = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailCurlGrid")).GetComponent<UIGrid>().valY;
+                this.OC().data.tailTaper = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valX;
+                this.OC().data.tailThickness = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valY;
+                this.OC().data.tailLength = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailLengthSlider")).GetComponent<Slider>().val;
+                this.OC().data.tailStiffness = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailStiffnessSlider")).GetComponent<Slider>().val;
+                this.OC().data.tailSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailSizeSlider")).GetComponent<Slider>().val;
+                this.OC().data.wingSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingSizeSlider")).GetComponent<Slider>().val;
+                this.OC().data.tailLift = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailLiftSlider")).GetComponent<Slider>().val;
+                if (this.OC().data.headType != ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().options[((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().value].text)
                 {
-                    this.PC().data.hairstyle = "none";
-                    this.PC().data.hairvariant = 0;
-                    this.PC().data.hairAddons = new List<HairLayer>();
-                    this.PC().data.headType = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().options[((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().value].text;
+                    this.OC().data.hairstyle = "none";
+                    this.OC().data.hairvariant = 0;
+                    this.OC().data.hairAddons = new List<HairLayer>();
+                    this.OC().data.headType = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().options[((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("ddHeads")).GetComponent<Dropdown>().value].text;
                 }
-                if ((UnityEngine.Object)this.PC().headPiece != (UnityEngine.Object)null && this.PC().headPiece.name != this.lastLoadedHeadPiece)
+                if ((UnityEngine.Object)this.OC().headPiece != (UnityEngine.Object)null && this.OC().headPiece.name != this.lastLoadedHeadPiece)
                 {
                     if ((UnityEngine.Object)this.headBlendSliderTemplate == (UnityEngine.Object)null)
                     {
@@ -13072,7 +13476,7 @@ public class Game : MonoBehaviour
                     this.headBlendSliderTemplate.SetActive(true);
                     int num2 = 0;
                     int num3 = 6;
-                    if (this.PC().data.headType == "human" || this.PC().data.headType == "bird" || this.PC().data.headType == "lizard")
+                    if (this.OC().data.headType == "human" || this.OC().data.headType == "bird" || this.OC().data.headType == "lizard")
                     {
                         num3 -= 3;
                     }
@@ -13108,31 +13512,31 @@ public class Game : MonoBehaviour
                         gameObject.transform.SetParent(this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HeadBlends"));
                         this.v3 = Vector3.zero;
                         this.v3.y = 8f - 17f * (float)num2;
-                        for (int m = 0; m < this.PC().data.headMorphs.Count; m++)
+                        for (int m = 0; m < this.OC().data.headMorphs.Count; m++)
                         {
-                            if (this.PC().data.headMorphs[m].key == ((UnityEngine.Component)gameObject.transform.Find("Text")).GetComponent<Text>().text)
+                            if (this.OC().data.headMorphs[m].key == ((UnityEngine.Component)gameObject.transform.Find("Text")).GetComponent<Text>().text)
                             {
-                                ((UnityEngine.Component)gameObject.transform.Find("Slider")).GetComponent<UnityEngine.UI.Slider>().value = this.PC().data.headMorphs[m].val;
+                                ((UnityEngine.Component)gameObject.transform.Find("Slider")).GetComponent<UnityEngine.UI.Slider>().value = this.OC().data.headMorphs[m].val;
                             }
                         }
                         gameObject.transform.localPosition = this.v3;
                         gameObject.transform.localScale = Vector3.one;
                         num2++;
                     }
-                    for (int n = 0; n < ((UnityEngine.Component)this.PC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; n++)
+                    for (int n = 0; n < ((UnityEngine.Component)this.OC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; n++)
                     {
-                        if (((UnityEngine.Component)this.PC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n) != "Ghost" && ((UnityEngine.Component)this.PC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n) != "Big Eyes" && ((UnityEngine.Component)this.PC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n) != "Small Eyes" && ((UnityEngine.Component)this.PC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n) != "Masculine" && ((UnityEngine.Component)this.PC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n) != "Feminine")
+                        if (((UnityEngine.Component)this.OC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n) != "Ghost" && ((UnityEngine.Component)this.OC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n) != "Big Eyes" && ((UnityEngine.Component)this.OC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n) != "Small Eyes" && ((UnityEngine.Component)this.OC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n) != "Masculine" && ((UnityEngine.Component)this.OC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n) != "Feminine")
                         {
                             GameObject gameObject2 = UnityEngine.Object.Instantiate(this.headBlendSliderTemplate);
-                            ((UnityEngine.Component)gameObject2.transform.Find("Text")).GetComponent<Text>().text = ((UnityEngine.Component)this.PC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n);
+                            ((UnityEngine.Component)gameObject2.transform.Find("Text")).GetComponent<Text>().text = ((UnityEngine.Component)this.OC().headPiece).GetComponent<SkinnedMeshRenderer>().sharedMesh.GetBlendShapeName(n);
                             gameObject2.transform.SetParent(this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HeadBlends"));
                             this.v3 = Vector3.zero;
                             this.v3.y = 8f - 17f * (float)num2;
-                            for (int num4 = 0; num4 < this.PC().data.headMorphs.Count; num4++)
+                            for (int num4 = 0; num4 < this.OC().data.headMorphs.Count; num4++)
                             {
-                                if (this.PC().data.headMorphs[num4].key == ((UnityEngine.Component)gameObject2.transform.Find("Text")).GetComponent<Text>().text)
+                                if (this.OC().data.headMorphs[num4].key == ((UnityEngine.Component)gameObject2.transform.Find("Text")).GetComponent<Text>().text)
                                 {
-                                    ((UnityEngine.Component)gameObject2.transform.Find("Slider")).GetComponent<UnityEngine.UI.Slider>().value = this.PC().data.headMorphs[num4].val;
+                                    ((UnityEngine.Component)gameObject2.transform.Find("Slider")).GetComponent<UnityEngine.UI.Slider>().value = this.OC().data.headMorphs[num4].val;
                                 }
                             }
                             gameObject2.transform.localPosition = this.v3;
@@ -13141,7 +13545,7 @@ public class Game : MonoBehaviour
                         }
                     }
                     this.headBlendSliderTemplate.SetActive(false);
-                    this.lastLoadedHeadPiece = this.PC().headPiece.name;
+                    this.lastLoadedHeadPiece = this.OC().headPiece.name;
                 }
             }
             this.UI.transform.Find("CharacterCustomizationUI").Find("Embellishments").gameObject.SetActive(this.customizeCharacterPage == 4);
@@ -13243,10 +13647,10 @@ public class Game : MonoBehaviour
                         int num12 = num11 % num8;
                         int num13 = Mathf.FloorToInt((float)(num11 / num8));
                         this.v3.x = num9 * (float)num12;
-                        this.v3.y = num10 * (float)(-num13);
+                        this.v3.y = num10 * (0f - (float)num13);
                         if (num12 % 2 == 0)
                         {
-                            this.v3.y -= num10 * 0.5f;
+                            this.v3.y = this.v3.y - num10 * 0.5f;
                         }
                         this.v3.z = 0f;
                         gameObject3.transform.localPosition = this.v3;
@@ -13262,11 +13666,7 @@ public class Game : MonoBehaviour
                 {
                     Texture2D texture2D = new Texture2D(2, 2);
                     texture2D.LoadImage(CharacterManager.getAvatarFromCharacterFile(this.importFiles[this.curImportFileToLoad].GetComponent<FileHex>().filename));
-                    Texture2D tex = texture2D;
-                    Vector3 localScale = this.importFiles[this.curImportFileToLoad].transform.localScale;
-                    int newWidth = Mathf.RoundToInt(128f * localScale.x);
-                    Vector3 localScale2 = this.importFiles[this.curImportFileToLoad].transform.localScale;
-                    TextureScale.Bilinear(tex, newWidth, Mathf.RoundToInt(128f * localScale2.x));
+                    TextureScale.Bilinear(texture2D, Mathf.RoundToInt(128f * this.importFiles[this.curImportFileToLoad].transform.localScale.x), Mathf.RoundToInt(128f * this.importFiles[this.curImportFileToLoad].transform.localScale.x));
                     ((UnityEngine.Component)this.importFiles[this.curImportFileToLoad].transform.Find("mask").Find("avatar")).GetComponent<RawImage>().texture = texture2D;
                     this.curImportFileToLoad++;
                 }
@@ -13318,7 +13718,7 @@ public class Game : MonoBehaviour
             }
             if (this.characterCustomizationChangeMade)
             {
-                this.PC().applyCustomization();
+                this.OC().applyCustomization();
                 this.characterCustomizationChangeMade = false;
             }
         }
@@ -13339,12 +13739,12 @@ public class Game : MonoBehaviour
             {
                 if (!item.ToLower().Contains("category"))
                 {
-                    this.PC().preferences[item] = this.sexualPreferenceSliders[item].value;
-                    for (int i = 0; i < this.PC().data.preferences.Count; i++)
+                    this.OC().preferences[item] = this.sexualPreferenceSliders[item].value;
+                    for (int i = 0; i < this.OC().data.preferences.Count; i++)
                     {
-                        if (this.PC().data.preferences[i].preference == item)
+                        if (this.OC().data.preferences[i].preference == item)
                         {
-                            this.PC().data.preferences[i].value = this.sexualPreferenceSliders[item].value;
+                            this.OC().data.preferences[i].value = this.sexualPreferenceSliders[item].value;
                         }
                     }
                 }
@@ -13358,6 +13758,7 @@ public class Game : MonoBehaviour
         this.UI.transform.Find("CharacterCustomizationUI").Find("SexualPreferences").gameObject.SetActive(this.customizeCharacterPage == 7);
         if (this.customizeCharacterPage == 7)
         {
+            List<string>.Enumerator enumerator;
             if (!this.sexualPreferencesPageBuilt)
             {
                 if ((UnityEngine.Object)this.sexualPreferenceSliderTemplate == (UnityEngine.Object)null)
@@ -13383,58 +13784,74 @@ public class Game : MonoBehaviour
                 this.sexualPreferenceSliders = new Dictionary<string, UnityEngine.UI.Slider>();
                 this.sexualPreferenceSliderTemplate.SetActive(true);
                 this.sexualPreferenceSliderY = 0f;
-                foreach (string item in SexualPreferences.preferences.Keys.ToList())
+                enumerator = SexualPreferences.preferences.Keys.ToList().GetEnumerator();
+                try
                 {
-                    if (!item.ToLower().Contains("category"))
+                    while (enumerator.MoveNext())
                     {
-                        this.addSexualPreferenceSlider(SexualPreferences.preferences[item].id, -1f, 2f);
+                        string current = enumerator.Current;
+                        if (!current.ToLower().Contains("category"))
+                        {
+                            this.addSexualPreferenceSlider(SexualPreferences.preferences[current].id, -1f, 2f);
+                        }
                     }
+                }
+                finally
+                {
+                    ((IDisposable)enumerator).Dispose();
                 }
                 this.sexualPreferenceSliderTemplate.SetActive(false);
                 this.sexualPreferencesPageBuilt = true;
             }
             if (!this.sexualPreferencesPageWasOpen)
             {
-                foreach (string item2 in this.sexualPreferenceSliders.Keys.ToList())
+                enumerator = this.sexualPreferenceSliders.Keys.ToList().GetEnumerator();
+                try
                 {
-                    if (!item2.ToLower().Contains("category"))
+                    while (enumerator.MoveNext())
                     {
-                        this.sexualPreferenceSliders[item2].value = this.PC().preferences[item2];
-                        if (SexualPreferences.getPreference(item2).hideFromPreview == 2 && !this.PC().showPenis)
+                        string current2 = enumerator.Current;
+                        if (!current2.ToLower().Contains("category"))
                         {
-                            goto IL_02ed;
+                            this.sexualPreferenceSliders[current2].value = this.OC().preferences[current2];
+                            if (SexualPreferences.getPreference(current2).hideFromPreview == 2 && !this.OC().showPenis)
+                            {
+                                goto IL_02ca;
+                            }
+                            if (SexualPreferences.getPreference(current2).hideFromPreview == 3 && !this.OC().showVagina)
+                            {
+                                goto IL_02ca;
+                            }
+                            ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualPreferences").Find("Preferences")
+                                .Find("container")
+                                .Find(current2)
+                                .Find("txtLabel")).GetComponent<Text>().color = Color.white * 1f;
+                            ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualPreferences").Find("Preferences")
+                                .Find("container")
+                                .Find(current2)
+                                .Find("txtDescription")).GetComponent<Text>().color = Color.white * 1f;
                         }
-                        if (SexualPreferences.getPreference(item2).hideFromPreview == 3 && !this.PC().showVagina)
-                        {
-                            goto IL_02ed;
-                        }
+                        continue;
+                        IL_02ca:
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualPreferences").Find("Preferences")
                             .Find("container")
-                            .Find(item2)
-                            .Find("txtLabel")).GetComponent<Text>().color = Color.white * 1f;
+                            .Find(current2)
+                            .Find("txtLabel")).GetComponent<Text>().color = Color.white * 0.5f;
                         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualPreferences").Find("Preferences")
                             .Find("container")
-                            .Find(item2)
-                            .Find("txtDescription")).GetComponent<Text>().color = Color.white * 1f;
+                            .Find(current2)
+                            .Find("txtDescription")).GetComponent<Text>().color = Color.white * 0.5f;
                     }
-                    continue;
-                IL_02ed:
-                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualPreferences").Find("Preferences")
-                        .Find("container")
-                        .Find(item2)
-                        .Find("txtLabel")).GetComponent<Text>().color = Color.white * 0.5f;
-                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualPreferences").Find("Preferences")
-                        .Find("container")
-                        .Find(item2)
-                        .Find("txtDescription")).GetComponent<Text>().color = Color.white * 0.5f;
+                }
+                finally
+                {
+                    ((IDisposable)enumerator).Dispose();
                 }
                 this.updateSexualPreferenceSliderColors();
             }
             if (this.mX < 0.5f)
             {
-                float num2 = this.sexualPreferenceScroll;
-                Vector2 mouseScrollDelta = Input.mouseScrollDelta;
-                this.sexualPreferenceScroll = num2 - mouseScrollDelta.y * 70f;
+                this.sexualPreferenceScroll -= Input.mouseScrollDelta.y * 70f;
                 if (this.sexualPreferenceScroll < 0f)
                 {
                     this.sexualPreferenceScroll = 0f;
@@ -13501,8 +13918,7 @@ public class Game : MonoBehaviour
     {
         if (this.sexualCharacteristicsPageWasOpen)
         {
-            Type type = this.PC().data.GetType();
-            FieldInfo[] fields = type.GetFields();
+            FieldInfo[] fields = this.OC().data.GetType().GetFields();
             foreach (string item in this.sexualCharacteristicSliders.Keys.ToList())
             {
                 FieldInfo[] array = fields;
@@ -13510,7 +13926,7 @@ public class Game : MonoBehaviour
                 {
                     if (fieldInfo.Name == item)
                     {
-                        fieldInfo.SetValue(this.PC().data, this.sexualCharacteristicSliders[item].value);
+                        fieldInfo.SetValue(this.OC().data, this.sexualCharacteristicSliders[item].value);
                     }
                 }
             }
@@ -13587,8 +14003,7 @@ public class Game : MonoBehaviour
             }
             if (!this.sexualCharacteristicsPageWasOpen)
             {
-                Type type = this.PC().data.GetType();
-                FieldInfo[] fields = type.GetFields();
+                FieldInfo[] fields = this.OC().data.GetType().GetFields();
                 foreach (string item in this.sexualCharacteristicSliders.Keys.ToList())
                 {
                     FieldInfo[] array = fields;
@@ -13596,120 +14011,103 @@ public class Game : MonoBehaviour
                     {
                         if (fieldInfo.Name == item)
                         {
-                            this.sexualCharacteristicSliders[item].value = (float)fieldInfo.GetValue(this.PC().data);
+                            this.sexualCharacteristicSliders[item].value = (float)fieldInfo.GetValue(this.OC().data);
                         }
                     }
-                    if (item != null)
+                    switch (item)
                     {
-                        Dictionary<string, int> dictionary = new Dictionary<string, int>(7);
-                        dictionary.Add("cumVolume", 1);
-                        dictionary.Add("cumSpurtStrength", 1);
-                        dictionary.Add("cumSpurtFrequency", 1);
-                        dictionary.Add("wetnessThreshold", 2);
-                        dictionary.Add("squirtAmount", 2);
-                        dictionary.Add("vaginalTightness", 2);
-                        dictionary.Add("precumThreshold", 3);
-                        int num2 = default(int);
-                        if (dictionary.TryGetValue(item, out num2))
-                        {
-                            switch (num2)
+                        case "cumVolume":
+                        case "cumSpurtStrength":
+                        case "cumSpurtFrequency":
+                            if (this.OC().showVagina || this.OC().showPenis)
                             {
-                                case 1:
-                                    goto IL_0548;
-                                case 2:
-                                    goto IL_06e2;
-                                case 3:
-                                    goto IL_086c;
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtLabel")).GetComponent<Text>().color = Color.white * 1f;
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtDescription")).GetComponent<Text>().color = Color.white * 1f;
                             }
-                        }
-                    }
-                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                        .Find("container")
-                        .Find(item)
-                        .Find("txtLabel")).GetComponent<Text>().color = Color.white * 1f;
-                    ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                        .Find("container")
-                        .Find(item)
-                        .Find("txtDescription")).GetComponent<Text>().color = Color.white * 1f;
-                    continue;
-                IL_086c:
-                    if (this.PC().showPenis)
-                    {
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtLabel")).GetComponent<Text>().color = Color.white * 1f;
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtDescription")).GetComponent<Text>().color = Color.white * 1f;
-                    }
-                    else
-                    {
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtLabel")).GetComponent<Text>().color = Color.white * 0.5f;
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtDescription")).GetComponent<Text>().color = Color.white * 0.5f;
-                    }
-                    continue;
-                IL_06e2:
-                    if (this.PC().showVagina)
-                    {
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtLabel")).GetComponent<Text>().color = Color.white * 1f;
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtDescription")).GetComponent<Text>().color = Color.white * 1f;
-                    }
-                    else
-                    {
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtLabel")).GetComponent<Text>().color = Color.white * 0.5f;
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtDescription")).GetComponent<Text>().color = Color.white * 0.5f;
-                    }
-                    continue;
-                IL_0548:
-                    if (this.PC().showVagina || this.PC().showPenis)
-                    {
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtLabel")).GetComponent<Text>().color = Color.white * 1f;
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtDescription")).GetComponent<Text>().color = Color.white * 1f;
-                    }
-                    else
-                    {
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtLabel")).GetComponent<Text>().color = Color.white * 0.5f;
-                        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
-                            .Find("container")
-                            .Find(item)
-                            .Find("txtDescription")).GetComponent<Text>().color = Color.white * 0.5f;
+                            else
+                            {
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtLabel")).GetComponent<Text>().color = Color.white * 0.5f;
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtDescription")).GetComponent<Text>().color = Color.white * 0.5f;
+                            }
+                            break;
+                        case "wetnessThreshold":
+                        case "squirtAmount":
+                        case "vaginalTightness":
+                            if (this.OC().showVagina)
+                            {
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtLabel")).GetComponent<Text>().color = Color.white * 1f;
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtDescription")).GetComponent<Text>().color = Color.white * 1f;
+                            }
+                            else
+                            {
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtLabel")).GetComponent<Text>().color = Color.white * 0.5f;
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtDescription")).GetComponent<Text>().color = Color.white * 0.5f;
+                            }
+                            break;
+                        case "precumThreshold":
+                            if (this.OC().showPenis)
+                            {
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtLabel")).GetComponent<Text>().color = Color.white * 1f;
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtDescription")).GetComponent<Text>().color = Color.white * 1f;
+                            }
+                            else
+                            {
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtLabel")).GetComponent<Text>().color = Color.white * 0.5f;
+                                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                    .Find("container")
+                                    .Find(item)
+                                    .Find("txtDescription")).GetComponent<Text>().color = Color.white * 0.5f;
+                            }
+                            break;
+                        default:
+                            ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                .Find("container")
+                                .Find(item)
+                                .Find("txtLabel")).GetComponent<Text>().color = Color.white * 1f;
+                            ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("SexualCharacteristics").Find("Characteristics")
+                                .Find("container")
+                                .Find(item)
+                                .Find("txtDescription")).GetComponent<Text>().color = Color.white * 1f;
+                            break;
                     }
                 }
             }
             if (this.mX < 0.5f)
             {
-                float num3 = this.sexualCharacteristicScroll;
-                Vector2 mouseScrollDelta = Input.mouseScrollDelta;
-                this.sexualCharacteristicScroll = num3 - mouseScrollDelta.y * 70f;
+                this.sexualCharacteristicScroll -= Input.mouseScrollDelta.y * 70f;
                 if (this.sexualCharacteristicScroll < 0f)
                 {
                     this.sexualCharacteristicScroll = 0f;
@@ -14662,16 +15060,16 @@ public class Game : MonoBehaviour
             {
                 object[] obj = new object[10]
                 {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    text,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "\r\n\t<colorDefinitionAlt alt=\"AAAAAAAAAAAAAA\" oddity=\"OOOOOOOOOOOO\"><name>",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Game.speciesDefinitionColorNames[i],
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "</name><autoBase></autoBase><r>",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    null,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    null,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    null,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    null,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    null,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    null
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        text,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "\r\n\t<colorDefinitionAlt alt=\"AAAAAAAAAAAAAA\" oddity=\"OOOOOOOOOOOO\"><name>",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Game.speciesDefinitionColorNames[i],
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "</name><autoBase></autoBase><r>",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        null,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        null,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        null,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        null,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        null,
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        null
                 };
                 Color color = Game.speciesDefinitionColorReplacements[i];
                 obj[4] = color.r;
@@ -15496,7 +15894,7 @@ public class Game : MonoBehaviour
             goto IL_05d5;
         }
         return;
-    IL_030a:
+        IL_030a:
         if ((this.precisePickPoint - this.embellishmentBrush.transform.position).magnitude > 0.5f)
         {
             Transform transform = this.embellishmentBrush.transform;
@@ -15529,7 +15927,7 @@ public class Game : MonoBehaviour
         Transform transform3 = this.embellishmentBrush.transform;
         transform3.localScale += (Vector3.one * this.PC().height_act * size - this.embellishmentBrush.transform.localScale) * Time.deltaTime * 4f;
         goto IL_05d5;
-    IL_1df3:
+        IL_1df3:
         float num4;
         int num5;
         int index;
@@ -15621,7 +16019,7 @@ public class Game : MonoBehaviour
             this.PC().data.embellishmentLayers.Add(embellishmentLayer);
         }
         return;
-    IL_05d5:
+        IL_05d5:
         int num6 = data.embellishmentLayers.Count + 1;
         int index2;
         if (this.embellishmentLayers.Count != num6)
@@ -16202,17 +16600,17 @@ public class Game : MonoBehaviour
                 {
                     string item = Game.allEmbellishments[i].Split(new string[1]
                     {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
                     }, StringSplitOptions.None)[0];
                     int num3 = -1;
                     if (Game.allEmbellishments[i].Split(new string[1]
                     {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
                     }, StringSplitOptions.None).Length == 2)
                     {
                         num3 = int.Parse(Game.allEmbellishments[i].Split(new string[1]
                         {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "_"
                         }, StringSplitOptions.None)[1]);
                     }
                     if (this.embellishmentNames.IndexOf(item) == -1)
@@ -16327,12 +16725,12 @@ public class Game : MonoBehaviour
                     this.embellishmentVariantSelected[j] = 0;
                     if (this.PC().data.embellishmentLayers[this.editingEmbellishmentLayer].embellishment.Split(new string[1]
                     {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "_"
                     }, StringSplitOptions.None).Length > 1)
                     {
                         this.embellishmentVariantSelected[j] = int.Parse(this.PC().data.embellishmentLayers[this.editingEmbellishmentLayer].embellishment.Split(new string[1]
                         {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "_"
                         }, StringSplitOptions.None)[1]);
                     }
                 }
@@ -16360,10 +16758,10 @@ public class Game : MonoBehaviour
                 bool flag2 = false;
                 if ((this.PC().data.embellishmentLayers[this.editingEmbellishmentLayer].embellishment.Split(new string[1]
                 {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "_"
                 }, StringSplitOptions.None).Length <= 1) ? (this.PC().data.embellishmentLayers[this.editingEmbellishmentLayer].embellishment == ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("txtFilename")).GetComponent<Text>().text) : (this.PC().data.embellishmentLayers[this.editingEmbellishmentLayer].embellishment.Split(new string[1]
                 {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "_"
                 }, StringSplitOptions.None)[0] == ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("txtFilename")).GetComponent<Text>().text))
                 {
                     ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("BG")).GetComponent<Image>().color = Color.white;
@@ -16553,7 +16951,7 @@ public class Game : MonoBehaviour
             string text = ((UnityEngine.Component)menuItem.transform.Find("txtFilename")).GetComponent<Text>().text;
             string[] array = this.PC().data.embellishmentLayers[this.editingEmbellishmentLayer].embellishment.Split(new string[1]
             {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
             }, StringSplitOptions.None);
             if (array[0] == text.Split(new string[0], StringSplitOptions.None)[0])
             {
@@ -16653,7 +17051,7 @@ public class Game : MonoBehaviour
                 {
                     string[] requiredParts = PatternIcons.getRequiredParts(list[num3].Split(Game.PathDirectorySeparatorChar)[list[num3].Split(Game.PathDirectorySeparatorChar).Length - 1].Split(new string[1]
                     {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "_"
                     }, StringSplitOptions.None)[0]);
                     bool flag = true;
                     for (int i = 0; i < requiredParts.Length; i++)
@@ -16685,7 +17083,7 @@ public class Game : MonoBehaviour
                     files[k] = files[k].Split(Game.PathDirectorySeparatorChar)[files[k].Split(Game.PathDirectorySeparatorChar).Length - 1];
                     string item = files[k].Split(new string[1]
                     {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "_"
                     }, StringSplitOptions.None)[0];
                     string b = "entirebody";
                     if (this.editingTextureLayerMask != -1)
@@ -16697,14 +17095,14 @@ public class Game : MonoBehaviour
                         int num4 = -1;
                         if (files[k].Split(new string[1]
                         {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "_"
                         }, StringSplitOptions.None).Length == 3)
                         {
                             try
                             {
                                 num4 = int.Parse(files[k].Split(new string[1]
                                 {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "_"
                                 }, StringSplitOptions.None)[1]);
                             }
                             catch
@@ -16790,23 +17188,23 @@ public class Game : MonoBehaviour
                     {
                         if (this.PC().data.textureLayers[this.editingTextureLayer - 1].texture.Split(new string[1]
                         {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
                         }, StringSplitOptions.None).Length > 1)
                         {
                             this.patternVariantSelected[l] = int.Parse(this.PC().data.textureLayers[this.editingTextureLayer - 1].texture.Split(new string[1]
                             {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "_"
                             }, StringSplitOptions.None)[1]);
                         }
                     }
                     else if (this.PC().data.textureLayers[this.editingTextureLayer - 1].masks[this.editingTextureLayerMask].texture.Split(new string[1]
                     {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "_"
                     }, StringSplitOptions.None).Length > 1)
                     {
                         this.patternVariantSelected[l] = int.Parse(this.PC().data.textureLayers[this.editingTextureLayer - 1].texture.Split(new string[1]
                         {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
                         }, StringSplitOptions.None)[1]);
                     }
                 }
@@ -16864,13 +17262,13 @@ public class Game : MonoBehaviour
                 }
                 bool flag3 = this.PC().data.textureLayers[this.editingTextureLayer - 1].texture.Split(new string[1]
                 {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "_"
                 }, StringSplitOptions.None)[0] == ((UnityEngine.Component)this.texturePatternOptions[num8].transform.Find("txtFilename")).GetComponent<Text>().text;
                 if (this.editingTextureLayerMask != -1)
                 {
                     flag3 = (this.PC().data.textureLayers[this.editingTextureLayer - 1].masks[this.editingTextureLayerMask].texture.Split(new string[1]
                     {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
                     }, StringSplitOptions.None)[0] == ((UnityEngine.Component)this.texturePatternOptions[num8].transform.Find("txtFilename")).GetComponent<Text>().text);
                 }
                 Image[] componentsInChildren2 = ((UnityEngine.Component)this.texturePatternOptions[num8].transform.Find("Preview")).GetComponentsInChildren<Image>();
@@ -16942,13 +17340,13 @@ public class Game : MonoBehaviour
             string text = ((UnityEngine.Component)menuItem.transform.Find("txtFilename")).GetComponent<Text>().text;
             string[] array = this.PC().data.textureLayers[this.editingTextureLayer - 1].texture.Split(new string[1]
             {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "_"
             }, StringSplitOptions.None);
             if (this.editingTextureLayerMask != -1)
             {
                 array = this.PC().data.textureLayers[this.editingTextureLayer - 1].masks[this.editingTextureLayerMask].texture.Split(new string[1]
                 {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "_"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "_"
                 }, StringSplitOptions.None);
             }
             if (array[0] == text.Split(new string[0], StringSplitOptions.None)[0])
@@ -17349,6 +17747,7 @@ public class Game : MonoBehaviour
             this.processGraphicsPage();
             this.processOptionsPage();
             this.processPreferencesPage();
+            this.UI.transform.FindChild("ModsMenu").gameObject.SetActive(Game.pausePage == "mods");
             if (this.needPauseRebuild)
             {
                 ((UnityEngine.Component)this.UI.transform.Find("PauseScreen").Find("MasterVolume")).GetComponent<Slider>().val = UserSettings.data.vol;
@@ -17714,7 +18113,7 @@ public class Game : MonoBehaviour
     public void processOptionsPage()
     {
         this.UI.transform.Find("OptionsMenu").gameObject.SetActive(Game.pausePage == "options");
-        if (Game.pausePage == "options")
+        if (Game.pausePage == "options" || this.needPauseRebuild)
         {
             if (this.needOptionsPageRebuild)
             {
@@ -17771,7 +18170,7 @@ public class Game : MonoBehaviour
         ((UnityEngine.Component)this.UI.transform.Find("LoadingScreen").Find("ProgressHexes")).GetComponent<ProgressHexes>().overallAlpha = this.loadTransition;
         if (this.anythingLoading || (this.renderingHeadshot && this.recentThinking <= 0f) || this.firstThinking || (Game.loadingAnyCharacters && NPC.curNPCbuild != "Characters") || this.anyRandomCharsStillInitting)
         {
-            this.UI.transform.Find("LoadingScreen").gameObject.SetActive(true);
+            this.UI.transform.Find("LoadingScreen").gameObject.SetActive(!UserSettings.data.mod_hideLoadScreens);
             ((UnityEngine.Component)this.UI.transform.Find("LoadingScreen").Find("txtLoading")).GetComponent<Text>().text = Localization.getPhrase("LOADING", string.Empty);
             ((UnityEngine.Component)this.UI.transform.Find("LoadingScreen").Find("txtInfo")).GetComponent<Text>().text = Localization.getPhrase("DEV_BUILD_WARNING", string.Empty);
             string str = string.Empty;
@@ -17875,10 +18274,6 @@ public class Game : MonoBehaviour
             {
                 num2 -= Game.cap(6f - this.titleTimer, 0f, 6f);
             }
-            if (num2 < 0f)
-            {
-                num2 = 0f;
-            }
         }
         if (this.recentThinking > 0f && !this.anythingLoading)
         {
@@ -17886,7 +18281,7 @@ public class Game : MonoBehaviour
         }
         if (this.rtBlur > 0.02f)
         {
-            this.mainCam.GetComponent<BlurOptimized>().enabled = (this.rtBlur > 0.05f);
+            this.mainCam.GetComponent<BlurOptimized>().enabled = (!UserSettings.data.mod_hideLoadScreens && this.rtBlur > 0.05f);
             this.mainCam.GetComponent<BlurOptimized>().blurSize = Game.cap(this.rtBlur * 1.5f - 0.1f, 0f, 10f);
             this.loadingOrange.r = 0.9372549f;
             this.loadingOrange.g = 0.6784314f;
@@ -18051,7 +18446,7 @@ public class Game : MonoBehaviour
         }
         this.UI.transform.Find("LanguageWindow").gameObject.SetActive(Game.pausePage == "options");
         return;
-    IL_039c:
+        IL_039c:
         if (this.showingTerms)
         {
             this.UI.transform.Find("TitleWindow").Find("legalWindow").gameObject.SetActive(true);
@@ -18576,12 +18971,21 @@ public class Game : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        for (int i = 0; i < this.characters.Count; i++)
+        if (this.characters != null)
         {
-            this.characters[i].kill();
+            for (int i = 0; i < this.characters.Count; i++)
+            {
+                if (this.characters[i] != null)
+                {
+                    this.characters[i].kill();
+                }
+            }
         }
         this.characters = new List<RackCharacter>();
-        RackCharacter.allPieceBundle.bundle.Unload(true);
+        if (RackCharacter.allPieceBundle != null && (UnityEngine.Object)RackCharacter.allPieceBundle.bundle != (UnityEngine.Object)null)
+        {
+            RackCharacter.allPieceBundle.bundle.Unload(true);
+        }
         RackCharacter.allPieceBundle = null;
         Resources.UnloadUnusedAssets();
         Objectives.kill();
@@ -18616,7 +19020,7 @@ public class Game : MonoBehaviour
         {
             CharacterManager.data.playerCharacter = UserSettings.data.activeUser.Split(new string[1]
             {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    " ("
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        " ("
             }, StringSplitOptions.None)[0] + "." + Guid.NewGuid();
         }
         CharacterData character = CharacterManager.getCharacter(CharacterManager.data.playerCharacter);
@@ -18624,7 +19028,7 @@ public class Game : MonoBehaviour
         {
             character.name = UserSettings.data.activeUser.Split(new string[1]
             {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    " ("
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        " ("
             }, StringSplitOptions.None)[0];
         }
         this.v3 = Vector3.zero;
@@ -19191,9 +19595,7 @@ public class Game : MonoBehaviour
             Light obj = this.fakeAmbientLights[i];
             obj.color += (this.fakeAmbientTargetColor - this.fakeAmbientLights[i].color) * Game.cap(Time.deltaTime * 1.5f, 0f, 1f);
             this.fakeAmbientLights[i].intensity += (this.fakeAmbientTargetIntensity - this.fakeAmbientLights[i].intensity) * Game.cap(Time.deltaTime * 1.5f, 0f, 1f);
-            Light obj2 = this.fakeAmbientLights[i];
-            Color color = this.fakeAmbientLights[i].color;
-            obj2.enabled = (color.b > 0.01f);
+            this.fakeAmbientLights[i].enabled = (this.fakeAmbientLights[i].color.b > 0.01f);
         }
         RenderSettings.fogColor = this.fakeAmbientLights[0].color;
         RenderSettings.fogMode = FogMode.Exponential;
@@ -19204,9 +19606,8 @@ public class Game : MonoBehaviour
         {
             this.fakeAmbient.position = this.PC().GO.transform.position;
         }
-        bool flag = false;
         this.inTestRoom = false;
-        flag = (((UnityEngine.Component)GameObject.Find("World").transform.Find("Lobby").Find("Doors and Windows").Find("Glass Door")).GetComponent<AutomaticSlidingDoor>().doorOpen || this.currentZone == "Outside");
+        bool flag = ((UnityEngine.Component)GameObject.Find("World").transform.Find("Lobby").Find("Doors and Windows").Find("Glass Door")).GetComponent<AutomaticSlidingDoor>().doorOpen || this.currentZone == "Outside";
         if (this.titleOpen || this.creditsOpen)
         {
             flag = true;
@@ -19234,8 +19635,7 @@ public class Game : MonoBehaviour
         float num = 1f;
         if (this.PC() != null)
         {
-            Vector3 position = this.PC().GO.transform.position;
-            num = position.z;
+            num = this.PC().GO.transform.position.z;
         }
         this.v3 = this.mainCam.transform.InverseTransformPoint(this.World.transform.Find("Outside").position + Vector3.forward * 10f);
         this.World.transform.Find("Outside").Find("FakeOutside").gameObject.SetActive(!flag && (this.v3.z > 0f || this.currentZone == "Outside" || num > 0f));
@@ -19261,7 +19661,7 @@ public class Game : MonoBehaviour
             this.fakeAmbientTargetColor.b = 0.06f;
             this.tarFogDensity = 0.001f;
         }
-        else if (this.customizingCharacter)
+        else if (this.customizingCharacter && this.PC() == this.OC())
         {
             this.World.transform.Find("Lobby").gameObject.SetActive(false);
             this.World.transform.Find("Connector").gameObject.SetActive(true);
@@ -19322,321 +19722,300 @@ public class Game : MonoBehaviour
                     this.fakeAmbientTargetColor.r = 1f;
                     this.fakeAmbientTargetColor.g = 0.392156869f;
                     this.fakeAmbientTargetColor.b = 0.06f;
-                    string text = this.currentZone;
-                    if (text != null)
+                    switch (this.currentZone)
                     {
-                        Dictionary<string, int> dictionary = new Dictionary<string, int>(12);
-                        dictionary.Add("Lobby", 0);
-                        dictionary.Add("Outside", 1);
-                        dictionary.Add("LobbyHall", 2);
-                        dictionary.Add("Showers", 3);
-                        dictionary.Add("LabEntrance", 4);
-                        dictionary.Add("LabTower", 5);
-                        dictionary.Add("LabTowerLower", 6);
-                        dictionary.Add("LabFloor", 7);
-                        dictionary.Add("Room0", 8);
-                        dictionary.Add("Room1", 9);
-                        dictionary.Add("Room2", 10);
-                        dictionary.Add("Hologram", 11);
-                        int num2 = default(int);
-                        if (dictionary.TryGetValue(text, out num2))
-                        {
-                            switch (num2)
-                            {
-                                case 0:
-                                    this.fakeAmbientTargetColor.r = 1f;
-                                    this.fakeAmbientTargetColor.g = 0.392156869f;
-                                    this.fakeAmbientTargetColor.b = 0.06f;
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(true);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(true);
-                                    this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(true);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
-                                    this.tarReverb = 0.2f;
-                                    break;
-                                case 1:
-                                    this.fakeAmbientTargetColor.r = 1f;
-                                    this.fakeAmbientTargetColor.g = 0.392156869f;
-                                    this.fakeAmbientTargetColor.b = 0.06f;
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(true);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(false);
-                                    this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(true);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
-                                    this.tarReverb = 0.2f;
-                                    this.tarFogDensity = 0.001f;
-                                    break;
-                                case 2:
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(true);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(true);
-                                    this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(true);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
-                                    this.tarReverb = 0.05f;
-                                    this.tarFogDensity = 0.004f;
-                                    break;
-                                case 3:
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(false);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(true);
-                                    this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(false);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(true);
-                                    this.tarReverb = 0.15f;
-                                    this.fakeAmbientTargetColor.r = 1f;
-                                    this.fakeAmbientTargetColor.g = 0.9019608f;
-                                    this.fakeAmbientTargetColor.b = 0.784313738f;
-                                    this.tarFogDensity = 0.005f;
-                                    break;
-                                case 4:
-                                    this.fakeAmbientTargetColor.r = 0f;
-                                    this.fakeAmbientTargetColor.g = 0.784313738f;
-                                    this.fakeAmbientTargetColor.b = 1f;
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(false);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(true);
-                                    this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(true);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(false);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(true);
-                                    this.tarReverb = 0.8f;
-                                    this.tarFogDensity = 0.002f;
-                                    break;
-                                case 5:
-                                    this.fakeAmbientTargetColor.r = 1f;
-                                    this.fakeAmbientTargetColor.g = 0.784313738f;
-                                    this.fakeAmbientTargetColor.b = 0.06f;
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(false);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(true);
-                                    this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(true);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(false);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(true);
-                                    this.tarReverb = 0.25f;
-                                    this.tarFogDensity = 0.007f;
-                                    break;
-                                case 6:
-                                    this.fakeAmbientTargetColor.r = 0f;
-                                    this.fakeAmbientTargetColor.g = 0.8627451f;
-                                    this.fakeAmbientTargetColor.b = 1f;
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(false);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(true);
-                                    this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(true);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(false);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(true);
-                                    this.tarReverb = 0.1f;
-                                    this.tarFogDensity = 0.009f;
-                                    break;
-                                case 7:
-                                    this.fakeAmbientTargetColor.r = 0f;
-                                    this.fakeAmbientTargetColor.g = 0.784313738f;
-                                    this.fakeAmbientTargetColor.b = 1f;
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(false);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(true);
-                                    this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(true);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(false);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(true);
-                                    this.tarReverb = 1f;
-                                    this.tarFogDensity = 0.002f;
-                                    break;
-                                case 8:
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(false);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(false);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(false);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
-                                    this.tarReverb = 0.15f;
-                                    this.enteredTestRoom(0);
-                                    this.tarFogDensity = 0.004f;
-                                    break;
-                                case 9:
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(false);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(false);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(false);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
-                                    this.tarReverb = 0.15f;
-                                    this.enteredTestRoom(1);
-                                    this.tarFogDensity = 0.004f;
-                                    break;
-                                case 10:
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(false);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(true);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(true);
-                                    this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(true);
-                                    this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(false);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(false);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
-                                    this.tarReverb = 0.15f;
-                                    this.enteredTestRoom(2);
-                                    this.tarFogDensity = 0.004f;
-                                    break;
-                                case 11:
-                                    this.World.transform.Find("Lobby").gameObject.SetActive(false);
-                                    this.World.transform.Find("Connector").gameObject.SetActive(false);
-                                    this.World.transform.Find("Lab").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
-                                        .gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(false);
-                                    this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(false);
-                                    this.World.transform.Find("Outside").gameObject.SetActive(false);
-                                    this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
-                                    this.fakeAmbientTargetColor.r = 0f;
-                                    this.fakeAmbientTargetColor.g = 0.784313738f;
-                                    this.fakeAmbientTargetColor.b = 1f;
-                                    this.tarReverb = 1f;
-                                    this.tarFogDensity = 0.002f;
-                                    break;
-                            }
-                        }
+                        case "Lobby":
+                            this.fakeAmbientTargetColor.r = 1f;
+                            this.fakeAmbientTargetColor.g = 0.392156869f;
+                            this.fakeAmbientTargetColor.b = 0.06f;
+                            this.World.transform.Find("Lobby").gameObject.SetActive(true);
+                            this.World.transform.Find("Connector").gameObject.SetActive(true);
+                            this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
+                            this.World.transform.Find("Outside").gameObject.SetActive(true);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
+                            this.tarReverb = 0.2f;
+                            break;
+                        case "Outside":
+                            this.fakeAmbientTargetColor.r = 1f;
+                            this.fakeAmbientTargetColor.g = 0.392156869f;
+                            this.fakeAmbientTargetColor.b = 0.06f;
+                            this.World.transform.Find("Lobby").gameObject.SetActive(true);
+                            this.World.transform.Find("Connector").gameObject.SetActive(false);
+                            this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
+                            this.World.transform.Find("Outside").gameObject.SetActive(true);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
+                            this.tarReverb = 0.2f;
+                            this.tarFogDensity = 0.001f;
+                            break;
+                        case "LobbyHall":
+                            this.World.transform.Find("Lobby").gameObject.SetActive(true);
+                            this.World.transform.Find("Connector").gameObject.SetActive(true);
+                            this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
+                            this.World.transform.Find("Outside").gameObject.SetActive(true);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
+                            this.tarReverb = 0.05f;
+                            this.tarFogDensity = 0.004f;
+                            break;
+                        case "Showers":
+                            this.World.transform.Find("Lobby").gameObject.SetActive(false);
+                            this.World.transform.Find("Connector").gameObject.SetActive(true);
+                            this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
+                            this.World.transform.Find("Outside").gameObject.SetActive(false);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(true);
+                            this.tarReverb = 0.15f;
+                            this.fakeAmbientTargetColor.r = 1f;
+                            this.fakeAmbientTargetColor.g = 0.9019608f;
+                            this.fakeAmbientTargetColor.b = 0.784313738f;
+                            this.tarFogDensity = 0.005f;
+                            break;
+                        case "LabEntrance":
+                            this.fakeAmbientTargetColor.r = 0f;
+                            this.fakeAmbientTargetColor.g = 0.784313738f;
+                            this.fakeAmbientTargetColor.b = 1f;
+                            this.World.transform.Find("Lobby").gameObject.SetActive(false);
+                            this.World.transform.Find("Connector").gameObject.SetActive(true);
+                            this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(true);
+                            this.World.transform.Find("Outside").gameObject.SetActive(false);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(true);
+                            this.tarReverb = 0.8f;
+                            this.tarFogDensity = 0.002f;
+                            break;
+                        case "LabTower":
+                            this.fakeAmbientTargetColor.r = 1f;
+                            this.fakeAmbientTargetColor.g = 0.784313738f;
+                            this.fakeAmbientTargetColor.b = 0.06f;
+                            this.World.transform.Find("Lobby").gameObject.SetActive(false);
+                            this.World.transform.Find("Connector").gameObject.SetActive(true);
+                            this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(true);
+                            this.World.transform.Find("Outside").gameObject.SetActive(false);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(true);
+                            this.tarReverb = 0.25f;
+                            this.tarFogDensity = 0.007f;
+                            break;
+                        case "LabTowerLower":
+                            this.fakeAmbientTargetColor.r = 0f;
+                            this.fakeAmbientTargetColor.g = 0.8627451f;
+                            this.fakeAmbientTargetColor.b = 1f;
+                            this.World.transform.Find("Lobby").gameObject.SetActive(false);
+                            this.World.transform.Find("Connector").gameObject.SetActive(true);
+                            this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(true);
+                            this.World.transform.Find("Outside").gameObject.SetActive(false);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(true);
+                            this.tarReverb = 0.1f;
+                            this.tarFogDensity = 0.009f;
+                            break;
+                        case "LabFloor":
+                            this.fakeAmbientTargetColor.r = 0f;
+                            this.fakeAmbientTargetColor.g = 0.784313738f;
+                            this.fakeAmbientTargetColor.b = 1f;
+                            this.World.transform.Find("Lobby").gameObject.SetActive(false);
+                            this.World.transform.Find("Connector").gameObject.SetActive(true);
+                            this.World.transform.Find("Connector").Find("Showers").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(true);
+                            this.World.transform.Find("Outside").gameObject.SetActive(false);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(true);
+                            this.tarReverb = 1f;
+                            this.tarFogDensity = 0.002f;
+                            break;
+                        case "Room0":
+                            this.World.transform.Find("Lobby").gameObject.SetActive(false);
+                            this.World.transform.Find("Connector").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(false);
+                            this.World.transform.Find("Outside").gameObject.SetActive(false);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
+                            this.tarReverb = 0.15f;
+                            this.enteredTestRoom(0);
+                            this.tarFogDensity = 0.004f;
+                            break;
+                        case "Room1":
+                            this.World.transform.Find("Lobby").gameObject.SetActive(false);
+                            this.World.transform.Find("Connector").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(false);
+                            this.World.transform.Find("Outside").gameObject.SetActive(false);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
+                            this.tarReverb = 0.15f;
+                            this.enteredTestRoom(1);
+                            this.tarFogDensity = 0.004f;
+                            break;
+                        case "Room2":
+                            this.World.transform.Find("Lobby").gameObject.SetActive(false);
+                            this.World.transform.Find("Connector").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(true);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(true);
+                            this.World.transform.Find("Lab").Find("LabShaft").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").Find("Garage").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(true);
+                            this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(false);
+                            this.World.transform.Find("Outside").gameObject.SetActive(false);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
+                            this.tarReverb = 0.15f;
+                            this.enteredTestRoom(2);
+                            this.tarFogDensity = 0.004f;
+                            break;
+                        case "Hologram":
+                            this.World.transform.Find("Lobby").gameObject.SetActive(false);
+                            this.World.transform.Find("Connector").gameObject.SetActive(false);
+                            this.World.transform.Find("Lab").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror0")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror1")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("lab_structure").Find("Assets").Find("mirror2")
+                                .gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Room0").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Room1").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Room2").gameObject.SetActive(false);
+                            this.World.transform.Find("Rooms").Find("Pit").gameObject.SetActive(false);
+                            this.World.transform.Find("Outside").gameObject.SetActive(false);
+                            this.World.transform.Find("ClientOffice").gameObject.SetActive(false);
+                            this.fakeAmbientTargetColor.r = 0f;
+                            this.fakeAmbientTargetColor.g = 0.784313738f;
+                            this.fakeAmbientTargetColor.b = 1f;
+                            this.tarReverb = 1f;
+                            this.tarFogDensity = 0.002f;
+                            break;
                     }
                     this.lastZone = this.currentZone;
                 }
@@ -19646,10 +20025,10 @@ public class Game : MonoBehaviour
                 }
                 switch (this.currentZone)
                 {
-                    case "Room0":
-                        this.fakeAmbientTargetColor.r = 0.4627451f;
-                        this.fakeAmbientTargetColor.g = 0.709803939f;
-                        this.fakeAmbientTargetColor.b = 1f;
+                    case "Room2":
+                        this.fakeAmbientTargetColor.r = 1f;
+                        this.fakeAmbientTargetColor.g = 0.6313726f;
+                        this.fakeAmbientTargetColor.b = 0.4627451f;
                         this.tarFogDensity = 0.004f;
                         break;
                     case "Room1":
@@ -19658,10 +20037,10 @@ public class Game : MonoBehaviour
                         this.fakeAmbientTargetColor.b = 0.5803922f;
                         this.tarFogDensity = 0.004f;
                         break;
-                    case "Room2":
-                        this.fakeAmbientTargetColor.r = 1f;
-                        this.fakeAmbientTargetColor.g = 0.6313726f;
-                        this.fakeAmbientTargetColor.b = 0.4627451f;
+                    case "Room0":
+                        this.fakeAmbientTargetColor.r = 0.4627451f;
+                        this.fakeAmbientTargetColor.g = 0.709803939f;
+                        this.fakeAmbientTargetColor.b = 1f;
                         this.tarFogDensity = 0.004f;
                         break;
                 }
@@ -19719,473 +20098,498 @@ public class Game : MonoBehaviour
         {
             rackCharacter.updateCameraFocusPoint();
         }
-        if (rackCharacter != null && !this.creditsOpen)
+        if (rackCharacter == null || this.creditsOpen)
         {
-            if (Game.VRmode)
+            this.v3.x = -13.14f + Mathf.Cos(Time.time * 0.1f) * 3f;
+            this.v3.y = 4.14f + Mathf.Sin(Time.time * 0.11f) * 1f;
+            this.v3.z = 56.61f - Mathf.Pow(this.loadTransition, 2f) * 40f;
+            if (this.creditsOpen)
             {
-                goto IL_028e;
-            }
-            goto IL_028e;
-        }
-        this.v3.x = -13.14f + Mathf.Cos(Time.time * 0.1f) * 3f;
-        this.v3.y = 4.14f + Mathf.Sin(Time.time * 0.11f) * 1f;
-        this.v3.z = 56.61f - Mathf.Pow(this.loadTransition, 2f) * 40f;
-        if (this.creditsOpen)
-        {
-            Transform parent = Game.gameInstance.mainCam.transform.parent;
-            parent.position += (this.v3 - Game.gameInstance.mainCam.transform.parent.position) * Game.cap(Time.deltaTime * 9f, 0f, 1f);
-        }
-        else
-        {
-            Game.gameInstance.mainCam.transform.parent.position = this.v3;
-        }
-        this.v3.x = 357f + this.titleCamSwayY;
-        this.titleCamSwayX += ((this.mX - 0.5f) * 30f - this.titleCamSwayX) * Game.cap(Time.deltaTime * 0.9f, 0f, 1f);
-        this.titleCamSwayY += ((this.mY - 0.5f) * 10f - this.titleCamSwayY) * Game.cap(Time.deltaTime * 0.9f, 0f, 1f);
-        this.v3.y = 178f + this.titleCamSwayX;
-        this.v3.z = 347f;
-        Game.gameInstance.mainCam.transform.parent.localRotation = Quaternion.Euler(this.v3);
-        if (this.creditsOpen)
-        {
-            this.DOFfocus.transform.position = this.mainCam.transform.position + Vector3.forward;
-        }
-        return;
-    IL_028e:
-        if (this.characterSelectorOpen)
-        {
-            this.v3 = this.World.transform.Find("Lab").Find("stasisTube" + this.characterSelector_currentSelected).Find("Root")
-                .position + this.World.transform.Find("Lab").Find("stasisTube" + this.characterSelector_currentSelected).forward * 5f + this.World.transform.Find("Lab").Find("stasisTube" + this.characterSelector_currentSelected).right * 0.5f;
-            this.v3.y += 3f;
-            this.v32.x = 8.549997f;
-            this.v32.y = -2f;
-            this.v32.z = -148.65f;
-            Transform parent2 = Game.gameInstance.mainCam.transform.parent;
-            parent2.position += (this.v3 - Game.gameInstance.mainCam.transform.parent.position) * Game.cap(Time.deltaTime * 4f, 0f, 1f);
-            Game.gameInstance.mainCam.transform.parent.position = this.v32 + (Game.gameInstance.mainCam.transform.parent.position - this.v32).normalized * 22f;
-            this.v32.y = -9.3f;
-            Game.gameInstance.mainCam.transform.parent.LookAt(this.v32 + Game.gameInstance.mainCam.transform.parent.right * 10.5f);
-            this.camPos_actual = Game.gameInstance.mainCam.transform.parent.position;
-            this.camTarget_actual = (this.camPos_actual * 5f + this.v32) / 6f;
-            this.DOFfocus.transform.position = this.World.transform.Find("Lab").Find("stasisTube" + this.characterSelector_currentSelected).Find("Root")
-                .position;
-        }
-        else
-        {
-            this.minCamDist = 1.5f;
-            this.maxCamDist = 20f;
-            if (this.forcedCamera > 0)
-            {
-                this.camPos += (this.forcedCameraPos - this.camPos) * Game.cap(Time.deltaTime * 3f, 0f, 1f);
-                this.camTarget += (this.forcedCameraTarget - this.camTarget) * Game.cap(Time.deltaTime * 3f, 0f, 1f);
-                this.forcedCamera--;
+                Transform parent = Game.gameInstance.mainCam.transform.parent;
+                parent.position += (this.v3 - Game.gameInstance.mainCam.transform.parent.position) * Game.cap(Time.deltaTime * 9f, 0f, 1f);
             }
             else
             {
-                if (this.customizingCharacter)
+                Game.gameInstance.mainCam.transform.parent.position = this.v3;
+            }
+            this.v3.x = 357f + this.titleCamSwayY;
+            this.titleCamSwayX += ((this.mX - 0.5f) * 30f - this.titleCamSwayX) * Game.cap(Time.deltaTime * 0.9f, 0f, 1f);
+            this.titleCamSwayY += ((this.mY - 0.5f) * 10f - this.titleCamSwayY) * Game.cap(Time.deltaTime * 0.9f, 0f, 1f);
+            this.v3.y = 178f + this.titleCamSwayX;
+            this.v3.z = 347f;
+            Game.gameInstance.mainCam.transform.parent.localRotation = Quaternion.Euler(this.v3);
+            if (this.creditsOpen)
+            {
+                this.DOFfocus.transform.position = this.mainCam.transform.position + Vector3.forward;
+            }
+        }
+        else
+        {
+            bool vRmode = Game.VRmode;
+            Vector3 vector2;
+            if (this.characterSelectorOpen)
+            {
+                this.v3 = this.World.transform.Find("Lab").Find("stasisTube" + this.characterSelector_currentSelected).Find("Root")
+                    .position + this.World.transform.Find("Lab").Find("stasisTube" + this.characterSelector_currentSelected).forward * 5f + this.World.transform.Find("Lab").Find("stasisTube" + this.characterSelector_currentSelected).right * 0.5f;
+                this.v3.y = this.v3.y + 3f;
+                this.v32.x = 8.549997f;
+                this.v32.y = -2f;
+                this.v32.z = -148.65f;
+                Transform parent2 = Game.gameInstance.mainCam.transform.parent;
+                parent2.position += (this.v3 - Game.gameInstance.mainCam.transform.parent.position) * Game.cap(Time.deltaTime * 4f, 0f, 1f);
+                Transform parent3 = Game.gameInstance.mainCam.transform.parent;
+                Vector3 vector = this.v32;
+                vector2 = Game.gameInstance.mainCam.transform.parent.position - this.v32;
+                parent3.position = vector + vector2.normalized * 22f;
+                this.v32.y = -9.3f;
+                Game.gameInstance.mainCam.transform.parent.LookAt(this.v32 + Game.gameInstance.mainCam.transform.parent.right * 10.5f);
+                this.camPos_actual = Game.gameInstance.mainCam.transform.parent.position;
+                this.camTarget_actual = (this.camPos_actual * 5f + this.v32) / 6f;
+                this.DOFfocus.transform.position = this.World.transform.Find("Lab").Find("stasisTube" + this.characterSelector_currentSelected).Find("Root")
+                    .position;
+            }
+            else
+            {
+                this.minCamDist = 1.5f;
+                this.maxCamDist = 20f;
+                if (this.forcedCamera > 0)
                 {
-                    this.firstPersonMode = false;
-                    if (Input.GetKey(UserSettings.data.KEY_ROTATE_LEFT) || Input.GetKey(UserSettings.data.KEY_STRAFE_LEFT))
-                    {
-                        this.recentCustomCamRot = 5f;
-                        this.customCamRotVel -= Time.deltaTime;
-                        if (this.customCamRotVel < -0.8f)
-                        {
-                            this.customCamRotVel = -0.8f;
-                        }
-                        if (this.customCamRotVel > 0f)
-                        {
-                            this.customCamRotVel *= 0.5f;
-                        }
-                        this.justChangedCustomizationPageAndNeedRecenter = false;
-                    }
-                    else if (Input.GetKey(UserSettings.data.KEY_ROTATE_RIGHT) || Input.GetKey(UserSettings.data.KEY_STRAFE_RIGHT))
-                    {
-                        this.recentCustomCamRot = 5f;
-                        this.customCamRotVel += Time.deltaTime;
-                        if (this.customCamRotVel > 0.8f)
-                        {
-                            this.customCamRotVel = 0.8f;
-                        }
-                        if (this.customCamRotVel < 0f)
-                        {
-                            this.customCamRotVel *= 0.5f;
-                        }
-                        this.justChangedCustomizationPageAndNeedRecenter = false;
-                    }
-                    else
-                    {
-                        this.customCamRotVel *= 0.5f;
-                    }
-                    if (Input.GetKey(UserSettings.data.KEY_ROTATE_UP) || Input.GetKey(UserSettings.data.KEY_WALK_FORWARD))
-                    {
-                        this.recentCustomCamRot = 5f;
-                        this.customCamElevationVel -= Time.deltaTime;
-                        if (this.customCamElevationVel < -1f)
-                        {
-                            this.customCamElevationVel = -1f;
-                        }
-                        if (this.customCamElevationVel > 0f)
-                        {
-                            this.customCamElevationVel *= 0.5f;
-                        }
-                        this.justChangedCustomizationPageAndNeedRecenter = false;
-                    }
-                    else if (Input.GetKey(UserSettings.data.KEY_ROTATE_DOWN) || Input.GetKey(UserSettings.data.KEY_WALK_BACKWARD))
-                    {
-                        this.recentCustomCamRot = 5f;
-                        this.customCamElevationVel += Time.deltaTime;
-                        if (this.customCamElevationVel > 1f)
-                        {
-                            this.customCamElevationVel = 1f;
-                        }
-                        if (this.customCamElevationVel < 0f)
-                        {
-                            this.customCamElevationVel *= 0.5f;
-                        }
-                        this.justChangedCustomizationPageAndNeedRecenter = false;
-                    }
-                    else
-                    {
-                        this.customCamElevationVel *= 0.5f;
-                    }
-                    if (this.justChangedCustomizationPageAndNeedRecenter)
-                    {
-                        this.justChangedCustomizationPageAndNeedRecenter = false;
-                    }
-                    this.customizationCamRot += this.customCamRotVel * 0.08f;
-                    this.customizationCamElevation += this.customCamElevationVel * 0.08f;
-                    while (this.camFollowAngle > 6.283f && this.camFollowAngle > this.customizationCamRot)
-                    {
-                        this.camFollowAngle -= 6.283f;
-                    }
-                    while (this.camFollowAngle < -6.283f && this.camFollowAngle < this.customizationCamRot)
-                    {
-                        this.camFollowAngle += 6.283f;
-                    }
-                    while (this.customizationCamRot > 6.283f)
-                    {
-                        this.customizationCamRot -= 6.283f;
-                    }
-                    while (this.customizationCamRot < -6.283f)
-                    {
-                        this.customizationCamRot += 6.283f;
-                    }
-                    if (this.customizeCharacterPage != 5 && this.customizeCharacterPage != 4 && this.customizeCharacterPage != 0)
-                    {
-                        this.customCamFreeSpin = 0f;
-                        this.colorPickerOpen = false;
-                        this.texturePatternMenuOpen = false;
-                    }
-                    this.camFollowAngle += (0.4675f - this.camFollowAngle) * Time.deltaTime * (0.3f * (1f + this.recentCustomCamRot));
-                    float num = 1.353f;
-                    this.camFollowElevation += (Game.cap(1.353f + this.customizationCamElevation, 0.6f, 2.15f) - this.camFollowElevation) * Time.deltaTime * (1.3f * (1f + this.recentCustomCamRot));
-                    this.customFocusBone = this.PC().bones.Root;
-                    if (num + this.customizationCamElevation > 2.15f)
-                    {
-                        this.customizationCamElevation = 2.15f - num;
-                    }
-                    if (num + this.customizationCamElevation < 0.6f)
-                    {
-                        this.customizationCamElevation = 0.6f - num;
-                    }
-                    if ((this.customizeCharacterPage == 4 || this.customizeCharacterPage == 5 || this.customizeCharacterPage == 0 || this.customizeCharacterPage == 6 || this.customizeCharacterPage == 7) && this.mX < 0.5f)
-                    {
-                        this.zoomAllowed = false;
-                    }
-                    if (this.zoomAllowed)
-                    {
-                        float num2 = this.camFollowDist;
-                        Vector2 mouseScrollDelta = Input.mouseScrollDelta;
-                        this.camFollowDist = num2 - mouseScrollDelta.y * (this.camFollowDist + 4f) * 0.1f;
-                    }
-                    if (this.camFollowDist <= this.minCamDist + 0.1f)
-                    {
-                        this.camFollowDist = this.minCamDist + 0.1f;
-                    }
+                    this.camPos += (this.forcedCameraPos - this.camPos) * Game.cap(Time.deltaTime * 3f, 0f, 1f);
+                    this.camTarget += (this.forcedCameraTarget - this.camTarget) * Game.cap(Time.deltaTime * 3f, 0f, 1f);
+                    this.forcedCamera--;
                 }
                 else
                 {
-                    if (!this.lightingControlPanelOpen && (Cursor.lockState == CursorLockMode.Locked || Input.GetMouseButton(1)))
+                    if (this.customizingCharacter)
                     {
-                        this.camFollowAngle += this.mouseChangeSinceLastFixedUpdate.x * 0.05f * (0.2f + UserSettings.data.lookSensitivity) * Game.cap(Time.deltaTime * 40f, 0f, 1f);
-                        float num3 = 1f;
-                        if (UserSettings.data.invertY)
+                        this.firstPersonMode = false;
+                        if (Input.GetKey(UserSettings.data.KEY_ROTATE_LEFT) || Input.GetKey(UserSettings.data.KEY_STRAFE_LEFT))
                         {
-                            num3 = -1f;
-                        }
-                        this.camFollowElevation += this.mouseChangeSinceLastFixedUpdate.y * 0.05f * (0.2f + UserSettings.data.lookSensitivity) * num3 * Game.cap(Time.deltaTime * 40f, 0f, 1f);
-                        if (this.camFollowElevation < 0.4f)
-                        {
-                            this.camFollowElevation = 0.4f;
-                        }
-                        if (this.camFollowElevation > 2.8f)
-                        {
-                            this.camFollowElevation = 2.8f;
-                        }
-                    }
-                    if ((!this.UIinUse || this.inResearchMode) && this.zoomAllowed)
-                    {
-                        float num4 = this.camFollowDist;
-                        float num5 = this.camFollowDist;
-                        Vector2 mouseScrollDelta2 = Input.mouseScrollDelta;
-                        this.camFollowDist = num5 - mouseScrollDelta2.y * (this.camFollowDist + 4f) * 0.1f * Game.cap(Time.deltaTime * 40f, 0f, 1f);
-                        if (this.firstPersonMode && (this.camFollowDist > num4 || this.customizingCharacter))
-                        {
-                            this.camFollowDist = this.minCamDist + this.firstPersonDistBuffer;
-                            this.firstPersonMode = false;
-                        }
-                    }
-                }
-                this.zoomAllowed = true;
-                if (this.PC().interactionSubject != null)
-                {
-                    this.camFollowDist = this.minCamDist + 1f;
-                    this.firstPersonMode = false;
-                }
-                else if (this.camFollowDist < this.minCamDist + this.firstPersonDistBuffer && !this.customizingCharacter)
-                {
-                    this.camFollowDist = this.minCamDist;
-                    this.firstPersonMode = true;
-                }
-                if (this.camFollowDist > this.maxCamDist)
-                {
-                    this.camFollowDist = this.maxCamDist;
-                }
-                this.camFollowAccel = Time.deltaTime * 25f;
-                for (int i = 0; i < this.characters.Count; i++)
-                {
-                    if (this.characters[i].initted && this.characters[i].controlledByPlayer)
-                    {
-                        this.firstPersonAccel = 0f;
-                        this.camTargetBone = this.characters[i].cameraFocusPoint;
-                        this.camPos = this.camTargetBone.position;
-                        if (this.firstPersonMode)
-                        {
-                            this.OOBoffset = 0f;
-                        }
-                        if (this.OOBoffset > this.camFollowDist)
-                        {
-                            this.OOBoffset = this.camFollowDist;
-                        }
-                        if (this.customizingCharacter)
-                        {
-                            this.camFollowAngle += this.customizationCamRot;
-                        }
-                        this.camPos.x += (this.camFollowDist - this.OOBoffset) * Mathf.Cos(this.camFollowAngle) * Mathf.Sin(this.camFollowElevation);
-                        this.camPos.z += (this.camFollowDist - this.OOBoffset) * Mathf.Sin(this.camFollowAngle) * Mathf.Sin(this.camFollowElevation);
-                        this.camPos.y += (this.camFollowDist - this.OOBoffset) * Mathf.Cos(this.camFollowElevation);
-                        if (this.customizingCharacter)
-                        {
-                            this.camFollowAngle -= this.customizationCamRot;
-                        }
-                        this.camTarget = this.camTargetBone.transform.position;
-                        if (this.customizingCharacter)
-                        {
-                            this.camTarget.y -= 2.5f * (this.mY - 0.5f) * 0.1f;
-                            this.camTarget.y += (this.camPos.y - this.camTarget.y) * 0.5f;
-                            this.camTarget += this.mainCam.transform.parent.right * (this.mX - 0.5f) * 0.3f;
-                        }
-                        if (this.anyResearchHotspotBeingUsed || TestingRoom.editingMode)
-                        {
-                            this.camPos += this.mainCam.transform.parent.right * 2.6f;
-                            this.camTarget += this.mainCam.transform.parent.right * 2.6f;
-                        }
-                        else if (this.curDialogue != string.Empty)
-                        {
-                            if (this.dialogueOnRight)
+                            this.recentCustomCamRot = 5f;
+                            this.customCamRotVel -= Time.deltaTime;
+                            if (this.customCamRotVel < -0.8f)
                             {
-                                this.dialogueCameraDisplacement = this.mainCam.transform.parent.right * this.dialogueCameraDisplacementAmount * (this.camFollowDist / 9f);
+                                this.customCamRotVel = -0.8f;
                             }
-                            else
+                            if (this.customCamRotVel > 0f)
                             {
-                                this.dialogueCameraDisplacement = this.mainCam.transform.parent.right * (0f - this.dialogueCameraDisplacementAmount) * (this.camFollowDist / 9f);
+                                this.customCamRotVel *= 0.5f;
                             }
-                            this.camPos += this.dialogueCameraDisplacement;
-                            this.camTarget += this.dialogueCameraDisplacement;
+                            this.justChangedCustomizationPageAndNeedRecenter = false;
+                        }
+                        else if (Input.GetKey(UserSettings.data.KEY_ROTATE_RIGHT) || Input.GetKey(UserSettings.data.KEY_STRAFE_RIGHT))
+                        {
+                            this.recentCustomCamRot = 5f;
+                            this.customCamRotVel += Time.deltaTime;
+                            if (this.customCamRotVel > 0.8f)
+                            {
+                                this.customCamRotVel = 0.8f;
+                            }
+                            if (this.customCamRotVel < 0f)
+                            {
+                                this.customCamRotVel *= 0.5f;
+                            }
+                            this.justChangedCustomizationPageAndNeedRecenter = false;
                         }
                         else
                         {
-                            this.dialogueCameraDisplacement = Vector3.zero;
+                            this.customCamRotVel *= 0.5f;
                         }
-                        this.camFollowAccel = 0.5f + this.characters[i].moveSpeed * 0.5f * Time.deltaTime * 60f;
-                    }
-                }
-                if (this.PC() != null && this.PC().ridingMovingElevator)
-                {
-                    this.v3 = this.camTarget;
-                    this.v3.y += 8f;
-                    this.camPos = (this.camPos + this.v3 * 6f) / 7f;
-                }
-                if (this.PC().interactionSubject != null)
-                {
-                    if (this.justSwitchedIntoCamMode)
-                    {
-                        this.freeCam = UserSettings.data.defaultToFreeCam;
-                        this.justSwitchedIntoCamMode = false;
-                    }
-                    this.camTarget = this.PC().interactionSubject.bones.Root.position;
-                    if (this.freeCam)
-                    {
-                        float num6 = this.interactionZoom;
-                        Vector2 mouseScrollDelta3 = Input.mouseScrollDelta;
-                        this.interactionZoom = num6 * (1f - mouseScrollDelta3.y * 0.05f);
-                        this.interactionZoom = Game.cap(this.interactionZoom, 0.1f, 1f);
-                        this.camPos = this.freeCamPos;
-                        if (Input.GetKey(UserSettings.data.KEY_STRAFE_LEFT))
+                        if (Input.GetKey(UserSettings.data.KEY_ROTATE_UP) || Input.GetKey(UserSettings.data.KEY_WALK_FORWARD))
                         {
-                            this.camPos -= this.mainCamContainer.transform.right * Time.deltaTime * 25f * this.interactionZoom;
-                        }
-                        if (Input.GetKey(UserSettings.data.KEY_STRAFE_RIGHT))
-                        {
-                            this.camPos += this.mainCamContainer.transform.right * Time.deltaTime * 25f * this.interactionZoom;
-                        }
-                        if (Mathf.Abs(this.camPos.y - this.camTarget.y) < Mathf.Abs(this.camPos.x - this.camTarget.x) + Mathf.Abs(this.camPos.z - this.camTarget.z))
-                        {
-                            if (Input.GetKey(UserSettings.data.KEY_WALK_BACKWARD))
+                            this.recentCustomCamRot = 5f;
+                            this.customCamElevationVel -= Time.deltaTime;
+                            if (this.customCamElevationVel < -1f)
                             {
-                                this.camPos -= this.mainCamContainer.transform.up * Time.deltaTime * 25f * this.interactionZoom;
+                                this.customCamElevationVel = -1f;
                             }
-                            if (Input.GetKey(UserSettings.data.KEY_WALK_FORWARD))
+                            if (this.customCamElevationVel > 0f)
                             {
-                                this.camPos += this.mainCamContainer.transform.up * Time.deltaTime * 25f * this.interactionZoom;
+                                this.customCamElevationVel *= 0.5f;
                             }
+                            this.justChangedCustomizationPageAndNeedRecenter = false;
                         }
-                        else if (this.camPos.y > this.camTarget.y)
+                        else if (Input.GetKey(UserSettings.data.KEY_ROTATE_DOWN) || Input.GetKey(UserSettings.data.KEY_WALK_BACKWARD))
                         {
-                            if (Input.GetKey(UserSettings.data.KEY_WALK_BACKWARD))
+                            this.recentCustomCamRot = 5f;
+                            this.customCamElevationVel += Time.deltaTime;
+                            if (this.customCamElevationVel > 1f)
                             {
-                                this.camPos -= this.mainCamContainer.transform.up * Time.deltaTime * 25f * this.interactionZoom;
+                                this.customCamElevationVel = 1f;
                             }
+                            if (this.customCamElevationVel < 0f)
+                            {
+                                this.customCamElevationVel *= 0.5f;
+                            }
+                            this.justChangedCustomizationPageAndNeedRecenter = false;
                         }
-                        else if (Input.GetKey(UserSettings.data.KEY_WALK_FORWARD))
+                        else
                         {
-                            this.camPos += this.mainCamContainer.transform.up * Time.deltaTime * 25f * this.interactionZoom;
+                            this.customCamElevationVel *= 0.5f;
                         }
-                        this.camPos = this.camTarget + (this.camPos - this.camTarget).normalized * this.interactionZoom * 9f;
-                        this.freeCamPos = this.camPos;
+                        if (this.justChangedCustomizationPageAndNeedRecenter)
+                        {
+                            this.justChangedCustomizationPageAndNeedRecenter = false;
+                        }
+                        this.customizationCamRot += this.customCamRotVel * 0.08f;
+                        this.customizationCamElevation += this.customCamElevationVel * 0.08f;
+                        while (this.camFollowAngle > 6.283f && this.camFollowAngle > this.customizationCamRot)
+                        {
+                            this.camFollowAngle -= 6.283f;
+                        }
+                        while (this.camFollowAngle < -6.283f && this.camFollowAngle < this.customizationCamRot)
+                        {
+                            this.camFollowAngle += 6.283f;
+                        }
+                        while (this.customizationCamRot > 6.283f)
+                        {
+                            this.customizationCamRot -= 6.283f;
+                        }
+                        while (this.customizationCamRot < -6.283f)
+                        {
+                            this.customizationCamRot += 6.283f;
+                        }
+                        if (this.customizeCharacterPage != 5 && this.customizeCharacterPage != 4 && this.customizeCharacterPage != 0)
+                        {
+                            this.customCamFreeSpin = 0f;
+                            this.colorPickerOpen = false;
+                            this.texturePatternMenuOpen = false;
+                        }
+                        this.camFollowAngle += (0.4675f - this.camFollowAngle) * Time.deltaTime * (0.3f * (1f + this.recentCustomCamRot));
+                        float num = 1.353f;
+                        this.camFollowElevation += (Game.cap(1.353f + this.customizationCamElevation, 0.6f, 2.15f) - this.camFollowElevation) * Time.deltaTime * (1.3f * (1f + this.recentCustomCamRot));
+                        this.customFocusBone = this.OC().bones.Root;
+                        if (num + this.customizationCamElevation > 2.15f)
+                        {
+                            this.customizationCamElevation = 2.15f - num;
+                        }
+                        if (num + this.customizationCamElevation < 0.6f)
+                        {
+                            this.customizationCamElevation = 0.6f - num;
+                        }
+                        if ((this.customizeCharacterPage == 4 || this.customizeCharacterPage == 5 || this.customizeCharacterPage == 0 || this.customizeCharacterPage == 6 || this.customizeCharacterPage == 7) && this.mX < 0.5f)
+                        {
+                            this.zoomAllowed = false;
+                        }
+                        if (this.zoomAllowed)
+                        {
+                            this.camFollowDist -= Input.mouseScrollDelta.y * (this.camFollowDist + 4f) * 0.1f;
+                        }
+                        if (this.camFollowDist <= this.minCamDist + 0.1f)
+                        {
+                            this.camFollowDist = this.minCamDist + 0.1f;
+                        }
                     }
                     else
                     {
-                        float num7 = this.interactionZoom;
-                        Vector2 mouseScrollDelta4 = Input.mouseScrollDelta;
-                        this.interactionZoom = num7 + mouseScrollDelta4.y * 0.12f;
-                        this.interactionZoom = Game.cap(this.interactionZoom, 0f, 1f);
-                        this.camTarget = this.PC().interactionSubject.bones.Root.position;
-                        this.camPos = this.PC().interactionPoint.Find("CamPosClose").position * this.interactionZoom + this.PC().interactionPoint.Find("CamPosFar").position * (1f - this.interactionZoom);
-                        this.PC().interactionPoint.Find("CamPosFar").LookAt(this.camTarget);
-                        float d = Mathf.Pow((1f - this.interactionZoom) * 0.6f + 0.4f, 2f);
-                        this.camPos += this.PC().interactionPoint.Find("CamPosFar").right * (this.camTarget - this.camPos).magnitude * d * 0.8f * (this.interactionCamX + Mathf.Cos(Time.time) * 0.05f);
-                        this.camPos += this.PC().interactionPoint.Find("CamPosFar").up * (this.camTarget - this.camPos).magnitude * d * 0.6f * (this.interactionCamY + Mathf.Sin(Time.time * 1.1f) * 0.05f);
-                        if (Input.GetKey(UserSettings.data.KEY_STRAFE_LEFT))
+                        if (!this.lightingControlPanelOpen && (Cursor.lockState == CursorLockMode.Locked || Input.GetMouseButton(1)))
                         {
-                            this.interactionCamX -= Time.deltaTime * 4f;
+                            this.camFollowAngle += this.mouseChangeSinceLastFixedUpdate.x * 0.05f * (0.2f + UserSettings.data.lookSensitivity) * Game.cap(Time.deltaTime * 40f, 0f, 1f);
+                            float num2 = 1f;
+                            if (UserSettings.data.invertY)
+                            {
+                                num2 = -1f;
+                            }
+                            this.camFollowElevation += this.mouseChangeSinceLastFixedUpdate.y * 0.05f * (0.2f + UserSettings.data.lookSensitivity) * num2 * Game.cap(Time.deltaTime * 40f, 0f, 1f);
+                            if (this.camFollowElevation < 0.4f)
+                            {
+                                this.camFollowElevation = 0.4f;
+                            }
+                            if (this.camFollowElevation > 2.8f)
+                            {
+                                this.camFollowElevation = 2.8f;
+                            }
                         }
-                        if (Input.GetKey(UserSettings.data.KEY_STRAFE_RIGHT))
+                        if ((!this.UIinUse || this.inResearchMode) && this.zoomAllowed)
                         {
-                            this.interactionCamX += Time.deltaTime * 4f;
+                            float num3 = this.camFollowDist;
+                            this.camFollowDist -= Input.mouseScrollDelta.y * (this.camFollowDist + 4f) * 0.1f * Game.cap(Time.deltaTime * 40f, 0f, 1f);
+                            if (this.firstPersonMode && (this.camFollowDist > num3 || this.customizingCharacter))
+                            {
+                                this.camFollowDist = this.minCamDist + this.firstPersonDistBuffer;
+                                this.firstPersonMode = false;
+                            }
                         }
-                        if (Input.GetKey(UserSettings.data.KEY_WALK_FORWARD))
-                        {
-                            this.interactionCamY += Time.deltaTime * 4f;
-                        }
-                        if (Input.GetKey(UserSettings.data.KEY_WALK_BACKWARD))
-                        {
-                            this.interactionCamY -= Time.deltaTime * 4f;
-                        }
-                        this.interactionCamX = Game.cap(this.interactionCamX, -1f, 1f);
-                        this.interactionCamY = Game.cap(this.interactionCamY, -1f, 1f);
-                        this.camFollowAccel = Time.deltaTime * 30f;
                     }
-                }
-                else
-                {
-                    this.freeCam = false;
-                    this.justSwitchedIntoCamMode = true;
-                }
-                if (this.firstPersonMode)
-                {
-                    this.firstpersonTransition += Time.deltaTime * 3f;
-                }
-                else
-                {
-                    this.firstpersonTransition -= Time.deltaTime * 3f;
-                }
-                this.firstpersonTransition = Game.cap(this.firstpersonTransition, 0f, 1f);
-                if (this.firstpersonTransition > 0f)
-                {
-                    this.v3 = (this.camTarget - this.camPos).normalized;
-                    this.camTarget += this.camFollowDist * this.v3 * this.firstpersonTransition;
-                    this.camPos += this.camFollowDist * this.v3 * this.firstpersonTransition;
-                    this.v3.y = 0f;
-                    this.v3.Normalize();
-                    this.camTarget += this.v3 * this.firstpersonTransition * 1f;
-                    this.camPos += this.v3 * this.firstpersonTransition * 1f;
-                }
-            }
-            float num8 = Mathf.Pow(1.5f - UserSettings.data.cameraSmoothing, 3f);
-            this.camPos_actual += (this.camPos - this.camPos_actual) * Game.cap(this.camFollowAccel * num8, 0f, 1f);
-            this.mainCam.transform.parent.position = this.camPos_actual;
-            this.camTarget_actual += (this.camTarget - this.camTarget_actual) * Game.cap(this.camFollowAccel * num8, 0f, 1f);
-            this.v3 = Vector3.up;
-            this.mainCam.transform.parent.LookAt(this.camTarget_actual, this.v3);
-            if (this.customizingCharacter)
-            {
-                this.mainCam.transform.parent.Rotate(0f, -20f, 0f);
-            }
-            if (this.freeCam || TestingRoom.editingMode)
-            {
-                this.mainCam.GetComponent<Camera>().fieldOfView += (80f - this.mainCam.GetComponent<Camera>().fieldOfView) * Game.cap(Time.deltaTime * 5f, 0f, 1f);
-            }
-            else
-            {
-                this.mainCam.GetComponent<Camera>().fieldOfView += (65f - this.mainCam.GetComponent<Camera>().fieldOfView) * Game.cap(Time.deltaTime * 5f, 0f, 1f);
-            }
-            this.DOFfocus.transform.position = this.camTarget_actual;
-            if (this.popupOpen || this.shopOpen || this.chemicalSynthesisMenuOpen || this.inventoryOpen)
-            {
-                Transform transform = this.DOFfocus.transform;
-                transform.position += (this.DOFfocus.transform.position - this.mainCam.transform.parent.position) * -100f;
-            }
-            else if (this.timeScale_act < 0.99f && !Input.GetKey(KeyCode.Keypad9))
-            {
-                Transform transform2 = this.DOFfocus.transform;
-                transform2.position += (this.DOFfocus.transform.position - this.mainCam.transform.parent.position) * (1f - this.timeScale_act) * -10f;
-            }
-            this.setAlphaRecursive(this.thinkingIndicator.transform, this.rtBlur * 0.5f);
-            if (this.recentThinking * 2f > this.rtBlur)
-            {
-                this.rtBlur += (this.recentThinking * 2f - this.rtBlur) * Time.deltaTime * 8f;
-            }
-            else
-            {
-                this.rtBlur += (this.recentThinking * 2f - this.rtBlur) * Time.deltaTime * 3f;
-            }
-            if (this.cameraBoundsMask == -99)
-            {
-                this.cameraBoundsMask = LayerMask.GetMask("Default", "StaticObjects");
-            }
-            if (!this.firstPersonMode)
-            {
-                if (this.inResearchMode)
-                {
-                    if (Physics.Raycast(this.camPos_actual, (this.camTarget_actual - this.camPos_actual).normalized, out this.camHit, (this.camPos_actual - this.camTarget_actual).magnitude + 0.1f, LayerMask.GetMask("Default")))
+                    this.zoomAllowed = true;
+                    if (this.PC().interactionSubject != null)
                     {
-                        this.mainCam.transform.parent.position = this.camHit.point;
+                        this.camFollowDist = this.minCamDist + 1f;
+                        this.firstPersonMode = false;
+                    }
+                    else if (this.camFollowDist < this.minCamDist + this.firstPersonDistBuffer && !this.customizingCharacter)
+                    {
+                        this.camFollowDist = this.minCamDist;
+                        this.firstPersonMode = true;
+                    }
+                    if (this.camFollowDist > this.maxCamDist)
+                    {
+                        this.camFollowDist = this.maxCamDist;
+                    }
+                    this.camFollowAccel = Time.deltaTime * 25f;
+                    for (int i = 0; i < this.characters.Count; i++)
+                    {
+                        if (this.characters[i].initted && (this.characters[i].controlledByPlayer || (this.customizingCharacter && this.characters[i] == this.OC())))
+                        {
+                            this.firstPersonAccel = 0f;
+                            this.camTargetBone = this.characters[i].cameraFocusPoint;
+                            this.camPos = this.camTargetBone.position;
+                            if (this.firstPersonMode)
+                            {
+                                this.OOBoffset = 0f;
+                            }
+                            if (this.OOBoffset > this.camFollowDist)
+                            {
+                                this.OOBoffset = this.camFollowDist;
+                            }
+                            if (this.customizingCharacter)
+                            {
+                                this.camFollowAngle += this.customizationCamRot;
+                            }
+                            this.camPos.x = this.camPos.x + (this.camFollowDist - this.OOBoffset) * Mathf.Cos(this.camFollowAngle) * Mathf.Sin(this.camFollowElevation);
+                            this.camPos.z = this.camPos.z + (this.camFollowDist - this.OOBoffset) * Mathf.Sin(this.camFollowAngle) * Mathf.Sin(this.camFollowElevation);
+                            this.camPos.y = this.camPos.y + (this.camFollowDist - this.OOBoffset) * Mathf.Cos(this.camFollowElevation);
+                            if (this.customizingCharacter)
+                            {
+                                this.camFollowAngle -= this.customizationCamRot;
+                            }
+                            this.camTarget = this.camTargetBone.transform.position;
+                            if (this.customizingCharacter)
+                            {
+                                this.camTarget.y = this.camTarget.y - 2.5f * (this.mY - 0.5f) * 0.1f;
+                                this.camTarget.y = this.camTarget.y + (this.camPos.y - this.camTarget.y) * 0.5f;
+                                this.camTarget += this.mainCam.transform.parent.right * (this.mX - 0.5f) * 0.3f;
+                            }
+                            if (this.anyResearchHotspotBeingUsed || TestingRoom.editingMode)
+                            {
+                                this.camPos += this.mainCam.transform.parent.right * 2.6f;
+                                this.camTarget += this.mainCam.transform.parent.right * 2.6f;
+                            }
+                            else if (this.curDialogue != string.Empty)
+                            {
+                                if (this.dialogueOnRight)
+                                {
+                                    this.dialogueCameraDisplacement = this.mainCam.transform.parent.right * this.dialogueCameraDisplacementAmount * (this.camFollowDist / 9f);
+                                }
+                                else
+                                {
+                                    this.dialogueCameraDisplacement = this.mainCam.transform.parent.right * (0f - this.dialogueCameraDisplacementAmount) * (this.camFollowDist / 9f);
+                                }
+                                this.camPos += this.dialogueCameraDisplacement;
+                                this.camTarget += this.dialogueCameraDisplacement;
+                            }
+                            else
+                            {
+                                this.dialogueCameraDisplacement = Vector3.zero;
+                            }
+                            this.camFollowAccel = 0.5f + this.characters[i].moveSpeed * 0.5f * Time.deltaTime * 60f;
+                        }
+                    }
+                    if (this.PC() != null && this.PC().ridingMovingElevator)
+                    {
+                        this.v3 = this.camTarget;
+                        this.v3.y = this.v3.y + 8f;
+                        this.camPos = (this.camPos + this.v3 * 6f) / 7f;
+                    }
+                    if (this.PC().interactionSubject != null)
+                    {
+                        if (this.justSwitchedIntoCamMode)
+                        {
+                            this.freeCam = UserSettings.data.defaultToFreeCam;
+                            this.justSwitchedIntoCamMode = false;
+                        }
+                        this.camTarget = this.PC().interactionSubject.bones.Root.position;
+                        if (this.freeCam)
+                        {
+                            this.interactionZoom *= 1f - Input.mouseScrollDelta.y * 0.05f;
+                            this.interactionZoom = Game.cap(this.interactionZoom, 0.1f, 1f);
+                            this.camPos = this.freeCamPos;
+                            if (Input.GetKey(UserSettings.data.KEY_STRAFE_LEFT))
+                            {
+                                this.camPos -= this.mainCamContainer.transform.right * Time.deltaTime * 25f * this.interactionZoom;
+                            }
+                            if (Input.GetKey(UserSettings.data.KEY_STRAFE_RIGHT))
+                            {
+                                this.camPos += this.mainCamContainer.transform.right * Time.deltaTime * 25f * this.interactionZoom;
+                            }
+                            if (Mathf.Abs(this.camPos.y - this.camTarget.y) < Mathf.Abs(this.camPos.x - this.camTarget.x) + Mathf.Abs(this.camPos.z - this.camTarget.z))
+                            {
+                                if (Input.GetKey(UserSettings.data.KEY_WALK_BACKWARD))
+                                {
+                                    this.camPos -= this.mainCamContainer.transform.up * Time.deltaTime * 25f * this.interactionZoom;
+                                }
+                                if (Input.GetKey(UserSettings.data.KEY_WALK_FORWARD))
+                                {
+                                    this.camPos += this.mainCamContainer.transform.up * Time.deltaTime * 25f * this.interactionZoom;
+                                }
+                            }
+                            else if (this.camPos.y > this.camTarget.y)
+                            {
+                                if (Input.GetKey(UserSettings.data.KEY_WALK_BACKWARD))
+                                {
+                                    this.camPos -= this.mainCamContainer.transform.up * Time.deltaTime * 25f * this.interactionZoom;
+                                }
+                            }
+                            else if (Input.GetKey(UserSettings.data.KEY_WALK_FORWARD))
+                            {
+                                this.camPos += this.mainCamContainer.transform.up * Time.deltaTime * 25f * this.interactionZoom;
+                            }
+                            Vector3 vector3 = this.camTarget;
+                            vector2 = this.camPos - this.camTarget;
+                            this.camPos = vector3 + vector2.normalized * this.interactionZoom * 9f;
+                            this.freeCamPos = this.camPos;
+                        }
+                        else
+                        {
+                            this.interactionZoom += Input.mouseScrollDelta.y * 0.12f;
+                            this.interactionZoom = Game.cap(this.interactionZoom, 0f, 1f);
+                            this.camTarget = this.PC().interactionSubject.bones.Root.position;
+                            this.camPos = this.PC().interactionPoint.Find("CamPosClose").position * this.interactionZoom + this.PC().interactionPoint.Find("CamPosFar").position * (1f - this.interactionZoom);
+                            this.PC().interactionPoint.Find("CamPosFar").LookAt(this.camTarget);
+                            float d = Mathf.Pow((1f - this.interactionZoom) * 0.6f + 0.4f, 2f);
+                            Vector3 vector4 = this.camPos;
+                            Vector3 right = this.PC().interactionPoint.Find("CamPosFar").right;
+                            vector2 = this.camTarget - this.camPos;
+                            this.camPos = vector4 + right * vector2.magnitude * d * 0.8f * (this.interactionCamX + Mathf.Cos(Time.time) * 0.05f);
+                            Vector3 vector5 = this.camPos;
+                            Vector3 up = this.PC().interactionPoint.Find("CamPosFar").up;
+                            vector2 = this.camTarget - this.camPos;
+                            this.camPos = vector5 + up * vector2.magnitude * d * 0.6f * (this.interactionCamY + Mathf.Sin(Time.time * 1.1f) * 0.05f);
+                            if (Input.GetKey(UserSettings.data.KEY_STRAFE_LEFT))
+                            {
+                                this.interactionCamX -= Time.deltaTime * 4f;
+                            }
+                            if (Input.GetKey(UserSettings.data.KEY_STRAFE_RIGHT))
+                            {
+                                this.interactionCamX += Time.deltaTime * 4f;
+                            }
+                            if (Input.GetKey(UserSettings.data.KEY_WALK_FORWARD))
+                            {
+                                this.interactionCamY += Time.deltaTime * 4f;
+                            }
+                            if (Input.GetKey(UserSettings.data.KEY_WALK_BACKWARD))
+                            {
+                                this.interactionCamY -= Time.deltaTime * 4f;
+                            }
+                            this.interactionCamX = Game.cap(this.interactionCamX, -1f, 1f);
+                            this.interactionCamY = Game.cap(this.interactionCamY, -1f, 1f);
+                            this.camFollowAccel = Time.deltaTime * 30f;
+                        }
+                    }
+                    else
+                    {
+                        this.freeCam = false;
+                        this.justSwitchedIntoCamMode = true;
+                    }
+                    if (this.firstPersonMode)
+                    {
+                        this.firstpersonTransition += Time.deltaTime * 3f;
+                    }
+                    else
+                    {
+                        this.firstpersonTransition -= Time.deltaTime * 3f;
+                    }
+                    this.firstpersonTransition = Game.cap(this.firstpersonTransition, 0f, 1f);
+                    if (this.firstpersonTransition > 0f)
+                    {
+                        vector2 = this.camTarget - this.camPos;
+                        this.v3 = vector2.normalized;
+                        this.camTarget += this.camFollowDist * this.v3 * this.firstpersonTransition;
+                        this.camPos += this.camFollowDist * this.v3 * this.firstpersonTransition;
+                        this.v3.y = 0f;
+                        this.v3.Normalize();
+                        this.camTarget += this.v3 * this.firstpersonTransition * 1f;
+                        this.camPos += this.v3 * this.firstpersonTransition * 1f;
                     }
                 }
-                else if (Physics.Raycast(this.camTarget_actual, (this.camPos_actual - this.camTarget_actual).normalized, out this.camHit, (this.camPos_actual - this.camTarget_actual).magnitude + 0.1f, this.cameraBoundsMask))
+                float num4 = Mathf.Pow(1.5f - UserSettings.data.cameraSmoothing, 3f);
+                this.camPos_actual += (this.camPos - this.camPos_actual) * Game.cap(this.camFollowAccel * num4, 0f, 1f);
+                this.mainCam.transform.parent.position = this.camPos_actual;
+                this.camTarget_actual += (this.camTarget - this.camTarget_actual) * Game.cap(this.camFollowAccel * num4, 0f, 1f);
+                this.v3 = Vector3.up;
+                this.mainCam.transform.parent.LookAt(this.camTarget_actual, this.v3);
+                if (this.customizingCharacter)
                 {
-                    this.OOBoffset += (((this.camPos_actual - this.camTarget_actual).magnitude - this.camHit.distance) * 5.5f - this.OOBoffset) * 0.1f;
-                    this.mainCam.transform.parent.position = this.camHit.point;
+                    this.mainCam.transform.parent.Rotate(0f, -20f, 0f);
+                }
+                if (this.freeCam || TestingRoom.editingMode)
+                {
+                    this.mainCam.GetComponent<Camera>().fieldOfView += (80f - this.mainCam.GetComponent<Camera>().fieldOfView) * Game.cap(Time.deltaTime * 5f, 0f, 1f);
                 }
                 else
                 {
-                    this.OOBoffset *= 0.96f;
+                    this.mainCam.GetComponent<Camera>().fieldOfView += (65f - this.mainCam.GetComponent<Camera>().fieldOfView) * Game.cap(Time.deltaTime * 5f, 0f, 1f);
                 }
-            }
-            else if (Physics.Raycast(this.camPos_actual, (this.DOFfocus.transform.position - this.camPos_actual).normalized, out this.camHit, (this.camPos_actual - this.DOFfocus.transform.position).magnitude + 0.1f, this.cameraBoundsMask))
-            {
-                this.DOFfocus.transform.position = this.camHit.point;
+                this.DOFfocus.transform.position = this.camTarget_actual;
+                if (this.popupOpen || this.shopOpen || this.chemicalSynthesisMenuOpen || this.inventoryOpen)
+                {
+                    Transform transform = this.DOFfocus.transform;
+                    transform.position += (this.DOFfocus.transform.position - this.mainCam.transform.parent.position) * -100f;
+                }
+                else if (this.timeScale_act < 0.99f && !Input.GetKey(KeyCode.Keypad9))
+                {
+                    Transform transform2 = this.DOFfocus.transform;
+                    transform2.position += (this.DOFfocus.transform.position - this.mainCam.transform.parent.position) * (1f - this.timeScale_act) * -10f;
+                }
+                this.setAlphaRecursive(this.thinkingIndicator.transform, this.rtBlur * 0.5f);
+                if (this.recentThinking * 2f > this.rtBlur)
+                {
+                    this.rtBlur += (this.recentThinking * 2f - this.rtBlur) * Time.deltaTime * 8f;
+                }
+                else
+                {
+                    this.rtBlur += (this.recentThinking * 2f - this.rtBlur) * Time.deltaTime * 3f;
+                }
+                if (this.cameraBoundsMask == -99)
+                {
+                    this.cameraBoundsMask = LayerMask.GetMask("Default", "StaticObjects");
+                }
+                if (!this.firstPersonMode)
+                {
+                    if (this.inResearchMode)
+                    {
+                        Vector3 origin = this.camPos_actual;
+                        vector2 = this.camTarget_actual - this.camPos_actual;
+                        Vector3 normalized = vector2.normalized;
+                        ref RaycastHit hitInfo = ref this.camHit;
+                        vector2 = this.camPos_actual - this.camTarget_actual;
+                        if (Physics.Raycast(origin, normalized, out hitInfo, vector2.magnitude + 0.1f, LayerMask.GetMask("Default")))
+                        {
+                            this.mainCam.transform.parent.position = this.camHit.point;
+                        }
+                    }
+                    else
+                    {
+                        Vector3 origin2 = this.camTarget_actual;
+                        vector2 = this.camPos_actual - this.camTarget_actual;
+                        Vector3 normalized2 = vector2.normalized;
+                        ref RaycastHit hitInfo2 = ref this.camHit;
+                        vector2 = this.camPos_actual - this.camTarget_actual;
+                        if (Physics.Raycast(origin2, normalized2, out hitInfo2, vector2.magnitude + 0.1f, this.cameraBoundsMask))
+                        {
+                            float oOBoffset = this.OOBoffset;
+                            vector2 = this.camPos_actual - this.camTarget_actual;
+                            this.OOBoffset = oOBoffset + ((vector2.magnitude - this.camHit.distance) * 5.5f - this.OOBoffset) * 0.1f;
+                            this.mainCam.transform.parent.position = this.camHit.point;
+                        }
+                        else
+                        {
+                            this.OOBoffset *= 0.96f;
+                        }
+                    }
+                }
+                else
+                {
+                    Vector3 origin3 = this.camPos_actual;
+                    vector2 = this.DOFfocus.transform.position - this.camPos_actual;
+                    Vector3 normalized3 = vector2.normalized;
+                    ref RaycastHit hitInfo3 = ref this.camHit;
+                    vector2 = this.camPos_actual - this.DOFfocus.transform.position;
+                    if (Physics.Raycast(origin3, normalized3, out hitInfo3, vector2.magnitude + 0.1f, this.cameraBoundsMask))
+                    {
+                        this.DOFfocus.transform.position = this.camHit.point;
+                    }
+                }
             }
         }
     }
@@ -20291,5 +20695,304 @@ public class Game : MonoBehaviour
     {
         Game.OpenInWinFileBrowser(path);
         Game.OpenInMacFileBrowser(path);
+    }
+
+    static Game()
+    {
+        Game.gameVersion = 2002;
+        Game.wipeVersion = 2001;
+        Game.reloadedFromGame = false;
+        Game.freeplay = false;
+        Game.VRmode = false;
+        Game.dialoguePartner = null;
+        Game.uiSounds = new List<AudioClip>();
+        Game.uiSoundNames = new List<string>();
+        Game.pausePage = string.Empty;
+        Game.thereHasBeenAtLeastOneFixedUpdate = false;
+        Game.framerate = 0f;
+        Game.doneAnimatingDialogue = false;
+        Game.curDialogueBreakStep = 0;
+        Game.locationOfNearestLabItemV3 = default(Vector3);
+        Game.waitingForDialogueContinue = false;
+        Game.loadingAnyCharacters = false;
+        Game.daddyCummyCheat = false;
+        Game.bigHeadCheat = false;
+        Game.rainbowJizzCheat = false;
+        Game.autoCamSpin = false;
+        Game.maxCharactersForSelector = 6;
+        Game.consoleLines = new List<string>();
+        Game.updatingEmbellishmentSpeciesID = 0;
+        Game.allowHandPositioning = true;
+        Game.allowIK = true;
+        Game.enjoymentDebugging = false;
+        Game.allowShiftSphere = false;
+        Game.allowCum = true;
+        Game.selectedChemicalWasJustForciblyChanged = false;
+        Game.needEmbellishmentPackageMenuRebuild = true;
+        Game.speciesDefinitionColors = new List<Color>();
+        Game.speciesDefinitionColorNames = new List<string>();
+        Game.speciesDefinitionColorReplacements = new List<Color>();
+        Game.speciesDefinitionColorRefs = new List<int>();
+        Game.speciesDefinitionColorRefOffsets_hue = new List<float>();
+        Game.speciesDefinitionColorRefOffsets_sat = new List<float>();
+        Game.speciesDefinitionColorRefOffsets_val = new List<float>();
+        Game.curEmbellishmentBrushMesh = 0;
+        Game.scrollV3 = default(Vector3);
+        Game.hasFocus = true;
+    }
+
+    public void consoleCommand2(string command)
+    {
+        string text = command;
+        if (command.IndexOf(' ') != -1)
+        {
+            text = command.Split(' ')[0];
+        }
+        string text2 = text;
+        switch (text2)
+        {
+            case "help":
+            case "cmdlist":
+            case "cvarlist":
+                if (UserSettings.data.mod_extraCommands)
+                {
+                    Game.trace(" ");
+                    Game.trace("tp [$]: teleports player to (s=Showers), (r=RNG Client Desk), (c=same as r), (1,2,3=Lab room 1, 2, or 3)");
+                    Game.trace("reset: wipes all RNG tube clients. If in character selector, loads 6 new candidates");
+                    Game.trace("wipe: same as reset");
+                    Game.trace("clean: removes all cum (useful if cum life is a large value)");
+                    Game.trace("balls: toggle everyone having/not having balls");
+                }
+                return;
+            case "tp":
+            case "teleport":
+                {
+                    string text3 = command.Split(' ')[1];
+                    this.PC().fallDelay = 0;
+                    if (text3 == "showers" || text3 == "s")
+                    {
+                        this.currentZone = "Showers";
+                        this.PC().teleport(-23f, 12f, -89f, -999f, false);
+                    }
+                    if (text3 == "clients" || text3 == "c" || text3 == "r")
+                    {
+                        this.currentZone = "LabTower";
+                        this.PC().teleport(26f, 12f, -100f, 90f, false);
+                    }
+                    if (text3 == "1")
+                    {
+                        this.currentZone = "Room0";
+                        this.PC().teleport(61.2f, -4.4f, -163.35f, 120f, false);
+                    }
+                    if (text3 == "2")
+                    {
+                        this.currentZone = "Room1";
+                        this.PC().teleport(22.57f, -4.4f, -203.28f, 180f, false);
+                    }
+                    if (text3 == "3")
+                    {
+                        this.currentZone = "Room2";
+                        this.PC().teleport(-29.637f, -4.4f, -186.6655f, 240f, false);
+                    }
+                    return;
+                }
+            case "wipe":
+            case "reset":
+                for (int j = 0; j < this.randomCharactersForSelection.Count; j++)
+                {
+                    this.removeCharacter(this.randomCharactersForSelection[j]);
+                }
+                this.randomCharactersForSelection = new List<RackCharacter>();
+                return;
+            case "clean":
+                for (int i = 0; i < Cum.cumDots.Count; i++)
+                {
+                    Cum.cumDots[i].life = 0f;
+                }
+                if (ProjectionPool.defaultPool != null)
+                {
+                    ProjectionPool.defaultPool.RemoveAll();
+                }
+                break;
+        }
+        if (text2 == "balls")
+        {
+            UserSettings.data.modx_alwaysHaveBalls = !UserSettings.data.modx_alwaysHaveBalls;
+            foreach (RackCharacter character in this.characters)
+            {
+                character.showBalls = UserSettings.data.modx_alwaysHaveBalls;
+            }
+        }
+    }
+
+    public void HandleLog(string logString, string stackTrace, LogType type)
+    {
+        if (logString != this.lastError)
+        {
+            File.AppendAllText("error-log.txt", logString + Environment.NewLine);
+            File.AppendAllText("error-log.txt", stackTrace + Environment.NewLine);
+            Game.trace(logString);
+            this.lastError = logString;
+        }
+    }
+
+    public void modValueChanged(bool value)
+    {
+        bool flag = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkNudeNpcs")).GetComponent<Toggle>().isOn != UserSettings.data.mod_nudeNpcs;
+        bool flag2 = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkFixNpcCum")).GetComponent<Toggle>().isOn != UserSettings.data.mod_fixNpcCum;
+        bool flag3 = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkExtraCommands")).GetComponent<Toggle>().isOn != UserSettings.data.mod_extraCommands;
+        bool flag4 = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkInheritRng")).GetComponent<Toggle>().isOn != UserSettings.data.mod_inheritRng;
+        bool flag5 = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkAltCumStyle")).GetComponent<Toggle>().isOn != UserSettings.data.mod_altCumStyle;
+        bool flag6 = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkHideLoadScreens")).GetComponent<Toggle>().isOn != UserSettings.data.mod_hideLoadScreens;
+        bool flag7 = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkLogErrors")).GetComponent<Toggle>().isOn != UserSettings.data.mod_logErrors;
+        bool flag8 = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkAleksMods")).GetComponent<Toggle>().isOn != UserSettings.data.mod_AleksMods;
+        if (flag)
+        {
+            UserSettings.data.mod_nudeNpcs = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkNudeNpcs")).GetComponent<Toggle>().isOn;
+            foreach (RackCharacter character in this.characters)
+            {
+                if ((UnityEngine.Object)character.npcData != (UnityEngine.Object)null)
+                {
+                    character.npcData.postBuildSetup();
+                }
+            }
+        }
+        if (flag7)
+        {
+            UserSettings.data.mod_logErrors = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkLogErrors")).GetComponent<Toggle>().isOn;
+            if (!UserSettings.data.mod_logErrors)
+            {
+                File.Delete("error-log.txt");
+                Application.logMessageReceived -= this.cachedLogDelegate;
+            }
+            else
+            {
+                Application.logMessageReceived += this.cachedLogDelegate;
+            }
+        }
+        if (flag | flag2 | flag3 | flag4 | flag5 | flag6 | flag7 | flag8)
+        {
+            UserSettings.data.mod_fixNpcCum = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkFixNpcCum")).GetComponent<Toggle>().isOn;
+            UserSettings.data.mod_extraCommands = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkExtraCommands")).GetComponent<Toggle>().isOn;
+            UserSettings.data.mod_inheritRng = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkInheritRng")).GetComponent<Toggle>().isOn;
+            UserSettings.data.mod_altCumStyle = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkAltCumStyle")).GetComponent<Toggle>().isOn;
+            UserSettings.data.mod_hideLoadScreens = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkHideLoadScreens")).GetComponent<Toggle>().isOn;
+            UserSettings.data.mod_AleksMods = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("chkAleksMods")).GetComponent<Toggle>().isOn;
+            this.needPauseRebuild = true;
+        }
+    }
+
+    public bool modSliderChanged()
+    {
+        bool num = (int)(((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("cumLife")).GetComponent<Slider>().val * 100f) != UserSettings.data.mod_cumLife;
+        bool flag = (float)(int)(((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("sexToyPotency")).GetComponent<Slider>().val * 100f) != UserSettings.data.mod_sexToyPotency;
+        if (num)
+        {
+            UserSettings.data.mod_cumLife = (int)(((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("cumLife")).GetComponent<Slider>().val * 100f);
+            Cum.maxCumLife = (float)UserSettings.data.mod_cumLife;
+        }
+        if (flag)
+        {
+            UserSettings.data.mod_sexToyPotency = ((UnityEngine.Component)this.UI.transform.FindChild("ModsMenu").FindChild("sexToyPotency")).GetComponent<Slider>().val;
+        }
+        if (num | flag)
+        {
+            this.needPauseRebuild = true;
+        }
+        return true;
+    }
+
+    public void SetStatsColor()
+    {
+        ((UnityEngine.Component)this.UI.transform.FindChild("CharacterSelector").FindChild("StatPanel").FindChild("txtStats")).GetComponent<Text>().color = UserSettings.data.mod_rngStatColor;
+        ((UnityEngine.Component)this.UI.transform.FindChild("CharacterSelector").FindChild("StatPanel").FindChild("txtStats")).GetComponent<ScienceTextAnimator>().setText(RandomCharacterGenerator.buildStatString(this.randomCharactersForSelection[this.characterSelector_currentSelected]), 10f, 10.9f, false);
+    }
+
+    public void endSessions()
+    {
+        for (int i = 0; i < this.interactions.Count; i++)
+        {
+            this.interactions[i].alive = false;
+        }
+    }
+
+    public void previewOrgasm(RackCharacter name)
+    {
+        if (name.hasPissed)
+        {
+            name.data.cumVolume = name.backupCumVolume;
+            name.data.cumSpurtStrength = name.backupCumSpurtStrength;
+            name.data.cumSpurtFrequency = name.backupCumSpurtFrequency;
+            name.data.orgasmDuration = name.backupOrgasmDuration;
+            name.isPissing = false;
+            name.hasPissed = false;
+        }
+        name.refractory = 0f;
+        name.arousal = 1f;
+        name.orgasming = 0f;
+        name.pleasure = 10f;
+        if (name == this.OC())
+        {
+            ((UnityEngine.Component)this.UI.transform.Find("CustomizationCamControls").Find("previewArousal")).GetComponent<Slider>().val = 1f;
+        }
+    }
+
+    public void pleasureOther(RackCharacter name, string target, string tool)
+    {
+        name.removeAnyClothesCoveringCrotch();
+        if (target == "penis" && tool == "hand")
+        {
+            this.beginInteraction(name, target, tool, this.curToolMode, 0f);
+        }
+        else
+        {
+            this.beginInteraction(name, target, tool, 0, 0f);
+        }
+    }
+
+    public void Piss(RackCharacter name)
+    {
+        if (!name.hasPissed)
+        {
+            name.backupCumVolume = name.data.cumVolume;
+            name.backupCumSpurtStrength = name.data.cumSpurtStrength;
+            name.backupCumSpurtFrequency = name.data.cumSpurtFrequency;
+            name.backupOrgasmDuration = name.data.orgasmDuration;
+        }
+        name.hasPissed = true;
+        name.isPissing = true;
+        name.data.cumVolume = 6f;
+        name.data.cumSpurtFrequency = 10f;
+        name.data.cumSpurtStrength = 0.6f;
+        name.data.orgasmDuration = 2f;
+        name.pleasure = 12f;
+        name.arousal = 0.1f;
+        name.stimulation = 0.1f;
+        name.anticipation = 0f;
+    }
+
+    public RackCharacter OC()
+    {
+        if (this.PC().interactionSubject != null)
+        {
+            return this.PC().interactionSubject;
+        }
+        if (Game.dialoguePartner != null)
+        {
+            return Game.dialoguePartner;
+        }
+        return this.PC();
+    }
+
+    public float modSlideRangeIn(float value, float min, float max)
+    {
+        float num = max - min;
+        return (value - min) / num;
+    }
+
+    public float modSlideRangeOut(float perc, float min, float max)
+    {
+        float num = max - min;
+        return perc * num + min;
     }
 }
