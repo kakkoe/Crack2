@@ -59,7 +59,7 @@ public class AssetLoadManager
 		{
 			return false;
 		}
-		if (AssetLoadManager.WWWs[AssetLoadManager.assetURLs.IndexOf(assetURL)].error != string.Empty)
+		if (!string.IsNullOrEmpty(AssetLoadManager.WWWs[AssetLoadManager.assetURLs.IndexOf(assetURL)].error))
 		{
 			return false;
 		}
@@ -72,7 +72,7 @@ public class AssetLoadManager
 		{
 			return null;
 		}
-		if (AssetLoadManager.WWWs[AssetLoadManager.assetURLs.IndexOf(assetURL)].error != string.Empty)
+		if (!string.IsNullOrEmpty(AssetLoadManager.WWWs[AssetLoadManager.assetURLs.IndexOf(assetURL)].error))
 		{
 			return null;
 		}

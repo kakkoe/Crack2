@@ -92,8 +92,7 @@ public class BGM
                 yield return (object)null;
             }
             yield return (object)www;
-            bool flag3 = string.IsNullOrEmpty(www.error);
-            if (flag3)
+            if (string.IsNullOrEmpty(www.error))
             {
                 bool flag4 = BGM.currentPlayer == 0;
                 if (flag4)

@@ -16,4 +16,8 @@ public class TextureLayer
 	public bool isDecal;
 
 	public bool glow;
+
+	public bool modifyFur;
+
+	public float furLength = 1f;
 }

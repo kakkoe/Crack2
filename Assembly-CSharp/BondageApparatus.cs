@@ -108,6 +108,8 @@ public class BondageApparatus : MonoBehaviour
 
 	private float sessionOrgasmDisplayTime;
 
+	public string interactionPointName;
+
 	private float backBendFromPerformance;
 
 	public Vector3 positioner = default(Vector3);
@@ -251,6 +253,10 @@ public class BondageApparatus : MonoBehaviour
 	private Vector3 originalRackChairstirrupRposition;
 
 	private bool hideHologramsForTutorialReasons = true;
+
+	private float undergroundAmount;
+
+	public float undergroundThreshold = 0.4f;
 
 	public bool blockHeadMovement_back;
 
@@ -707,6 +713,68 @@ public class BondageApparatus : MonoBehaviour
 				this.v3.y = 0f;
 				this.v3.z = 0f;
 				gameObject4.transform.localEulerAngles = this.v3;
+				str = "FACEFUCK";
+				gameObject = new GameObject(this.poseName + "." + str + ".handL");
+				gameObject2 = new GameObject(this.poseName + "." + str + ".handR");
+				gameObject2.transform.SetParent(this.boundCharacter.bones.Head);
+				gameObject.transform.SetParent(this.boundCharacter.bones.Head);
+				gameObject3 = new GameObject(this.poseName + "." + str + ".elbowL");
+				gameObject3.transform.SetParent(performer.bones.SpineUpper);
+				performer.temporaryPerformerMountPoints.Add(gameObject3);
+				gameObject4 = new GameObject(this.poseName + "." + str + ".elbowR");
+				gameObject4.transform.SetParent(performer.bones.SpineUpper);
+				performer.temporaryPerformerMountPoints.Add(gameObject4);
+				gameObject5 = new GameObject(this.poseName + "." + str + ".kneeL");
+				gameObject5.transform.SetParent(performer.bones.SpineUpper);
+				gameObject6 = new GameObject(this.poseName + "." + str + ".kneeR");
+				gameObject6.transform.SetParent(performer.bones.SpineUpper);
+				this.v3.x = -0.44f;
+				this.v3.y = -0.295f;
+				this.v3.z = -0.111f;
+				gameObject.transform.localPosition = this.v3;
+				this.v3.x = 44.9784f;
+				this.v3.y = 320.3191f;
+				this.v3.z = 229.6641f;
+				gameObject.transform.localEulerAngles = this.v3;
+				this.v3.x = -0.478f;
+				this.v3.y = 0.307f;
+				this.v3.z = -0.145f;
+				gameObject2.transform.localPosition = this.v3;
+				this.v3.x = 325.0858f;
+				this.v3.y = 307.4168f;
+				this.v3.z = 151.0075f;
+				gameObject2.transform.localEulerAngles = this.v3;
+				this.v3.x = -0.66f;
+				this.v3.y = 1.465f;
+				this.v3.z = 1.97f;
+				gameObject3.transform.localPosition = this.v3;
+				this.v3.x = 0f;
+				this.v3.y = 0f;
+				this.v3.z = 0f;
+				gameObject3.transform.localEulerAngles = this.v3;
+				this.v3.x = -0.56f;
+				this.v3.y = -1.11f;
+				this.v3.z = 1.639f;
+				gameObject4.transform.localPosition = this.v3;
+				this.v3.x = 0f;
+				this.v3.y = 0f;
+				this.v3.z = 0f;
+				this.v3.x = 0.84f;
+				this.v3.y = 1.74f;
+				this.v3.z = -4.2f;
+				gameObject5.transform.localPosition = this.v3;
+				this.v3.x = 0f;
+				this.v3.y = 0f;
+				this.v3.z = 0f;
+				gameObject5.transform.localEulerAngles = this.v3;
+				this.v3.x = 1.16f;
+				this.v3.y = -0.32f;
+				this.v3.z = -3.91f;
+				gameObject6.transform.localPosition = this.v3;
+				this.v3.x = 0f;
+				this.v3.y = 0f;
+				this.v3.z = 0f;
+				gameObject6.transform.localEulerAngles = this.v3;
 				str = "HIGHLIFTBEHIND";
 				gameObject = new GameObject(this.poseName + "." + str + ".handL");
 				gameObject2 = new GameObject(this.poseName + "." + str + ".handR");
@@ -1198,11 +1266,18 @@ public class BondageApparatus : MonoBehaviour
 
 	public void positionPerformerBasedOnSelectedPose(RackCharacter performer, string pose)
 	{
-		performer.interactionPoint = this.getApproachPointByName(pose);
-		string text = this.poseName + "." + pose;
+		this.interactionPointName = this.poseName + "." + pose;
+		if (performer.lastInteractionPointName != this.interactionPointName)
+		{
+			performer.interactionPoint = this.getApproachPointByName(pose);
+			performer.lastInteractionPointName = this.interactionPointName;
+			performer.stepLiftAmount = 0f;
+			performer.stepLifting = false;
+		}
+		string text = this.interactionPointName;
 		if (text != null)
 		{
-			Dictionary<string, int> dictionary = new Dictionary<string, int>(20);
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(21);
 			dictionary.Add("RackChair.default", 0);
 			dictionary.Add("RackChair.lifted", 1);
 			dictionary.Add("RackChair.eyelevel", 2);
@@ -1213,16 +1288,17 @@ public class BondageApparatus : MonoBehaviour
 			dictionary.Add("Stocks.lifted", 7);
 			dictionary.Add("Stocks.fuck", 8);
 			dictionary.Add("Stocks.highliftBehind", 9);
-			dictionary.Add("Stocks.highlift", 10);
-			dictionary.Add("TableStraps.default", 11);
-			dictionary.Add("TableStraps.missionary", 12);
-			dictionary.Add("TableStraps.sixtynine", 13);
-			dictionary.Add("TableStraps.facefuck", 14);
-			dictionary.Add("TableStraps.riding", 15);
-			dictionary.Add("UpsideDown.default", 16);
-			dictionary.Add("UpsideDown.lowered", 17);
-			dictionary.Add("UpsideDown.behind", 18);
-			dictionary.Add("UpsideDown.facefuck", 19);
+			dictionary.Add("Stocks.facefuck", 10);
+			dictionary.Add("Stocks.highlift", 11);
+			dictionary.Add("TableStraps.default", 12);
+			dictionary.Add("TableStraps.missionary", 13);
+			dictionary.Add("TableStraps.sixtynine", 14);
+			dictionary.Add("TableStraps.facefuck", 15);
+			dictionary.Add("TableStraps.riding", 16);
+			dictionary.Add("UpsideDown.default", 17);
+			dictionary.Add("UpsideDown.lowered", 18);
+			dictionary.Add("UpsideDown.behind", 19);
+			dictionary.Add("UpsideDown.facefuck", 20);
 			int num = default(int);
 			if (dictionary.TryGetValue(text, out num))
 			{
@@ -1310,6 +1386,14 @@ public class BondageApparatus : MonoBehaviour
 					performer.setKneeTarget(true, this.performingCharacter.recursiveFindChild("Stocks.HIGHLIFTBEHIND.kneeR", null), 0.9f);
 					break;
 				case 10:
+					performer.setIdleHandTarget(false, this.boundCharacter.recursiveFindChild("Stocks.FACEFUCK.handL", null), 0.22f, 0.5f);
+					performer.setIdleHandTarget(true, this.boundCharacter.recursiveFindChild("Stocks.FACEFUCK.handR", null), 0.22f, 0.5f);
+					performer.setElbowTarget(false, ((Component)this.performingCharacter.recursiveFindChild("Stocks.FACEFUCK.elbowL", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
+					performer.setElbowTarget(true, ((Component)this.performingCharacter.recursiveFindChild("Stocks.FACEFUCK.elbowR", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
+					performer.setKneeTarget(false, this.performingCharacter.recursiveFindChild("Stocks.FACEFUCK.kneeL", null), 0.9f);
+					performer.setKneeTarget(true, this.performingCharacter.recursiveFindChild("Stocks.FACEFUCK.kneeR", null), 0.9f);
+					break;
+				case 11:
 					performer.setIdleHandTarget(false, this.boundCharacter.recursiveFindChild("Stocks.HIGHLIFT.handL", null), 0.22f, 0f);
 					performer.setIdleHandTarget(true, this.boundCharacter.recursiveFindChild("Stocks.HIGHLIFT.handR", null), 0.22f, 0f);
 					performer.setElbowTarget(false, ((Component)this.performingCharacter.recursiveFindChild("Stocks.HIGHLIFT.elbowL", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
@@ -1317,7 +1401,7 @@ public class BondageApparatus : MonoBehaviour
 					performer.setKneeTarget(false, this.performingCharacter.recursiveFindChild("Stocks.HIGHLIFT.kneeL", null), 0.9f);
 					performer.setKneeTarget(true, this.performingCharacter.recursiveFindChild("Stocks.HIGHLIFT.kneeR", null), 0.9f);
 					break;
-				case 11:
+				case 12:
 					performer.setIdleHandTarget(false, this.boundCharacter.recursiveFindChild("TableStraps.DEFAULT.handL", null), 0.35f, 0f);
 					performer.setIdleHandTarget(true, this.boundCharacter.recursiveFindChild("TableStraps.DEFAULT.handR", null), 0.22f, 0f);
 					performer.setElbowTarget(false, ((Component)this.performingCharacter.recursiveFindChild("TableStraps.DEFAULT.elbowL", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
@@ -1325,7 +1409,7 @@ public class BondageApparatus : MonoBehaviour
 					performer.setKneeTarget(false, this.performingCharacter.recursiveFindChild("TableStraps.DEFAULT.kneeL", null), 0.9f);
 					performer.setKneeTarget(true, this.performingCharacter.recursiveFindChild("TableStraps.DEFAULT.kneeR", null), 0.9f);
 					break;
-				case 12:
+				case 13:
 					performer.setIdleHandTarget(false, this.scaleWithCharacter.Find("ridingMountPoints").Find("HandL"), 0.05f, 0f);
 					performer.setIdleHandTarget(true, this.scaleWithCharacter.Find("ridingMountPoints").Find("HandR"), 0.05f, 0f);
 					performer.setFootTargets(this.scaleWithCharacter.Find("ridingMountPoints").Find("FootL"), this.scaleWithCharacter.Find("ridingMountPoints").Find("FootR"));
@@ -1334,7 +1418,7 @@ public class BondageApparatus : MonoBehaviour
 					performer.setKneeTarget(false, this.scaleWithCharacter.Find("ridingMountPoints").Find("MISSIONARY.kneeL"), 0.9f);
 					performer.setKneeTarget(true, this.scaleWithCharacter.Find("ridingMountPoints").Find("MISSIONARY.kneeR"), 0.9f);
 					break;
-				case 13:
+				case 14:
 					performer.setIdleHandTarget(false, this.scaleWithCharacter.Find("ridingMountPoints").Find("SIXTYNINE.handL"), 0.05f, 0f);
 					performer.setIdleHandTarget(true, this.scaleWithCharacter.Find("ridingMountPoints").Find("SIXTYNINE.handR"), 0.05f, 0f);
 					performer.setFootTargets(this.scaleWithCharacter.Find("ridingMountPoints").Find("SIXTYNINE.footL"), this.scaleWithCharacter.Find("ridingMountPoints").Find("SIXTYNINE.footR"));
@@ -1343,7 +1427,7 @@ public class BondageApparatus : MonoBehaviour
 					performer.setKneeTarget(false, this.scaleWithCharacter.Find("ridingMountPoints").Find("SIXTYNINE.kneeL"), 0.9f);
 					performer.setKneeTarget(true, this.scaleWithCharacter.Find("ridingMountPoints").Find("SIXTYNINE.kneeR"), 0.9f);
 					break;
-				case 14:
+				case 15:
 					performer.setIdleHandTarget(false, this.boundCharacter.recursiveFindChild("TableStraps.FACEFUCK.handL", null), 0.35f, 0f);
 					performer.setIdleHandTarget(true, this.boundCharacter.recursiveFindChild("TableStraps.FACEFUCK.handR", null), 0.22f, 0f);
 					performer.setElbowTarget(false, ((Component)this.performingCharacter.recursiveFindChild("TableStraps.FACEFUCK.elbowL", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
@@ -1351,7 +1435,7 @@ public class BondageApparatus : MonoBehaviour
 					performer.setKneeTarget(false, this.performingCharacter.recursiveFindChild("TableStraps.FACEFUCK.kneeL", null), 0.9f);
 					performer.setKneeTarget(true, this.performingCharacter.recursiveFindChild("TableStraps.FACEFUCK.kneeR", null), 0.9f);
 					break;
-				case 15:
+				case 16:
 					performer.setIdleHandTarget(false, ((Component)this.performingCharacter.recursiveFindChild("TableStraps.RIDING.handL", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.25f, 0f);
 					performer.setIdleHandTarget(true, ((Component)this.performingCharacter.recursiveFindChild("TableStraps.RIDING.handR", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.25f, 0f);
 					performer.setFootTargets(this.scaleWithCharacter.Find("ridingMountPoints").Find("FootLriding"), this.scaleWithCharacter.Find("ridingMountPoints").Find("FootRriding"));
@@ -1359,14 +1443,6 @@ public class BondageApparatus : MonoBehaviour
 					performer.setElbowTarget(true, ((Component)this.performingCharacter.recursiveFindChild("TableStraps.RIDING.elbowR", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
 					performer.setKneeTarget(false, this.scaleWithCharacter.Find("ridingMountPoints").Find("RIDING.kneeL"), 0.9f);
 					performer.setKneeTarget(true, this.scaleWithCharacter.Find("ridingMountPoints").Find("RIDING.kneeR"), 0.9f);
-					break;
-				case 16:
-					performer.setIdleHandTarget(false, this.boundCharacter.recursiveFindChild("UpsideDown.DEFAULT.handL", null), 0.22f, 0f);
-					performer.setIdleHandTarget(true, this.boundCharacter.recursiveFindChild("UpsideDown.DEFAULT.handR", null), 0.22f, 0f);
-					performer.setElbowTarget(false, ((Component)this.performingCharacter.recursiveFindChild("UpsideDown.DEFAULT.elbowL", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
-					performer.setElbowTarget(true, ((Component)this.performingCharacter.recursiveFindChild("UpsideDown.DEFAULT.elbowR", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
-					performer.setKneeTarget(false, this.performingCharacter.recursiveFindChild("UpsideDown.DEFAULT.kneeL", null), 0.9f);
-					performer.setKneeTarget(true, this.performingCharacter.recursiveFindChild("UpsideDown.DEFAULT.kneeR", null), 0.9f);
 					break;
 				case 17:
 					performer.setIdleHandTarget(false, this.boundCharacter.recursiveFindChild("UpsideDown.DEFAULT.handL", null), 0.22f, 0f);
@@ -1377,6 +1453,14 @@ public class BondageApparatus : MonoBehaviour
 					performer.setKneeTarget(true, this.performingCharacter.recursiveFindChild("UpsideDown.DEFAULT.kneeR", null), 0.9f);
 					break;
 				case 18:
+					performer.setIdleHandTarget(false, this.boundCharacter.recursiveFindChild("UpsideDown.DEFAULT.handL", null), 0.22f, 0f);
+					performer.setIdleHandTarget(true, this.boundCharacter.recursiveFindChild("UpsideDown.DEFAULT.handR", null), 0.22f, 0f);
+					performer.setElbowTarget(false, ((Component)this.performingCharacter.recursiveFindChild("UpsideDown.DEFAULT.elbowL", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
+					performer.setElbowTarget(true, ((Component)this.performingCharacter.recursiveFindChild("UpsideDown.DEFAULT.elbowR", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
+					performer.setKneeTarget(false, this.performingCharacter.recursiveFindChild("UpsideDown.DEFAULT.kneeL", null), 0.9f);
+					performer.setKneeTarget(true, this.performingCharacter.recursiveFindChild("UpsideDown.DEFAULT.kneeR", null), 0.9f);
+					break;
+				case 19:
 					performer.setIdleHandTarget(false, this.boundCharacter.recursiveFindChild("UpsideDown.BEHIND.handL", null), 0.22f, 0f);
 					performer.setIdleHandTarget(true, this.boundCharacter.recursiveFindChild("UpsideDown.BEHIND.handR", null), 0.22f, 0f);
 					performer.setElbowTarget(false, ((Component)this.performingCharacter.recursiveFindChild("UpsideDown.BEHIND.elbowL", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
@@ -1384,7 +1468,7 @@ public class BondageApparatus : MonoBehaviour
 					performer.setKneeTarget(false, this.performingCharacter.recursiveFindChild("UpsideDown.BEHIND.kneeL", null), 0.9f);
 					performer.setKneeTarget(true, this.performingCharacter.recursiveFindChild("UpsideDown.BEHIND.kneeR", null), 0.9f);
 					break;
-				case 19:
+				case 20:
 					performer.setIdleHandTarget(false, this.boundCharacter.recursiveFindChild("UpsideDown.FACEFUCK.handL", null), 0.22f, 0f);
 					performer.setIdleHandTarget(true, this.boundCharacter.recursiveFindChild("UpsideDown.FACEFUCK.handR", null), 0.22f, 0f);
 					performer.setElbowTarget(false, ((Component)this.performingCharacter.recursiveFindChild("UpsideDown.DEFAULT.elbowL", null)).GetComponent<GlobalFollower>().globalPointTransform, 0.9f);
@@ -1403,7 +1487,7 @@ public class BondageApparatus : MonoBehaviour
 		string text = this.poseName + "." + pose;
 		if (text != null)
 		{
-			Dictionary<string, int> dictionary = new Dictionary<string, int>(19);
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(20);
 			dictionary.Add("TableStraps.default", 1);
 			dictionary.Add("TableStraps.riding", 2);
 			dictionary.Add("TableStraps.sixtynine", 3);
@@ -1423,6 +1507,7 @@ public class BondageApparatus : MonoBehaviour
 			dictionary.Add("Stocks.fuck", 17);
 			dictionary.Add("Stocks.highlift", 18);
 			dictionary.Add("Stocks.highliftBehind", 19);
+			dictionary.Add("Stocks.facefuck", 20);
 			int num = default(int);
 			if (dictionary.TryGetValue(text, out num))
 			{
@@ -1440,7 +1525,7 @@ public class BondageApparatus : MonoBehaviour
 					performer.bendBack(-0.1f + this.backBendFromPerformance);
 					break;
 				case 4:
-					performer.bendBack(0.1f + this.backBendFromPerformance);
+					performer.bendBack(-0.8f + this.backBendFromPerformance);
 					break;
 				case 5:
 					performer.bendBack(0.148f + this.backBendFromPerformance);
@@ -1486,6 +1571,9 @@ public class BondageApparatus : MonoBehaviour
 					break;
 				case 19:
 					performer.bendBack(-0.4f + this.backBendFromPerformance);
+					break;
+				case 20:
+					performer.bendBack(-0.31f + this.backBendFromPerformance);
 					break;
 				}
 			}
@@ -1902,125 +1990,104 @@ public class BondageApparatus : MonoBehaviour
 							switch (this.poseName)
 							{
 							case "RackChair":
-							{
 								switch (this.performingCharacter.curSexPoseName)
 								{
 								case "default":
 								{
-									Vector3 position23 = this.performingCharacter.GO.transform.position;
-									float num15 = position23.y + 2.8f * this.performingCharacter.height_act;
-									Vector3 position24 = this.boundCharacter.bones.Root.position;
-									this.heightAdjustment = num15 - position24.y;
+									Vector3 position35 = this.performingCharacter.GO.transform.position;
+									float num21 = position35.y + 2.8f * this.performingCharacter.height_act;
+									Vector3 position36 = this.boundCharacter.bones.Root.position;
+									this.heightAdjustment = num21 - position36.y;
 									break;
 								}
 								case "lifted":
 								{
-									Vector3 position21 = this.performingCharacter.GO.transform.position;
-									float num14 = position21.y + 3.2f * this.performingCharacter.height_act;
-									Vector3 position22 = this.boundCharacter.bones.Root.position;
-									this.heightAdjustment = num14 - position22.y;
-									break;
-								}
-								case "eyelevel":
-								{
-									Vector3 position19 = this.performingCharacter.GO.transform.position;
-									float num13 = position19.y + 3.11f * this.performingCharacter.height_act;
-									Vector3 position20 = this.boundCharacter.bones.Pubic.position;
-									this.heightAdjustment = num13 - position20.y;
-									break;
-								}
-								case "highlift":
-								{
-									Vector3 position17 = this.performingCharacter.GO.transform.position;
-									float num12 = position17.y + 4.6f * this.performingCharacter.height_act;
-									Vector3 position18 = this.boundCharacter.bones.Pubic.position;
-									this.heightAdjustment = num12 - position18.y;
-									break;
-								}
-								case "fuck":
-								{
-									Vector3 position15 = this.performingCharacter.GO.transform.position;
-									float num11 = position15.y + 2.05f * this.performingCharacter.height_act;
-									Vector3 position16 = this.boundCharacter.bones.Pubic.position;
-									this.heightAdjustment = num11 - position16.y;
-									break;
-								}
-								}
-								this.heightAdjustmentVelocity += this.heightAdjustment * Time.deltaTime;
-								this.heightAdjustmentVelocity = BondageApparatus.cap(this.heightAdjustmentVelocity, -4.5f, 4.5f);
-								if (Mathf.Abs(this.heightAdjustment) < 0.05f || (this.heightAdjustment > 0f && this.heightAdjustmentVelocity < 0f) || (this.heightAdjustment < 0f && this.heightAdjustmentVelocity > 0f))
-								{
-									this.heightAdjustmentVelocity -= this.heightAdjustmentVelocity * BondageApparatus.cap(Time.deltaTime * 8f, 0f, 1f);
-								}
-								this.adjustingHeight = (Mathf.Abs(this.heightAdjustment) > 0.29f);
-								this.v3.x = 0f;
-								this.v3.y = this.heightAdjustmentVelocity * Time.deltaTime;
-								this.v3.z = 0f;
-								Transform transform8 = this.scaleWithCharacter;
-								transform8.position += this.v3;
-								break;
-							}
-							case "Stocks":
-							{
-								switch (this.performingCharacter.curSexPoseName)
-								{
-								case "default":
-								{
 									Vector3 position33 = this.performingCharacter.GO.transform.position;
-									float num20 = position33.y + 2.8f * this.performingCharacter.height_act;
+									float num20 = position33.y + 3.2f * this.performingCharacter.height_act;
 									Vector3 position34 = this.boundCharacter.bones.Root.position;
 									this.heightAdjustment = num20 - position34.y;
 									break;
 								}
-								case "lifted":
+								case "eyelevel":
 								{
 									Vector3 position31 = this.performingCharacter.GO.transform.position;
-									float num19 = position31.y + 3.7f * this.performingCharacter.height_act;
-									Vector3 position32 = this.boundCharacter.bones.Root.position;
+									float num19 = position31.y + 3.11f * this.performingCharacter.height_act;
+									Vector3 position32 = this.boundCharacter.bones.Pubic.position;
 									this.heightAdjustment = num19 - position32.y;
 									break;
 								}
 								case "highlift":
 								{
 									Vector3 position29 = this.performingCharacter.GO.transform.position;
-									float num18 = position29.y + 4.8f * this.performingCharacter.height_act;
+									float num18 = position29.y + 4.6f * this.performingCharacter.height_act;
 									Vector3 position30 = this.boundCharacter.bones.Pubic.position;
 									this.heightAdjustment = num18 - position30.y;
 									break;
 								}
-								case "highliftBehind":
+								case "fuck":
 								{
 									Vector3 position27 = this.performingCharacter.GO.transform.position;
-									float num17 = position27.y + 4.4f * this.performingCharacter.height_act;
+									float num17 = position27.y + 2.05f * this.performingCharacter.height_act;
 									Vector3 position28 = this.boundCharacter.bones.Pubic.position;
 									this.heightAdjustment = num17 - position28.y;
 									break;
 								}
-								case "fuck":
+								}
+								break;
+							case "Stocks":
+								switch (this.performingCharacter.curSexPoseName)
+								{
+								case "default":
 								{
 									Vector3 position25 = this.performingCharacter.GO.transform.position;
-									float num16 = position25.y + 1.9f * this.performingCharacter.height_act;
-									Vector3 position26 = this.boundCharacter.bones.Pubic.position;
+									float num16 = position25.y + 2.8f * this.performingCharacter.height_act;
+									Vector3 position26 = this.boundCharacter.bones.Root.position;
 									this.heightAdjustment = num16 - position26.y;
 									break;
 								}
-								}
-								this.heightAdjustmentVelocity += this.heightAdjustment * Time.deltaTime;
-								this.heightAdjustmentVelocity = BondageApparatus.cap(this.heightAdjustmentVelocity, -4.5f, 4.5f);
-								if (Mathf.Abs(this.heightAdjustment) < 0.05f || (this.heightAdjustment > 0f && this.heightAdjustmentVelocity < 0f) || (this.heightAdjustment < 0f && this.heightAdjustmentVelocity > 0f))
+								case "lifted":
 								{
-									this.heightAdjustmentVelocity -= this.heightAdjustmentVelocity * BondageApparatus.cap(Time.deltaTime * 8f, 0f, 1f);
+									Vector3 position23 = this.performingCharacter.GO.transform.position;
+									float num15 = position23.y + 3.7f * this.performingCharacter.height_act;
+									Vector3 position24 = this.boundCharacter.bones.Root.position;
+									this.heightAdjustment = num15 - position24.y;
+									break;
 								}
-								this.adjustingHeight = (Mathf.Abs(this.heightAdjustment) > 0.29f);
-								this.v3.x = 0f;
-								this.v3.y = this.heightAdjustmentVelocity * Time.deltaTime;
-								this.v3.z = 0f;
-								Transform transform9 = this.scaleWithCharacter;
-								transform9.position += this.v3;
+								case "highlift":
+								{
+									Vector3 position21 = this.performingCharacter.GO.transform.position;
+									float num14 = position21.y + 4.8f * this.performingCharacter.height_act;
+									Vector3 position22 = this.boundCharacter.bones.Pubic.position;
+									this.heightAdjustment = num14 - position22.y;
+									break;
+								}
+								case "highliftBehind":
+								{
+									Vector3 position19 = this.performingCharacter.GO.transform.position;
+									float num13 = position19.y + 4.4f * this.performingCharacter.height_act;
+									Vector3 position20 = this.boundCharacter.bones.Pubic.position;
+									this.heightAdjustment = num13 - position20.y;
+									break;
+								}
+								case "fuck":
+								{
+									Vector3 position17 = this.performingCharacter.GO.transform.position;
+									float num12 = position17.y + 1.9f * this.performingCharacter.height_act;
+									Vector3 position18 = this.boundCharacter.bones.Pubic.position;
+									this.heightAdjustment = num12 - position18.y;
+									break;
+								}
+								case "facefuck":
+								{
+									Vector3 position15 = this.performingCharacter.GO.transform.position;
+									float num11 = position15.y + 2f * this.performingCharacter.height_act;
+									Vector3 position16 = this.boundCharacter.bones.Head.position;
+									this.heightAdjustment = num11 - position16.y;
+									break;
+								}
+								}
 								break;
-							}
 							case "TableStraps":
-							{
 								switch (this.performingCharacter.curSexPoseName)
 								{
 								case "default":
@@ -2048,22 +2115,8 @@ public class BondageApparatus : MonoBehaviour
 									break;
 								}
 								}
-								this.heightAdjustmentVelocity += this.heightAdjustment * Time.deltaTime;
-								this.heightAdjustmentVelocity = BondageApparatus.cap(this.heightAdjustmentVelocity, -4.5f, 4.5f);
-								if (Mathf.Abs(this.heightAdjustment) < 0.05f || (this.heightAdjustment > 0f && this.heightAdjustmentVelocity < 0f) || (this.heightAdjustment < 0f && this.heightAdjustmentVelocity > 0f))
-								{
-									this.heightAdjustmentVelocity -= this.heightAdjustmentVelocity * BondageApparatus.cap(Time.deltaTime * 8f, 0f, 1f);
-								}
-								this.adjustingHeight = (Mathf.Abs(this.heightAdjustment) > 0.29f);
-								this.v3.x = 0f;
-								this.v3.y = this.heightAdjustmentVelocity * Time.deltaTime;
-								this.v3.z = 0f;
-								Transform transform7 = this.scaleWithCharacter;
-								transform7.position += this.v3;
 								break;
-							}
 							case "UpsideDown":
-							{
 								switch (this.performingCharacter.curSexPoseName)
 								{
 								default:
@@ -2099,20 +2152,45 @@ public class BondageApparatus : MonoBehaviour
 									break;
 								}
 								}
-								this.heightAdjustmentVelocity += this.heightAdjustment * Time.deltaTime;
-								this.heightAdjustmentVelocity = BondageApparatus.cap(this.heightAdjustmentVelocity, -4.5f, 4.5f);
-								if (Mathf.Abs(this.heightAdjustment) < 0.05f || (this.heightAdjustment > 0f && this.heightAdjustmentVelocity < 0f) || (this.heightAdjustment < 0f && this.heightAdjustmentVelocity > 0f))
-								{
-									this.heightAdjustmentVelocity -= this.heightAdjustmentVelocity * BondageApparatus.cap(Time.deltaTime * 8f, 0f, 1f);
-								}
-								this.adjustingHeight = (Mathf.Abs(this.heightAdjustment) > 0.29f);
-								this.v3.x = 0f;
-								this.v3.y = this.heightAdjustmentVelocity * Time.deltaTime;
-								this.v3.z = 0f;
-								Transform transform6 = this.scaleWithCharacter;
-								transform6.position += this.v3;
 								break;
 							}
+							this.heightAdjustmentVelocity += this.heightAdjustment * Time.deltaTime;
+							this.heightAdjustmentVelocity = BondageApparatus.cap(this.heightAdjustmentVelocity, -4.5f, 4.5f);
+							if (Mathf.Abs(this.heightAdjustment) < 0.05f || (this.heightAdjustment > 0f && this.heightAdjustmentVelocity < 0f) || (this.heightAdjustment < 0f && this.heightAdjustmentVelocity > 0f))
+							{
+								this.heightAdjustmentVelocity -= this.heightAdjustmentVelocity * BondageApparatus.cap(Time.deltaTime * 8f, 0f, 1f);
+							}
+							this.adjustingHeight = (Mathf.Abs(this.heightAdjustment) > 0.29f);
+							this.v3.x = 0f;
+							this.v3.y = this.heightAdjustmentVelocity * Time.deltaTime;
+							this.v3.z = 0f;
+							Vector3 position37 = base.transform.position;
+							float y = position37.y;
+							Vector3 position38 = this.scaleWithCharacter.position;
+							this.undergroundAmount = y - position38.y;
+							float num22 = this.undergroundAmount / this.boundCharacter.height_act - this.undergroundThreshold;
+							if (num22 > 0f)
+							{
+								if (this.v3.y > 0f)
+								{
+									Transform transform6 = this.scaleWithCharacter;
+									transform6.position += this.v3;
+									this.performingCharacter.stepLift(0f);
+								}
+								else
+								{
+									this.performingCharacter.stepLift(Time.deltaTime * 1f);
+									this.heightAdjustmentVelocity = 0f;
+								}
+							}
+							else
+							{
+								Transform transform7 = this.scaleWithCharacter;
+								transform7.position += this.v3;
+								if (num22 > -0.15f)
+								{
+									this.performingCharacter.stepLift(0f);
+								}
 							}
 							if (this.adjustingHeight)
 							{
@@ -2186,15 +2264,15 @@ public class BondageApparatus : MonoBehaviour
 								{
 									this.v32 = this.hologramHarvestContents.position;
 									ref Vector3 val = ref this.v32;
-									Vector3 position35 = this.game.PC().bones.Head.position;
-									val.y = position35.y * 0.5f;
+									Vector3 position39 = this.game.PC().bones.Head.position;
+									val.y = position39.y * 0.5f;
 									this.hologramHarvestContents.position = this.v32;
 								}
 								this.hologramHarvestContents.LookAt(this.game.mainCam.transform);
 							}
 							if ((UnityEngine.Object)this.hologramRealtime != (UnityEngine.Object)null)
 							{
-								float num21 = this.boundCharacter.percievedStimulation / this.boundCharacter.targetStimulation;
+								float num23 = this.boundCharacter.percievedStimulation / this.boundCharacter.targetStimulation;
 								if (this.boundCharacter.timeSincePain < 0.5f)
 								{
 									this.painSmoother += Time.deltaTime;
@@ -2202,34 +2280,34 @@ public class BondageApparatus : MonoBehaviour
 									{
 										this.painSmoother = 1f;
 									}
-									num21 += (this.boundCharacter.discomfort - this.boundCharacter.pleasure) * 80f * (0.5f - this.boundCharacter.timeSincePain) * this.painSmoother;
+									num23 += (this.boundCharacter.discomfort - this.boundCharacter.pleasure) * 80f * (0.5f - this.boundCharacter.timeSincePain) * this.painSmoother;
 								}
 								else
 								{
 									this.painSmoother = 0f;
 								}
 								this.txtSensitivity.text = Localization.getPhrase("STIMULATION", string.Empty).ToUpper();
-								this.sensitivityPulse += Time.deltaTime * num21 * 5f;
+								this.sensitivityPulse += Time.deltaTime * num23 * 5f;
 								this.anticipationPulse += Time.deltaTime * (3f + this.boundCharacter.anticipation * 5f);
-								this.v3 = Vector3.one * (0.1f + Mathf.Cos(this.sensitivityPulse) * 0.02f * BondageApparatus.cap(num21, 0f, 2.5f));
+								this.v3 = Vector3.one * (0.1f + Mathf.Cos(this.sensitivityPulse) * 0.02f * BondageApparatus.cap(num23, 0f, 2.5f));
 								this.sensitivityIndicator.localScale = this.v3;
 								this.v3 = Vector3.one * (0.06f + BondageApparatus.cap(0.5f * (1f - this.boundCharacter.sensitivity), 0f, 0.14f) * (0.95f + Mathf.Sin(this.sensitivityPulse) * 0.05f));
-								float num22 = BondageApparatus.cap(1f - this.boundCharacter.sensitivity, 0f, 0.5f) / 0.5f;
-								this.heatPulse += num22 * 0.2f;
+								float num24 = BondageApparatus.cap(1f - this.boundCharacter.sensitivity, 0f, 0.5f) / 0.5f;
+								this.heatPulse += num24 * 0.2f;
 								this.sensitivityHeat.localScale = this.v3;
-								this.sensitivityHeatMR.material.SetColor("_EmissionColor", 0.9f * ((BondageApparatus.c2_r * num22 + BondageApparatus.c2_g * (1f - num22)) * (0.85f + Mathf.Cos(this.heatPulse) * 0.15f) * (this.v3.x / 0.2f)));
-								this.sensitivityHeatMR.material.SetColor("_Color", (BondageApparatus.c2_r * num22 + BondageApparatus.c2_g * (1f - num22)) * (0.85f + Mathf.Cos(this.heatPulse) * 0.15f) * (this.v3.x / 0.2f));
-								num22 = BondageApparatus.cap(Mathf.Abs(num21 - 1f), 0f, 1f);
-								((Component)this.sensitivityIndicator).GetComponent<SkinnedMeshRenderer>().material.SetColor("_EmissionColor", 0.9f * (BondageApparatus.c2_r * num22 + BondageApparatus.c2_g * (1f - num22)));
-								((Component)this.sensitivityIndicator).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", BondageApparatus.c2_r * num22 + BondageApparatus.c2_g * (1f - num22));
-								if (num21 >= 1f)
+								this.sensitivityHeatMR.material.SetColor("_EmissionColor", 0.9f * ((BondageApparatus.c2_r * num24 + BondageApparatus.c2_g * (1f - num24)) * (0.85f + Mathf.Cos(this.heatPulse) * 0.15f) * (this.v3.x / 0.2f)));
+								this.sensitivityHeatMR.material.SetColor("_Color", (BondageApparatus.c2_r * num24 + BondageApparatus.c2_g * (1f - num24)) * (0.85f + Mathf.Cos(this.heatPulse) * 0.15f) * (this.v3.x / 0.2f));
+								num24 = BondageApparatus.cap(Mathf.Abs(num23 - 1f), 0f, 1f);
+								((Component)this.sensitivityIndicator).GetComponent<SkinnedMeshRenderer>().material.SetColor("_EmissionColor", 0.9f * (BondageApparatus.c2_r * num24 + BondageApparatus.c2_g * (1f - num24)));
+								((Component)this.sensitivityIndicator).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", BondageApparatus.c2_r * num24 + BondageApparatus.c2_g * (1f - num24));
+								if (num23 >= 1f)
 								{
-									((Component)this.sensitivityIndicator).GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100f * BondageApparatus.cap(num21 - 1f, 0f, 1f));
+									((Component)this.sensitivityIndicator).GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100f * BondageApparatus.cap(num23 - 1f, 0f, 1f));
 									((Component)this.sensitivityIndicator).GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(1, 0f);
 								}
 								else
 								{
-									((Component)this.sensitivityIndicator).GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(1, 100f * BondageApparatus.cap(1f - num21, 0f, 1f));
+									((Component)this.sensitivityIndicator).GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(1, 100f * BondageApparatus.cap(1f - num23, 0f, 1f));
 									((Component)this.sensitivityIndicator).GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 0f);
 								}
 								this.txtAnticipation.text = Localization.getPhrase("ANTICIPATION", string.Empty).ToUpper();
@@ -2237,9 +2315,9 @@ public class BondageApparatus : MonoBehaviour
 								this.anticipationHeart.localScale = this.v3;
 								this.v3 = Vector3.one * BondageApparatus.cap(this.v3.x, 1f, 2f);
 								this.anticipationHeart1.localScale = this.v3;
-								num22 = BondageApparatus.cap((this.v3.x - 1f) * 8f, 0f, 1f);
-								this.anticipationHeartMR.material.SetColor("_EmissionColor", 0.9f * (BondageApparatus.c2_r * num22 + BondageApparatus.c2_g * (1f - num22)));
-								this.anticipationHeartMR.material.SetColor("_Color", BondageApparatus.c2_r * num22 + BondageApparatus.c2_g * (1f - num22));
+								num24 = BondageApparatus.cap((this.v3.x - 1f) * 8f, 0f, 1f);
+								this.anticipationHeartMR.material.SetColor("_EmissionColor", 0.9f * (BondageApparatus.c2_r * num24 + BondageApparatus.c2_g * (1f - num24)));
+								this.anticipationHeartMR.material.SetColor("_Color", BondageApparatus.c2_r * num24 + BondageApparatus.c2_g * (1f - num24));
 								this.refractoryColor += (BondageApparatus.cap(this.boundCharacter.refractory * 2f / this.boundCharacter.currentRefractoryDuration, 0f, 1f) - this.refractoryColor) * BondageApparatus.cap(Time.deltaTime * 2f, 0f, 1f);
 								this.anticipationHeart1MR.material.SetColor("_EmissionColor", 0.9f * (BondageApparatus.c2_r * this.refractoryColor + BondageApparatus.c2_w * (1f - this.refractoryColor)));
 								this.anticipationHeart1MR.material.SetColor("_Color", BondageApparatus.c2_r * this.refractoryColor + BondageApparatus.c2_w * (1f - this.refractoryColor));
@@ -2248,32 +2326,32 @@ public class BondageApparatus : MonoBehaviour
 								if (this.arousalHistoryTick <= 0f)
 								{
 									this.arousalHistoryTick += 0.05f;
-									for (int num23 = this.arousalHistory.Length - 1; num23 >= 0; num23--)
+									for (int num25 = this.arousalHistory.Length - 1; num25 >= 0; num25--)
 									{
-										if (num23 == 0)
+										if (num25 == 0)
 										{
 											this.arousalHistory[0] = this.boundCharacter.arousal + this.boundCharacter.cockTwitch * 0.5f + this.boundCharacter.breath[0] * 0.2f;
 										}
 										else
 										{
-											this.arousalHistory[num23] = this.arousalHistory[num23 - 1] * 0.97f;
+											this.arousalHistory[num25] = this.arousalHistory[num25 - 1] * 0.97f;
 										}
-										this.v3.x = 2f + (1f - this.arousalHistory[num23]) * 2f;
-										this.v3.y = 0.5f + BondageApparatus.cap(this.arousalHistory[num23], 0f, 1f) * 11.5f;
-										num22 = BondageApparatus.cap(1f - this.arousalHistory[num23], 0f, 1f);
-										this.arousalHistories[this.arousalHistory.Length - 1 - num23].localScale = this.v3;
-										this.arousalHistoriesMR[this.arousalHistory.Length - 1 - num23].material.SetColor("_EmissionColor", 0.9f * (BondageApparatus.c2_r * num22 + BondageApparatus.c2_g * (1f - num22)));
-										this.arousalHistoriesMR[this.arousalHistory.Length - 1 - num23].material.SetColor("_Color", BondageApparatus.c2_r * num22 + BondageApparatus.c2_g * (1f - num22));
+										this.v3.x = 2f + (1f - this.arousalHistory[num25]) * 2f;
+										this.v3.y = 0.5f + BondageApparatus.cap(this.arousalHistory[num25], 0f, 1f) * 11.5f;
+										num24 = BondageApparatus.cap(1f - this.arousalHistory[num25], 0f, 1f);
+										this.arousalHistories[this.arousalHistory.Length - 1 - num25].localScale = this.v3;
+										this.arousalHistoriesMR[this.arousalHistory.Length - 1 - num25].material.SetColor("_EmissionColor", 0.9f * (BondageApparatus.c2_r * num24 + BondageApparatus.c2_g * (1f - num24)));
+										this.arousalHistoriesMR[this.arousalHistory.Length - 1 - num25].material.SetColor("_Color", BondageApparatus.c2_r * num24 + BondageApparatus.c2_g * (1f - num24));
 									}
 								}
 								this.txtArousal.text = Localization.getPhrase("AROUSAL", string.Empty).ToUpper();
 								this.txtClimax.text = Localization.getPhrase("CLIMAX", string.Empty).ToUpper();
 								this.orgasmPulse += Time.deltaTime * (4f + 15f * Mathf.Pow(BondageApparatus.cap(this.boundCharacter.orgasm + this.boundCharacter.pleasure * this.boundCharacter.arousal, 0f, 1f), 5f));
-								num22 = 1f - Mathf.Pow(Mathf.Cos(this.orgasmPulse), 3f);
-								this.orgasmMeterCurve.material.SetColor("_EmissionColor", 0.9f * (BondageApparatus.c2_w * num22 + BondageApparatus.c2_g * (1f - num22)));
-								this.orgasmMeterCurve.material.SetColor("_Color", BondageApparatus.c2_w * num22 + BondageApparatus.c2_g * (1f - num22));
-								this.pleasureMeterCurve.material.SetColor("_EmissionColor", 0.9f * (BondageApparatus.c2_w * num22 + BondageApparatus.c2_g * (1f - num22)));
-								this.pleasureMeterCurve.material.SetColor("_Color", BondageApparatus.c2_w * num22 + BondageApparatus.c2_g * (1f - num22));
+								num24 = 1f - Mathf.Pow(Mathf.Cos(this.orgasmPulse), 3f);
+								this.orgasmMeterCurve.material.SetColor("_EmissionColor", 0.9f * (BondageApparatus.c2_w * num24 + BondageApparatus.c2_g * (1f - num24)));
+								this.orgasmMeterCurve.material.SetColor("_Color", BondageApparatus.c2_w * num24 + BondageApparatus.c2_g * (1f - num24));
+								this.pleasureMeterCurve.material.SetColor("_EmissionColor", 0.9f * (BondageApparatus.c2_w * num24 + BondageApparatus.c2_g * (1f - num24)));
+								this.pleasureMeterCurve.material.SetColor("_Color", BondageApparatus.c2_w * num24 + BondageApparatus.c2_g * (1f - num24));
 								this.orgasmMeterCurve.SetBlendShapeWeight(0, 100f - BondageApparatus.cap(this.boundCharacter.orgasm / 0.25f, 0f, 1f) * 100f);
 								this.orgasmMeterCurve.SetBlendShapeWeight(1, 100f - BondageApparatus.cap(this.boundCharacter.orgasm / 0.25f - 1f, 0f, 1f) * 100f);
 								this.orgasmMeterCurve.SetBlendShapeWeight(2, 100f - BondageApparatus.cap(this.boundCharacter.orgasm / 0.25f - 2f, 0f, 1f) * 100f);
@@ -2292,8 +2370,8 @@ public class BondageApparatus : MonoBehaviour
 								{
 									this.v32 = this.hologramRealtimeContents.position;
 									ref Vector3 val2 = ref this.v32;
-									Vector3 position36 = this.game.PC().bones.Head.position;
-									val2.y = position36.y * 0.5f;
+									Vector3 position40 = this.game.PC().bones.Head.position;
+									val2.y = position40.y * 0.5f;
 									this.hologramRealtimeContents.position = this.v32;
 								}
 								this.hologramRealtimeContents.LookAt(this.game.mainCam.transform);

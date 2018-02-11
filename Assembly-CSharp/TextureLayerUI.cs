@@ -118,6 +118,14 @@ public class TextureLayerUI : MonoBehaviour
 				{
 					((Component)base.transform.Find("LayerStuff").Find("cmdGlow")).GetComponent<Image>().color = this.fadeColor;
 				}
+				if (Game.gameInstance.PC().data.textureLayers[this.id - 1].modifyFur)
+				{
+					((Component)base.transform.Find("cmdFur")).GetComponent<Image>().color = Color.white;
+				}
+				else
+				{
+					((Component)base.transform.Find("cmdFur")).GetComponent<Image>().color = this.fadeColor;
+				}
 				int num = 1 + Game.gameInstance.PC().data.textureLayers[this.id - 1].masks.Count;
 				while (this.maskButtons.Count != num)
 				{
@@ -305,6 +313,24 @@ public class TextureLayerUI : MonoBehaviour
 		Game.gameInstance.characterRedrawDelay = 2;
 	}
 
+	public void toggleFur()
+	{
+		if (this.id != 0)
+		{
+			Game.gameInstance.PC().data.textureLayers[this.id - 1].modifyFur = !Game.gameInstance.PC().data.textureLayers[this.id - 1].modifyFur;
+			Game.gameInstance.characterRedrawDelay = 2;
+			base.transform.Find("sldFur").gameObject.SetActive(Game.gameInstance.PC().data.textureLayers[this.id - 1].modifyFur);
+			if (Game.gameInstance.PC().data.textureLayers[this.id - 1].modifyFur)
+			{
+				((Component)base.transform.Find("sldFur")).GetComponent<UnityEngine.UI.Slider>().value = Game.gameInstance.PC().data.textureLayers[this.id - 1].furLength;
+			}
+			else
+			{
+				((Component)base.transform.Find("sldFur")).GetComponent<UnityEngine.UI.Slider>().value = Game.gameInstance.PC().data.furLength;
+			}
+		}
+	}
+
 	public void CreateClicked()
 	{
 		Game.gameInstance.colorPickerOpen = false;
@@ -338,6 +364,20 @@ public class TextureLayerUI : MonoBehaviour
 		if (!Game.gameInstance.PC().data.textureLayers[this.id - 1].required)
 		{
 			Game.gameInstance.PC().data.textureLayers[this.id - 1].opacity = ((Component)base.transform.Find("LayerStuff").Find("sldOpacity")).GetComponent<UnityEngine.UI.Slider>().value;
+			Game.gameInstance.characterRedrawDelay = 2;
+		}
+	}
+
+	public void furLengthChanged()
+	{
+		if (this.id == 0)
+		{
+			Game.gameInstance.PC().data.furLength = ((Component)base.transform.Find("sldFur")).GetComponent<UnityEngine.UI.Slider>().value;
+			Game.gameInstance.characterRedrawDelay = 2;
+		}
+		else
+		{
+			Game.gameInstance.PC().data.textureLayers[this.id - 1].furLength = ((Component)base.transform.Find("sldFur")).GetComponent<UnityEngine.UI.Slider>().value;
 			Game.gameInstance.characterRedrawDelay = 2;
 		}
 	}

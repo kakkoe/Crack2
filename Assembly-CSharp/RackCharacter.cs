@@ -739,6 +739,14 @@ public class RackCharacter
 
 	private bool customGlow;
 
+	private float[] headFurModifierPixels = new float[1];
+
+	private float[] bodyFurModifierPixels = new float[1];
+
+	private float[] wingFurModifierPixels = new float[1];
+
+	private bool haveFurModifiersBeenInitialized;
+
 	public List<string> textureSuffixes;
 
 	public List<string> customTexturesWeNeedToDownload = new List<string>();
@@ -769,6 +777,14 @@ public class RackCharacter
 
 	private Texture2D wingEmitCanvas;
 
+	private Texture2D headControlCanvas;
+
+	private Texture2D bodyControlCanvas;
+
+	private Texture2D tailControlCanvas;
+
+	private Texture2D wingControlCanvas;
+
 	private Texture2D tex;
 
 	private string characterTextureDirectory;
@@ -782,6 +798,12 @@ public class RackCharacter
 	public static bool showTextureBuildTimes;
 
 	private bool queueTextureBuild;
+
+	private float defaultFurMapScale = 1f;
+
+	private bool needFurLOD;
+
+	private UnityEngine.Color[] controlPixels;
 
 	private UnityEngine.Color[] wetPixels;
 
@@ -1073,6 +1095,10 @@ public class RackCharacter
 
 	private SoftJointLimitSpring penisLimitSpring = default(SoftJointLimitSpring);
 
+	public static float originalPenisLengthMinusHead = 0f;
+
+	public static float originalPenisHeadLength = 0f;
+
 	private bool allowPenisUnparenting;
 
 	public Quaternion[] wingInRots;
@@ -1194,6 +1220,12 @@ public class RackCharacter
 	private bool collidersWereOn = true;
 
 	private bool needColliderRebuild;
+
+	private bool fadingOutCharacter;
+
+	private bool wasFadingOutCharacter;
+
+	private float fadeOutCharacterAmount;
 
 	private bool wasHidden;
 
@@ -1510,9 +1542,9 @@ public class RackCharacter
 	private float tarHMDIWTO;
 
 	public float forcedPleasure;
-
+    
 	public static float targetStimulationGlobalAdjustment;
-
+    
 	public float cumIntensity;
 
 	public bool emittingCum;
@@ -1625,6 +1657,8 @@ public class RackCharacter
 
 	public Transform interactionPoint;
 
+	public string lastInteractionPointName = string.Empty;
+
 	public List<GameObject> temporaryPerformerMountPoints = new List<GameObject>();
 
 	public bool hasFootTargets;
@@ -1648,6 +1682,8 @@ public class RackCharacter
 	public float handPositionAlongPenis;
 
 	public float lastHandPositionAlongPenis;
+
+	private float bodyIKweight;
 
 	public Vector3 aikPenisTip = Vector3.zero;
 
@@ -1744,6 +1780,10 @@ public class RackCharacter
 	public static string ApplicationpersistentDataPath;
 
 	public static List<string> customTexturesWeNeedToCheckForZeroLength;
+
+	private List<ImperialFurLOD> furLODs = new List<ImperialFurLOD>();
+
+	private bool hasFurLOD;
 
 	public bool needsRandomDecals;
 
@@ -2009,9 +2049,11 @@ public class RackCharacter
 
 	private Transform hho_Thumb2_R1;
 
-	public static Texture characterBodyFXTex;
+	public static Texture2D headFurControlBase;
 
-	public static Texture characterHeadFXTex;
+	public static Texture2D bodyFurControlBase;
+
+	public static Texture2D wingFurControlBase;
 
 	public static UnityEngine.Color[] wetnessTex_vagina;
 
@@ -2031,9 +2073,23 @@ public class RackCharacter
 
 	public static ParticleSystem cumEmitter;
 
+	public static string baseModelFilename;
+
 	public static bool windowsOS;
 
-	public static List<string> existingTextures;
+	public static bool macOS;
+
+	public static bool linuxOS;
+
+	public static List<string> furTypes = new List<string>();
+
+	public static List<string> skinTypes = new List<string>();
+
+	public static Dictionary<string, Texture> furNoiseTextures = new Dictionary<string, Texture>();
+
+	public static Dictionary<string, Texture> skinNormalTextures = new Dictionary<string, Texture>();
+
+	public static List<string> existingTextures = new List<string>();
 
 	public List<string> loadingClothes = new List<string>();
 
@@ -2042,6 +2098,10 @@ public class RackCharacter
 	private List<GameObject> clothingCollisionMeshes = new List<GameObject>();
 
 	public static List<clothingRefVertDefinition> clothingRefDefinitions;
+
+	public bool stepLifting;
+
+	public float stepLiftAmount;
 
 	private Vector3 lastMTPosition = default(Vector3);
 
@@ -2092,6 +2152,14 @@ public class RackCharacter
 	private float timeSinceTeleport;
 
 	private float floorFixDelay;
+
+	private float stepLiftVel;
+
+	private StepLift steplift;
+
+	private bool stepliftInitted;
+
+	private GameObject stepLiftSource;
 
 	private Vector3 lastKnownGoodLocation = default(Vector3);
 
@@ -2301,7 +2369,7 @@ public class RackCharacter
 
 	public bool needTailRecurl = true;
 
-	public float tailsize_act;
+	public float tailsize_act = 1f;
 
 	public float effectiveTailCurlX;
 
@@ -2510,6 +2578,8 @@ public class RackCharacter
 	public Quaternion angleTo_newRot;
 
 	private Vector3 axisFixVector = new Vector3(-90f, 90f, 0f);
+
+	private float longestFurLength = 1f;
 
 	private float footstepWeight = 1f;
 
@@ -2872,7 +2942,7 @@ public class RackCharacter
 			}
 			if (this.data.assetBundleName == string.Empty || this.data.assetBundleName == null)
 			{
-				this.data.assetBundleName = "basemodel";
+				this.data.assetBundleName = RackCharacter.baseModelFilename;
 			}
 			if (this.data.embellishmentColors.Count < 12)
 			{
@@ -3195,8 +3265,23 @@ public class RackCharacter
 			}
 			this.aggression = this.data.aggression;
 			this.dominance = this.data.aggression * UnityEngine.Random.value;
+			if (this.data.furType != string.Empty && !RackCharacter.furTypes.Contains(this.data.furType))
+			{
+				this.data.furType = string.Empty;
+			}
+			if (this.data.furType == string.Empty)
+			{
+				if (RackCharacter.furTypes.Contains("velvety"))
+				{
+					this.data.furType = "velvety";
+				}
+				else
+				{
+					this.data.furType = RackCharacter.furTypes[0];
+				}
+			}
 			this.mostRecentMeshModificationTime = 0;
-			string fileName = Game.characterAssetDirectory + "basemodel";
+			string fileName = Game.characterAssetDirectory + RackCharacter.baseModelFilename;
 			FileInfo fileInfo = new FileInfo(fileName);
 			int num3 = (int)RackCharacter.GetUnixEpoch(fileInfo.LastWriteTime);
 			if (num3 > this.mostRecentMeshModificationTime)
@@ -3571,203 +3656,237 @@ public class RackCharacter
 		return 0.35f;
 	}
 
-	public void drawTexLayer(int canvasID, string layer, Vector4 color, float opacity, bool additive = false, List<TextureLayerMask> masks = null)
+	public void drawTexLayer(int canvasID, string layer, Vector4 color, float opacity, bool additive = false, List<TextureLayerMask> masks = null, bool adjustFur = false, float adjustFurAmount = 1f)
 	{
-		if (opacity != 0f)
+		if (opacity == 0f && !adjustFur)
 		{
-			if (layer == "fill")
+			return;
+		}
+		if (layer == "fill")
+		{
+			for (int i = 0; i < this.canvasPixels[canvasID].Length; i++)
 			{
-				for (int i = 0; i < this.canvasPixels[canvasID].Length; i++)
-				{
-					this.canvasPixels[canvasID][i] = color;
-				}
+				this.canvasPixels[canvasID][i] = color;
 			}
-			else
+		}
+		else
+		{
+			string str = string.Empty;
+			switch (canvasID)
 			{
-				string str = string.Empty;
-				switch (canvasID)
+			case 0:
+				str = "_head";
+				break;
+			case 1:
+				str = "_body";
+				break;
+			case 2:
+				str = "_wings";
+				break;
+			case 3:
+				str = "_head";
+				break;
+			case 4:
+				str = "_body";
+				break;
+			case 5:
+				str = "_wings";
+				break;
+			}
+			bool flag = false;
+			if (canvasID >= 3 && !File.Exists(this.characterTextureDirectory + layer.ToLower() + ".png"))
+			{
+				layer = layer.Replace("FX", string.Empty);
+				flag = true;
+			}
+			int num = 0;
+			string text = this.characterTextureDirectory + layer.ToLower() + ".png";
+			if (File.Exists(text))
+			{
+				if (RackCharacter.windowsOS)
 				{
-				case 0:
-					str = "_head";
-					break;
-				case 1:
-					str = "_body";
-					break;
-				case 2:
-					str = "_wings";
-					break;
-				case 3:
-					str = "_head";
-					break;
-				case 4:
-					str = "_body";
-					break;
-				case 5:
-					str = "_wings";
-					break;
-				}
-				bool flag = false;
-				if (canvasID >= 3 && !File.Exists(this.characterTextureDirectory + layer.ToLower() + ".png"))
-				{
-					layer = layer.Replace("FX", string.Empty);
-					flag = true;
-				}
-				int num = 0;
-				string text = this.characterTextureDirectory + layer.ToLower() + ".png";
-				if (File.Exists(text))
-				{
-					if (RackCharacter.windowsOS)
+					try
 					{
-						try
+						this.image = new Bitmap(text);
+					}
+					catch (Exception ex)
+					{
+						Debug.Log("error loading image: " + ex.Message);
+						return;
+					}
+					this.bitmapData = this.image.LockBits(new Rectangle(0, 0, this.image.Width, this.image.Height), ImageLockMode.ReadWrite, this.image.PixelFormat);
+					this.bytesPerPixel = System.Drawing.Image.GetPixelFormatSize(this.image.PixelFormat) / 8;
+					this.byteCount = this.bitmapData.Stride * this.image.Height;
+					this.pixels = new byte[this.byteCount];
+					this.ptrFirstPixel = this.bitmapData.Scan0;
+					Marshal.Copy(this.ptrFirstPixel, this.pixels, 0, this.pixels.Length);
+					this.heightInPixels = this.bitmapData.Height;
+					this.widthInBytes = this.bitmapData.Width * this.bytesPerPixel;
+					this.threadedImagePixels = new Vector4[this.image.Width * this.image.Height];
+					for (int num2 = this.heightInPixels - 1; num2 >= 0; num2--)
+					{
+						int num3 = num2 * this.bitmapData.Stride;
+						for (int j = 0; j < this.widthInBytes; j += this.bytesPerPixel)
 						{
-							this.image = new Bitmap(text);
+							this.threadedImagePixels[num].x = (float)(int)this.pixels[num3 + j] / 255f;
+							this.threadedImagePixels[num].y = (float)(int)this.pixels[num3 + j + 1] / 255f;
+							this.threadedImagePixels[num].z = (float)(int)this.pixels[num3 + j + 2] / 255f;
+							this.threadedImagePixels[num].w = (float)(int)this.pixels[num3 + j + 3] / 255f;
+							num++;
 						}
-						catch (Exception ex)
+					}
+					this.image.Dispose();
+					this.image = null;
+				}
+				else
+				{
+					Texture2D texture2D = new Texture2D(2, 2);
+					texture2D.LoadImage(File.ReadAllBytes(text));
+					UnityEngine.Color[] array = texture2D.GetPixels();
+					this.threadedImagePixels = new Vector4[array.Length];
+					for (int k = 0; k < array.Length; k++)
+					{
+						this.threadedImagePixels[k] = array[k];
+					}
+					UnityEngine.Object.Destroy(texture2D);
+					texture2D = null;
+					array = null;
+				}
+				if (masks != null)
+				{
+					for (int l = 0; l < masks.Count; l++)
+					{
+						string text2 = this.characterTextureDirectory + masks[l].texture.ToLower() + str + ".png";
+						if (!File.Exists(text2))
 						{
-							Debug.Log("error loading image: " + ex.Message);
 							return;
 						}
-						this.bitmapData = this.image.LockBits(new Rectangle(0, 0, this.image.Width, this.image.Height), ImageLockMode.ReadWrite, this.image.PixelFormat);
-						this.bytesPerPixel = System.Drawing.Image.GetPixelFormatSize(this.image.PixelFormat) / 8;
-						this.byteCount = this.bitmapData.Stride * this.image.Height;
-						this.pixels = new byte[this.byteCount];
-						this.ptrFirstPixel = this.bitmapData.Scan0;
-						Marshal.Copy(this.ptrFirstPixel, this.pixels, 0, this.pixels.Length);
-						this.heightInPixels = this.bitmapData.Height;
-						this.widthInBytes = this.bitmapData.Width * this.bytesPerPixel;
-						this.threadedImagePixels = new Vector4[this.image.Width * this.image.Height];
-						for (int num2 = this.heightInPixels - 1; num2 >= 0; num2--)
+						if (RackCharacter.windowsOS)
 						{
-							int num3 = num2 * this.bitmapData.Stride;
-							for (int j = 0; j < this.widthInBytes; j += this.bytesPerPixel)
+							try
 							{
-								this.threadedImagePixels[num].x = (float)(int)this.pixels[num3 + j] / 255f;
-								this.threadedImagePixels[num].y = (float)(int)this.pixels[num3 + j + 1] / 255f;
-								this.threadedImagePixels[num].z = (float)(int)this.pixels[num3 + j + 2] / 255f;
-								this.threadedImagePixels[num].w = (float)(int)this.pixels[num3 + j + 3] / 255f;
-								num++;
-							}
-						}
-						this.image.Dispose();
-						this.image = null;
-					}
-					else
-					{
-						Texture2D texture2D = new Texture2D(2, 2);
-						texture2D.LoadImage(File.ReadAllBytes(text));
-						UnityEngine.Color[] array = texture2D.GetPixels();
-						this.threadedImagePixels = new Vector4[array.Length];
-						for (int k = 0; k < array.Length; k++)
-						{
-							this.threadedImagePixels[k] = array[k];
-						}
-						UnityEngine.Object.Destroy(texture2D);
-						texture2D = null;
-						array = null;
-					}
-					if (masks != null)
-					{
-						for (int l = 0; l < masks.Count; l++)
-						{
-							string text2 = this.characterTextureDirectory + masks[l].texture.ToLower() + str + ".png";
-							if (!File.Exists(text2))
-							{
-								return;
-							}
-							if (RackCharacter.windowsOS)
-							{
-								try
+								this.image = new Bitmap(text2);
+								this.bitmapData = this.image.LockBits(new Rectangle(0, 0, this.image.Width, this.image.Height), ImageLockMode.ReadWrite, this.image.PixelFormat);
+								this.bytesPerPixel = System.Drawing.Image.GetPixelFormatSize(this.image.PixelFormat) / 8;
+								this.byteCount = this.bitmapData.Stride * this.image.Height;
+								this.pixels = new byte[this.byteCount];
+								this.ptrFirstPixel = this.bitmapData.Scan0;
+								Marshal.Copy(this.ptrFirstPixel, this.pixels, 0, this.pixels.Length);
+								this.heightInPixels = this.bitmapData.Height;
+								this.widthInBytes = this.bitmapData.Width * this.bytesPerPixel;
+								num = 0;
+								for (int num4 = this.heightInPixels - 1; num4 >= 0; num4--)
 								{
-									this.image = new Bitmap(text2);
-									this.bitmapData = this.image.LockBits(new Rectangle(0, 0, this.image.Width, this.image.Height), ImageLockMode.ReadWrite, this.image.PixelFormat);
-									this.bytesPerPixel = System.Drawing.Image.GetPixelFormatSize(this.image.PixelFormat) / 8;
-									this.byteCount = this.bitmapData.Stride * this.image.Height;
-									this.pixels = new byte[this.byteCount];
-									this.ptrFirstPixel = this.bitmapData.Scan0;
-									Marshal.Copy(this.ptrFirstPixel, this.pixels, 0, this.pixels.Length);
-									this.heightInPixels = this.bitmapData.Height;
-									this.widthInBytes = this.bitmapData.Width * this.bytesPerPixel;
-									num = 0;
-									for (int num4 = this.heightInPixels - 1; num4 >= 0; num4--)
+									int num5 = num4 * this.bitmapData.Stride;
+									for (int m = 0; m < this.widthInBytes; m += this.bytesPerPixel)
 									{
-										int num5 = num4 * this.bitmapData.Stride;
-										for (int m = 0; m < this.widthInBytes; m += this.bytesPerPixel)
-										{
-											this.threadedImagePixels[num].w *= (float)(int)this.pixels[num5 + m + 3] / 255f;
-											num++;
-										}
+										this.threadedImagePixels[num].w *= (float)(int)this.pixels[num5 + m + 3] / 255f;
+										num++;
 									}
-									this.bitmapData = null;
-									this.image.Dispose();
-									this.image = null;
-									this.pixels = null;
 								}
-								catch
-								{
-								}
+								this.bitmapData = null;
+								this.image.Dispose();
+								this.image = null;
+								this.pixels = null;
 							}
-							else
+							catch
 							{
-								Texture2D texture2D2 = new Texture2D(2, 2);
-								texture2D2.LoadImage(File.ReadAllBytes(text2));
-								UnityEngine.Color[] array2 = texture2D2.GetPixels();
-								for (int n = 0; n < array2.Length; n++)
-								{
-									this.threadedImagePixels[n].w *= array2[n].a;
-								}
-								UnityEngine.Object.Destroy(texture2D2);
-								texture2D2 = null;
-								array2 = null;
 							}
 						}
-					}
-					if (additive)
-					{
-						if (!flag)
+						else
 						{
-							for (int num6 = 0; num6 < this.canvasPixels[canvasID].Length; num6++)
+							Texture2D texture2D2 = new Texture2D(2, 2);
+							texture2D2.LoadImage(File.ReadAllBytes(text2));
+							UnityEngine.Color[] array2 = texture2D2.GetPixels();
+							for (int n = 0; n < array2.Length; n++)
 							{
-								if (this.threadedImagePixels[num6].w != 0f && (this.threadedImagePixels[num6].x != 0f || this.threadedImagePixels[num6].y != 0f || this.threadedImagePixels[num6].z != 0f))
-								{
-									this.tarCol.r = this.threadedImagePixels[num6].x * color.x;
-									this.tarCol.g = this.threadedImagePixels[num6].y * color.y;
-									this.tarCol.b = this.threadedImagePixels[num6].z * color.z;
-									this.tarCol.a = this.threadedImagePixels[num6].w * color.w;
-									ref UnityEngine.Color val = ref this.canvasPixels[canvasID][num6];
-									val += this.tarCol;
-								}
+								this.threadedImagePixels[n].w *= array2[n].a;
 							}
+							UnityEngine.Object.Destroy(texture2D2);
+							texture2D2 = null;
+							array2 = null;
 						}
 					}
-					else
+				}
+				if (adjustFur)
+				{
+					switch (canvasID)
 					{
+					case 0:
 						for (int num7 = 0; num7 < this.canvasPixels[canvasID].Length; num7++)
 						{
 							if (this.threadedImagePixels[num7].w != 0f)
 							{
-								if (flag)
-								{
-									this.tarCol = UnityEngine.Color.black;
-								}
-								else
-								{
-									this.tarCol.r = this.threadedImagePixels[num7].x * color.x;
-									this.tarCol.g = this.threadedImagePixels[num7].y * color.y;
-									this.tarCol.b = this.threadedImagePixels[num7].z * color.z;
-									this.tarCol.a = this.threadedImagePixels[num7].w * color.w;
-								}
-								this.alph = opacity * this.threadedImagePixels[num7].w;
-								if (this.alph < 1f)
-								{
-									this.canvasPixels[canvasID][num7].r += (this.tarCol.r - this.canvasPixels[canvasID][num7].r) * this.alph;
-									this.canvasPixels[canvasID][num7].g += (this.tarCol.g - this.canvasPixels[canvasID][num7].g) * this.alph;
-									this.canvasPixels[canvasID][num7].b += (this.tarCol.b - this.canvasPixels[canvasID][num7].b) * this.alph;
-									this.canvasPixels[canvasID][num7].a = this.cap(this.canvasPixels[canvasID][num7].a + this.alph, 0f, 1f);
-								}
-								else
-								{
-									this.canvasPixels[canvasID][num7] = this.tarCol;
-								}
+								this.headFurModifierPixels[num7] += (adjustFurAmount - this.headFurModifierPixels[num7]) * this.threadedImagePixels[num7].w;
+							}
+						}
+						break;
+					case 1:
+						for (int num8 = 0; num8 < this.canvasPixels[canvasID].Length; num8++)
+						{
+							if (this.threadedImagePixels[num8].w != 0f)
+							{
+								this.bodyFurModifierPixels[num8] += (adjustFurAmount - this.bodyFurModifierPixels[num8]) * this.threadedImagePixels[num8].w;
+							}
+						}
+						break;
+					case 2:
+						for (int num6 = 0; num6 < this.canvasPixels[canvasID].Length; num6++)
+						{
+							if (this.threadedImagePixels[num6].w != 0f)
+							{
+								this.wingFurModifierPixels[num6] += (adjustFurAmount - this.wingFurModifierPixels[num6]) * this.threadedImagePixels[num6].w;
+							}
+						}
+						break;
+					}
+				}
+				if (additive)
+				{
+					if (!flag)
+					{
+						for (int num9 = 0; num9 < this.canvasPixels[canvasID].Length; num9++)
+						{
+							if (this.threadedImagePixels[num9].w != 0f && (this.threadedImagePixels[num9].x != 0f || this.threadedImagePixels[num9].y != 0f || this.threadedImagePixels[num9].z != 0f))
+							{
+								this.tarCol.r = this.threadedImagePixels[num9].x * color.x;
+								this.tarCol.g = this.threadedImagePixels[num9].y * color.y;
+								this.tarCol.b = this.threadedImagePixels[num9].z * color.z;
+								this.tarCol.a = this.threadedImagePixels[num9].w * color.w;
+								ref UnityEngine.Color val = ref this.canvasPixels[canvasID][num9];
+								val += this.tarCol;
+							}
+						}
+					}
+				}
+				else
+				{
+					for (int num10 = 0; num10 < this.canvasPixels[canvasID].Length; num10++)
+					{
+						if (this.threadedImagePixels[num10].w != 0f)
+						{
+							if (flag)
+							{
+								this.tarCol = UnityEngine.Color.black;
+							}
+							else
+							{
+								this.tarCol.r = this.threadedImagePixels[num10].x * color.x;
+								this.tarCol.g = this.threadedImagePixels[num10].y * color.y;
+								this.tarCol.b = this.threadedImagePixels[num10].z * color.z;
+								this.tarCol.a = this.threadedImagePixels[num10].w * color.w;
+							}
+							this.alph = opacity * this.threadedImagePixels[num10].w;
+							if (this.alph < 1f)
+							{
+								this.canvasPixels[canvasID][num10].r += (this.tarCol.r - this.canvasPixels[canvasID][num10].r) * this.alph;
+								this.canvasPixels[canvasID][num10].g += (this.tarCol.g - this.canvasPixels[canvasID][num10].g) * this.alph;
+								this.canvasPixels[canvasID][num10].b += (this.tarCol.b - this.canvasPixels[canvasID][num10].b) * this.alph;
+								this.canvasPixels[canvasID][num10].a = this.cap(this.canvasPixels[canvasID][num10].a + this.alph, 0f, 1f);
+							}
+							else
+							{
+								this.canvasPixels[canvasID][num10] = this.tarCol;
 							}
 						}
 					}
@@ -3778,12 +3897,12 @@ public class RackCharacter
 
 	public void paintTexture()
 	{
-		this.drawTexLayer(0, "fill", this.data.baseColor, 1f, false, null);
-		this.drawTexLayer(1, "fill", this.data.baseColor, 1f, false, null);
-		this.drawTexLayer(2, "fill", this.data.baseColor, 1f, false, null);
-		this.drawTexLayer(3, "fill", RackCharacter.blackV4, 1f, false, null);
-		this.drawTexLayer(4, "fill", RackCharacter.blackV4, 1f, false, null);
-		this.drawTexLayer(5, "fill", RackCharacter.blackV4, 1f, false, null);
+		this.drawTexLayer(0, "fill", this.data.baseColor, 1f, false, null, false, 1f);
+		this.drawTexLayer(1, "fill", this.data.baseColor, 1f, false, null, false, 1f);
+		this.drawTexLayer(2, "fill", this.data.baseColor, 1f, false, null, false, 1f);
+		this.drawTexLayer(3, "fill", RackCharacter.blackV4, 1f, false, null, false, 1f);
+		this.drawTexLayer(4, "fill", RackCharacter.blackV4, 1f, false, null, false, 1f);
+		this.drawTexLayer(5, "fill", RackCharacter.blackV4, 1f, false, null, false, 1f);
 		this.threadedTextureDrawingState = 2;
 		for (int i = 0; i < 4; i++)
 		{
@@ -3816,12 +3935,12 @@ public class RackCharacter
 							str = "_wingsFX";
 							break;
 						}
-						this.drawTexLayer(k, this.data.textureLayers[j].texture + str, this.data.textureLayers[j].color, this.data.textureLayers[j].opacity, false, this.data.textureLayers[j].masks);
+						this.drawTexLayer(k, this.data.textureLayers[j].texture + str, this.data.textureLayers[j].color, this.data.textureLayers[j].opacity, false, this.data.textureLayers[j].masks, this.data.textureLayers[j].modifyFur, this.data.textureLayers[j].furLength - this.data.furLength);
 						if (this.data.textureLayers[j].glow && k < 3)
 						{
 							this.customGlow = true;
 							k += 3;
-							this.drawTexLayer(k, this.data.textureLayers[j].texture + str, UnityEngine.Color.green, this.data.textureLayers[j].opacity, false, this.data.textureLayers[j].masks);
+							this.drawTexLayer(k, this.data.textureLayers[j].texture + str, UnityEngine.Color.green, this.data.textureLayers[j].opacity, false, this.data.textureLayers[j].masks, false, 1f);
 							k -= 3;
 						}
 					}
@@ -3835,34 +3954,42 @@ public class RackCharacter
 	public void preTexDraw()
 	{
 		this.characterTextureDirectory = RackCharacter.ApplicationpersistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + Mathf.RoundToInt(UserSettings.data.characterTextureQuality * 100f) + "/";
+		this.longestFurLength = this.data.furLength;
+		for (int i = 0; i < this.data.textureLayers.Count; i++)
+		{
+			if (this.data.textureLayers[i].modifyFur && this.data.textureLayers[i].furLength > this.longestFurLength)
+			{
+				this.longestFurLength = this.data.textureLayers[i].furLength;
+			}
+		}
 		bool flag = this.data.genitalType == 3;
 		bool flag2 = false;
 		UnityEngine.Color color = UnityEngine.Color.white;
 		int index = -1;
-		for (int i = 0; i < this.data.textureLayers.Count; i++)
+		for (int j = 0; j < this.data.textureLayers.Count; j++)
 		{
-			if (this.data.textureLayers[i].texture == "hermmask")
+			if (this.data.textureLayers[j].texture == "hermmask")
 			{
 				flag2 = true;
-				index = i;
+				index = j;
 				if (!flag)
 				{
-					this.data.textureLayers.RemoveAt(i);
-					i--;
+					this.data.textureLayers.RemoveAt(j);
+					j--;
 				}
 			}
-			if (this.data.textureLayers[i].texture == "penis")
+			if (this.data.textureLayers[j].texture == "penis")
 			{
-				color = this.data.textureLayers[i].color;
+				color = this.data.textureLayers[j].color;
 			}
-			if (this.data.textureLayers[i].texture == "nose")
+			if (this.data.textureLayers[j].texture == "nose")
 			{
 				bool flag3 = false;
 				int index2 = -1;
 				int num = 0;
-				while (num < this.data.textureLayers[i].masks.Count)
+				while (num < this.data.textureLayers[j].masks.Count)
 				{
-					if (this.data.textureLayers[i].masks[num].texture.IndexOf("nosemask_") == -1)
+					if (this.data.textureLayers[j].masks[num].texture.IndexOf("nosemask_") == -1)
 					{
 						num++;
 						continue;
@@ -3873,22 +4000,22 @@ public class RackCharacter
 				}
 				if (!flag3)
 				{
-					this.data.textureLayers[i].masks.Add(new TextureLayerMask());
-					this.data.textureLayers[i].masks[this.data.textureLayers[i].masks.Count - 1].texture = "nosemask_" + RackCharacter.headTypeIndex(this.data.headType);
+					this.data.textureLayers[j].masks.Add(new TextureLayerMask());
+					this.data.textureLayers[j].masks[this.data.textureLayers[j].masks.Count - 1].texture = "nosemask_" + RackCharacter.headTypeIndex(this.data.headType);
 				}
 				else
 				{
-					this.data.textureLayers[i].masks[index2].texture = "nosemask_" + RackCharacter.headTypeIndex(this.data.headType);
+					this.data.textureLayers[j].masks[index2].texture = "nosemask_" + RackCharacter.headTypeIndex(this.data.headType);
 				}
 			}
-			if (this.data.textureLayers[i].texture == "penis")
+			if (this.data.textureLayers[j].texture == "penis")
 			{
 				bool flag4 = this.data.ballsType == 0 && this.data.genitalType != 3;
 				bool flag5 = false;
 				int num2 = 0;
-				while (num2 < this.data.textureLayers[i].masks.Count)
+				while (num2 < this.data.textureLayers[j].masks.Count)
 				{
-					if (this.data.textureLayers[i].masks[num2].texture.IndexOf("penismask") == -1)
+					if (this.data.textureLayers[j].masks[num2].texture.IndexOf("penismask") == -1)
 					{
 						num2++;
 						continue;
@@ -3898,13 +4025,13 @@ public class RackCharacter
 					{
 						break;
 					}
-					this.data.textureLayers[i].masks.RemoveAt(num2);
+					this.data.textureLayers[j].masks.RemoveAt(num2);
 					break;
 				}
 				if (flag4 && !flag5)
 				{
-					this.data.textureLayers[i].masks.Add(new TextureLayerMask());
-					this.data.textureLayers[i].masks[this.data.textureLayers[i].masks.Count - 1].texture = "penismask";
+					this.data.textureLayers[j].masks.Add(new TextureLayerMask());
+					this.data.textureLayers[j].masks[this.data.textureLayers[j].masks.Count - 1].texture = "penismask";
 				}
 			}
 		}
@@ -3922,12 +4049,12 @@ public class RackCharacter
 				this.data.textureLayers[index].color = color;
 			}
 		}
-		for (int j = 0; j < this.data.textureLayers.Count; j++)
+		for (int k = 0; k < this.data.textureLayers.Count; k++)
 		{
-			for (int k = 0; k < 6; k++)
+			for (int l = 0; l < 6; l++)
 			{
 				string text = string.Empty;
-				switch (k)
+				switch (l)
 				{
 				case 0:
 					text = "_head";
@@ -3948,33 +4075,33 @@ public class RackCharacter
 					text = "_wingsFX";
 					break;
 				}
-				if (!this.textureExists(this.data.textureLayers[j].texture.ToLower() + text) && File.Exists(RackCharacter.ApplicationpersistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + this.data.textureLayers[j].texture.ToLower() + text + ".png"))
+				if (!this.textureExists(this.data.textureLayers[k].texture.ToLower() + text) && File.Exists(RackCharacter.ApplicationpersistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + this.data.textureLayers[k].texture.ToLower() + text + ".png"))
 				{
-					byte[] array = File.ReadAllBytes(RackCharacter.ApplicationpersistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + this.data.textureLayers[j].texture.ToLower() + text + ".png");
+					byte[] array = File.ReadAllBytes(RackCharacter.ApplicationpersistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + this.data.textureLayers[k].texture.ToLower() + text + ".png");
 					Texture2D texture2D = new Texture2D(4, 4);
 					texture2D.LoadImage(array);
 					TextureScale.Bilinear(texture2D, Mathf.RoundToInt((float)texture2D.width * UserSettings.data.characterTextureQuality), Mathf.RoundToInt((float)texture2D.height * UserSettings.data.characterTextureQuality));
 					byte[] bytes = texture2D.EncodeToPNG();
-					File.WriteAllBytes(this.characterTextureDirectory + this.data.textureLayers[j].texture.ToLower() + text + ".png", bytes);
+					File.WriteAllBytes(this.characterTextureDirectory + this.data.textureLayers[k].texture.ToLower() + text + ".png", bytes);
 					UnityEngine.Object.Destroy(texture2D);
-					RackCharacter.existingTextures.Add(this.data.textureLayers[j].texture.ToLower() + text);
+					RackCharacter.existingTextures.Add(this.data.textureLayers[k].texture.ToLower() + text);
 					array = null;
 					bytes = null;
 				}
-				if (this.data.textureLayers[j].masks != null)
+				if (this.data.textureLayers[k].masks != null)
 				{
-					for (int l = 0; l < this.data.textureLayers[j].masks.Count; l++)
+					for (int m = 0; m < this.data.textureLayers[k].masks.Count; m++)
 					{
-						if (!this.textureExists(this.data.textureLayers[j].masks[l].texture.ToLower() + text) && File.Exists(RackCharacter.ApplicationpersistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + this.data.textureLayers[j].masks[l].texture.ToLower() + text + ".png"))
+						if (!this.textureExists(this.data.textureLayers[k].masks[m].texture.ToLower() + text) && File.Exists(RackCharacter.ApplicationpersistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + this.data.textureLayers[k].masks[m].texture.ToLower() + text + ".png"))
 						{
-							byte[] array2 = File.ReadAllBytes(RackCharacter.ApplicationpersistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + this.data.textureLayers[j].masks[l].texture.ToLower() + text + ".png");
+							byte[] array2 = File.ReadAllBytes(RackCharacter.ApplicationpersistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + this.data.textureLayers[k].masks[m].texture.ToLower() + text + ".png");
 							Texture2D texture2D2 = new Texture2D(4, 4);
 							texture2D2.LoadImage(array2);
 							TextureScale.Bilinear(texture2D2, Mathf.RoundToInt((float)texture2D2.width * UserSettings.data.characterTextureQuality), Mathf.RoundToInt((float)texture2D2.height * UserSettings.data.characterTextureQuality));
 							byte[] bytes2 = texture2D2.EncodeToPNG();
-							File.WriteAllBytes(this.characterTextureDirectory + this.data.textureLayers[j].masks[l].texture.ToLower() + text + ".png", bytes2);
+							File.WriteAllBytes(this.characterTextureDirectory + this.data.textureLayers[k].masks[m].texture.ToLower() + text + ".png", bytes2);
 							UnityEngine.Object.Destroy(texture2D2);
-							RackCharacter.existingTextures.Add(this.data.textureLayers[j].masks[l].texture.ToLower() + text);
+							RackCharacter.existingTextures.Add(this.data.textureLayers[k].masks[m].texture.ToLower() + text);
 							array2 = null;
 							bytes2 = null;
 						}
@@ -3990,31 +4117,51 @@ public class RackCharacter
 			this.headFXCanvas = new Texture2D(Mathf.FloorToInt(1024f * UserSettings.data.characterTextureQuality), Mathf.FloorToInt(1024f * UserSettings.data.characterTextureQuality));
 			this.bodyFXCanvas = new Texture2D(Mathf.FloorToInt(2048f * UserSettings.data.characterTextureQuality), Mathf.FloorToInt(2048f * UserSettings.data.characterTextureQuality));
 			this.wingFXCanvas = new Texture2D(Mathf.FloorToInt(1024f * UserSettings.data.characterTextureQuality), Mathf.FloorToInt(1024f * UserSettings.data.characterTextureQuality));
-			for (int m = 0; m < 6; m++)
+			this.headControlCanvas = new Texture2D(this.headFXCanvas.width, this.headFXCanvas.height);
+			this.bodyControlCanvas = new Texture2D(this.bodyFXCanvas.width, this.bodyFXCanvas.height);
+			this.tailControlCanvas = new Texture2D(this.bodyFXCanvas.width, this.bodyFXCanvas.height);
+			this.wingControlCanvas = new Texture2D(this.wingFXCanvas.width, this.wingFXCanvas.height);
+			for (int n = 0; n < 6; n++)
 			{
-				switch (m)
+				switch (n)
 				{
 				case 0:
-					this.canvasPixels[m] = this.headCanvas.GetPixels();
+					this.canvasPixels[n] = this.headCanvas.GetPixels();
 					break;
 				case 1:
-					this.canvasPixels[m] = this.bodyCanvas.GetPixels();
+					this.canvasPixels[n] = this.bodyCanvas.GetPixels();
 					break;
 				case 2:
-					this.canvasPixels[m] = this.wingCanvas.GetPixels();
+					this.canvasPixels[n] = this.wingCanvas.GetPixels();
 					break;
 				case 3:
-					this.canvasPixels[m] = this.headFXCanvas.GetPixels();
+					this.canvasPixels[n] = this.headFXCanvas.GetPixels();
 					break;
 				case 4:
-					this.canvasPixels[m] = this.bodyFXCanvas.GetPixels();
+					this.canvasPixels[n] = this.bodyFXCanvas.GetPixels();
 					break;
 				case 5:
-					this.canvasPixels[m] = this.wingFXCanvas.GetPixels();
+					this.canvasPixels[n] = this.wingFXCanvas.GetPixels();
 					break;
 				}
 			}
 		}
+		this.headFurModifierPixels = new float[this.headControlCanvas.width * this.headControlCanvas.height];
+		for (int num3 = 0; num3 < this.headFurModifierPixels.Length; num3++)
+		{
+			this.headFurModifierPixels[num3] = 0f;
+		}
+		this.bodyFurModifierPixels = new float[this.bodyControlCanvas.width * this.bodyControlCanvas.height];
+		for (int num4 = 0; num4 < this.bodyFurModifierPixels.Length; num4++)
+		{
+			this.bodyFurModifierPixels[num4] = 0f;
+		}
+		this.wingFurModifierPixels = new float[this.wingControlCanvas.width * this.wingControlCanvas.height];
+		for (int num5 = 0; num5 < this.wingFurModifierPixels.Length; num5++)
+		{
+			this.wingFurModifierPixels[num5] = 0f;
+		}
+		this.haveFurModifiersBeenInitialized = true;
 	}
 
 	public void checkForCustomTextures()
@@ -4201,6 +4348,101 @@ public class RackCharacter
 			}
 			this.wingEmitCanvas.SetPixels(array);
 			this.wingEmitCanvas.Apply();
+			if (this.haveFurModifiersBeenInitialized)
+			{
+				this.defaultFurMapScale = this.data.furLength / this.longestFurLength;
+				if (RackCharacter.headFurControlBase.width != this.headFXCanvas.width)
+				{
+					RackCharacter.headFurControlBase = (Resources.Load("headFUR") as Texture2D);
+					RackCharacter.bodyFurControlBase = (Resources.Load("bodyFUR") as Texture2D);
+					RackCharacter.wingFurControlBase = (Resources.Load("wingFUR") as Texture2D);
+					TextureScale.Bilinear(RackCharacter.headFurControlBase, this.headFXCanvas.width, this.headFXCanvas.height);
+					TextureScale.Bilinear(RackCharacter.bodyFurControlBase, this.bodyFXCanvas.width, this.bodyFXCanvas.height);
+					TextureScale.Bilinear(RackCharacter.wingFurControlBase, this.wingFXCanvas.width, this.wingFXCanvas.height);
+				}
+				try
+				{
+					UnityEngine.Object.Destroy(this.headControlCanvas);
+				}
+				catch
+				{
+				}
+				this.headControlCanvas = new Texture2D(this.headFXCanvas.width, this.headFXCanvas.height);
+				array = this.headFXCanvas.GetPixels();
+				array2 = RackCharacter.headFurControlBase.GetPixels();
+				for (int num = 0; num < array.Length; num++)
+				{
+					if (array[num].b > 0f || this.longestFurLength == 0f)
+					{
+						array[num].r = (array[num].g = (array[num].b = 0f));
+					}
+					else
+					{
+						array[num].r = (array[num].g = (array[num].b = array2[num].r * this.defaultFurMapScale + this.headFurModifierPixels[num]));
+					}
+				}
+				this.headControlCanvas.SetPixels(array);
+				this.headControlCanvas.Apply();
+				try
+				{
+					UnityEngine.Object.Destroy(this.bodyControlCanvas);
+				}
+				catch
+				{
+				}
+				try
+				{
+					UnityEngine.Object.Destroy(this.tailControlCanvas);
+				}
+				catch
+				{
+				}
+				this.bodyControlCanvas = new Texture2D(this.bodyFXCanvas.width, this.bodyFXCanvas.height);
+				this.tailControlCanvas = new Texture2D(this.bodyFXCanvas.width, this.bodyFXCanvas.height);
+				array = this.bodyFXCanvas.GetPixels();
+				array2 = RackCharacter.bodyFurControlBase.GetPixels();
+				float num2 = 0f;
+				for (int num3 = 0; num3 < array.Length; num3++)
+				{
+					if (array[num3].r > 0f || this.longestFurLength == 0f)
+					{
+						array[num3].r = (array[num3].g = (array[num3].b = 0f));
+					}
+					else
+					{
+						if (this.bodyFurModifierPixels[num3] > num2)
+						{
+							num2 = this.bodyFurModifierPixels[num3];
+						}
+						array[num3].r = (array[num3].g = (array[num3].b = array2[num3].r * this.defaultFurMapScale + this.bodyFurModifierPixels[num3]));
+					}
+				}
+				this.bodyControlCanvas.SetPixels(array);
+				this.bodyControlCanvas.Apply();
+				try
+				{
+					UnityEngine.Object.Destroy(this.wingControlCanvas);
+				}
+				catch
+				{
+				}
+				this.wingControlCanvas = new Texture2D(this.wingFXCanvas.width, this.wingFXCanvas.height);
+				array = this.wingFXCanvas.GetPixels();
+				array2 = RackCharacter.wingFurControlBase.GetPixels();
+				for (int num4 = 0; num4 < array.Length; num4++)
+				{
+					if (array[num4].b > 0f || this.longestFurLength == 0f)
+					{
+						array[num4].r = (array[num4].g = (array[num4].b = 0f));
+					}
+					else
+					{
+						array[num4].r = (array[num4].g = (array[num4].b = array2[num4].r * this.defaultFurMapScale + this.wingFurModifierPixels[num4]));
+					}
+				}
+				this.wingControlCanvas.SetPixels(array);
+				this.wingControlCanvas.Apply();
+			}
 		}
 	}
 
@@ -4209,31 +4451,126 @@ public class RackCharacter
 		if (!((UnityEngine.Object)this.headFXCanvas == (UnityEngine.Object)null))
 		{
 			this.splitFXtexIntoSeparateTextures();
-			for (int i = 0; i < this.parts.Count; i++)
+			int num = 0;
+			while (num < this.parts.Count)
 			{
 				Material material = new Material(this.game.shader);
 				material.CopyPropertiesFromMaterial(this.game.defaultMaterial);
-				if (i == this.wingPieceIndex)
+				if (num == this.wingPieceIndex)
 				{
 					material.SetTexture("_MainTex", this.wingCanvas);
+					material.SetTexture("_SkinTex", this.wingCanvas);
+					material.SetTexture("_FurMetallicMap", this.wingMetalCanvas);
 					material.SetTexture("_MetallicGlossMap", this.wingMetalCanvas);
 					material.SetTexture("_EmissionMap", this.wingEmitCanvas);
+					material.SetTexture("_ControlTex", this.wingControlCanvas);
 				}
-				else if (i == this.headPieceIndex)
+				else if (num == this.headPieceIndex)
 				{
 					material.SetTexture("_MainTex", this.headCanvas);
+					material.SetTexture("_SkinTex", this.headCanvas);
+					material.SetTexture("_FurMetallicMap", this.headMetalCanvas);
 					material.SetTexture("_MetallicGlossMap", this.headMetalCanvas);
 					material.SetTexture("_EmissionMap", this.headEmitCanvas);
+					material.SetTexture("_ControlTex", this.headControlCanvas);
 				}
 				else
 				{
 					material.SetTexture("_MainTex", this.bodyCanvas);
+					material.SetTexture("_SkinTex", this.bodyCanvas);
+					material.SetTexture("_FurMetallicMap", this.bodyMetalCanvas);
 					material.SetTexture("_MetallicGlossMap", this.bodyMetalCanvas);
 					material.SetTexture("_EmissionMap", this.bodyEmitCanvas);
+					if (num == this.tailPieceIndex && this.defaultFurMapScale != 1f)
+					{
+						this.controlPixels = this.bodyControlCanvas.GetPixels();
+						for (int i = 0; i < this.controlPixels.Length; i++)
+						{
+							ref UnityEngine.Color val = ref this.controlPixels[i];
+							val /= this.defaultFurMapScale;
+						}
+						this.tailControlCanvas.SetPixels(this.controlPixels);
+						this.tailControlCanvas.Apply();
+						material.SetTexture("_ControlTex", this.tailControlCanvas);
+					}
+					else
+					{
+						material.SetTexture("_ControlTex", this.bodyControlCanvas);
+					}
 				}
-				RackCharacter.setBlendmode(material, "opaque");
-				this.parts[i].GetComponent<Renderer>().material = material;
+				RackCharacter.setBlendmode(material, "cutout");
+				if (num == this.tailPieceIndex)
+				{
+					material.SetFloat("_MaxHairLength", 0.15f * this.height_act / this.tailsize_act * this.data.tailFurLength * 3f);
+				}
+				else
+				{
+					if (this.clothingPiecesEquipped.Count > 0 && this.controlledByPlayer)
+					{
+						goto IL_02b3;
+					}
+					if (this.clothingPiecesEquipped.Count > 1 && !this.controlledByPlayer)
+					{
+						goto IL_02b3;
+					}
+					material.SetFloat("_MaxHairLength", 0.15f * this.longestFurLength * this.height_act);
+				}
+				goto IL_02e6;
+				IL_02e6:
+				if (!RackCharacter.skinTypes.Contains(this.data.skinType))
+				{
+					Debug.Log(this.data.name + " has an skin type that we're missing: " + this.data.skinType);
+					if (RackCharacter.skinTypes.Contains("skin"))
+					{
+						this.data.skinType = "skin";
+					}
+					else if (RackCharacter.skinTypes.Count > 0)
+					{
+						this.data.skinType = RackCharacter.skinTypes[0];
+					}
+				}
+				if (num == this.headPieceIndex)
+				{
+					material.SetFloat("_StrandThickness", 1.15f);
+					material.SetTexture("_BumpMap", RackCharacter.skinNormalTextures[this.data.skinType + "_head"]);
+				}
+				else if (num != this.wingPieceIndex)
+				{
+					material.SetTexture("_BumpMap", RackCharacter.skinNormalTextures[this.data.skinType + "_body"]);
+				}
+				material.SetTexture("_NoiseTex", RackCharacter.furNoiseTextures[this.data.furType]);
+				material.SetFloat("_EdgeFade", 0.2f);
+				this.parts[num].GetComponent<Renderer>().material = material;
+				if ((UnityEngine.Object)this.parts[num].GetComponent<ImperialFurPhysics>() == (UnityEngine.Object)null)
+				{
+					this.parts[num].AddComponent<ImperialFurPhysics>();
+					this.parts[num].GetComponent<ImperialFurPhysics>().useRigidbody = false;
+					this.parts[num].GetComponent<ImperialFurPhysics>().rack2CharacterHack = true;
+					this.parts[num].GetComponent<ImperialFurPhysics>().usePhysicsGravity = false;
+					this.parts[num].GetComponent<ImperialFurPhysics>().physicsEnabled = false;
+				}
+				if (num == this.tailPieceIndex)
+				{
+					this.v3.x = (this.data.tailLift - 0.5f) * -0.5f;
+					this.v3.y = 0f;
+					this.v3.z = 0.2f;
+				}
+				else
+				{
+					this.v3.x = 1f;
+					this.v3.y = 0f;
+					this.v3.z = 0f;
+				}
+				this.parts[num].GetComponent<ImperialFurPhysics>().AdditionalGravity = this.v3;
+				this.parts[num].GetComponent<ImperialFurPhysics>().UpdateMaterial();
+				this.parts[num].GetComponent<ImperialFurPhysics>().UpdatePhysics();
+				num++;
+				continue;
+				IL_02b3:
+				material.SetFloat("_MaxHairLength", 0f);
+				goto IL_02e6;
 			}
+			this.needFurLOD = true;
 		}
 	}
 
@@ -4888,8 +5225,24 @@ public class RackCharacter
 		return RackCharacter.allPieces.transform.Find(name).gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh;
 	}
 
+	public int getFurTypeIndex()
+	{
+		return RackCharacter.furTypes.IndexOf(this.data.furType);
+	}
+
+	public int getSkinTypeIndex()
+	{
+		return RackCharacter.skinTypes.IndexOf(this.data.skinType);
+	}
+
+	public void determineTailSizeAct()
+	{
+		this.tailsize_act = 1f + (this.data.tailSize - 0.5f) * 1.9f;
+	}
+
 	public void applyTailModifications(Mesh tailMesh)
 	{
+		this.determineTailSizeAct();
 		this.tailFurEmbellishments = new List<EmbellishmentLayer>();
 		int num = 11;
 		float num2 = 0f;
@@ -5025,8 +5378,13 @@ public class RackCharacter
 				num12 = 1f - Mathf.Pow(1f - num12, 2f);
 				if (num10 > 0)
 				{
-					float num13 = Mathf.Abs(this.data.tailThickness - 0.5f) * 2f;
-					float num14 = (this.data.tailThickness - 0.5f) * 2f;
+					float num13 = Mathf.Abs(this.data.tailThickness - 0.5f) * 2f / this.tailsize_act;
+					float num14 = (this.data.tailThickness - 0.5f) * 2f / this.tailsize_act;
+					if ((double)this.data.tailThickness < 0.5)
+					{
+						num13 = this.cap(Mathf.Abs(this.data.tailThickness - 0.5f) * 4f, 0f, 1f) / this.tailsize_act;
+						num14 = this.cap(Mathf.Abs(this.data.tailThickness - 0.5f) * 4f - 1f, 0f, 1f) / this.tailsize_act;
+					}
 					if (num14 < 0f)
 					{
 						num14 *= -0.25f;
@@ -5050,46 +5408,21 @@ public class RackCharacter
 						float num19 = z3 - vector9.z;
 						ref Vector3 val = ref vertices[this.tailRingVerts[num10][num17]];
 						Vector3 vector10 = this.tailRingCenters[num10];
-						val.x = vector10.x + num18 * (1f + num13 * 2f) * (1f - (float)num10 / (float)this.tailRingVerts.Count * this.data.tailTaper) * num12;
+						val.x = vector10.x + num18 * (1f + num13 * 2f) * (1f - Mathf.Pow(1f - (1f - (float)num10 / (float)this.tailRingVerts.Count), 3f) * this.data.tailTaper) * num12;
+						float num20 = num14;
+						if (num19 > 0f && (double)this.data.tailThickness < 0.5)
+						{
+							num20 *= 0.3f;
+						}
 						ref Vector3 val2 = ref vertices[this.tailRingVerts[num10][num17]];
 						Vector3 vector11 = this.tailRingCenters[num10];
-						val2.z = vector11.z + num19 * (1f + num14 * 2f) * (1f - (float)num10 / (float)this.tailRingVerts.Count * this.data.tailTaper) * num12;
-						if ((num17 * 5 + num10) % Mathf.FloorToInt(2f + (1f - this.data.tailFurDensity) * 3f) == 0 && num10 < this.tailRingVerts.Count - 1 && this.data.tailFurLength > 0f && this.data.tailFurDensity > 0f && !flag)
-						{
-							EmbellishmentLayer embellishmentLayer = new EmbellishmentLayer();
-							embellishmentLayer.partName = tailMesh.name.Split(new string[1]
-							{
-								"(Clone"
-							}, StringSplitOptions.None)[0].ToLower();
-							embellishmentLayer.embellishment = "TAILFUR_" + this.data.tailFurType;
-							embellishmentLayer.bend = 0.5f;
-							embellishmentLayer.turn = 0.5f;
-							embellishmentLayer.twist = 0.5f + (-0.05f + UnityEngine.Random.value * 0.1f);
-							embellishmentLayer.color = -1;
-							embellishmentLayer.size = this.data.tailFurLength * 2.2f * this.getFurLengthAt((float)num10 / (float)this.tailRingVerts.Count);
-							embellishmentLayer.vertexID = this.tailRingVerts[num10][num17];
-							embellishmentLayer.temporaryLayer = true;
-							this.tailFurEmbellishments.Add(embellishmentLayer);
-						}
+						val2.z = vector11.z + num19 * (1f + num20 * 2f) * (1f - Mathf.Pow(1f - (1f - (float)num10 / (float)this.tailRingVerts.Count), 3f) * this.data.tailTaper) * num12;
 					}
 				}
 			}
-			if (this.data.tailTipSize >= 0.05f)
+			for (int num21 = 0; num21 < this.leftoverVerts.Count; num21++)
 			{
-				EmbellishmentLayer embellishmentLayer2 = new EmbellishmentLayer();
-				embellishmentLayer2.partName = tailMesh.name.Split(new string[1]
-				{
-					"(Clone"
-				}, StringSplitOptions.None)[0].ToLower();
-				embellishmentLayer2.embellishment = "TAILEND_" + this.data.tailFurType;
-				embellishmentLayer2.bend = 0.5f;
-				embellishmentLayer2.turn = 0.5f;
-				embellishmentLayer2.twist = 0.5f;
-				embellishmentLayer2.color = -1;
-				embellishmentLayer2.size = this.data.tailTipSize * (1f + Mathf.Abs(this.data.tailThickness - 0.5f) * 2f) * (1f - this.data.tailTaper * 0.2f);
-				embellishmentLayer2.vertexID = this.tailTipID;
-				embellishmentLayer2.temporaryLayer = true;
-				this.tailFurEmbellishments.Add(embellishmentLayer2);
+				vertices[this.leftoverVerts[num21]].y += this.data.tailTaper * 0.5f;
 			}
 			tailMesh.vertices = vertices;
 		}
@@ -5137,55 +5470,51 @@ public class RackCharacter
 		if (pieceName.IndexOf("tail") != -1)
 		{
 			this.applyTailModifications(targetMesh);
-			for (int j = 0; j < this.tailFurEmbellishments.Count; j++)
-			{
-				this.data.embellishmentLayers.Add(this.tailFurEmbellishments[j]);
-			}
 		}
-		for (int k = 0; k < this.clothingPiecesEquipped.Count; k++)
+		for (int j = 0; j < this.clothingPiecesEquipped.Count; j++)
 		{
 			GameObject gameObject = new GameObject();
 			gameObject.layer = 17;
 			gameObject.AddComponent<MeshCollider>();
-			gameObject.GetComponent<MeshCollider>().sharedMesh = this.clothingPieceStartPoseMesh[k];
+			gameObject.GetComponent<MeshCollider>().sharedMesh = this.clothingPieceStartPoseMesh[j];
 			gameObject.GetComponent<MeshCollider>().enabled = false;
 			gameObject.GetComponent<MeshCollider>().enabled = true;
 			this.clothingCollisionMeshes.Add(gameObject);
 		}
-		for (int l = 0; l < this.data.embellishmentLayers.Count; l++)
+		for (int k = 0; k < this.data.embellishmentLayers.Count; k++)
 		{
 			bool flag4 = false;
 			bool flag5 = false;
-			if (this.data.embellishmentLayers[l].size != 0f && !this.data.embellishmentLayers[l].utilityLayer && !this.data.embellishmentLayers[l].hidden && this.data.embellishmentLayers[l].partName.ToLower() == pieceName.ToLower())
+			if (this.data.embellishmentLayers[k].size != 0f && !this.data.embellishmentLayers[k].utilityLayer && !this.data.embellishmentLayers[k].hidden && this.data.embellishmentLayers[k].partName.ToLower() == pieceName.ToLower())
 			{
-				if (this.data.embellishmentLayers[l].meshModifiedTime < this.mostRecentMeshModificationTime)
+				if (this.data.embellishmentLayers[k].meshModifiedTime < this.mostRecentMeshModificationTime)
 				{
 					flag4 = true;
 				}
-				if (this.data.embellishmentLayers[l].vertexID >= targetMesh.vertexCount)
+				if (this.data.embellishmentLayers[k].vertexID >= targetMesh.vertexCount)
 				{
-					this.data.embellishmentLayers.RemoveAt(l);
-					l--;
+					this.data.embellishmentLayers.RemoveAt(k);
+					k--;
 					this.game.popup("YOU_CANNOT_PLACE_AN_EMBELLISHMENT_ON_AN_EMBELLISHMENT", false, false);
 				}
 				else
 				{
-					for (int m = 0; m < RackCharacter.embellishmentMeshes.Count; m++)
+					for (int l = 0; l < RackCharacter.embellishmentMeshes.Count; l++)
 					{
-						if (RackCharacter.embellishmentMeshes[m].name == this.data.embellishmentLayers[l].embellishment)
+						if (RackCharacter.embellishmentMeshes[l].name == this.data.embellishmentLayers[k].embellishment)
 						{
 							Vector3 one = default(Vector3);
-							if (RackCharacter.embellishmentMeshes[m].name.IndexOf("TAILFUR_0") != -1)
+							if (RackCharacter.embellishmentMeshes[l].name.IndexOf("TAILFUR_0") != -1)
 							{
 								one.x = 0.8f + 0.2f * UnityEngine.Random.value;
-								one.y = 0.7f + (0.3f + 2f / (0.7f + Mathf.Pow(this.data.embellishmentLayers[l].size, 2f))) * UnityEngine.Random.value;
+								one.y = 0.7f + (0.3f + 2f / (0.7f + Mathf.Pow(this.data.embellishmentLayers[k].size, 2f))) * UnityEngine.Random.value;
 								one.z = 0.8f + 0.2f * UnityEngine.Random.value;
 								flag5 = true;
 							}
-							else if (RackCharacter.embellishmentMeshes[m].name.IndexOf("TAILFUR") != -1)
+							else if (RackCharacter.embellishmentMeshes[l].name.IndexOf("TAILFUR") != -1)
 							{
 								one.x = 0.8f + 0.2f * UnityEngine.Random.value;
-								one.y = 0.7f + (0.3f + 0.7f / (0.7f + Mathf.Pow(this.data.embellishmentLayers[l].size, 2f))) * UnityEngine.Random.value;
+								one.y = 0.7f + (0.3f + 0.7f / (0.7f + Mathf.Pow(this.data.embellishmentLayers[k].size, 2f))) * UnityEngine.Random.value;
 								one.z = 0.8f + 0.2f * UnityEngine.Random.value;
 								flag5 = true;
 							}
@@ -5195,45 +5524,45 @@ public class RackCharacter
 								flag5 = false;
 							}
 							flag3 = true;
-							if (checkForMeshUpdates && flag4 && !flag && !this.data.embellishmentLayers[l].temporaryLayer)
+							if (checkForMeshUpdates && flag4 && !flag && !this.data.embellishmentLayers[k].temporaryLayer)
 							{
-								if (this.data.embellishmentLayers[l].embellishmentPositionForVertexLookup != Vector3.zero)
+								if (this.data.embellishmentLayers[k].embellishmentPositionForVertexLookup != Vector3.zero)
 								{
 									float num4 = 99f;
-									for (int n = 0; n < targetMesh.vertices.Length; n++)
+									for (int m = 0; m < targetMesh.vertices.Length; m++)
 									{
-										float magnitude = (targetMesh.vertices[n] - this.data.embellishmentLayers[l].embellishmentPositionForVertexLookup).magnitude;
+										float magnitude = (targetMesh.vertices[m] - this.data.embellishmentLayers[k].embellishmentPositionForVertexLookup).magnitude;
 										if (magnitude < num4)
 										{
 											num4 = magnitude;
-											this.data.embellishmentLayers[l].vertexID = n;
+											this.data.embellishmentLayers[k].vertexID = m;
 										}
 									}
 									num3++;
-									this.data.embellishmentLayers[l].mirrorVertID = -1;
+									this.data.embellishmentLayers[k].mirrorVertID = -1;
 								}
-								this.data.embellishmentLayers[l].meshModifiedTime = this.mostRecentMeshModificationTime;
+								this.data.embellishmentLayers[k].meshModifiedTime = this.mostRecentMeshModificationTime;
 							}
-							int num5 = this.data.embellishmentLayers[l].vertexID;
+							int num5 = this.data.embellishmentLayers[k].vertexID;
 							if (flag)
 							{
 								num5 = -1;
-								if (this.data.embellishmentLayers[l].mirrorVertID == -1)
+								if (this.data.embellishmentLayers[k].mirrorVertID == -1)
 								{
 									num2++;
-									for (int num6 = 0; num6 < targetMesh.vertices.Length; num6++)
+									for (int n = 0; n < targetMesh.vertices.Length; n++)
 									{
-										if (targetMesh.vertices[num6].x == 0f - targetMesh.vertices[this.data.embellishmentLayers[l].vertexID].x && targetMesh.vertices[num6].y == targetMesh.vertices[this.data.embellishmentLayers[l].vertexID].y && targetMesh.vertices[num6].z == targetMesh.vertices[this.data.embellishmentLayers[l].vertexID].z)
+										if (targetMesh.vertices[n].x == 0f - targetMesh.vertices[this.data.embellishmentLayers[k].vertexID].x && targetMesh.vertices[n].y == targetMesh.vertices[this.data.embellishmentLayers[k].vertexID].y && targetMesh.vertices[n].z == targetMesh.vertices[this.data.embellishmentLayers[k].vertexID].z)
 										{
-											num5 = num6;
-											this.data.embellishmentLayers[l].mirrorVertID = num5;
+											num5 = n;
+											this.data.embellishmentLayers[k].mirrorVertID = num5;
 											flag2 = true;
 										}
 									}
 								}
 								else
 								{
-									num5 = this.data.embellishmentLayers[l].mirrorVertID;
+									num5 = this.data.embellishmentLayers[k].mirrorVertID;
 								}
 								if (num5 == -1)
 								{
@@ -5242,7 +5571,7 @@ public class RackCharacter
 								}
 							}
 							bool flag6 = false;
-							if (0 == 0 && this.data.embellishmentLayers[l].embellishment.ToLower().IndexOf("antler") == -1 && this.data.embellishmentLayers[l].embellishment.ToLower().IndexOf("fin") == -1 && this.data.embellishmentLayers[l].embellishment.ToLower().IndexOf("horn") == -1)
+							if (0 == 0 && this.data.embellishmentLayers[k].embellishment.ToLower().IndexOf("antler") == -1 && this.data.embellishmentLayers[k].embellishment.ToLower().IndexOf("fin") == -1 && this.data.embellishmentLayers[k].embellishment.ToLower().IndexOf("horn") == -1)
 							{
 								Vector3 vector = targetMesh.vertices[num5] + targetMesh.normals[num5];
 								Vector3 a = targetMesh.vertices[num5] - targetMesh.normals[num5] * 0.1f;
@@ -5250,14 +5579,14 @@ public class RackCharacter
 							}
 							if (!flag6)
 							{
-								Vector3[] vertices = RackCharacter.embellishmentMeshes[m].vertices;
-								Quaternion rhs = Quaternion.AngleAxis((this.data.embellishmentLayers[l].twist - 0.5f) * 360f, Vector3.forward);
-								Quaternion lhs = Quaternion.AngleAxis((this.data.embellishmentLayers[l].bend - 0.5f) * 360f, Vector3.right);
-								Quaternion lhs2 = Quaternion.AngleAxis((this.data.embellishmentLayers[l].turn - 0.5f) * 360f, Vector3.forward);
+								Vector3[] vertices = RackCharacter.embellishmentMeshes[l].vertices;
+								Quaternion rhs = Quaternion.AngleAxis((this.data.embellishmentLayers[k].twist - 0.5f) * 360f, Vector3.forward);
+								Quaternion lhs = Quaternion.AngleAxis((this.data.embellishmentLayers[k].bend - 0.5f) * 360f, Vector3.right);
+								Quaternion lhs2 = Quaternion.AngleAxis((this.data.embellishmentLayers[k].turn - 0.5f) * 360f, Vector3.forward);
 								if (flag)
 								{
-									rhs = Quaternion.AngleAxis((1f - this.data.embellishmentLayers[l].twist - 0.5f) * 360f, Vector3.forward);
-									lhs2 = Quaternion.AngleAxis((1f - this.data.embellishmentLayers[l].turn - 0.5f) * 360f, Vector3.forward);
+									rhs = Quaternion.AngleAxis((1f - this.data.embellishmentLayers[k].twist - 0.5f) * 360f, Vector3.forward);
+									lhs2 = Quaternion.AngleAxis((1f - this.data.embellishmentLayers[k].turn - 0.5f) * 360f, Vector3.forward);
 								}
 								Quaternion quaternion = Quaternion.FromToRotation(Vector3.forward, targetMesh.normals[num5]);
 								bool headTexture = false;
@@ -5267,95 +5596,95 @@ public class RackCharacter
 								}
 								Vector2 vector2 = default(Vector2);
 								Vector2 vector3 = default(Vector2);
-								this.getEmbellishmentColorCoords(out vector2, out vector3, this.data.embellishmentLayers[l].color, headTexture);
-								if (checkForMeshUpdates && (this.data.embellishmentLayers[l].embellishmentPositionForVertexLookup == Vector3.zero || flag4) && !flag && !this.data.embellishmentLayers[l].temporaryLayer)
+								this.getEmbellishmentColorCoords(out vector2, out vector3, this.data.embellishmentLayers[k].color, headTexture);
+								if (checkForMeshUpdates && (this.data.embellishmentLayers[k].embellishmentPositionForVertexLookup == Vector3.zero || flag4) && !flag && !this.data.embellishmentLayers[k].temporaryLayer)
 								{
-									this.data.embellishmentLayers[l].embellishmentPositionForVertexLookup = targetMesh.vertices[num5];
+									this.data.embellishmentLayers[k].embellishmentPositionForVertexLookup = targetMesh.vertices[num5];
 									flag2 = true;
 								}
 								Quaternion rotation = quaternion * (lhs2 * (lhs * rhs));
-								for (int num7 = 0; num7 < vertices.Length; this.newBoneWeights.Add(targetMesh.boneWeights[num5]), num7++)
+								for (int num6 = 0; num6 < vertices.Length; this.newBoneWeights.Add(targetMesh.boneWeights[num5]), num6++)
 								{
 									if (flag)
 									{
-										vertices[num7].x *= -1f;
+										vertices[num6].x *= -1f;
 									}
 									if (flag5)
 									{
-										vertices[num7].x *= one.x;
-										vertices[num7].y *= one.y;
-										vertices[num7].z *= one.z;
+										vertices[num6].x *= one.x;
+										vertices[num6].y *= one.y;
+										vertices[num6].z *= one.z;
 									}
-									vertices[num7] = rotation * vertices[num7] * this.data.embellishmentLayers[l].size;
-									this.newVerts.Add(vertices[num7] + targetMesh.vertices[num5]);
+									vertices[num6] = rotation * vertices[num6] * this.data.embellishmentLayers[k].size;
+									this.newVerts.Add(vertices[num6] + targetMesh.vertices[num5]);
 									this.newVertReferenceVertIndices.Add(num5);
-									this.v32 = RackCharacter.embellishmentMeshes[m].normals[num7];
+									this.v32 = RackCharacter.embellishmentMeshes[l].normals[num6];
 									if (flag)
 									{
 										this.v32.x *= -1f;
 									}
 									this.v3 = quaternion * this.v32;
 									this.newNormals.Add(this.v3);
-									if (RackCharacter.embellishmentMeshes[m].uv[num7].x == 0f && RackCharacter.embellishmentMeshes[m].uv[num7].y == 0f)
+									if (RackCharacter.embellishmentMeshes[l].uv[num6].x == 0f && RackCharacter.embellishmentMeshes[l].uv[num6].y == 0f)
 									{
-										goto IL_0c01;
+										goto IL_0bc4;
 									}
-									if (this.data.embellishmentLayers[l].color == -1)
+									if (this.data.embellishmentLayers[k].color == -1)
 									{
-										goto IL_0c01;
+										goto IL_0bc4;
 									}
-									float y = RackCharacter.embellishmentMeshes[m].uv[num7].y;
+									float y = RackCharacter.embellishmentMeshes[l].uv[num6].y;
 									Vector2 zero = Vector2.zero;
 									zero.x = vector2.x + (vector3.x - vector2.x) * y;
 									zero.y = vector2.y + (vector3.y - vector2.y) * y;
 									zero.y = 1f - zero.y;
 									this.newUVs.Add(zero);
 									continue;
-									IL_0c01:
+									IL_0bc4:
 									this.newUVs.Add(targetMesh.uv[num5]);
 								}
-								for (int num8 = 0; num8 < RackCharacter.embellishmentMeshes[m].triangles.Length; num8 += 3)
+								for (int num7 = 0; num7 < RackCharacter.embellishmentMeshes[l].triangles.Length; num7 += 3)
 								{
 									if (flag)
 									{
-										this.newTriangles.Add(RackCharacter.embellishmentMeshes[m].triangles[num8 + 2] + num);
-										this.newTriangles.Add(RackCharacter.embellishmentMeshes[m].triangles[num8 + 1] + num);
-										this.newTriangles.Add(RackCharacter.embellishmentMeshes[m].triangles[num8] + num);
+										this.newTriangles.Add(RackCharacter.embellishmentMeshes[l].triangles[num7 + 2] + num);
+										this.newTriangles.Add(RackCharacter.embellishmentMeshes[l].triangles[num7 + 1] + num);
+										this.newTriangles.Add(RackCharacter.embellishmentMeshes[l].triangles[num7] + num);
 									}
 									else
 									{
-										this.newTriangles.Add(RackCharacter.embellishmentMeshes[m].triangles[num8] + num);
-										this.newTriangles.Add(RackCharacter.embellishmentMeshes[m].triangles[num8 + 1] + num);
-										this.newTriangles.Add(RackCharacter.embellishmentMeshes[m].triangles[num8 + 2] + num);
+										this.newTriangles.Add(RackCharacter.embellishmentMeshes[l].triangles[num7] + num);
+										this.newTriangles.Add(RackCharacter.embellishmentMeshes[l].triangles[num7 + 1] + num);
+										this.newTriangles.Add(RackCharacter.embellishmentMeshes[l].triangles[num7 + 2] + num);
 									}
 								}
-								num += RackCharacter.embellishmentMeshes[m].vertices.Length;
+								num += RackCharacter.embellishmentMeshes[l].vertices.Length;
 							}
-							if (!flag && this.data.embellishmentLayers[l].mirror)
+							if (!flag && this.data.embellishmentLayers[k].mirror)
 							{
 								flag = true;
-								m--;
+								l--;
 							}
 							else
 							{
 								flag = false;
-								m = RackCharacter.embellishmentMeshes.Count;
+								l = RackCharacter.embellishmentMeshes.Count;
 							}
 						}
 					}
 				}
 			}
 		}
-		for (int num9 = 0; num9 < this.clothingCollisionMeshes.Count; num9++)
+		for (int num8 = 0; num8 < this.clothingCollisionMeshes.Count; num8++)
 		{
-			UnityEngine.Object.Destroy(this.clothingCollisionMeshes[num9]);
+			UnityEngine.Object.Destroy(this.clothingCollisionMeshes[num8]);
 		}
 		this.clothingCollisionMeshes = new List<GameObject>();
-		for (int num10 = this.data.embellishmentLayers.Count - 1; num10 >= 0; num10--)
+		for (int num9 = this.data.embellishmentLayers.Count - 1; num9 >= 0; num9--)
 		{
-			if (this.data.embellishmentLayers[num10].temporaryLayer)
+			if (this.data.embellishmentLayers[num9].temporaryLayer)
 			{
-				this.data.embellishmentLayers.RemoveAt(num10);
+				this.data.embellishmentLayers.RemoveAt(num9);
 			}
 		}
 		if (flag2)
@@ -5389,19 +5718,19 @@ public class RackCharacter
 		targetMesh.uv = array3;
 		targetMesh.boneWeights = array2;
 		targetMesh.ClearBlendShapes();
-		for (int num11 = 0; num11 < list.Count; num11++)
+		for (int num10 = 0; num10 < list.Count; num10++)
 		{
 			this.newBlendshapeVerts = new Vector3[this.newVerts.Count];
 			this.newBlendshapeNormals = new Vector3[this.newVerts.Count];
 			this.newBlendshapeTangents = new Vector3[this.newVerts.Count];
-			for (int num12 = 0; num12 < this.newBlendshapeVerts.Length; num12++)
+			for (int num11 = 0; num11 < this.newBlendshapeVerts.Length; num11++)
 			{
-				this.newBlendshapeVerts[num12] = list[num11].verts[this.newVertReferenceVertIndices[num12]];
+				this.newBlendshapeVerts[num11] = list[num10].verts[this.newVertReferenceVertIndices[num11]];
 			}
-			list[num11].verts = list[num11].verts.Concat(this.newBlendshapeVerts).ToArray();
-			list[num11].normals = list[num11].normals.Concat(this.newBlendshapeNormals).ToArray();
-			list[num11].tangents = list[num11].tangents.Concat(this.newBlendshapeTangents).ToArray();
-			targetMesh.AddBlendShapeFrame(list[num11].name, 100f, list[num11].verts, list[num11].normals, list[num11].tangents);
+			list[num10].verts = list[num10].verts.Concat(this.newBlendshapeVerts).ToArray();
+			list[num10].normals = list[num10].normals.Concat(this.newBlendshapeNormals).ToArray();
+			list[num10].tangents = list[num10].tangents.Concat(this.newBlendshapeTangents).ToArray();
+			targetMesh.AddBlendShapeFrame(list[num10].name, 100f, list[num10].verts, list[num10].normals, list[num10].tangents);
 		}
 		this.newVerts = null;
 		this.newVertReferenceVertIndices = null;
@@ -6721,6 +7050,13 @@ public class RackCharacter
 			this.penisRigidbodies[l].useGravity = false;
 		}
 		this.penisBaseRelativeToRoot = this.bones.Root.InverseTransformPoint(this.bones.Penis0.position);
+		if (RackCharacter.originalPenisLengthMinusHead == 0f)
+		{
+			RackCharacter.originalPenisLengthMinusHead = (this.bones.Penis4.position - this.bones.Penis3.position).magnitude + (this.bones.Penis3.position - this.bones.Penis2.position).magnitude + (this.bones.Penis2.position - this.bones.Penis1.position).magnitude;
+			RackCharacter.originalPenisHeadLength = (this.bones.Penis1.position - this.bones.Penis0.position).magnitude * 2.571058f;
+			float num = ((this.bones.Penis4.position - this.bones.Penis3.position).magnitude + (this.bones.Penis3.position - this.bones.Penis2.position).magnitude + (this.bones.Penis2.position - this.bones.Penis1.position).magnitude + (this.bones.Penis1.position - this.bones.Penis0.position).magnitude) * 1.353161f;
+			float num2 = RackCharacter.originalPenisHeadLength + RackCharacter.originalPenisLengthMinusHead;
+		}
 	}
 
 	public void reparentPenis()
@@ -6948,9 +7284,7 @@ public class RackCharacter
 				position.z += 0.4f;
 			}
 			float magnitude = (position - this.tailbones[k].position).magnitude;
-			Vector3 lossyScale = this.tailbones[0].lossyScale;
-			float num6 = magnitude / lossyScale.x;
-			this.originalTailCapsuleHeight.Add(num6);
+			this.originalTailCapsuleHeight.Add(magnitude);
 			if ((UnityEngine.Object)this.tailbones[k].gameObject.GetComponent<CapsuleCollider>() == (UnityEngine.Object)null)
 			{
 				this.tailbones[k].gameObject.AddComponent<CapsuleCollider>();
@@ -6958,14 +7292,14 @@ public class RackCharacter
 			this.tailColliders[k] = this.tailbones[k].gameObject.GetComponent<CapsuleCollider>();
 			this.tailColliders[k].direction = 0;
 			this.tailColliders[k].radius = 0.1f;
-			this.tailColliders[k].height = num6;
-			this.v3.x = (0f - num6) / 2f;
+			this.tailColliders[k].height = magnitude;
+			this.v3.x = (0f - magnitude) / 2f;
 			this.v3.y = 0f;
 			this.v3.z = 0f;
 			this.tailColliders[k].center = this.v3;
 			this.tailRigidBodies[k].centerOfMass = Vector3.zero;
 			this.tailRigidBodies[k].inertiaTensor = Vector3.one;
-			this.tailRigidBodies[k].useGravity = true;
+			this.tailRigidBodies[k].useGravity = false;
 		}
 		this.needTailRecurl = true;
 	}
@@ -8282,7 +8616,7 @@ public class RackCharacter
 		}
 		for (int i = 0; i < this.tailLength_act; i++)
 		{
-			this.tailRigidBodies[i].AddForce(this.testTubeTurbulence, ForceMode.Acceleration);
+			this.tailRigidBodies[i].AddForce(Physics.gravity * this.gravityModifier * 6f + this.testTubeTurbulence, ForceMode.Acceleration);
 		}
 		for (int j = 0; j < this.earRigidbodies.Length; j++)
 		{
@@ -8394,6 +8728,9 @@ public class RackCharacter
 							material.DisableKeyword("_ALPHATEST_ON");
 							material.DisableKeyword("_ALPHABLEND_ON");
 							material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+							material.EnableKeyword("_METALLICGLOSSMAP");
+							material.EnableKeyword("_NORMALMAP");
+							material.EnableKeyword("_EMISSION");
 							material.renderQueue = 3000;
 						}
 					}
@@ -8405,6 +8742,9 @@ public class RackCharacter
 						material.DisableKeyword("_ALPHATEST_ON");
 						material.EnableKeyword("_ALPHABLEND_ON");
 						material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+						material.EnableKeyword("_METALLICGLOSSMAP");
+						material.EnableKeyword("_NORMALMAP");
+						material.EnableKeyword("_EMISSION");
 						material.renderQueue = 3000;
 					}
 				}
@@ -8416,6 +8756,9 @@ public class RackCharacter
 					material.EnableKeyword("_ALPHATEST_ON");
 					material.DisableKeyword("_ALPHABLEND_ON");
 					material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+					material.EnableKeyword("_METALLICGLOSSMAP");
+					material.EnableKeyword("_NORMALMAP");
+					material.EnableKeyword("_EMISSION");
 					material.renderQueue = 2450;
 				}
 			}
@@ -8427,6 +8770,9 @@ public class RackCharacter
 				material.DisableKeyword("_ALPHATEST_ON");
 				material.DisableKeyword("_ALPHABLEND_ON");
 				material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+				material.EnableKeyword("_METALLICGLOSSMAP");
+				material.EnableKeyword("_NORMALMAP");
+				material.EnableKeyword("_EMISSION");
 				material.renderQueue = -1;
 			}
 		}
@@ -8558,6 +8904,12 @@ public class RackCharacter
 		}
 	}
 
+	public void fadeOutCharacter(float amount)
+	{
+		this.fadingOutCharacter = true;
+		this.fadeOutCharacterAmount = amount;
+	}
+
 	public void render()
 	{
 		if ((UnityEngine.Object)this.GO != (UnityEngine.Object)null)
@@ -8584,8 +8936,18 @@ public class RackCharacter
 			}
 			bool flag = false;
 			this.tailGhosted = false;
+			if (this.fadingOutCharacter)
+			{
+				this.fadingOutCharacter = false;
+				this.wasFadingOutCharacter = true;
+			}
+			else
+			{
+				this.wasFadingOutCharacter = false;
+			}
 			for (int i = 0; i < this.parts.Count; i++)
 			{
+				this.parts[i].transform.localPosition = Vector3.zero;
 				this.pieceHidden = (this.controlledByPlayer && this.interactionSubject != null && this.game.interactionZoom > 0.25f);
 				if (this.pieceHidden && i == this.handsPieceIndex && (this.game.curTool == "hand" || this.interactingWithSelf || this.currentlyUsingHandL || this.currentlyUsingHandR))
 				{
@@ -8620,23 +8982,28 @@ public class RackCharacter
 				{
 					if (this.controlledByPlayer && this.interactionSubject != null)
 					{
-						goto IL_038c;
+						goto IL_03cc;
 					}
 					if (this.isInteractionSubject)
 					{
-						goto IL_038c;
+						goto IL_03cc;
 					}
 				}
-				goto IL_03e7;
-				IL_038c:
+				goto IL_0427;
+				IL_03cc:
 				float num = Vector3.Angle(this.bones.SpineLower.forward, this.game.mainCam.transform.position - this.bones.SpineLower.position);
 				if (num < 95f)
 				{
 					this.pieceHidden = true;
 					this.tailGhosted = true;
 				}
-				goto IL_03e7;
-				IL_079c:
+				goto IL_0427;
+				IL_0856:
+				if (this.wasFadingOutCharacter)
+				{
+					this.rimColor *= 1f - this.fadeOutCharacterAmount;
+					this.rimAmount[i] = 0f;
+				}
 				this.rimColor *= 0.2f + this.rimAmount[i] * 0.8f;
 				this.parts[i].GetComponent<SkinnedMeshRenderer>().enabled = (this.fadeAmount[i] < 1f);
 				this.parts[i].GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", this.rimColor);
@@ -8652,17 +9019,23 @@ public class RackCharacter
 				}
 				this.needFadeUpdate = false;
 				continue;
-				IL_0723:
+				IL_07dd:
 				this.rimAmount[i] += Time.deltaTime * 0.5f;
 				if (this.rimAmount[i] > 1f)
 				{
 					this.rimAmount[i] = 1f;
 				}
-				goto IL_079c;
-				IL_03e7:
+				goto IL_0856;
+				IL_0427:
 				if (!UserSettings.data.ghostBodyDuringSex)
 				{
 					this.pieceHidden = false;
+				}
+				if (this.wasFadingOutCharacter)
+				{
+					this.fadeAmount[i] = this.fadeOutCharacterAmount;
+					this.pieceHidden = (this.fadeOutCharacterAmount >= 1f);
+					this.rimAmount[i] = 0f;
 				}
 				if (this.pieceHidden)
 				{
@@ -8728,16 +9101,23 @@ public class RackCharacter
 				{
 					if (this.wasFaded[i])
 					{
+						if (this.hasFurLOD)
+						{
+							for (int m = 0; m < this.furLODs.Count; m++)
+							{
+								this.furLODs[m].suppressed = false;
+							}
+						}
 						this.parts[i].GetComponent<SkinnedMeshRenderer>().material.shader = RackCharacter.originalCharacterShader;
-						RackCharacter.setBlendmode(this.parts[i].GetComponent<SkinnedMeshRenderer>().material, "opaque");
+						RackCharacter.setBlendmode(this.parts[i].GetComponent<SkinnedMeshRenderer>().material, "cutout");
 						this.parts[i].GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", this.originalCharacterMatCol);
 						if (i == this.bodyPieceIndex)
 						{
-							for (int m = 0; m < this.clothingPiecesEquipped.Count; m++)
+							for (int n = 0; n < this.clothingPiecesEquipped.Count; n++)
 							{
-								this.clothingPiecesEquipped[m].GetComponent<SkinnedMeshRenderer>().material.shader = RackCharacter.originalCharacterShader;
-								RackCharacter.setBlendmode(this.clothingPiecesEquipped[m].GetComponent<SkinnedMeshRenderer>().material, "opaque");
-								this.clothingPiecesEquipped[m].GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", this.originalCharacterMatCol);
+								this.clothingPiecesEquipped[n].GetComponent<SkinnedMeshRenderer>().material.shader = RackCharacter.originalCharacterShader;
+								RackCharacter.setBlendmode(this.clothingPiecesEquipped[n].GetComponent<SkinnedMeshRenderer>().material, "cutout");
+								this.clothingPiecesEquipped[n].GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", this.originalCharacterMatCol);
 							}
 							flag = true;
 						}
@@ -8753,12 +9133,19 @@ public class RackCharacter
 				}
 				if (!this.wasFaded[i])
 				{
+					if (this.hasFurLOD)
+					{
+						for (int num2 = 0; num2 < this.furLODs.Count; num2++)
+						{
+							this.furLODs[num2].suppressed = true;
+						}
+					}
 					this.parts[i].GetComponent<SkinnedMeshRenderer>().material.shader = Shader.Find("Ciconia Studio/Effects/Ghost/FastGhost");
 					if (i == this.bodyPieceIndex)
 					{
-						for (int n = 0; n < this.clothingPiecesEquipped.Count; n++)
+						for (int num3 = 0; num3 < this.clothingPiecesEquipped.Count; num3++)
 						{
-							this.clothingPiecesEquipped[n].GetComponent<SkinnedMeshRenderer>().material.shader = Shader.Find("Ciconia Studio/Effects/Ghost/FastGhost");
+							this.clothingPiecesEquipped[num3].GetComponent<SkinnedMeshRenderer>().material.shader = Shader.Find("Ciconia Studio/Effects/Ghost/FastGhost");
 						}
 						flag = true;
 					}
@@ -8771,11 +9158,11 @@ public class RackCharacter
 				{
 					if (i != this.bodyPieceIndex && i != this.tailPieceIndex && i != this.wingPieceIndex)
 					{
-						goto IL_0723;
+						goto IL_07dd;
 					}
 					if (!flag2)
 					{
-						goto IL_0723;
+						goto IL_07dd;
 					}
 				}
 				this.rimAmount[i] -= Time.deltaTime * 15f;
@@ -8783,7 +9170,7 @@ public class RackCharacter
 				{
 					this.rimAmount[i] = 0f;
 				}
-				goto IL_079c;
+				goto IL_0856;
 			}
 			if (this.initted)
 			{
@@ -8806,9 +9193,9 @@ public class RackCharacter
 			}
 			if (this.initted)
 			{
-				for (int num2 = 0; num2 < this.tailbones.Length; num2++)
+				for (int num4 = 0; num4 < this.tailbones.Length; num4++)
 				{
-					this.tailbones[num2].gameObject.SetActive(!this.hidden);
+					this.tailbones[num4].gameObject.SetActive(!this.hidden);
 				}
 			}
 			if (this.initted && !this.rebuilding && !this.hidden && !((UnityEngine.Object)this.animator == (UnityEngine.Object)null))
@@ -8832,94 +9219,105 @@ public class RackCharacter
 				}
 				if (this.controlledByPlayer && this.game.firstPersonMode)
 				{
-					this.animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+					goto IL_0cc0;
 				}
-				else
+				if (this.wasFadingOutCharacter)
 				{
-					this.animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+					goto IL_0cc0;
 				}
-				this.updateBaseCoordinates();
-				if (this.controlledByPlayer && TestingRoom.editingMode)
-				{
-					if (!this.usingGhostMat)
-					{
-						this.usingGhostMat = true;
-						this.assignGhostMaterial();
-					}
-				}
-				else if (this.usingGhostMat)
-				{
-					this.usingGhostMat = false;
-					this.assignNormalMaterial();
-				}
-				if (this.delayedApparatusTime > 0f)
-				{
-					this.delayedApparatusTime -= Time.deltaTime;
-					if (this.delayedApparatusTime <= 0f)
-					{
-						this.bindToApparatus(this.delayedApparatusBind);
-					}
-				}
-				this.processTexture();
-				this.processPleasure();
-				this.processChemicalsInSystem();
-				this.processPlayerKnowledgeAndInlineDialogue();
-				this.processEnjoyment();
-				this.processSpecimenProduction();
-				this.processThoughtsAndEmotes();
-				this.processInteraction();
-				this.determineColliderVisibility();
-				if (!this.effectivelyFrozen)
-				{
-					this.processAnimation();
-					this.processWrithing();
-					this.processBody();
-					this.processBreath();
-					this.processIK();
-					this.processInput();
-					this.processMovement();
-					this.processInteractionOrigins();
-					if (!this.faceControlledByAnimation)
-					{
-						this.processFaceAndEmotions();
-					}
-					if (this.faceControlledByAnimation)
-					{
-						this.animator.SetLayerWeight(1, 0f);
-					}
-					else
-					{
-						this.animator.SetLayerWeight(1, 1f);
-					}
-					this.processWings();
-					this.processPubic();
-					this.processVagina();
-					this.processButt();
-					this.processAnus();
-					this.processEars();
-					this.processBoobs();
-					this.processBelly();
-					this.processClothing();
-					this.processHair();
-					this.reparentPenis();
-					this.reparentBalls();
-					this.processBalls();
-					this.processPenis();
-					this.unparentBalls();
-					this.unparentPenis();
-					this.lastPubicPosition = this.bones.Pubic.position;
-					this.processTail();
-					this.processDrippingAndPrecum();
-					this.processWetness();
-					this.processHands();
-					this.pointFingers();
-					this.processHead();
-					this.applyGravityToAttachedFloppyParts();
-				}
+				this.animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+				goto IL_0cdd;
 			}
-			this.wasHidden = this.hidden;
-			this.physicsTickCount = 0;
+			goto IL_0ec4;
 		}
+		return;
+		IL_0cc0:
+		this.animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+		goto IL_0cdd;
+		IL_0ec4:
+		this.wasHidden = this.hidden;
+		this.physicsTickCount = 0;
+		return;
+		IL_0cdd:
+		this.updateBaseCoordinates();
+		if (this.controlledByPlayer && TestingRoom.editingMode)
+		{
+			if (!this.usingGhostMat)
+			{
+				this.usingGhostMat = true;
+				this.assignGhostMaterial();
+			}
+		}
+		else if (this.usingGhostMat)
+		{
+			this.usingGhostMat = false;
+			this.assignNormalMaterial();
+		}
+		if (this.delayedApparatusTime > 0f)
+		{
+			this.delayedApparatusTime -= Time.deltaTime;
+			if (this.delayedApparatusTime <= 0f)
+			{
+				this.bindToApparatus(this.delayedApparatusBind);
+			}
+		}
+		this.processTexture();
+		this.processPleasure();
+		this.processChemicalsInSystem();
+		this.processPlayerKnowledgeAndInlineDialogue();
+		this.processEnjoyment();
+		this.processSpecimenProduction();
+		this.processThoughtsAndEmotes();
+		this.processInteraction();
+		this.determineColliderVisibility();
+		if (!this.effectivelyFrozen)
+		{
+			this.processAnimation();
+			this.processWrithing();
+			this.processBody();
+			this.processBreath();
+			this.processIK();
+			this.processInput();
+			this.processMovement();
+			this.processInteractionOrigins();
+			if (!this.faceControlledByAnimation)
+			{
+				this.processFaceAndEmotions();
+			}
+			if (this.faceControlledByAnimation)
+			{
+				this.animator.SetLayerWeight(1, 0f);
+			}
+			else
+			{
+				this.animator.SetLayerWeight(1, 1f);
+			}
+			this.processWings();
+			this.processPubic();
+			this.processVagina();
+			this.processButt();
+			this.processAnus();
+			this.processEars();
+			this.processBoobs();
+			this.processBelly();
+			this.processClothing();
+			this.processHair();
+			this.reparentPenis();
+			this.reparentBalls();
+			this.processBalls();
+			this.processPenis();
+			this.unparentBalls();
+			this.unparentPenis();
+			this.lastPubicPosition = this.bones.Pubic.position;
+			this.processTail();
+			this.processDrippingAndPrecum();
+			this.processWetness();
+			this.processHands();
+			this.pointFingers();
+			this.processHead();
+			this.applyGravityToAttachedFloppyParts();
+		}
+		goto IL_0ec4;
 	}
 
 	public float getChemicalCompound(string name)
@@ -11167,7 +11565,7 @@ public class RackCharacter
 			this.sensitivity += (1f - this.cap(this.percievedStimulation - this.targetStimulation * 0.5f, 0f, 1f) - this.sensitivity) * this.cap(Time.deltaTime * 0.5f, 0f, 1f) * (1f + this.rFactor * 2f);
 		}
 		this.sensitivityAdjustment += (this.sensitivityAdjustmentTarget - this.sensitivityAdjustment) * this.cap(Time.deltaTime * 5f, 0f, 1f);
-		this.targetStimulation = this.cap((2f - this.sensitivity * this.sensitivityAdjustment) * 0.5f, 0.1f, 1f) * RackCharacter.targetStimulationGlobalAdjustment;
+		this.targetStimulation = this.cap((2f - this.sensitivity * this.sensitivityAdjustment) * 0.5f, 0.1f, 1f) * 0.25f + (1f - UserSettings.data.globalSensitivity) * 2f;
 		float num = 0f;
 		float num2 = 0f;
 		if (this.refractory > 0f)
@@ -11634,8 +12032,8 @@ public class RackCharacter
 		case "penis":
 			this.usingDefaultBodyTarget = false;
 			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.target = interaction.gizmo.transform.Find("mountPoint");
-			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.positionWeight = 1f;
-			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.rotationWeight = 1f;
+			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.positionWeight = 0f;
+			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.rotationWeight = 0f;
 			this.ignoreCollisions(interaction.targetCharacter.GO.transform, false, null);
 			this.ignoreCollisions(interaction.targetCharacter.GO.transform, true, this.bones.UpperLeg_L);
 			this.ignoreCollisions(interaction.targetCharacter.GO.transform, true, this.bones.UpperLeg_R);
@@ -11644,8 +12042,8 @@ public class RackCharacter
 		case "butt":
 			this.usingDefaultBodyTarget = false;
 			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.target = interaction.gizmo.transform.Find("mountPoint");
-			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.positionWeight = 1f;
-			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.rotationWeight = 1f;
+			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.positionWeight = 0f;
+			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.rotationWeight = 0f;
 			this.ignoreCollisions(interaction.targetCharacter.GO.transform, false, null);
 			this.ignoreCollisions(interaction.targetCharacter.GO.transform, true, this.bones.Penis0);
 			this.currentlyUsingButt = true;
@@ -11653,8 +12051,8 @@ public class RackCharacter
 		case "vagina":
 			this.usingDefaultBodyTarget = false;
 			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.target = interaction.gizmo.transform.Find("mountPoint");
-			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.positionWeight = 1f;
-			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.rotationWeight = 1f;
+			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.positionWeight = 0f;
+			this.GO.GetComponent<FullBodyBipedIK>().solver.bodyEffector.rotationWeight = 0f;
 			this.ignoreCollisions(interaction.targetCharacter.GO.transform, false, null);
 			this.ignoreCollisions(interaction.targetCharacter.GO.transform, true, this.bones.Penis0);
 			this.currentlyUsingVagina = true;
@@ -11819,6 +12217,7 @@ public class RackCharacter
 			}
 			this.interactionSubject = null;
 			this.interactionPoint = null;
+			this.lastInteractionPointName = string.Empty;
 			this.ignoreCollisions(this.interactionApparatus.transform, true, null);
 			this.resetIdleHandTarget(false);
 			this.resetIdleHandTarget(true);
@@ -12371,7 +12770,9 @@ public class RackCharacter
 
 	public void pollPenisLength()
 	{
-		this.penisLengthInWorldUnits_tar = ((this.bones.Penis4.position - this.bones.Penis3.position).magnitude + (this.bones.Penis3.position - this.bones.Penis2.position).magnitude + (this.bones.Penis2.position - this.bones.Penis1.position).magnitude + (this.bones.Penis1.position - this.bones.Penis0.position).magnitude) * 1.353161f;
+		float num = RackCharacter.originalPenisLengthMinusHead;
+		Vector3 lossyScale = this.bones.Pubic.lossyScale;
+		this.penisLengthInWorldUnits_tar = num * lossyScale.x * this.penisArousalScale + RackCharacter.originalPenisHeadLength;
 	}
 
 	public Vector3 penisTip(bool afterIK = false)
@@ -13291,10 +13692,10 @@ public class RackCharacter
 			this.headCanvas.SetPixels(this.canvasPixels[0]);
 			this.bodyCanvas.SetPixels(this.canvasPixels[1]);
 			this.wingCanvas.SetPixels(this.canvasPixels[2]);
+			this.drawEmbellishmentColorsOnTexture();
 			this.headFXCanvas.SetPixels(this.canvasPixels[3]);
 			this.bodyFXCanvas.SetPixels(this.canvasPixels[4]);
 			this.wingFXCanvas.SetPixels(this.canvasPixels[5]);
-			this.drawEmbellishmentColorsOnTexture();
 			this.headCanvas.Apply();
 			this.bodyCanvas.Apply();
 			this.wingCanvas.Apply();
@@ -13328,6 +13729,39 @@ public class RackCharacter
 			this.queueTextureBuild = false;
 			this.buildTexture();
 		}
+		if (this.needFurLOD)
+		{
+			if (this.isPreviewCharacter)
+			{
+				this.needFurLOD = false;
+			}
+			else
+			{
+				for (int j = 0; j < this.parts.Count; j++)
+				{
+					if ((UnityEngine.Object)this.parts[j].GetComponent<ImperialFurLOD>() != (UnityEngine.Object)null)
+					{
+						UnityEngine.Object.Destroy(this.parts[j].GetComponent<ImperialFurLOD>());
+						this.hasFurLOD = false;
+					}
+					else
+					{
+						if (j == 0)
+						{
+							this.furLODs = new List<ImperialFurLOD>();
+						}
+						this.furLODs.Add(this.parts[j].AddComponent<ImperialFurLOD>());
+						this.hasFurLOD = true;
+						this.parts[j].GetComponent<ImperialFurLOD>().from40To20 = 5f;
+						this.parts[j].GetComponent<ImperialFurLOD>().from20To10 = 10f;
+						this.parts[j].GetComponent<ImperialFurLOD>().from10To5 = 15f;
+						this.parts[j].GetComponent<ImperialFurLOD>().from5To2 = 40f;
+						this.parts[j].GetComponent<ImperialFurLOD>().from2To1 = 80f;
+						this.needFurLOD = false;
+					}
+				}
+			}
+		}
 	}
 
 	public void drawEmbellishmentColorsOnTexture()
@@ -13350,6 +13784,10 @@ public class RackCharacter
 						num = a.x + (float)j - (float)num3;
 						num2 = 2048f - (a.y - (float)k + (float)num3);
 						this.bodyCanvas.SetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality), Game.determineEmbellishmentColorAtPoint(this, i, ((float)j - (float)num3) / 32f) / 256f);
+						this.col.r = 0.01f;
+						this.col.g = 0.01f;
+						this.col.b = 0.01f;
+						this.bodyFXCanvas.SetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality), this.bodyFXCanvas.GetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality)) + this.col);
 					}
 				}
 			}
@@ -13362,6 +13800,10 @@ public class RackCharacter
 						num = a.x + (float)l - (float)num3;
 						num2 = 2048f - (a.y - (float)m + (float)num3);
 						this.bodyCanvas.SetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality), Game.determineEmbellishmentColorAtPoint(this, i, ((float)m - (float)num3) / 32f) / 256f);
+						this.col.r = 0.01f;
+						this.col.g = 0.01f;
+						this.col.b = 0.01f;
+						this.bodyFXCanvas.SetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality), this.bodyFXCanvas.GetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality)) + this.col);
 					}
 				}
 			}
@@ -13376,6 +13818,10 @@ public class RackCharacter
 						num = a.x + (float)n - (float)num3;
 						num2 = 1024f - (a.y - (float)num4 + (float)num3);
 						this.headCanvas.SetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality), Game.determineEmbellishmentColorAtPoint(this, i, ((float)n - (float)num3) / 32f) / 256f);
+						this.col.r = 0.01f;
+						this.col.g = 0.01f;
+						this.col.b = 0.01f;
+						this.headFXCanvas.SetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality), this.headFXCanvas.GetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality)) + this.col);
 					}
 				}
 			}
@@ -13388,6 +13834,10 @@ public class RackCharacter
 						num = a.x + (float)num5 - (float)num3;
 						num2 = 1024f - (a.y - (float)num6 + (float)num3);
 						this.headCanvas.SetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality), Game.determineEmbellishmentColorAtPoint(this, i, ((float)num6 - (float)num3) / (32f + (float)num3 * 2f)) / 256f);
+						this.col.r = 0.01f;
+						this.col.g = 0.01f;
+						this.col.b = 0.01f;
+						this.headFXCanvas.SetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality), this.headFXCanvas.GetPixel(Mathf.RoundToInt(num * UserSettings.data.characterTextureQuality), Mathf.RoundToInt(num2 * UserSettings.data.characterTextureQuality)) + this.col);
 					}
 				}
 			}
@@ -14133,9 +14583,16 @@ public class RackCharacter
 		{
 			this.resetBoobs();
 		}
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < this.boobRigidbodies.Length; i++)
 		{
-			if ((this.boobbones[i].position - this.bones.SpineUpper.position).magnitude > 2f)
+			if (this.boobRigidbodies[i].velocity.magnitude > 100f)
+			{
+				this.resetBoobs();
+			}
+		}
+		for (int j = 0; j < 2; j++)
+		{
+			if ((this.boobbones[j].position - this.bones.SpineUpper.position).magnitude > 2f)
 			{
 				this.resetBoobs();
 			}
@@ -14162,27 +14619,27 @@ public class RackCharacter
 		this.v3.y *= -1f;
 		this.boobColliders[0].radius = num;
 		this.boobColliders[0].center = this.v3;
-		for (int j = 0; j < 2; j++)
+		for (int k = 0; k < 2; k++)
 		{
-			this.boobJoints[j].connectedAnchor = RackCharacter.originalBoobAnchors[j];
+			this.boobJoints[k].connectedAnchor = RackCharacter.originalBoobAnchors[k];
 		}
 		if (this.breastSize_act < RackCharacter.breastThreshhold)
 		{
-			for (int k = 0; k < 2; k++)
+			for (int l = 0; l < 2; l++)
 			{
 				if (this.boobsWereBeingPhysicked == 1)
 				{
-					this.boobbones[k].localEulerAngles = RackCharacter.boobOriginalRotations[k];
-					this.boobbones[k].localPosition = RackCharacter.boobOriginalPositions[k];
-					this.boobbones[k].localScale = this.boobOriginalScales[k];
+					this.boobbones[l].localEulerAngles = RackCharacter.boobOriginalRotations[l];
+					this.boobbones[l].localPosition = RackCharacter.boobOriginalPositions[l];
+					this.boobbones[l].localScale = this.boobOriginalScales[l];
 					this.boobLimit.limit = 0f;
-					this.boobJoints[k].angularYLimit = this.boobLimit;
-					this.boobJoints[k].angularZLimit = this.boobLimit;
-					this.boobRigidbodies[k].velocity = Vector3.zero;
-					this.boobRigidbodies[k].angularVelocity = Vector3.zero;
-					this.boobRigidbodies[k + 2].velocity = Vector3.zero;
-					this.boobRigidbodies[k + 2].angularVelocity = Vector3.zero;
-					if (k == 1)
+					this.boobJoints[l].angularYLimit = this.boobLimit;
+					this.boobJoints[l].angularZLimit = this.boobLimit;
+					this.boobRigidbodies[l].velocity = Vector3.zero;
+					this.boobRigidbodies[l].angularVelocity = Vector3.zero;
+					this.boobRigidbodies[l + 2].velocity = Vector3.zero;
+					this.boobRigidbodies[l + 2].angularVelocity = Vector3.zero;
+					if (l == 1)
 					{
 						this.updateBoneWeights(true);
 					}
@@ -14192,7 +14649,7 @@ public class RackCharacter
 		}
 		else
 		{
-			for (int l = 0; l < 2; l++)
+			for (int m = 0; m < 2; m++)
 			{
 				if (this.boobsWereBeingPhysicked == 0)
 				{
@@ -14211,29 +14668,29 @@ public class RackCharacter
 				}
 				if (this.breastPerkiness != this.lastBreastPerk)
 				{
-					this.v3 = this.boobbones[l].localEulerAngles;
-					this.boobbones[l].localEulerAngles = RackCharacter.boobOriginalRotations[l];
+					this.v3 = this.boobbones[m].localEulerAngles;
+					this.boobbones[m].localEulerAngles = RackCharacter.boobOriginalRotations[m];
 					this.boobForceIn = 18f * this.breastPerkiness;
 					this.boobForceUp = 5f * this.breastPerkiness;
-					if (l == 0)
+					if (m == 0)
 					{
-						this.boobbones[l].Rotate(0f, this.boobForceUp, this.boobForceIn);
+						this.boobbones[m].Rotate(0f, this.boobForceUp, this.boobForceIn);
 					}
 					else
 					{
-						this.boobbones[l].Rotate(0f, this.boobForceUp, 0f - this.boobForceIn);
+						this.boobbones[m].Rotate(0f, this.boobForceUp, 0f - this.boobForceIn);
 					}
-					this.boobJoints[l].autoConfigureConnectedAnchor = false;
-					this.boobJoints[l].connectedAnchor = this.boobJoints[l].connectedAnchor;
-					this.boobbones[l].localEulerAngles = this.v3;
+					this.boobJoints[m].autoConfigureConnectedAnchor = false;
+					this.boobJoints[m].connectedAnchor = this.boobJoints[m].connectedAnchor;
+					this.boobbones[m].localEulerAngles = this.v3;
 					this.boobLimit.limit = 25f - 22f * this.breastPerkiness;
-					this.boobJoints[l].angularYLimit = this.boobLimit;
+					this.boobJoints[m].angularYLimit = this.boobLimit;
 					this.boobLimit.limit = 25f - 22f * this.breastPerkiness;
-					this.boobJoints[l].angularZLimit = this.boobLimit;
+					this.boobJoints[m].angularZLimit = this.boobLimit;
 					this.boobLimitSpring.spring = 100f + 19900f * this.breastPerkiness;
 					this.boobLimitSpring.damper = 10f + 1990f * this.breastPerkiness;
-					this.boobJoints[l].angularYZLimitSpring = this.boobLimitSpring;
-					if (l == 1)
+					this.boobJoints[m].angularYZLimitSpring = this.boobLimitSpring;
+					if (m == 1)
 					{
 						this.updateBoneWeights(false);
 					}
@@ -14242,78 +14699,78 @@ public class RackCharacter
 			this.boobsWereBeingPhysicked = 1;
 			this.lastBreastPerk = this.breastPerkiness;
 		}
-		for (int m = 0; m < 2; m++)
+		for (int n = 0; n < 2; n++)
 		{
-			if (this.boobPushedInFromArm[m] <= 0f)
+			if (this.boobPushedInFromArm[n] <= 0f)
 			{
-				this.boobPushingInSpeed[m] = 0f;
-				if (this.boobPushInFromArm[m] > 0f)
+				this.boobPushingInSpeed[n] = 0f;
+				if (this.boobPushInFromArm[n] > 0f)
 				{
-					this.boobReturnToPositionSpeed[m] += Time.deltaTime * 15f;
-					this.boobPushInFromArm[m] -= Time.deltaTime * this.boobReturnToPositionSpeed[m];
-					if (this.boobPushInFromArm[m] < 0f)
+					this.boobReturnToPositionSpeed[n] += Time.deltaTime * 15f;
+					this.boobPushInFromArm[n] -= Time.deltaTime * this.boobReturnToPositionSpeed[n];
+					if (this.boobPushInFromArm[n] < 0f)
 					{
-						this.boobPushInFromArm[m] = 0f;
-						this.boobReturnToPositionSpeed[m] = 0f;
+						this.boobPushInFromArm[n] = 0f;
+						this.boobReturnToPositionSpeed[n] = 0f;
 					}
 				}
-				else if (this.boobPushInFromArm[m] < 0f)
+				else if (this.boobPushInFromArm[n] < 0f)
 				{
-					this.boobReturnToPositionSpeed[m] += Time.deltaTime * 15f;
-					this.boobPushInFromArm[m] += Time.deltaTime * this.boobReturnToPositionSpeed[m];
-					if (this.boobPushInFromArm[m] > 0f)
+					this.boobReturnToPositionSpeed[n] += Time.deltaTime * 15f;
+					this.boobPushInFromArm[n] += Time.deltaTime * this.boobReturnToPositionSpeed[n];
+					if (this.boobPushInFromArm[n] > 0f)
 					{
-						this.boobPushInFromArm[m] = 0f;
-						this.boobReturnToPositionSpeed[m] = 0f;
+						this.boobPushInFromArm[n] = 0f;
+						this.boobReturnToPositionSpeed[n] = 0f;
 					}
 				}
 			}
 			else
 			{
-				this.boobReturnToPositionSpeed[m] = 0f;
-				this.boobPushedInFromArm[m] -= Time.deltaTime;
+				this.boobReturnToPositionSpeed[n] = 0f;
+				this.boobPushedInFromArm[n] -= Time.deltaTime;
 			}
 			this.v3 = Vector3.one;
-			Vector3 localEulerAngles = this.boobbones[m].localEulerAngles;
+			Vector3 localEulerAngles = this.boobbones[n].localEulerAngles;
 			float num4 = 0f - Game.degreeDist(localEulerAngles.y, 260f);
 			num4 = ((!(num4 > 0f)) ? (num4 * 0.5f) : (num4 * 3f));
-			float to = (m != 0) ? -13f : 13f;
+			float to = (n != 0) ? -13f : 13f;
 			num4 *= 0.005f;
-			this.boobUpAmount[m] += (num4 - this.boobUpAmount[m]) * this.cap(Time.deltaTime * 10f, 0f, 1f);
-			Vector3 localEulerAngles2 = this.boobbones[m].localEulerAngles;
+			this.boobUpAmount[n] += (num4 - this.boobUpAmount[n]) * this.cap(Time.deltaTime * 10f, 0f, 1f);
+			Vector3 localEulerAngles2 = this.boobbones[n].localEulerAngles;
 			float num5 = Game.degreeDist(localEulerAngles2.z, to);
-			if (m == 1)
+			if (n == 1)
 			{
 				num5 *= -1f;
 			}
-			this.boobSideStretchAmount[m] += (num5 - this.boobSideStretchAmount[m]) * this.cap(Time.deltaTime * 10f, 0f, 1f);
-			this.v3.x = 1f - this.boobUpAmount[m] - Mathf.Abs(this.boobSideStretchAmount[m] - 30f) * 0.011f - this.breastSupportFromClothing * 0.25f;
-			this.v3.y = 1f + this.boobUpAmount[m] * 0.2f - this.boobSideStretchAmount[m] * 0.006f;
-			this.v3.z = 1f - this.boobUpAmount[m] * 0.2f + this.boobSideStretchAmount[m] * 0.006f;
+			this.boobSideStretchAmount[n] += (num5 - this.boobSideStretchAmount[n]) * this.cap(Time.deltaTime * 10f, 0f, 1f);
+			this.v3.x = 1f - this.boobUpAmount[n] - Mathf.Abs(this.boobSideStretchAmount[n] - 30f) * 0.011f - this.breastSupportFromClothing * 0.25f;
+			this.v3.y = 1f + this.boobUpAmount[n] * 0.2f - this.boobSideStretchAmount[n] * 0.006f;
+			this.v3.z = 1f - this.boobUpAmount[n] * 0.2f + this.boobSideStretchAmount[n] * 0.006f;
 			this.v3.x = this.cap(this.v3.x, 0.85f, 1.5f);
 			this.v3.y = this.cap(this.v3.y, 0.5f, 1.25f);
 			this.v3.z = this.cap(this.v3.z, 0.5f, 1.25f);
-			this.boobbones[m].localScale = this.v3;
-			this.v3 = RackCharacter.boobOriginalPositions[m];
-			this.boobTranslateToCenter[m] = this.cap((20f - this.boobSideStretchAmount[m]) * 0.04f, 0f, 1f) * 0.1f;
-			this.boobTranslateToCenter[m] += 0.04f * this.breastPerkiness;
-			if (m == 0)
+			this.boobbones[n].localScale = this.v3;
+			this.v3 = RackCharacter.boobOriginalPositions[n];
+			this.boobTranslateToCenter[n] = this.cap((20f - this.boobSideStretchAmount[n]) * 0.04f, 0f, 1f) * 0.1f;
+			this.boobTranslateToCenter[n] += 0.04f * this.breastPerkiness;
+			if (n == 0)
 			{
-				this.boobTranslateToCenter[m] *= -1f;
+				this.boobTranslateToCenter[n] *= -1f;
 			}
-			this.boobTranslateToCenter[m] *= 0.4f;
-			this.v3.y += this.boobTranslateToCenter[m];
-			this.v3.z -= Mathf.Abs(this.boobTranslateToCenter[m]) * 1.3f + 0.025f;
-			this.boobbones[m].localPosition = this.v3;
+			this.boobTranslateToCenter[n] *= 0.4f;
+			this.v3.y += this.boobTranslateToCenter[n];
+			this.v3.z -= Mathf.Abs(this.boobTranslateToCenter[n]) * 1.3f + 0.025f;
+			this.boobbones[n].localPosition = this.v3;
 		}
-		for (int n = 2; n < this.boobRigidbodies.Length; n++)
+		for (int num6 = 2; num6 < this.boobRigidbodies.Length; num6++)
 		{
-			this.v3 = this.lastBoobPos[n - 2] - this.boobRigidbodies[n - 2].position + this.amountMovedHorizontal;
+			this.v3 = this.lastBoobPos[num6 - 2] - this.boobRigidbodies[num6 - 2].position + this.amountMovedHorizontal;
 			if (this.v3.magnitude < 2f)
 			{
-				this.boobRigidbodies[n].AddForce(this.v3 * 120f, ForceMode.Impulse);
+				this.boobRigidbodies[num6].AddForce(this.v3 * 120f, ForceMode.Impulse);
 			}
-			this.lastBoobPos[n - 2] = this.boobRigidbodies[n - 2].position;
+			this.lastBoobPos[num6 - 2] = this.boobRigidbodies[num6 - 2].position;
 		}
 	}
 
@@ -14780,14 +15237,29 @@ public class RackCharacter
 	public static void initSystem()
 	{
 		RackCharacter.windowsOS = (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Windows);
+		if (RackCharacter.windowsOS)
+		{
+			RackCharacter.baseModelFilename = "basemodel";
+		}
+		RackCharacter.macOS = (SystemInfo.operatingSystemFamily == OperatingSystemFamily.MacOSX);
+		if (RackCharacter.macOS)
+		{
+			RackCharacter.baseModelFilename = "basemodel_mac";
+		}
+		RackCharacter.linuxOS = (SystemInfo.operatingSystemFamily == OperatingSystemFamily.Linux);
+		if (RackCharacter.linuxOS)
+		{
+			RackCharacter.baseModelFilename = "basemodel_linux";
+		}
 		RackCharacter.cumEmitterTransform = GameObject.Find("cumEmitter").transform;
 		RackCharacter.cumEmitter = ((Component)RackCharacter.cumEmitterTransform).GetComponent<ParticleSystem>();
 		RackCharacter.ApplicationpersistentDataPath = Application.persistentDataPath;
 		RackCharacter.blackV4 = new Vector4(0f, 0f, 0f, 1f);
 		SexualPreferences.init();
 		RackCharacter.initClipFixRegions();
-		RackCharacter.characterBodyFXTex = GameObject.Find("CharacterMaterial").GetComponent<MeshRenderer>().material.GetTexture("_MainTex");
-		RackCharacter.characterHeadFXTex = GameObject.Find("CharacterMaterial").GetComponent<MeshRenderer>().material.GetTexture("_Mask1");
+		RackCharacter.headFurControlBase = (Resources.Load("headFUR") as Texture2D);
+		RackCharacter.bodyFurControlBase = (Resources.Load("bodyFUR") as Texture2D);
+		RackCharacter.wingFurControlBase = (Resources.Load("wingFUR") as Texture2D);
 		if (RackCharacter.embellishmentMeshes == null)
 		{
 			RackCharacter.embellishmentMeshes = new List<Mesh>();
@@ -14811,6 +15283,7 @@ public class RackCharacter
 		RackCharacter.initAllPieces();
 		new FileInfo(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "speciesDefinitions" + Game.PathDirectorySeparatorChar + string.Empty).Directory.Create();
 		new FileInfo(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characters" + Game.PathDirectorySeparatorChar + "texturecache" + Game.PathDirectorySeparatorChar + string.Empty).Directory.Create();
+		new FileInfo(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characters" + Game.PathDirectorySeparatorChar + "fur" + Game.PathDirectorySeparatorChar + string.Empty).Directory.Create();
 		new FileInfo(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + Mathf.RoundToInt(UserSettings.data.characterTextureQuality * 100f) + string.Empty + Game.PathDirectorySeparatorChar + string.Empty).Directory.Create();
 		new FileInfo(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + Mathf.RoundToInt(UserSettings.data.characterTextureQuality * 100f) + string.Empty + Game.PathDirectorySeparatorChar + "decal_cache" + Game.PathDirectorySeparatorChar + string.Empty).Directory.Create();
 		new FileInfo(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + string.Empty + Mathf.RoundToInt(UserSettings.data.characterTextureQuality * 100f) + string.Empty + Game.PathDirectorySeparatorChar + "racknet_cache" + Game.PathDirectorySeparatorChar + string.Empty).Directory.Create();
@@ -14823,6 +15296,50 @@ public class RackCharacter
 			{
 				".png"
 			}, StringSplitOptions.None)[0];
+		}
+		RackCharacter.furTypes = Directory.GetFiles(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + "fur" + Game.PathDirectorySeparatorChar + string.Empty).ToList();
+		for (int l = 0; l < RackCharacter.furTypes.Count; l++)
+		{
+			RackCharacter.furTypes[l] = RackCharacter.furTypes[l].Split(Game.PathDirectorySeparatorChar)[RackCharacter.furTypes[l].Split(Game.PathDirectorySeparatorChar).Length - 1];
+			RackCharacter.furTypes[l] = RackCharacter.furTypes[l].Split(new string[1]
+			{
+				".png"
+			}, StringSplitOptions.None)[0];
+			if (!RackCharacter.furNoiseTextures.ContainsKey(RackCharacter.furTypes[l]))
+			{
+				Texture2D value = new Texture2D(2, 2);
+				value.LoadImage(File.ReadAllBytes(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + "fur" + Game.PathDirectorySeparatorChar + RackCharacter.furTypes[l] + ".png"));
+				RackCharacter.furNoiseTextures.Add(RackCharacter.furTypes[l], value);
+			}
+		}
+		RackCharacter.skinTypes = Directory.GetFiles(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + "normals" + Game.PathDirectorySeparatorChar + string.Empty).ToList();
+		for (int m = 0; m < RackCharacter.skinTypes.Count; m++)
+		{
+			RackCharacter.skinTypes[m] = RackCharacter.skinTypes[m].Split(Game.PathDirectorySeparatorChar)[RackCharacter.skinTypes[m].Split(Game.PathDirectorySeparatorChar).Length - 1];
+			if (RackCharacter.skinTypes.Contains(RackCharacter.skinTypes[m].Split('_')[0]))
+			{
+				RackCharacter.skinTypes.RemoveAt(m);
+				m--;
+			}
+			else
+			{
+				RackCharacter.skinTypes[m] = RackCharacter.skinTypes[m].Split('_')[0];
+				if (!RackCharacter.skinNormalTextures.ContainsKey(RackCharacter.skinTypes[m] + "_head"))
+				{
+					Texture2D texture2D = new Texture2D(2, 2);
+					texture2D.LoadImage(File.ReadAllBytes(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + "normals" + Game.PathDirectorySeparatorChar + RackCharacter.skinTypes[m] + "_body.png"));
+					UnityEngine.Color[] array = texture2D.GetPixels();
+					texture2D.SetPixels(array);
+					texture2D.Apply();
+					RackCharacter.skinNormalTextures.Add(RackCharacter.skinTypes[m] + "_body", texture2D);
+					texture2D = new Texture2D(2, 2);
+					texture2D.LoadImage(File.ReadAllBytes(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterTextures" + Game.PathDirectorySeparatorChar + "normals" + Game.PathDirectorySeparatorChar + RackCharacter.skinTypes[m] + "_head.png"));
+					array = texture2D.GetPixels();
+					texture2D.SetPixels(array);
+					texture2D.Apply();
+					RackCharacter.skinNormalTextures.Add(RackCharacter.skinTypes[m] + "_head", texture2D);
+				}
+			}
 		}
 	}
 
@@ -14843,7 +15360,7 @@ public class RackCharacter
 		if (RackCharacter.allPieceBundle == null)
 		{
 			RackCharacter.allPieceBundle = new CharacterBundle();
-			RackCharacter.allPieceBundle.asseturl = Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterParts" + Game.PathDirectorySeparatorChar + "basemodel";
+			RackCharacter.allPieceBundle.asseturl = Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterParts" + Game.PathDirectorySeparatorChar + RackCharacter.baseModelFilename;
 			Game.gameInstance.StartCoroutine(RackCharacter.allPieceBundle.loadBundle());
 		}
 	}
@@ -14923,17 +15440,18 @@ public class RackCharacter
 					flag = true;
 				}
 				this.clothingRefsBuilt = false;
+				Debug.Log(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "clothing" + Game.PathDirectorySeparatorChar + string.Empty + this.loadingClothes[num].ToLower());
 				GameObject gameObject = UnityEngine.Object.Instantiate((AssetLoadManager.getAsset(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "clothing" + Game.PathDirectorySeparatorChar + string.Empty + this.loadingClothes[num].ToLower()).assetBundle.LoadAsset(this.loadingClothes[num]) as GameObject).transform.Find(this.loadingClothes[num]).gameObject);
 				gameObject.name = this.loadingClothes[num];
 				gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh = UnityEngine.Object.Instantiate(gameObject.GetComponent<SkinnedMeshRenderer>().sharedMesh);
 				this.clothingPieceStartPoseMesh.Add(new Mesh());
 				gameObject.GetComponent<SkinnedMeshRenderer>().BakeMesh(this.clothingPieceStartPoseMesh[this.clothingPieceStartPoseMesh.Count - 1]);
 				this.addBodyBlendsToClothingPiece(gameObject.GetComponent<SkinnedMeshRenderer>(), this.clothingPieceStartPoseMesh[this.clothingPieceStartPoseMesh.Count - 1]);
-				Material material = new Material(this.game.shader);
+				Material material = new Material(this.game.clothingShader);
 				material.CopyPropertiesFromMaterial(this.game.defaultMaterial);
 				for (int i = 0; i < gameObject.GetComponent<Renderer>().materials.Length; i++)
 				{
-					gameObject.GetComponent<Renderer>().materials[i].shader = this.game.shader;
+					gameObject.GetComponent<Renderer>().materials[i].shader = this.game.clothingShader;
 					gameObject.GetComponent<Renderer>().materials[i].CopyPropertiesFromMaterial(this.game.defaultMaterial);
 					Texture2D texture2D = new Texture2D(4, 4);
 					AssetLoadManager.getAsset(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "clothing" + Game.PathDirectorySeparatorChar + string.Empty + Mathf.RoundToInt(UserSettings.data.characterTextureQuality * 100f) + string.Empty + Game.PathDirectorySeparatorChar + string.Empty + this.loadingClothes[num] + ".png").LoadImageIntoTexture(texture2D);
@@ -14941,11 +15459,6 @@ public class RackCharacter
 					Texture2D texture2D2 = new Texture2D(4, 4);
 					AssetLoadManager.getAsset(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "clothing" + Game.PathDirectorySeparatorChar + string.Empty + Mathf.RoundToInt(UserSettings.data.characterTextureQuality * 100f) + string.Empty + Game.PathDirectorySeparatorChar + string.Empty + this.loadingClothes[num] + "NRM.png").LoadImageIntoTexture(texture2D2);
 					UnityEngine.Color[] array = texture2D2.GetPixels();
-					for (int j = 0; j < array.Length; j++)
-					{
-						array[j].a = array[j].r;
-						array[j].r = (array[j].b = 0f);
-					}
 					texture2D2.SetPixels(array);
 					texture2D2.Apply();
 					gameObject.GetComponent<Renderer>().materials[i].SetTexture("_BumpMap", texture2D2);
@@ -14957,22 +15470,22 @@ public class RackCharacter
 					AssetLoadManager.getAsset(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "clothing" + Game.PathDirectorySeparatorChar + string.Empty + Mathf.RoundToInt(UserSettings.data.characterTextureQuality * 100f) + string.Empty + Game.PathDirectorySeparatorChar + string.Empty + this.loadingClothes[num] + "FX.png").LoadImageIntoTexture(texture2D3);
 					Texture2D texture2D4 = new Texture2D(texture2D3.width, texture2D3.height);
 					UnityEngine.Color[] array2 = texture2D3.GetPixels();
-					for (int k = 0; k < array2.Length; k++)
+					for (int j = 0; j < array2.Length; j++)
 					{
-						array2[k].a = array2[k].r;
-						array2[k].r = array2[k].b;
-						array2[k].g = (array2[k].b = 0f);
+						array2[j].a = array2[j].r;
+						array2[j].r = array2[j].b;
+						array2[j].g = (array2[j].b = 0f);
 					}
 					texture2D4.SetPixels(array2);
 					texture2D4.Apply();
 					Texture2D texture2D5 = new Texture2D(texture2D3.width, texture2D3.height);
 					array2 = texture2D3.GetPixels();
 					UnityEngine.Color[] array3 = texture2D.GetPixels();
-					for (int l = 0; l < array2.Length; l++)
+					for (int k = 0; k < array2.Length; k++)
 					{
-						array2[l].r = array3[l].r * array2[l].g;
-						array2[l].b = array3[l].b * array2[l].g;
-						array2[l].g = array3[l].g * array2[l].g;
+						array2[k].r = array3[k].r * array2[k].g;
+						array2[k].b = array3[k].b * array2[k].g;
+						array2[k].g = array3[k].g * array2[k].g;
 					}
 					texture2D5.SetPixels(array2);
 					texture2D5.Apply();
@@ -14988,26 +15501,26 @@ public class RackCharacter
 			}
 			if (flag)
 			{
-				for (int m = 0; m < this.parts.Count; m++)
+				for (int l = 0; l < this.parts.Count; l++)
 				{
-					UnityEngine.Object.Destroy(this.parts[m].GetComponent<SkinnedMeshRenderer>().sharedMesh);
-					UnityEngine.Object.Destroy(this.parts[m]);
+					UnityEngine.Object.Destroy(this.parts[l].GetComponent<SkinnedMeshRenderer>().sharedMesh);
+					UnityEngine.Object.Destroy(this.parts[l]);
 				}
 				this.createPieces();
-				for (int n = 0; n < this.parts.Count; n++)
+				for (int m = 0; m < this.parts.Count; m++)
 				{
-					this.assimilatePart(this.parts[n], "body_universal", false);
+					this.assimilatePart(this.parts[m], "body_universal", false);
 				}
 				this.applyTexture();
 				this.animator.Rebind();
 				this.createPreciseRaycastingMesh();
 				this.applyCustomization();
-				for (int num2 = 0; num2 < this.parts.Count; num2++)
+				for (int n = 0; n < this.parts.Count; n++)
 				{
-					if (this.wasFaded[num2])
+					if (this.wasFaded[n])
 					{
-						this.wasFaded[num2] = false;
-						this.fadeAmount[num2] += (0.5f - this.fadeAmount[num2]) * 0.01f;
+						this.wasFaded[n] = false;
+						this.fadeAmount[n] += (0.5f - this.fadeAmount[n]) * 0.01f;
 					}
 				}
 			}
@@ -15200,6 +15713,12 @@ public class RackCharacter
 		return 1f;
 	}
 
+	public void stepLift(float amount)
+	{
+		this.stepLiftAmount += amount;
+		this.stepLifting = true;
+	}
+
 	public void processMovement()
 	{
 		this.timeSinceTeleport += Time.deltaTime;
@@ -15210,7 +15729,43 @@ public class RackCharacter
 		this.previousPosition = this.GO.transform.position;
 		if ((UnityEngine.Object)this.interactionPoint != (UnityEngine.Object)null)
 		{
-			this.moveGO((this.interactionPoint.transform.position - this.GO.transform.position) * this.cap(Time.deltaTime * 10f, 0f, 1f));
+			if (this.stepLifting)
+			{
+				if (!this.stepliftInitted)
+				{
+					if ((UnityEngine.Object)this.stepLiftSource == (UnityEngine.Object)null)
+					{
+						TestingRoom.labItemContainer.gameObject.SetActive(true);
+						this.stepLiftSource = GameObject.Find("LabItems").transform.Find("StepLift").gameObject;
+						TestingRoom.labItemContainer.gameObject.SetActive(false);
+					}
+					this.steplift = UnityEngine.Object.Instantiate(this.stepLiftSource).GetComponent<StepLift>();
+					this.steplift.transform.SetParent(this.game.World.transform);
+					this.steplift.owner = this;
+					this.stepliftInitted = true;
+				}
+				this.stepLifting = false;
+				this.stepLiftVel = 0f;
+			}
+			else if (this.stepLiftAmount > 0f)
+			{
+				this.stepLiftVel += Time.deltaTime;
+				this.stepLiftAmount -= this.stepLiftVel * Time.deltaTime;
+				if (this.stepLiftAmount < 0f)
+				{
+					this.stepLiftAmount = 0f;
+				}
+			}
+			if (this.stepliftInitted)
+			{
+				this.steplift.useLift(this.stepLiftAmount);
+				this.steplift.process();
+			}
+			if (this.interactionSubject.apparatus.adjustingHeight)
+			{
+				this.fadeOutCharacter(1f);
+			}
+			this.moveGO(this.interactionPoint.transform.position + Vector3.up * this.stepLiftAmount - this.GO.transform.position);
 			this.GO.transform.rotation = this.interactionPoint.transform.rotation;
 			this.moveSpeed = 0f;
 			this.moving = false;
@@ -15424,157 +15979,19 @@ public class RackCharacter
 					Vector3 position7 = Game.gameInstance.PC().GO.transform.position;
 					if (position7.z > -18f)
 					{
-						goto IL_0a23;
+						goto IL_0b80;
 					}
 				}
-				goto IL_0a66;
+				goto IL_0bc3;
 			}
-			goto IL_0a23;
+			goto IL_0b80;
 		}
 		this.timeSpentAutowalking = 0f;
-		goto IL_0a66;
-		IL_11cf:
-		this.moving = false;
-		Rigidbody rigidbody = this.movementTarget;
-		rigidbody.velocity *= 0f;
-		this.movementTarget.position = this.GO.transform.position;
-		goto IL_120c;
-		IL_0a66:
-		if (!this.controlledByPlayer && this.followPC && (this.GO.transform.position - this.game.PC().GO.transform.position).magnitude > 20f)
-		{
-			this.targetLocation = this.game.PC().GO.transform.position;
-		}
-		this.distanceFromMovementTarget = (this.targetLocation - this.GO.transform.position).magnitude;
-		float y3 = this.targetLocation.y;
-		ref Vector3 val = ref this.targetLocation;
-		Vector3 position8 = this.GO.transform.position;
-		val.y = position8.y;
-		this.horizontalDistanceFromMovementTarget = (this.targetLocation - this.GO.transform.position).magnitude;
-		this.targetLocation.y = y3;
-		if ((this.horizontalDistanceFromMovementTarget > 0.3f || this.pressingAnyMovementKeys || this.midair || this.jumping) && (UnityEngine.Object)this.furniture == (UnityEngine.Object)null && (UnityEngine.Object)this.apparatus == (UnityEngine.Object)null)
-		{
-			if (!this.moving)
-			{
-				this.animator.SetTrigger("Idle");
-			}
-			this.moveSpeed += (this.horizontalDistanceFromMovementTarget * 0.4f - this.moveSpeed) * 0.4f;
-			if (this.moveSpeed > 1f && !this.runSpeedCheat)
-			{
-				this.moveSpeed = 1f;
-			}
-			if (this.horizontalDistanceFromMovementTarget > 0.3f)
-			{
-				Quaternion localRotation = this.GO.transform.localRotation;
-				this.v32 = this.targetLocation;
-				ref Vector3 val2 = ref this.v32;
-				Vector3 position9 = this.GO.transform.position;
-				val2.y = position9.y;
-				this.GO.transform.LookAt(this.v32);
-				if (this.controlledByPlayer && !this.autoWalking)
-				{
-					this.v3 = Vector3.forward * this.moveSpeed * Time.deltaTime * 19f;
-					this.GO.transform.Translate(this.v3, this.GO.transform);
-					Vector3 position10 = this.movementTarget.position;
-					float y4 = position10.y;
-					Vector3 position11 = this.GO.transform.position;
-					this.climbHelper = (y4 - position11.y) * 7f / this.selectedMoveSpeed;
-					if (this.climbHelper < 0f)
-					{
-						this.climbHelper = 0f;
-					}
-				}
-				else
-				{
-					this.extraMoveRotation = 0f;
-					if (this.distanceFromMovementTarget < 5f)
-					{
-						this.extraMoveRotation = 0.3f;
-					}
-					if (this.distanceFromMovementTarget < 3f)
-					{
-						this.extraMoveRotation = 0.5f;
-					}
-					if (this.distanceFromMovementTarget < 1f)
-					{
-						this.extraMoveRotation = 0.7f;
-					}
-					this.GO.transform.localRotation = Quaternion.Slerp(localRotation, this.GO.transform.localRotation, 0.3f + this.extraMoveRotation);
-					if (this.autoWalking)
-					{
-						this.moveSpeed = 0.25f;
-					}
-					if (this.autoWalking && !this.controlledByPlayer && (UnityEngine.Object)this.npcData != (UnityEngine.Object)null)
-					{
-						this.moveSpeed *= this.npcData.walkSpeed;
-					}
-					this.v3 = Vector3.forward * this.moveSpeed * Time.deltaTime * 19f;
-					this.GO.transform.Translate(this.v3, this.GO.transform);
-					Vector3 position12 = this.movementTarget.position;
-					float y5 = position12.y;
-					Vector3 position13 = this.GO.transform.position;
-					this.climbHelper = (y5 - position13.y) * 4f / this.selectedMoveSpeed;
-					if (this.climbHelper < 0f)
-					{
-						this.climbHelper = 0f;
-					}
-					this.climbHelper *= 0f / Time.deltaTime;
-				}
-			}
-			if (this.horizontalDistanceFromMovementTarget > 2f)
-			{
-				this.targetLocation = this.GO.transform.position + (this.targetLocation - this.GO.transform.position) * (1f / this.distanceFromMovementTarget);
-				ref Vector3 val3 = ref this.v3;
-				Vector3 position14 = this.GO.transform.position;
-				float x3 = position14.x;
-				Vector3 position15 = this.movementTarget.transform.position;
-				val3.x = x3 - position15.x;
-				this.v3.y = 0f;
-				ref Vector3 val4 = ref this.v3;
-				Vector3 position16 = this.GO.transform.position;
-				float z2 = position16.z;
-				Vector3 position17 = this.movementTarget.transform.position;
-				val4.z = z2 - position17.z;
-				this.movementTarget.transform.Translate(this.v3 * this.cap(Time.deltaTime * 8f, 0f, 1f));
-			}
-			if (!this.pressingAnyMovementKeys && this.distanceFromMovementTarget > 0f && !this.autoWalking)
-			{
-				this.targetLocation += (this.GO.transform.position - this.targetLocation) * 0.1f;
-				if (this.horizontalDistanceFromMovementTarget > 0.05f)
-				{
-					ref Vector3 val5 = ref this.v3;
-					Vector3 position18 = this.GO.transform.position;
-					float x4 = position18.x;
-					Vector3 position19 = this.movementTarget.transform.position;
-					val5.x = x4 - position19.x;
-					this.v3.y = 0f;
-					ref Vector3 val6 = ref this.v3;
-					Vector3 position20 = this.GO.transform.position;
-					float z3 = position20.z;
-					Vector3 position21 = this.movementTarget.transform.position;
-					val6.z = z3 - position21.z;
-					this.movementTarget.transform.Translate(this.v3 * this.cap(Time.deltaTime * 8f, 0f, 1f));
-				}
-				if (!this.midair)
-				{
-					Rigidbody rigidbody2 = this.movementTarget;
-					rigidbody2.velocity *= 0.5f;
-				}
-			}
-			Transform transform = this.GO.transform;
-			Vector3 localEulerAngles = this.GO.transform.localEulerAngles;
-			float xAngle = 0f - localEulerAngles.x;
-			Vector3 localEulerAngles2 = this.GO.transform.localEulerAngles;
-			transform.Rotate(xAngle, 0f, 0f - localEulerAngles2.z);
-			this.moving = true;
-			goto IL_120c;
-		}
-		this.moveSpeed = 0f;
-		if (!this.moving)
-		{
-			goto IL_11cf;
-		}
-		goto IL_11cf;
-		IL_120c:
+		goto IL_0bc3;
+		IL_0b80:
+		this.teleport(this.autoWalkLocation.x, this.autoWalkLocation.y, this.autoWalkLocation.z, this.autoWalkFinishAngle.y, false);
+		goto IL_0bc3;
+		IL_13ab:
 		bool flag = false;
 		float num2 = 0f;
 		this.v3 = this.movementTarget.position + Vector3.up * 1f;
@@ -15605,73 +16022,74 @@ public class RackCharacter
 		if (this.midair && this.recentFloorFall <= 0f && this.timeSinceTeleport > 1f)
 		{
 			this.movementTarget.useGravity = true;
-			((Component)this.movementTarget).GetComponent<Rigidbody>().AddForce(Vector3.down * 18750f * Time.deltaTime);
 		}
 		else
 		{
 			this.movementTarget.useGravity = false;
-			Rigidbody rigidbody3 = this.movementTarget;
-			rigidbody3.velocity *= 0f;
+			Rigidbody rigidbody = this.movementTarget;
+			rigidbody.velocity *= 0f;
 		}
 		bool flag2 = false;
 		this.v3 = this.GO.transform.position;
 		this.v3.y += 4f;
 		RaycastHit raycastHit = default(RaycastHit);
 		flag2 = Physics.Raycast(this.v3, Vector3.down, out raycastHit, 10.5f, 257);
-		ref Vector3 val7 = ref this.v3;
-		Vector3 position22 = this.movementTarget.position;
-		val7.y = position22.y;
+		ref Vector3 val = ref this.v3;
+		Vector3 position8 = this.movementTarget.position;
+		val.y = position8.y;
 		if (flag2)
 		{
 			Vector3 point = raycastHit.point;
 			if (point.y < this.v3.y)
 			{
-				ref Vector3 val8 = ref this.v3;
+				ref Vector3 val2 = ref this.v3;
 				Vector3 point2 = raycastHit.point;
-				val8.y = point2.y;
+				val2.y = point2.y;
 			}
 			this.moveGO(this.v3 - this.GO.transform.position);
 			this.lastKnownGoodLocation = this.v3;
 			this.recentFloorFall = 0f;
 		}
-		else if (this.floorFixDelay <= 0f)
+		else if (this.controlledByPlayer)
 		{
-			for (float num3 = 1f; num3 < 100f; num3 += num3)
+			if (this.floorFixDelay <= 0f)
 			{
-				if (flag2)
+				for (float num3 = 1f; num3 < 100f; num3 += num3)
 				{
-					break;
+					if (flag2)
+					{
+						break;
+					}
+					this.v3 = this.GO.transform.position;
+					this.v3.y += 5f;
+					flag2 = Physics.Raycast(this.v3, Vector3.down, out raycastHit, num3 + 10f, 257);
 				}
-				this.v3 = this.GO.transform.position;
-				this.v3.y += 5f;
-				flag2 = Physics.Raycast(this.v3, Vector3.down, out raycastHit, num3 + 10f, 257);
-			}
-			if (!flag2)
-			{
-				if (this.recentFloorFall <= 0f)
+				if (!flag2)
 				{
-					this.teleport(this.lastKnownGoodLocation.x, this.lastKnownGoodLocation.y, this.lastKnownGoodLocation.z, -999f, false);
+					if (this.recentFloorFall <= 0f)
+					{
+						this.teleport(this.lastKnownGoodLocation.x, this.lastKnownGoodLocation.y, this.lastKnownGoodLocation.z, -999f, false);
+					}
+					else
+					{
+						this.teleport(3.1f, -4f, -146.3f, 297f, false);
+					}
+					this.recentFloorFall = 3f;
 				}
 				else
 				{
-					Debug.Log("ABORT!");
-					this.teleport(3.1f, -4f, -146.3f, 297f, false);
+					Vector3 point3 = raycastHit.point;
+					float x3 = point3.x;
+					Vector3 point4 = raycastHit.point;
+					float y3 = point4.y;
+					Vector3 point5 = raycastHit.point;
+					this.teleport(x3, y3, point5.z, -999f, false);
 				}
-				this.recentFloorFall = 3f;
 			}
 			else
 			{
-				Vector3 point3 = raycastHit.point;
-				float x5 = point3.x;
-				Vector3 point4 = raycastHit.point;
-				float y6 = point4.y;
-				Vector3 point5 = raycastHit.point;
-				this.teleport(x5, y6, point5.z, -999f, false);
+				this.floorFixDelay -= Time.deltaTime;
 			}
-		}
-		else
-		{
-			this.floorFixDelay -= Time.deltaTime;
 		}
 		if (this.jumping)
 		{
@@ -15746,8 +16164,8 @@ public class RackCharacter
 			this.v3.y += Game.degreeDist(this.v3.y, this.autoWalkFinishAngle.y) * Time.deltaTime * 9f;
 			this.GO.transform.localEulerAngles = this.v3;
 			this.timeSpentTryingToGetAutowalkAngle += Time.deltaTime;
-			Vector3 localEulerAngles3 = this.GO.transform.localEulerAngles;
-			if (Mathf.Abs(localEulerAngles3.y - this.autoWalkFinishAngle.y) < 4f || this.timeSpentTryingToGetAutowalkAngle > 1f)
+			Vector3 localEulerAngles = this.GO.transform.localEulerAngles;
+			if (Mathf.Abs(localEulerAngles.y - this.autoWalkFinishAngle.y) < 4f || this.timeSpentTryingToGetAutowalkAngle > 1f)
 			{
 				this.moveSpeed = 0f;
 				this.autoWalking = false;
@@ -15770,9 +16188,148 @@ public class RackCharacter
 			this.recentFloorFall -= Time.deltaTime;
 		}
 		return;
-		IL_0a23:
-		this.teleport(this.autoWalkLocation.x, this.autoWalkLocation.y, this.autoWalkLocation.z, this.autoWalkFinishAngle.y, false);
-		goto IL_0a66;
+		IL_0bc3:
+		if (!this.controlledByPlayer && this.followPC && (this.GO.transform.position - this.game.PC().GO.transform.position).magnitude > 20f)
+		{
+			this.targetLocation = this.game.PC().GO.transform.position;
+		}
+		this.distanceFromMovementTarget = (this.targetLocation - this.GO.transform.position).magnitude;
+		float y4 = this.targetLocation.y;
+		ref Vector3 val3 = ref this.targetLocation;
+		Vector3 position9 = this.GO.transform.position;
+		val3.y = position9.y;
+		this.horizontalDistanceFromMovementTarget = (this.targetLocation - this.GO.transform.position).magnitude;
+		this.targetLocation.y = y4;
+		if ((this.horizontalDistanceFromMovementTarget > 0.3f || this.pressingAnyMovementKeys || this.midair || this.jumping) && (UnityEngine.Object)this.furniture == (UnityEngine.Object)null && (UnityEngine.Object)this.apparatus == (UnityEngine.Object)null)
+		{
+			if (!this.moving)
+			{
+				this.animator.SetTrigger("Idle");
+			}
+			this.moveSpeed += (this.horizontalDistanceFromMovementTarget * 0.4f - this.moveSpeed) * 0.4f;
+			if (this.moveSpeed > 1f && !this.runSpeedCheat)
+			{
+				this.moveSpeed = 1f;
+			}
+			if (this.horizontalDistanceFromMovementTarget > 0.3f)
+			{
+				Quaternion localRotation = this.GO.transform.localRotation;
+				this.v32 = this.targetLocation;
+				ref Vector3 val4 = ref this.v32;
+				Vector3 position10 = this.GO.transform.position;
+				val4.y = position10.y;
+				this.GO.transform.LookAt(this.v32);
+				if (this.controlledByPlayer && !this.autoWalking)
+				{
+					this.v3 = Vector3.forward * this.moveSpeed * Time.deltaTime * 19f;
+					this.GO.transform.Translate(this.v3, this.GO.transform);
+					Vector3 position11 = this.movementTarget.position;
+					float y5 = position11.y;
+					Vector3 position12 = this.GO.transform.position;
+					this.climbHelper = (y5 - position12.y) * 7f / this.selectedMoveSpeed;
+					if (this.climbHelper < 0f)
+					{
+						this.climbHelper = 0f;
+					}
+					this.GO.transform.localRotation = Quaternion.Slerp(localRotation, this.GO.transform.localRotation, this.cap(Time.deltaTime * 10f, 0f, 1f));
+				}
+				else
+				{
+					this.extraMoveRotation = 0f;
+					if (this.distanceFromMovementTarget < 5f)
+					{
+						this.extraMoveRotation = 0.3f;
+					}
+					if (this.distanceFromMovementTarget < 3f)
+					{
+						this.extraMoveRotation = 0.5f;
+					}
+					if (this.distanceFromMovementTarget < 1f)
+					{
+						this.extraMoveRotation = 0.7f;
+					}
+					this.GO.transform.localRotation = Quaternion.Slerp(localRotation, this.GO.transform.localRotation, 0.3f + this.extraMoveRotation);
+					if (this.autoWalking)
+					{
+						this.moveSpeed = 0.25f;
+					}
+					if (this.autoWalking && !this.controlledByPlayer && (UnityEngine.Object)this.npcData != (UnityEngine.Object)null)
+					{
+						this.moveSpeed *= this.npcData.walkSpeed;
+					}
+					this.v3 = Vector3.forward * this.moveSpeed * Time.deltaTime * 19f;
+					this.GO.transform.Translate(this.v3, this.GO.transform);
+					Vector3 position13 = this.movementTarget.position;
+					float y6 = position13.y;
+					Vector3 position14 = this.GO.transform.position;
+					this.climbHelper = (y6 - position14.y) * 4f / this.selectedMoveSpeed;
+					if (this.climbHelper < 0f)
+					{
+						this.climbHelper = 0f;
+					}
+					this.climbHelper *= 0f / Time.deltaTime;
+				}
+			}
+			if (this.horizontalDistanceFromMovementTarget > 2f)
+			{
+				this.targetLocation = this.GO.transform.position + (this.targetLocation - this.GO.transform.position) * (1f / this.distanceFromMovementTarget);
+				ref Vector3 val5 = ref this.v3;
+				Vector3 position15 = this.GO.transform.position;
+				float x4 = position15.x;
+				Vector3 position16 = this.movementTarget.transform.position;
+				val5.x = x4 - position16.x;
+				this.v3.y = 0f;
+				ref Vector3 val6 = ref this.v3;
+				Vector3 position17 = this.GO.transform.position;
+				float z2 = position17.z;
+				Vector3 position18 = this.movementTarget.transform.position;
+				val6.z = z2 - position18.z;
+				this.movementTarget.transform.Translate(this.v3 * this.cap(Time.deltaTime * 8f, 0f, 1f));
+			}
+			if (!this.pressingAnyMovementKeys && this.distanceFromMovementTarget > 0f && !this.autoWalking)
+			{
+				this.targetLocation += (this.GO.transform.position - this.targetLocation) * 0.1f;
+				if (this.horizontalDistanceFromMovementTarget > 0.05f)
+				{
+					ref Vector3 val7 = ref this.v3;
+					Vector3 position19 = this.GO.transform.position;
+					float x5 = position19.x;
+					Vector3 position20 = this.movementTarget.transform.position;
+					val7.x = x5 - position20.x;
+					this.v3.y = 0f;
+					ref Vector3 val8 = ref this.v3;
+					Vector3 position21 = this.GO.transform.position;
+					float z3 = position21.z;
+					Vector3 position22 = this.movementTarget.transform.position;
+					val8.z = z3 - position22.z;
+					this.movementTarget.transform.Translate(this.v3 * this.cap(Time.deltaTime * 8f, 0f, 1f));
+				}
+				if (!this.midair)
+				{
+					Rigidbody rigidbody2 = this.movementTarget;
+					rigidbody2.velocity *= 0.5f;
+				}
+			}
+			Transform transform = this.GO.transform;
+			Vector3 localEulerAngles2 = this.GO.transform.localEulerAngles;
+			float xAngle = 0f - localEulerAngles2.x;
+			Vector3 localEulerAngles3 = this.GO.transform.localEulerAngles;
+			transform.Rotate(xAngle, 0f, 0f - localEulerAngles3.z);
+			this.moving = true;
+			goto IL_13ab;
+		}
+		this.moveSpeed = 0f;
+		if (!this.moving)
+		{
+			goto IL_136e;
+		}
+		goto IL_136e;
+		IL_136e:
+		this.moving = false;
+		Rigidbody rigidbody3 = this.movementTarget;
+		rigidbody3.velocity *= 0f;
+		this.movementTarget.position = this.GO.transform.position;
+		goto IL_13ab;
 	}
 
 	public void moveGO(Vector3 amount)
@@ -15887,17 +16444,6 @@ public class RackCharacter
 			this.height_act = 1f;
 		}
 		this.newHeight = false;
-		if (!this.controlledByPlayer)
-		{
-			if (Input.GetKey(KeyCode.Keypad7))
-			{
-				this.height_act -= Time.deltaTime;
-			}
-			if (Input.GetKey(KeyCode.Keypad8))
-			{
-				this.height_act += Time.deltaTime;
-			}
-		}
 		this.GO.transform.localScale = Vector3.one * this.height_act;
 		if (this.height_act != this.lastHeight)
 		{
@@ -16767,7 +17313,7 @@ public class RackCharacter
 		}
 		goto IL_032e;
 		IL_032e:
-		this.tailsize_act = 1f + (this.data.tailSize - 0.4f) * 1.9f;
+		this.determineTailSizeAct();
 		if (this.tailsize_act != this.lastTailSize || this.newHeight)
 		{
 			this.reparentTail();
@@ -18718,6 +19264,10 @@ public class RackCharacter
 		UnityEngine.Object.Destroy(this.wingFXCanvas);
 		UnityEngine.Object.Destroy(this.wingMetalCanvas);
 		UnityEngine.Object.Destroy(this.wingEmitCanvas);
+		UnityEngine.Object.Destroy(this.headControlCanvas);
+		UnityEngine.Object.Destroy(this.bodyControlCanvas);
+		UnityEngine.Object.Destroy(this.tailControlCanvas);
+		UnityEngine.Object.Destroy(this.wingControlCanvas);
 		for (int j = 0; j < this.parts.Count; j++)
 		{
 			UnityEngine.Object.Destroy(this.parts[j].GetComponent<SkinnedMeshRenderer>().sharedMesh);

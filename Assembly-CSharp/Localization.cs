@@ -36,8 +36,7 @@ public class Localization
 	{
 		WWW www = new WWW(url + "?refresh=" + Guid.NewGuid());
 		yield return (object)www;
-        bool flag = !string.IsNullOrEmpty(www.error);
-        if (flag)
+        if (!string.IsNullOrEmpty(www.error))
         {
             Debug.Log("Failed to load new localization");
         }
@@ -118,6 +117,7 @@ public class Localization
 		if (text.Length == 0)
 		{
 			Localization.missingPhrase = phraseName;
+			Debug.Log("Missing phrase: '" + Localization.missingPhrase + "'");
 			if (language != "english")
 			{
 				return Localization.getPhrase(phraseName, "english");
@@ -138,14 +138,13 @@ public class Localization
 
 	public static IEnumerator loadLocalizationData()
 	{
-		if (!File.Exists(Game.persistentDataPath + "/translation/Localization.xml"))
+		if (!File.Exists(Game.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "translation" + Game.PathDirectorySeparatorChar + "Localization.xml"))
 		{
 			UserSettings.rebuildGameAssets();
 		}
-		WWW www = new WWW("file:///" + Game.persistentDataPath + "/translation/Localization.xml?refresh=" + Guid.NewGuid());
+		WWW www = new WWW("file:///" + Game.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "translation" + Game.PathDirectorySeparatorChar + "Localization.xml");
 		yield return (object)www;
-        bool flag2 = !string.IsNullOrEmpty(www.error);
-        if (flag2)
+        if (!string.IsNullOrEmpty(www.error))
         {
             Debug.Log("failed to load translations: " + www.error);
             Localization.data = new LocalizationData();
@@ -195,7 +194,7 @@ public class Localization
 
 	public static void save()
 	{
-		new FileInfo(Game.persistentDataPath + "/translate/").Directory.Create();
-		Game.saveDataToXML(Game.persistentDataPath + "/translation/Localization.xml", typeof(LocalizationData), Localization.data);
+		new FileInfo(Game.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "translate" + Game.PathDirectorySeparatorChar + string.Empty).Directory.Create();
+		Game.saveDataToXML(Game.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "translation" + Game.PathDirectorySeparatorChar + "Localization.xml", typeof(LocalizationData), Localization.data);
 	}
 }

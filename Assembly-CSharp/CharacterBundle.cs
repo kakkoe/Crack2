@@ -133,8 +133,7 @@ public class CharacterBundle
                     yield return (object)null;
                 }
                 yield return (object)www;
-                bool flag7 = !string.IsNullOrEmpty(www.error);
-                if (flag7)
+                if (!string.IsNullOrEmpty(www.error))
                 {
                     Game.gameInstance.popup("IMPORTANT_ASSET_MISSING", true, false);
                     Game.trace("Asset load fail message: " + www.error);

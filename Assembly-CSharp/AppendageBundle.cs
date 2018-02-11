@@ -35,8 +35,7 @@ public class AppendageBundle
                     yield return (object)null;
                 }
                 yield return (object)www;
-                bool flag5 = !string.IsNullOrEmpty(www.error);
-                if (flag5)
+                if (!string.IsNullOrEmpty(www.error))
                 {
                     this.loaded = false;
                     throw new System.Exception("Error downloading appendage bundle " + this.url + ": " + www.error);

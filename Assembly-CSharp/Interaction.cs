@@ -942,6 +942,7 @@ public class Interaction
 		Interaction.addToolMode("penis", "mouth", "fuckmouth");
 		Interaction.addCompatiblePose("UpsideDown.facefuck", -1);
 		Interaction.addCompatiblePose("TableStraps.facefuck", -1);
+		Interaction.addCompatiblePose("Stocks.facefuck", -1);
 		Interaction.addToolMode("vagina", "penis", "vaginalridedick");
 		Interaction.addCompatiblePose("RackChair.riding", -1);
 		Interaction.addCompatiblePose("TableStraps.missionary", -1);
@@ -2174,9 +2175,10 @@ public class Interaction
 			this.targetCharacter.stretchPenis(1f + this.pushingThroughResistance * (1f - this.performingCharacter.currentTailholeTightness * 0.8f) * 2f);
 			break;
 		case 1:
+			this.performingCharacter.grindRoot(-25f);
 			this.performingCharacter.rollRoot(Game.cap(this.performingCharacter.interactionMX + this.performingCharacter.interactionMY - 1f, -0.5f, 0.5f) * -24f);
 			this.performingCharacter.archBack(Game.cap(this.performingCharacter.interactionMX + this.performingCharacter.interactionMY - 1f, -0.5f, 0.5f) * 2f);
-			this.performingCharacter.stimulate(this.targetCharacter.interactionVigor * 0.21f * num2);
+			this.performingCharacter.stimulate(this.targetCharacter.interactionVigor * 1f * num2);
 			this.performingCharacter.arouse(this.targetCharacter.interactionVigor * 0.1f * num2);
 			if (this.howFarInWorldUnits > -0.01f)
 			{

@@ -26,33 +26,6 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>lib\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="PlayerIOUnity3DClient">
-      <HintPath>lib\PlayerIOUnity3DClient.dll</HintPath>
-    </Reference>
-    <Reference Include="System">
-      <HintPath>lib\System.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Core">
-      <HintPath>lib\System.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <HintPath>lib\System.Drawing.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml">
-      <HintPath>lib\System.Xml.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>lib\UnityEngine.UI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Aimer.cs" />
     <Compile Include="AnimatedDirectionArrows.cs" />
     <Compile Include="AnimatedSpark.cs" />
@@ -154,12 +127,17 @@
     <Compile Include="GlossType.cs" />
     <Compile Include="GradientEditor.cs" />
     <Compile Include="GradientEditorDot.cs" />
+    <Compile Include="Grass.cs" />
     <Compile Include="HairAddonColorMenu.cs" />
     <Compile Include="HairLayer.cs" />
     <Compile Include="hexOption.cs" />
     <Compile Include="HexOptionSystem.cs" />
     <Compile Include="HologramMonitor.cs" />
+    <Compile Include="HUDFPS.cs" />
     <Compile Include="HypotheticalItem.cs" />
+    <Compile Include="ImperialFurLOD.cs" />
+    <Compile Include="ImperialFurPhysics.cs" />
+    <Compile Include="ImperialFurWind.cs" />
     <Compile Include="IndustrialRailing.cs" />
     <Compile Include="InlineDialogue.cs" />
     <Compile Include="Interaction.cs" />
@@ -183,6 +161,8 @@
     <Compile Include="Localization.cs" />
     <Compile Include="LocalizationData.cs" />
     <Compile Include="Locker.cs" />
+    <Compile Include="LODDemo.cs" />
+    <Compile Include="LODSphere.cs" />
     <Compile Include="MainCam.cs" />
     <Compile Include="MainGarageDoor.cs" />
     <Compile Include="ManifestPiece.cs" />
@@ -202,6 +182,7 @@
     <Compile Include="PatternIcons.cs" />
     <Compile Include="PenisDetector.cs" />
     <Compile Include="Phrases.cs" />
+    <Compile Include="PhysicsDemo.cs" />
     <Compile Include="PlanarRealtimeReflection.cs" />
     <Compile Include="PlayerIOAuth.cs" />
     <Compile Include="PlayerScreenFX.cs" />
@@ -268,12 +249,14 @@
     <Compile Include="SliderTicks.cs" />
     <Compile Include="SpeciesPref.cs" />
     <Compile Include="SSAOPro.cs" />
+    <Compile Include="StepLift.cs" />
     <Compile Include="TestingRoom.cs" />
     <Compile Include="TextureLayer.cs" />
     <Compile Include="TextureLayerMask.cs" />
     <Compile Include="TextureLayerUI.cs" />
     <Compile Include="TextureScale.cs" />
     <Compile Include="TextureScaler.cs" />
+    <Compile Include="Tips.cs" />
     <Compile Include="Toast.cs" />
     <Compile Include="ToolbarItem.cs" />
     <Compile Include="ToolMode.cs" />
@@ -292,9 +275,76 @@
     <Compile Include="Visibility.cs" />
     <Compile Include="__0__-PrivateImplementationDetails-.cs" />
     <Compile Include="__1__-PrivateImplementationDetails-.cs" />
+    <Compile Include="WallForce.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="UnityEngine.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="PlayerIOUnity3DClient, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\PlayerIOUnity3DClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>lib\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>lib\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>lib\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>lib\System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>lib\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>lib\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>lib\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>lib\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>lib\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>lib\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>lib\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>lib\UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>lib\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>lib\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>lib\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>lib\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

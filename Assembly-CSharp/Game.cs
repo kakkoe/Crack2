@@ -36,10 +36,10 @@ public class Game : MonoBehaviour
     public delegate void NFDelegate();
 
     public static Game gameInstance;
+    
+    public static int gameVersion = 2003;
 
-    public static int gameVersion;
-
-    public static int wipeVersion;
+    public static int wipeVersion = 2001;
 
     public int konamiStep;
 
@@ -150,6 +150,8 @@ public class Game : MonoBehaviour
     public Drone helperDrone;
 
     public Shader shader;
+
+    public Shader clothingShader;
 
     public Shader ghostShader;
 
@@ -1495,6 +1497,10 @@ public class Game : MonoBehaviour
 
     public bool texturePatternMenuWasOpen;
 
+    private int furType;
+
+    private int skinType;
+
     private GameObject textureLayerContainer;
 
     private GameObject texturePatternMaskMenu;
@@ -1514,6 +1520,8 @@ public class Game : MonoBehaviour
     public float textureEditorScroll;
 
     public Color originalEditColor;
+
+    private Transform layer;
 
     private List<GameObject> contextHotspots = new List<GameObject>();
 
@@ -1674,6 +1682,8 @@ public class Game : MonoBehaviour
     private float headshotCamDist = 1f;
 
     public Texture2D mostRecentSnapshot;
+
+    private bool justSkippedALaggyFrame;
 
     public float vol = 1f;
 
@@ -1936,6 +1946,7 @@ public class Game : MonoBehaviour
     public void initRenderingAndLighting()
     {
         this.shader = GameObject.Find("CharacterMaterial").GetComponent<MeshRenderer>().material.shader;
+        this.clothingShader = GameObject.Find("ClothingMaterial").GetComponent<MeshRenderer>().material.shader;
         this.ghostShader = Shader.Find("Particles/Additive");
         RackCharacter.originalCharacterShader = GameObject.Find("CharacterMaterial").GetComponent<MeshRenderer>().material.shader;
         this.defaultMaterial = GameObject.Find("CharacterMaterial").GetComponent<MeshRenderer>().material;
@@ -2009,8 +2020,7 @@ public class Game : MonoBehaviour
         this.originalNewsLocation = this.newsWindow.transform.localPosition;
         WWW www = new WWW("http://fek.onl/_r2ckversioninfo.xml?refresh=" + Guid.NewGuid());
         yield return (object)www;
-        bool flag = string.IsNullOrEmpty(www.error);
-        if (flag)
+        if (string.IsNullOrEmpty(www.error))
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(NewsAndVersionData));
             TextReader textReader = new StringReader(www.text);
@@ -2350,7 +2360,7 @@ public class Game : MonoBehaviour
         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("FootOptions")).GetComponent<HexOptionSystem>().onChange = this.characterCustomizePhysiologyChanged;
         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingOptions")).GetComponent<HexOptionSystem>().onChange = this.characterCustomizePhysiologyChanged;
         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("HandOptions")).GetComponent<HexOptionSystem>().onChange = this.characterCustomizePhysiologyChanged;
-        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailLengthSlider")).GetComponent<Slider>().onChange = this.characterCustomizePhysiologyChanged;
+        ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailFurSlider")).GetComponent<Slider>().onChange = this.characterCustomizePhysiologyChanged;
         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailStiffnessSlider")).GetComponent<Slider>().onChange = this.characterCustomizePhysiologyChanged;
         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().onChange = this.characterCustomizePhysiologyChanged;
         ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailCurlGrid")).GetComponent<UIGrid>().onChange = this.characterCustomizePhysiologyChanged;
@@ -2575,6 +2585,10 @@ public class Game : MonoBehaviour
         this.processAudio();
         this.processConsole();
         this.simulatedESC = false;
+    }
+
+    public void processScreenColor()
+    {
     }
 
     public void connectToRackNet()
@@ -8689,7 +8703,7 @@ public class Game : MonoBehaviour
         }
         goto IL_00a7;
         IL_00a7:
-        if (Input.GetKey(UserSettings.data.KEY_SCREENSHOT))
+        if (Input.GetKeyDown(UserSettings.data.KEY_SCREENSHOT))
         {
             new FileInfo(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "screenshots" + Game.PathDirectorySeparatorChar + string.Empty).Directory.Create();
             ScreenCapture.CaptureScreenshot(Game.persistentDataPath + Game.PathDirectorySeparatorChar + "screenshots" + Game.PathDirectorySeparatorChar + DateTime.Now.Ticks.ToString().Substring(0, 10) + "-" + DateTime.Now.Ticks.ToString().Substring(10) + ".png");
@@ -8807,7 +8821,7 @@ public class Game : MonoBehaviour
         }
         if (text != null)
         {
-            Dictionary<string, int> dictionary = new Dictionary<string, int>(37);
+            Dictionary<string, int> dictionary = new Dictionary<string, int>(38);
             dictionary.Add("help", 0);
             dictionary.Add("cmdlist", 0);
             dictionary.Add("cvarlist", 0);
@@ -8845,6 +8859,7 @@ public class Game : MonoBehaviour
             dictionary.Add("camera", 32);
             dictionary.Add("assets", 33);
             dictionary.Add("autowalkdist", 34);
+            dictionary.Add("skipdrone", 35);
             int num = default(int);
             if (dictionary.TryGetValue(text, out num))
             {
@@ -8876,6 +8891,7 @@ public class Game : MonoBehaviour
                         Game.trace("resizetextures: caches character textures at quality-specific resolutions for faster load times");
                         Game.trace("shiftsphere: toggle the debug shiftsphere");
                         Game.trace("size [#]: change your character's height");
+                        Game.trace("skipdrone: skip the drone's tutorial");
                         Game.trace("skiptour: skip the intro tour (don't do this until you have your passkey)");
                         Game.trace("species [name]: force the random character generator to pick a specific species");
                         Game.trace("ssao: toggle SSAO");
@@ -9057,6 +9073,9 @@ public class Game : MonoBehaviour
                         break;
                     case 34:
                         Game.trace("Distance from autowalk target: " + (this.PC().targetLocation - this.PC().GO.transform.position).magnitude);
+                        break;
+                    case 35:
+                        this.skipDrone();
                         break;
                 }
             }
@@ -10380,8 +10399,7 @@ public class Game : MonoBehaviour
     {
         WWW www = new WWW(url + "?refresh=" + Guid.NewGuid());
         yield return (object)www;
-        bool flag = !string.IsNullOrEmpty(www.error);
-        if (flag)
+        if (!string.IsNullOrEmpty(www.error))
         {
             UnityEngine.Debug.Log("Failed to load patrons");
         }
@@ -13132,7 +13150,7 @@ public class Game : MonoBehaviour
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailCurlGrid")).GetComponent<UIGrid>().valY = this.OC().data.tailCurlY;
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valX = this.OC().data.tailTaper;
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valY = this.OC().data.tailThickness;
-                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailLengthSlider")).GetComponent<Slider>().val = this.OC().data.tailLength;
+                ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailFurSlider")).GetComponent<Slider>().val = this.OC().data.tailFurLength;
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailStiffnessSlider")).GetComponent<Slider>().val = this.OC().data.tailStiffness;
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailSizeSlider")).GetComponent<Slider>().val = this.OC().data.tailSize;
                 ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingSizeSlider")).GetComponent<Slider>().val = this.OC().data.wingSize;
@@ -13446,7 +13464,7 @@ public class Game : MonoBehaviour
                 this.OC().data.tailCurlY = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailCurlGrid")).GetComponent<UIGrid>().valY;
                 this.OC().data.tailTaper = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valX;
                 this.OC().data.tailThickness = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailShapeGrid")).GetComponent<UIGrid>().valY;
-                this.OC().data.tailLength = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailLengthSlider")).GetComponent<Slider>().val;
+                this.OC().data.tailFurLength = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailFurSlider")).GetComponent<Slider>().val;
                 this.OC().data.tailStiffness = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailStiffnessSlider")).GetComponent<Slider>().val;
                 this.OC().data.tailSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("TailSizeSlider")).GetComponent<Slider>().val;
                 this.OC().data.wingSize = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("PhysiologicalFeatures").Find("WingSizeSlider")).GetComponent<Slider>().val;
@@ -17409,6 +17427,58 @@ public class Game : MonoBehaviour
         this.texturePatternMenuOpen = false;
     }
 
+    public void changeFurTypeLeft()
+    {
+        this.furType = this.PC().getFurTypeIndex();
+        this.furType--;
+        if (this.furType < 0)
+        {
+            this.furType = RackCharacter.furTypes.Count - 1;
+        }
+        this.PC().data.furType = RackCharacter.furTypes[this.furType];
+        this.characterRedrawDelay = 2;
+        ((UnityEngine.Component)this.textureLayers[0].transform.Find("txtFurType")).GetComponent<Text>().text = this.PC().data.furType;
+    }
+
+    public void changeFurTypeRight()
+    {
+        this.furType = this.PC().getFurTypeIndex();
+        this.furType++;
+        if (this.furType >= RackCharacter.furTypes.Count)
+        {
+            this.furType = 0;
+        }
+        this.PC().data.furType = RackCharacter.furTypes[this.furType];
+        this.characterRedrawDelay = 2;
+        ((UnityEngine.Component)this.textureLayers[0].transform.Find("txtFurType")).GetComponent<Text>().text = this.PC().data.furType;
+    }
+
+    public void changeSkinTypeLeft()
+    {
+        this.skinType = this.PC().getSkinTypeIndex();
+        this.skinType--;
+        if (this.skinType < 0)
+        {
+            this.skinType = RackCharacter.skinTypes.Count - 1;
+        }
+        this.PC().data.skinType = RackCharacter.skinTypes[this.skinType];
+        this.characterRedrawDelay = 2;
+        ((UnityEngine.Component)this.textureLayers[0].transform.Find("txtSkinType")).GetComponent<Text>().text = this.PC().data.skinType;
+    }
+
+    public void changeSkinTypeRight()
+    {
+        this.skinType = this.PC().getSkinTypeIndex();
+        this.skinType++;
+        if (this.skinType >= RackCharacter.skinTypes.Count)
+        {
+            this.skinType = 0;
+        }
+        this.PC().data.skinType = RackCharacter.skinTypes[this.skinType];
+        this.characterRedrawDelay = 2;
+        ((UnityEngine.Component)this.textureLayers[0].transform.Find("txtSkinType")).GetComponent<Text>().text = this.PC().data.skinType;
+    }
+
     public void processTextureEditor()
     {
         if ((UnityEngine.Object)this.textureLayerContainer == (UnityEngine.Object)null)
@@ -17429,7 +17499,7 @@ public class Game : MonoBehaviour
                 this.textureLayerTemplate.SetActive(true);
                 GameObject gameObject = UnityEngine.Object.Instantiate(this.textureLayerTemplate);
                 this.v3 = Vector3.zero;
-                this.v3.y = (float)(70 * this.textureLayers.Count);
+                this.v3.y = (float)(91 * this.textureLayers.Count);
                 gameObject.transform.SetParent(this.textureLayerContainer.transform);
                 gameObject.transform.localPosition = this.v3;
                 this.v3 = Vector3.one;
@@ -17452,7 +17522,7 @@ public class Game : MonoBehaviour
             }
         }
         this.v3 = this.textureLayerContainer.transform.localPosition;
-        float num2 = (float)(num * 70 - 350);
+        float num2 = (float)(num * 91 - 350);
         if (num2 < 0f)
         {
             num2 = 0f;
@@ -17475,65 +17545,92 @@ public class Game : MonoBehaviour
         this.textureLayerContainer.transform.localPosition = this.v3;
         for (int j = 0; j < num; j++)
         {
-            Transform transform = this.textureLayers[j].transform;
+            this.layer = this.textureLayers[j].transform;
             if (j == 0)
             {
-                transform.Find("hdBaseColor").gameObject.SetActive(true);
+                this.layer.Find("hdBaseColor").gameObject.SetActive(true);
                 if (this.colorPickerOpen && (j == this.editingTextureLayer || (data.baseColor == this.originalEditColor && ((UnityEngine.Component)this.colorPicker.transform.Find("chkPalette")).GetComponent<Toggle>().isOn)) && !this.texturePatternMenuOpen)
                 {
                     data.baseColor = this.colorPicker.GetComponent<ColorPicker>().color;
                 }
-                ((UnityEngine.Component)transform.Find("cmdColor")).GetComponent<Image>().color = data.baseColor;
+                ((UnityEngine.Component)this.layer.Find("cmdColor")).GetComponent<Image>().color = data.baseColor;
+                this.layer.Find("hdFur").gameObject.SetActive(true);
+                this.layer.Find("cmdFur").gameObject.SetActive(true);
+                this.layer.Find("sldFur").gameObject.SetActive(true);
+                this.layer.Find("hdFurType").gameObject.SetActive(true);
+                this.layer.Find("txtFurType").gameObject.SetActive(true);
+                this.layer.Find("cmdFurTypeLeft").gameObject.SetActive(true);
+                this.layer.Find("cmdFurTypeRight").gameObject.SetActive(true);
+                this.layer.Find("hdSkinType").gameObject.SetActive(true);
+                this.layer.Find("txtSkinType").gameObject.SetActive(true);
+                this.layer.Find("cmdSkinTypeLeft").gameObject.SetActive(true);
+                this.layer.Find("cmdSkinTypeRight").gameObject.SetActive(true);
+                ((UnityEngine.Component)this.layer.Find("sldFur")).GetComponent<UnityEngine.UI.Slider>().value = Game.gameInstance.PC().data.furLength;
+                ((UnityEngine.Component)this.layer.Find("txtFurType")).GetComponent<Text>().text = this.PC().data.furType;
+                ((UnityEngine.Component)this.layer.Find("txtSkinType")).GetComponent<Text>().text = this.PC().data.skinType;
             }
             else
             {
-                transform.Find("hdBaseColor").gameObject.SetActive(false);
+                this.layer.Find("hdBaseColor").gameObject.SetActive(false);
             }
             if (j > 0 && j < num - 1)
             {
                 int index2 = j - 1;
-                transform.Find("cmdUp").gameObject.SetActive(!Game.gameInstance.PC().data.textureLayers[index2].required);
-                transform.Find("LayerStuff").Find("sldOpacity").gameObject.SetActive(!Game.gameInstance.PC().data.textureLayers[index2].required);
-                transform.Find("cmdDown").gameObject.SetActive(!Game.gameInstance.PC().data.textureLayers[index2].required);
+                this.layer.Find("cmdUp").gameObject.SetActive(!Game.gameInstance.PC().data.textureLayers[index2].required);
+                this.layer.Find("LayerStuff").Find("sldOpacity").gameObject.SetActive(!Game.gameInstance.PC().data.textureLayers[index2].required);
+                ((UnityEngine.Component)this.layer.Find("LayerStuff").Find("sldOpacity")).GetComponent<UnityEngine.UI.Slider>().value = Game.gameInstance.PC().data.textureLayers[index2].opacity;
+                if (Game.gameInstance.PC().data.textureLayers[index2].modifyFur)
+                {
+                    ((UnityEngine.Component)this.layer.Find("sldFur")).GetComponent<UnityEngine.UI.Slider>().value = Game.gameInstance.PC().data.textureLayers[index2].furLength;
+                }
+                else
+                {
+                    ((UnityEngine.Component)this.layer.Find("sldFur")).GetComponent<UnityEngine.UI.Slider>().value = Game.gameInstance.PC().data.furLength;
+                }
+                this.layer.Find("hdFur").gameObject.SetActive(true);
+                this.layer.Find("cmdFur").gameObject.SetActive(true);
+                this.layer.Find("sldFur").gameObject.SetActive(true);
+                this.layer.Find("sldFur").gameObject.SetActive(Game.gameInstance.PC().data.textureLayers[index2].modifyFur);
+                this.layer.Find("cmdDown").gameObject.SetActive(!Game.gameInstance.PC().data.textureLayers[index2].required);
                 if (this.colorPickerOpen && (j == this.editingTextureLayer || (data.textureLayers[index2].color == this.originalEditColor && ((UnityEngine.Component)this.colorPicker.transform.Find("chkPalette")).GetComponent<Toggle>().isOn)) && !this.texturePatternMenuOpen)
                 {
                     data.textureLayers[index2].color = this.colorPicker.GetComponent<ColorPicker>().color;
                 }
-                ((UnityEngine.Component)transform.Find("cmdColor")).GetComponent<Image>().color = data.textureLayers[index2].color;
-                transform.Find("cmdDelete").gameObject.SetActive(!Game.gameInstance.PC().data.textureLayers[index2].required);
-                transform.Find("lockIndicator").gameObject.SetActive(Game.gameInstance.PC().data.textureLayers[index2].required);
-                transform.Find("LayerStuff").gameObject.SetActive(true);
+                ((UnityEngine.Component)this.layer.Find("cmdColor")).GetComponent<Image>().color = data.textureLayers[index2].color;
+                this.layer.Find("cmdDelete").gameObject.SetActive(!Game.gameInstance.PC().data.textureLayers[index2].required);
+                this.layer.Find("lockIndicator").gameObject.SetActive(Game.gameInstance.PC().data.textureLayers[index2].required);
+                this.layer.Find("LayerStuff").gameObject.SetActive(true);
                 if (data.textureLayers[index2].isDecal)
                 {
-                    ((UnityEngine.Component)transform.Find("LayerStuff").Find("txtPattern")).GetComponent<Text>().text = "decal";
+                    ((UnityEngine.Component)this.layer.Find("LayerStuff").Find("txtPattern")).GetComponent<Text>().text = "decal";
                 }
                 else
                 {
-                    ((UnityEngine.Component)transform.Find("LayerStuff").Find("txtPattern")).GetComponent<Text>().text = data.textureLayers[index2].texture.ToUpper();
+                    ((UnityEngine.Component)this.layer.Find("LayerStuff").Find("txtPattern")).GetComponent<Text>().text = data.textureLayers[index2].texture.ToUpper();
                 }
             }
             else
             {
-                transform.Find("cmdDelete").gameObject.SetActive(false);
-                transform.Find("cmdUp").gameObject.SetActive(false);
-                transform.Find("cmdDown").gameObject.SetActive(false);
-                transform.Find("LayerStuff").gameObject.SetActive(false);
-                transform.Find("lockIndicator").gameObject.SetActive(false);
-                transform.Find("LayerStuff").Find("sldOpacity").gameObject.SetActive(false);
+                this.layer.Find("cmdDelete").gameObject.SetActive(false);
+                this.layer.Find("cmdUp").gameObject.SetActive(false);
+                this.layer.Find("cmdDown").gameObject.SetActive(false);
+                this.layer.Find("LayerStuff").gameObject.SetActive(false);
+                this.layer.Find("lockIndicator").gameObject.SetActive(false);
+                this.layer.Find("LayerStuff").Find("sldOpacity").gameObject.SetActive(false);
             }
             if (j == num - 1)
             {
-                transform.Find("hdAddMarking").gameObject.SetActive(true);
-                transform.Find("addLayer").gameObject.SetActive(true);
-                ((UnityEngine.Component)transform.Find("BG")).GetComponent<Image>().color = Game.fadedCol;
-                transform.Find("cmdColor").gameObject.SetActive(false);
+                this.layer.Find("hdAddMarking").gameObject.SetActive(true);
+                this.layer.Find("addLayer").gameObject.SetActive(true);
+                ((UnityEngine.Component)this.layer.Find("BG")).GetComponent<Image>().color = Game.fadedCol;
+                this.layer.Find("cmdColor").gameObject.SetActive(false);
             }
             else
             {
-                transform.Find("hdAddMarking").gameObject.SetActive(false);
-                transform.Find("addLayer").gameObject.SetActive(false);
-                ((UnityEngine.Component)transform.Find("BG")).GetComponent<Image>().color = Color.white;
-                transform.Find("cmdColor").gameObject.SetActive(true);
+                this.layer.Find("hdAddMarking").gameObject.SetActive(false);
+                this.layer.Find("addLayer").gameObject.SetActive(false);
+                ((UnityEngine.Component)this.layer.Find("BG")).GetComponent<Image>().color = Color.white;
+                this.layer.Find("cmdColor").gameObject.SetActive(true);
             }
         }
         this.originalEditColor = this.colorPicker.GetComponent<ColorPicker>().color;
@@ -18107,6 +18204,7 @@ public class Game : MonoBehaviour
             UserSettings.data.orgasmSpeed = ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("SexualStamina")).GetComponent<Slider>().val;
             UserSettings.data.racknetCharacterFrequency = ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("RacknetCharacterFrequency")).GetComponent<Slider>().val;
             UserSettings.data.favoriteCharacterFrequency = ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("FavoriteCharacterFrequency")).GetComponent<Slider>().val;
+            UserSettings.data.globalSensitivity = ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("GlobalSensitivity")).GetComponent<Slider>().val;
         }
     }
 
@@ -18141,6 +18239,7 @@ public class Game : MonoBehaviour
                 ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("CameraSmoothing")).GetComponent<Slider>().val = UserSettings.data.cameraSmoothing;
                 ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("CustomCharacterFrequency")).GetComponent<Slider>().val = UserSettings.data.customCharacterFrequency;
                 ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("SexualStamina")).GetComponent<Slider>().val = UserSettings.data.orgasmSpeed;
+                ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("GlobalSensitivity")).GetComponent<Slider>().val = UserSettings.data.globalSensitivity;
                 ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("RacknetCharacterFrequency")).GetComponent<Slider>().val = UserSettings.data.racknetCharacterFrequency;
                 ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("FavoriteCharacterFrequency")).GetComponent<Slider>().val = UserSettings.data.favoriteCharacterFrequency;
                 ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("CameraSmoothing")).GetComponent<Slider>().onChange = this.optionsSliderUpdated;
@@ -18148,6 +18247,7 @@ public class Game : MonoBehaviour
                 ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("SexualStamina")).GetComponent<Slider>().onChange = this.optionsSliderUpdated;
                 ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("RacknetCharacterFrequency")).GetComponent<Slider>().onChange = this.optionsSliderUpdated;
                 ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("FavoriteCharacterFrequency")).GetComponent<Slider>().onChange = this.optionsSliderUpdated;
+                ((UnityEngine.Component)this.UI.transform.Find("OptionsMenu").Find("GlobalSensitivity")).GetComponent<Slider>().onChange = this.optionsSliderUpdated;
                 this.needOptionsPageRebuild = false;
                 this.optionsPageInitting = false;
             }
@@ -18942,6 +19042,11 @@ public class Game : MonoBehaviour
         this.setTourProgress(7);
     }
 
+    public void skipDrone()
+    {
+        Tutorials.completeAllNPTtutorials();
+    }
+
     public void unlockAllResearch()
     {
         for (int i = 0; i < ResearchList.allTasksAvailable.Count; i++)
@@ -19371,11 +19476,15 @@ public class Game : MonoBehaviour
             this.ADT = Time.deltaTime;
         }
         this.ADT += (Time.deltaTime - this.ADT) * 0.1f;
-        if (Time.deltaTime / this.ADT > 2f)
+        if (Time.deltaTime / this.ADT > 2f || this.justSkippedALaggyFrame)
         {
-            if (this.interactions.Count > 0)
+            if (this.justSkippedALaggyFrame)
             {
-                UnityEngine.Debug.Log("Skipping a laggy frame: " + Time.deltaTime);
+                this.justSkippedALaggyFrame = false;
+            }
+            else
+            {
+                this.justSkippedALaggyFrame = true;
             }
         }
         else
@@ -19395,6 +19504,7 @@ public class Game : MonoBehaviour
 
     public void postRender()
     {
+        this.processScreenColor();
         this.pcc = -1;
         for (int i = 0; i < this.characters.Count; i++)
         {
@@ -20699,8 +20809,6 @@ public class Game : MonoBehaviour
 
     static Game()
     {
-        Game.gameVersion = 2002;
-        Game.wipeVersion = 2001;
         Game.reloadedFromGame = false;
         Game.freeplay = false;
         Game.VRmode = false;

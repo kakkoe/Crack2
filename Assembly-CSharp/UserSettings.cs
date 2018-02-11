@@ -315,10 +315,13 @@ public class UserSettings
 		try
 		{
 			UserSettings.copyDirectory(Application.dataPath + string.Empty + Game.PathDirectorySeparatorChar + "Rack 2_ Furry Science", Application.persistentDataPath);
+			Debug.Log("Successfully rebuild game directory.");
 			if (UserSettings.data != null)
 			{
 				UserSettings.data.needDirectoryRebuild = false;
 			}
+			Game.gameInstance.closePopup(null);
+			UserSettings.saveSettings();
 		}
 		catch (Exception ex)
 		{

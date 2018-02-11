@@ -1657,7 +1657,7 @@ public class RacknetMultiplayer
                 w2 = null;
             }
         }
-        yield break;
+        ;
     }
 
     public static void finishedUploadingCustomTexture()
@@ -1805,7 +1805,6 @@ public class RacknetMultiplayer
                 w2 = null;
             }
         }
-        yield break;
     }
 
     public static IEnumerator UploadAvatar()

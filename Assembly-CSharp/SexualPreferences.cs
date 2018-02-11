@@ -76,7 +76,7 @@ public class SexualPreferences
 			SexualPreferences.addPreference(3, 0.8f, "blowjob_giving", 0);
 			SexualPreferences.addPreference(0, 1f, "blowjob_receiving", 2);
 			SexualPreferences.addPreference(3, 0.8f, "cunnilingus_giving", 0);
-			SexualPreferences.addPreference(0, 1f, "cunnilingus_receiving", 2);
+			SexualPreferences.addPreference(0, 1f, "cunnilingus_receiving", 3);
 			SexualPreferences.addPreference(1, 0.1f, "rimming_giving", 0);
 			SexualPreferences.addPreference(1, 0.5f, "rimming_receiving", 0);
 			SexualPreferences.addPreference(0, 0.7f, "sextoy_general", 1);

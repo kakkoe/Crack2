@@ -435,4 +435,7 @@ public class SettingsData
 
 	[XmlElement("KEY_MOD_CLEAN_UP_CUM")]
 	public KeyCode KEY_MOD_CLEAN_UP_CUM = KeyCode.Slash;
+
+	[XmlElement("globalSensitivity")]
+	public float globalSensitivity = 0.5f;
 }

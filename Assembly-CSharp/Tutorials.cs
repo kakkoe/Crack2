@@ -1820,6 +1820,7 @@ public class Tutorials
 		if (UserSettings.needTutorial(name))
 		{
 			UserSettings.completeTutorial(name);
+			Objectives.completeObjective(name);
 			TutorialTooltip.recentTutorialCompletion = 3;
 		}
 	}
