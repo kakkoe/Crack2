@@ -18254,7 +18254,7 @@ public class RackCharacter
 			}
 		}
 		vector = this.ballbones[2].position - this.bones.Pubic.position;
-		if (vector.magnitude > 1f)
+		if (vector.magnitude > 10f)
 		{
 			this.resetBalls();
 		}
