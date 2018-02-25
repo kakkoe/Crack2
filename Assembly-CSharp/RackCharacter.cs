@@ -17491,7 +17491,7 @@ public class RackCharacter
 				this.resetPenis();
 			}
 		}
-		if ((this.penisbones[2].position - this.bones.Pubic.position).magnitude > 1f)
+		if ((this.penisbones[2].position - this.bones.Pubic.position).magnitude > 100f)
 		{
 			this.resetPenis();
 		}
@@ -17576,23 +17576,11 @@ public class RackCharacter
 				this.parts[this.penisPieceIndex].gameObject.SetActive(true);
 				for (int num2 = 0; num2 < 5; num2++)
 				{
-					if (this.slitOutAmount > 0.95f && this.ballsOverDickFixTime <= 0f)
+					this.penisbones[num2].gameObject.layer = 13;
+					this.penisColliders[num2].enabled = false;
+					if (num2 == 4)
 					{
-						this.penisbones[num2].gameObject.layer = 2;
-						this.penisColliders[num2].enabled = true;
-						if (num2 == 4)
-						{
-							this.bones.Penis4Collider2.enabled = true;
-						}
-					}
-					else
-					{
-						this.penisbones[num2].gameObject.layer = 13;
-						this.penisColliders[num2].enabled = false;
-						if (num2 == 4)
-						{
-							this.bones.Penis4Collider2.enabled = false;
-						}
+						this.bones.Penis4Collider2.enabled = false;
 					}
 				}
 				if (this.data.ballsType == 1)
