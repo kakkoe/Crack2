@@ -69,3 +69,4 @@ The "cum life" option in the adjusts the limit of splat spots using a multiplier
 ### Bug Fix
 
 Fix much large penis and long scrotum trembling or immobilized
+Fix ears of tall character not to be lengthened
