@@ -55,9 +55,9 @@ You can also change all characters current emotion with 0-3 on the keypad.
 
 the new screenshot key is rebound to "P" so that F12 still works the way Alek's mod originally was configured.
 
-### Fix
+## Fix
 
-#### NPC Cum Fix
+### NPC Cum Fix
 
 Enabling "NPC cum fix" does several things now:
 1) makes the stasis tubes non-solid
@@ -66,6 +66,6 @@ Enabling "NPC cum fix" does several things now:
 
 The "cum life" option in the adjusts the limit of splat spots using a multiplier (<10 is fewer than normal, >10 is exponentially more than normal.)
 
-#### Bug Fix
+### Bug Fix
 
 Fix much large penis and long scrotum trembling or immobilized
