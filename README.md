@@ -1,10 +1,35 @@
 # Crack 2
 
-## Customize NPC
+WIN 64-bit only
+
+## Getting Started
+
+Get Release: https://github.com/kakkoe/Crack2/releases
+
+Back up, then overwrite the existing Assembly-CSharp.dll file found in Rack 2_Data\\Managed with the downloaded one to use it.
+
+## Features
+### Customize NPC
 
 A new thing this mod adds is the ability to call up the character customizer for NPCs you are talking to or clients you are interacting with. To do so, just hit ctrl+O.
 
-## Hotkey
+### Slider
+
+tried to increase the range of most sliders, but most options cannot benefit from this due to how the blendshapes work.
+
+### UI
+
+the climax meter is always visible
+
+you can hold down the left Alt key before interacting with your hand to use your left one instead of the right.
+
+### General
+
+you can use "subjectsize" to do the same to your test subject.
+
+all staff will now be nude (by default, no option)
+
+### Hotkey
 
  - F5 - Pleasure self
  - F6 - Give handjob to dialogue partner or subject
@@ -30,25 +55,9 @@ You can also change all characters current emotion with 0-3 on the keypad.
 
 the new screenshot key is rebound to "P" so that F12 still works the way Alek's mod originally was configured.
 
-## Slider
+### Fix
 
-tried to increase the range of most sliders, but most options cannot benefit from this due to how the blendshapes work.
-
-## UI
-
-the climax meter is always visible
-
-you can hold down the left Alt key before interacting with your hand to use your left one instead of the right.
-
-## General
-
-you can use "subjectsize" to do the same to your test subject.
-
-all staff will now be nude (by default, no option)
-
-## Fix
-
-### NPC Cum Fix
+#### NPC Cum Fix
 
 Enabling "NPC cum fix" does several things now:
 1) makes the stasis tubes non-solid
@@ -57,6 +66,6 @@ Enabling "NPC cum fix" does several things now:
 
 The "cum life" option in the adjusts the limit of splat spots using a multiplier (<10 is fewer than normal, >10 is exponentially more than normal.)
 
-### Bug Fix
+#### Bug Fix
 
 Fix much large penis and long scrotum trembling or immobilized
