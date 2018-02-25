@@ -1,9 +1,10 @@
-Enabling "NPC cum fix" does several things now:
-1) makes the stasis tubes non-solid
-2) allows cum splats on NPCs (at great cost to performance)
-3) calculates IK for all NPCs (again hurts performance)
+# Crack 2
 
-The "cum life" option in the adjusts the limit of splat spots using a multiplier (<10 is fewer than normal, >10 is exponentially more than normal.)
+## Customize NPC
+
+A new thing this mod adds is the ability to call up the character customizer for NPCs you are talking to or clients you are interacting with. To do so, just hit ctrl+O.
+
+## Hotkey
 
  - F5 - Pleasure self
  - F6 - Give handjob to dialogue partner or subject
@@ -27,18 +28,35 @@ The "cum life" option in the adjusts the limit of splat spots using a multiplier
 
 You can also change all characters current emotion with 0-3 on the keypad.
 
-you can use "subjectsize" to do the same to your test subject.
+the new screenshot key is rebound to "P" so that F12 still works the way Alek's mod originally was configured.
 
-you can hold down the left Alt key before interacting with your hand to use your left one instead of the right.
+## Slider
 
-all staff will now be nude (by default, no option)
+tried to increase the range of most sliders, but most options cannot benefit from this due to how the blendshapes work.
+
+## UI
 
 the climax meter is always visible
 
-As normal, descriptions for the mod capabilities are generally in the mod menu. Like my last mod release, "NPC cum fix" will significantly hurt performance due to it enabling all colliders (so that the cum will "stick" to the NPCs.)
+you can hold down the left Alt key before interacting with your hand to use your left one instead of the right.
 
-the new screenshot key is rebound to "P" so that F12 still works the way Alek's mod originally was configured.
+## General
 
-A new thing this mod adds is the ability to call up the character customizer for NPCs you are talking to or clients you are interacting with. To do so, just hit ctrl+O.
+you can use "subjectsize" to do the same to your test subject.
 
-tried to increase the range of most sliders, but most options cannot benefit from this due to how the blendshapes work.
+all staff will now be nude (by default, no option)
+
+## Fix
+
+### NPC Cum Fix
+
+Enabling "NPC cum fix" does several things now:
+1) makes the stasis tubes non-solid
+2) allows cum splats on NPCs (at great cost to performance)
+3) calculates IK for all NPCs (again hurts performance)
+
+The "cum life" option in the adjusts the limit of splat spots using a multiplier (<10 is fewer than normal, >10 is exponentially more than normal.)
+
+### Bug Fix
+
+Fix much large penis trembling or immobilized
