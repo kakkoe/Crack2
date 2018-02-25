@@ -33,8 +33,8 @@ all staff will now be nude (by default, no option)
  - F8 - Ride dialogue partner (wouldn't recommend) or subject
  - F9 - Finger dialogue partner or subject
  - F10 - Fuck dialogue partner (wouldn't recommend) or subject
- - F11 - Make player urinate*
- - F12 - Make dialogue partner or subject urinate*
+ - F11 - Make player urinate
+ - F12 - Make dialogue partner or subject urinate
  - Hyphen - Lower tool mode (i.e. when performing a handjob, switch from polishing to jerking to teasing) (note this does not work on the fly. You have to cancel the animation, change the mode and then reactivate it)
  - Equals - Increase tool mode (reverse of above)
  - Delete - Kill last interaction
