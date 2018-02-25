@@ -21,11 +21,7 @@ tried to increase the range of most sliders, but most options cannot benefit fro
 
 the climax meter is always visible
 
-you can hold down the left Alt key before interacting with your hand to use your left one instead of the right.
-
 ### General
-
-you can use "subjectsize" to do the same to your test subject.
 
 all staff will now be nude (by default, no option)
 
@@ -50,9 +46,6 @@ all staff will now be nude (by default, no option)
  - Home - Toggle user control over player
  - Page Up - Make all characters incrementally horny but not bring to orgasm
  - Page Down - Initiate full flaccidity
-
-You can also change all characters current emotion with 0-3 on the keypad.
-
 the new screenshot key is rebound to "P" so that F12 still works the way Alek's mod originally was configured.
 
 ## Fix
