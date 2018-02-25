@@ -917,6 +917,8 @@ public class RackCharacter
 
 	private bool longEars;
 
+    private float longEarValue;
+
 	private float earStiffness = 0.8f;
 
 	private float earForward;
@@ -6000,6 +6002,7 @@ public class RackCharacter
 		this.earStiffness = 0.8f;
 		this.earForward = 0f;
 		this.longEars = false;
+        this.longEarValue = 0;
 		for (int i = 0; i < this.data.headMorphs.Count; i++)
 		{
 			if (this.data.headMorphs[i].key == "Floppy Ears")
@@ -6016,9 +6019,16 @@ public class RackCharacter
 			}
 			if ((this.data.headType == "canine" || this.data.headType == "rodent") && this.data.headMorphs[i].key == "Long Ears")
 			{
-				this.longEars = (this.data.headMorphs[i].val > 0.5f);
-			}
-		}
+                this.longEars = (this.data.headMorphs[i].val > 0.5f);
+                this.longEarValue = this.data.headMorphs[i].val;
+                this.resetEars();
+                for (int n = 0; n < this.earJoints.Length; n++)
+                {
+                    this.earJoints[n].autoConfigureConnectedAnchor = true;
+                    this.earJoints[n].connectedBody = this.earJoints[n].connectedBody;
+                }
+            }
+        }
 	}
 
 	public void reparentEars()
@@ -6050,7 +6060,16 @@ public class RackCharacter
 		{
 			this.earbones[i].localPosition = RackCharacter.originalEarPositions[i];
 			this.earbones[i].localEulerAngles = RackCharacter.earStartingAngles[i];
-			this.earbones[i].localScale = Vector3.one;
+            if (this.height_act > 1f)
+            {
+                float t = Mathf.Clamp01(this.height_act - 1f);
+                float earLengthForMacro = (1 + this.longEarValue) / this.height_act;
+                this.earbones[i].localScale = Vector3.one * Mathf.Lerp(1, earLengthForMacro, t);
+            }
+            else
+            {
+                this.earbones[i].localScale = Vector3.one;
+            }
 			Rigidbody obj = this.earRigidbodies[i];
 			obj.angularVelocity *= 0f;
 			Rigidbody obj2 = this.earRigidbodies[i];
@@ -17576,12 +17595,24 @@ public class RackCharacter
 				this.parts[this.penisPieceIndex].gameObject.SetActive(true);
 				for (int num2 = 0; num2 < 5; num2++)
 				{
-					this.penisbones[num2].gameObject.layer = 13;
-					this.penisColliders[num2].enabled = false;
-					if (num2 == 4)
-					{
-						this.bones.Penis4Collider2.enabled = false;
-					}
+                    if (num2 > 0 && this.slitOutAmount > 0.95f && this.ballsOverDickFixTime <= 0f)
+                    {
+                        this.penisbones[num2].gameObject.layer = 2;
+                        this.penisColliders[num2].enabled = true;
+                        if (num2 == 4)
+                        {
+                            this.bones.Penis4Collider2.enabled = true;
+                        }
+                    }
+                    else
+                    {
+                        this.penisbones[num2].gameObject.layer = 13;
+                        this.penisColliders[num2].enabled = false;
+                        if (num2 == 4)
+                        {
+                            this.bones.Penis4Collider2.enabled = false;
+                        }
+                    }
 				}
 				if (this.data.ballsType == 1)
 				{
@@ -18223,7 +18254,7 @@ public class RackCharacter
 			}
 		}
 		vector = this.ballbones[2].position - this.bones.Pubic.position;
-		if (vector.magnitude > 1f)
+		if (vector.magnitude > 10f)
 		{
 			this.resetBalls();
 		}
