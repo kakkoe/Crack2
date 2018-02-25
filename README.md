@@ -1,6 +1,6 @@
 # Crack 2
 
-WIN 64-bit only
+Only For 0.2.3 WIN 64-bit
 
 ## Getting Started
 
