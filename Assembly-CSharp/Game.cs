@@ -37,9 +37,9 @@ public class Game : MonoBehaviour
 
     public static Game gameInstance;
 
-    public static int gameVersion = 2003;
+    public static int gameVersion = 2004;
 
-    public static int wipeVersion = 2001;
+    public static int wipeVersion = 2004;
 
     public int konamiStep;
 
@@ -147,6 +147,8 @@ public class Game : MonoBehaviour
 
     public RenderTexture characterPreviewRT;
 
+    public GameObject VersionControlMenu;
+
     public Drone helperDrone;
 
     public Shader shader;
@@ -167,8 +169,6 @@ public class Game : MonoBehaviour
 
     public Vector3 mouseChange;
 
-    public Vector3 mouseChangeSinceLastFixedUpdate;
-
     public bool lockedPosition;
 
     public bool lockedFocus;
@@ -177,7 +177,7 @@ public class Game : MonoBehaviour
 
     public static AssetBundle textureBundle;
 
-    public GameObject masterSkeleton;
+    public static GameObject masterSkeleton;
 
     public List<Interaction> interactions = new List<Interaction>();
 
@@ -194,6 +194,14 @@ public class Game : MonoBehaviour
     public Color c3;
 
     public static char PathDirectorySeparatorChar;
+
+    public static bool readyToProceedToGameInit = false;
+
+    public static bool initted = false;
+
+    public static int startupPhase = 0;
+
+    private int readyToBackupAndWipeGameData;
 
     public List<string> threadSoundsQueued = new List<string>();
 
@@ -263,7 +271,13 @@ public class Game : MonoBehaviour
 
     private bool manualFPSset;
 
-    public static bool thereHasBeenAtLeastOneFixedUpdate = false;
+    private int simulationsToRun;
+
+    private float simulationTime;
+
+    private int framesSinceSimulationTimeRecalculate = 999999;
+
+    private int installNotificationDelay;
 
     private bool showThoughtGauge;
 
@@ -1421,7 +1435,7 @@ public class Game : MonoBehaviour
 
     public bool editingExistingEmbellishment;
 
-    public static SkinnedMeshRenderer[] embellishmentBrushMeshes;
+    public static GameObject[] embellishmentBrushMeshes;
 
     public static int curEmbellishmentBrushMesh = 0;
 
@@ -1472,6 +1486,8 @@ public class Game : MonoBehaviour
     public bool embellishmentMenuOpen;
 
     public static string[] allEmbellishments;
+
+    public static Dictionary<string, GameObject> embellishmentBoneRoots = new Dictionary<string, GameObject>();
 
     private EmbellishmentPackage newEmbellishmentPackage;
 
@@ -1791,11 +1807,25 @@ public class Game : MonoBehaviour
 
     private void Start()
     {
+        this.VersionControlMenu = GameObject.Find("VersionControlMenu");
+        Physics.autoSimulation = false;
         Game.PathDirectorySeparatorChar = Path.DirectorySeparatorChar;
         Game.characterAssetDirectory = Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "characterParts" + Game.PathDirectorySeparatorChar + string.Empty;
         Game.persistentDataPath = Application.persistentDataPath;
-        Game.gameInstance = this;
-        this.initSettings();
+        GameObject.Find("InstallNotificationMenu").transform.localScale = Vector3.one;
+        Game.startupPhase = 1;
+    }
+
+    public void handleVersionDiscrepancy()
+    {
+        UnityEngine.Object.Destroy(GameObject.Find("txtCrash"));
+        this.VersionControlMenu.transform.localScale = Vector3.one;
+    }
+
+    public void initGame()
+    {
+        UnityEngine.Object.Destroy(this.VersionControlMenu);
+        UnityEngine.Object.Destroy(GameObject.Find("txtCrash"));
         this.initCharacterSystem();
         RackCharacter.initWetnessMaps();
         this.initInventory();
@@ -1811,6 +1841,28 @@ public class Game : MonoBehaviour
         this.initResearch();
         this.updateCamGraphicsSettings();
         this.initObjectives();
+        Game.initted = true;
+    }
+
+    public void backupAndWipeGameData()
+    {
+        this.v3.x = 0f;
+        this.v3.y = -50f;
+        this.v3.z = 0f;
+        this.VersionControlMenu.transform.Find("wait").localPosition = this.v3;
+        this.readyToBackupAndWipeGameData = 2;
+        this.VersionControlMenu.transform.Find("txtRecommended").gameObject.SetActive(false);
+    }
+
+    public void attemptToUpdateGameData()
+    {
+        this.v3.x = 0f;
+        this.v3.y = -50f;
+        this.v3.z = 0f;
+        this.VersionControlMenu.transform.Find("wait").localPosition = this.v3;
+        this.VersionControlMenu.transform.Find("txtRecommended").gameObject.SetActive(false);
+        UserSettings.data.gameVersion = Game.gameVersion;
+        this.initGame();
     }
 
     public void openRackNet()
@@ -1957,22 +2009,8 @@ public class Game : MonoBehaviour
     {
         Cum.init();
         Game.maxBreastSize = 3f;
-        this.masterSkeleton = GameObject.Find("MasterSkeleton");
-        this.masterSkeleton.SetActive(false);
-        SkinnedMeshRenderer[] componentsInChildren = GameObject.Find("paintables").GetComponentsInChildren<SkinnedMeshRenderer>();
-        Game.allEmbellishments = new string[componentsInChildren.Length - 1];
-        int num = 0;
-        for (int i = 0; i < componentsInChildren.Length; i++)
-        {
-            if (componentsInChildren[i].name == "RefBody")
-            {
-                num = 1;
-            }
-            else
-            {
-                Game.allEmbellishments[i - num] = componentsInChildren[i].name;
-            }
-        }
+        Game.masterSkeleton = GameObject.Find("MasterSkeleton");
+        Game.masterSkeleton.SetActive(false);
         Interaction.initSystem();
         RackCharacter.initSystem();
         this.initEmbellishmentBrush();
@@ -1996,7 +2034,7 @@ public class Game : MonoBehaviour
         this.newsMinimize = this.UI.transform.Find("news").Find("cmdMinimize").gameObject;
         this.originalNewsLocation = this.newsWindow.transform.localPosition;
         WWW www = new WWW("http://fek.onl/_r2ckversioninfo.xml?refresh=" + Guid.NewGuid());
-        yield return (object)www;
+        yield return www;
         if (string.IsNullOrEmpty(www.error))
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(NewsAndVersionData));
@@ -2316,14 +2354,154 @@ public class Game : MonoBehaviour
         this.creditsOpen = true;
     }
 
+    public string versionify(int i)
+    {
+        string str = (i % 1000).ToString();
+        i -= i % 1000;
+        i /= 1000;
+        str = (i % 1000).ToString() + "." + str;
+        i -= i % 1000;
+        i /= 1000;
+        return (i % 1000).ToString() + "." + str;
+    }
+
     private void Update()
     {
-        if (Time.smoothDeltaTime > 0f)
+        if (Game.startupPhase != 0)
         {
-            Game.framerate = 1f / Time.smoothDeltaTime;
+            if (Game.startupPhase == 1)
+            {
+                Game.gameInstance = this;
+                Game.startupPhase = 2;
+            }
+            else if (Game.startupPhase == 2)
+            {
+                this.installNotificationDelay++;
+                if (this.installNotificationDelay >= 2)
+                {
+                    Game.startupPhase = 3;
+                    if (!Directory.Exists(Application.persistentDataPath))
+                    {
+                        UserSettings.rebuilding = true;
+                        UserSettings.rebuildGameAssets();
+                    }
+                }
+            }
+            else if (Game.startupPhase == 3)
+            {
+                if (!UserSettings.rebuilding)
+                {
+                    Game.startupPhase = 4;
+                }
+            }
+            else if (Game.startupPhase == 4)
+            {
+                UnityEngine.Object.Destroy(GameObject.Find("InstallNotificationMenu"));
+                this.initSettings();
+                if (Game.readyToProceedToGameInit)
+                {
+                    this.initGame();
+                }
+                else
+                {
+                    this.handleVersionDiscrepancy();
+                }
+                Game.startupPhase = 5;
+            }
+            else if (Game.startupPhase == 5)
+            {
+                if (!Game.initted)
+                {
+                    ((UnityEngine.Component)this.VersionControlMenu.transform.Find("txtVersionComparison")).GetComponent<Text>().text = Localization.getPhrase("VERSION_COMPARISON", string.Empty).Replace("[1]", this.versionify(UserSettings.data.gameVersion)).Replace("[2]", this.versionify(Game.gameVersion));
+                    if (UserSettings.data.gameVersion < Game.wipeVersion)
+                    {
+                        this.v3.x = -175f;
+                    }
+                    else
+                    {
+                        this.v3.x = 175f;
+                    }
+                    this.v3.y = -155f + Mathf.Abs(Mathf.Pow(Mathf.Cos(Time.time * 3f), 10f)) * 10f;
+                    this.v3.z = 0f;
+                    this.VersionControlMenu.transform.Find("txtRecommended").localPosition = this.v3;
+                    this.v3.x = 0f;
+                    this.v3.y = 27f + Mathf.Abs(Mathf.Pow(Mathf.Cos(Time.time * 3f), 3f)) * 5f;
+                    this.v3.z = 0f;
+                    this.VersionControlMenu.transform.Find("txtRecommended").Find("arrow").localPosition = this.v3;
+                    if (this.readyToBackupAndWipeGameData > 0)
+                    {
+                        this.readyToBackupAndWipeGameData--;
+                        if (this.readyToBackupAndWipeGameData <= 0)
+                        {
+                            int num = 1;
+                            while (Directory.Exists(Application.persistentDataPath.Replace("Rack 2_ Furry Science", "Rack 2_ Furry Science - BACKUP " + num.ToString())))
+                            {
+                                num++;
+                            }
+                            Directory.CreateDirectory(Application.persistentDataPath.Replace("Rack 2_ Furry Science", "Rack 2_ Furry Science - BACKUP " + num.ToString()));
+                            UserSettings.copyDirectory(Application.persistentDataPath, Application.persistentDataPath.Replace("Rack 2_ Furry Science", "Rack 2_ Furry Science - BACKUP " + num.ToString()));
+                            UserSettings.rebuildGameAssets();
+                            this.initGame();
+                        }
+                    }
+                }
+                else
+                {
+                    if (Time.smoothDeltaTime > 0f)
+                    {
+                        Game.framerate = 1f / Time.smoothDeltaTime;
+                    }
+                    if (this.ADT == 0f)
+                    {
+                        this.ADT = Time.deltaTime;
+                    }
+                    this.ADT += (Time.deltaTime - this.ADT) * 0.1f;
+                    if (Time.deltaTime / this.ADT > 2f || this.justSkippedALaggyFrame)
+                    {
+                        if (this.justSkippedALaggyFrame)
+                        {
+                            this.justSkippedALaggyFrame = false;
+                        }
+                        else
+                        {
+                            this.justSkippedALaggyFrame = true;
+                        }
+                    }
+                    else
+                    {
+                        Cum.process();
+                        for (int i = 0; i < this.characters.Count; i++)
+                        {
+                            this.characters[i].render();
+                        }
+                        this.processInteractions();
+                        this.processRenderCam();
+                        this.processCamera();
+                        this.processGame();
+                        if (this.framesSinceSimulationTimeRecalculate > 250)
+                        {
+                            this.simulationsToRun = 1;
+                            this.simulationTime = Time.deltaTime;
+                            while (this.simulationTime > 0.02f)
+                            {
+                                this.simulationTime /= 2f;
+                                this.simulationsToRun *= 2;
+                            }
+                            this.framesSinceSimulationTimeRecalculate = 0;
+                        }
+                        else
+                        {
+                            this.simulationTime = Time.deltaTime / (float)this.simulationsToRun;
+                            this.framesSinceSimulationTimeRecalculate++;
+                        }
+                        for (int j = 0; j < this.simulationsToRun; j++)
+                        {
+                            Physics.Simulate(this.simulationTime);
+                        }
+                    }
+                }
+            }
         }
-        this.processGame();
-        Game.thereHasBeenAtLeastOneFixedUpdate = false;
     }
 
     private void processGame()
@@ -2614,7 +2792,6 @@ public class Game : MonoBehaviour
         {
             this.FDT = 0.07f - UserSettings.data.physicsQuality * 0.06f;
         }
-        Time.fixedDeltaTime = this.FDT;
     }
 
     public float radDist(float r1, float r2)
@@ -3629,6 +3806,12 @@ public class Game : MonoBehaviour
                         {
                             ((UnityEngine.Component)gameObject.transform.Find("txtName")).GetComponent<Text>().text = Localization.getPhrase(Inventory.data.chemicalcompounds[j].name, string.Empty);
                         }
+                        ((UnityEngine.Component)gameObject.transform.Find("txtQuantity")).GetComponent<Text>().text = (Mathf.Floor(100f * Inventory.getChemicalCompound(Inventory.data.chemicalcompounds[j].name)) / 100f).ToString();
+                        if (!((UnityEngine.Component)gameObject.transform.Find("txtQuantity")).GetComponent<Text>().text.Contains("."))
+                        {
+                            ((UnityEngine.Component)gameObject.transform.Find("txtQuantity")).GetComponent<Text>().text = ((UnityEngine.Component)gameObject.transform.Find("txtQuantity")).GetComponent<Text>().text + ".0";
+                        }
+                        ((UnityEngine.Component)gameObject.transform.Find("txtQuantityW")).GetComponent<Text>().text = ((UnityEngine.Component)gameObject.transform.Find("txtQuantity")).GetComponent<Text>().text;
                         gameObject.GetComponent<RawImage>().texture = (Resources.Load("chemicalbranding" + Game.PathDirectorySeparatorChar + string.Empty + Inventory.data.chemicalcompounds[j].name.Split('.')[Inventory.data.chemicalcompounds[j].name.Split('.').Length - 1]) as Texture2D);
                         gameObject.name = Inventory.data.chemicalcompounds[j].name;
                         this.chemicalSelectionTiles.Add(gameObject);
@@ -8331,7 +8514,6 @@ public class Game : MonoBehaviour
         this.mouseMoved = ((Input.mousePosition - this.lastMousePosition).magnitude > 0f);
         this.lastMousePosition = Input.mousePosition;
         this.mouseChange = new Vector3(0f - Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0f);
-        this.mouseChangeSinceLastFixedUpdate += this.mouseChange;
         Vector3 vector = GameObject.Find("UICam").GetComponent<Camera>().WorldToScreenPoint(this.UI.transform.Find("bottomright").position);
         float x = vector.x;
         Vector3 vector2 = GameObject.Find("UICam").GetComponent<Camera>().WorldToScreenPoint(this.UI.transform.Find("topleft").position);
@@ -9378,6 +9560,12 @@ public class Game : MonoBehaviour
                         gameObject.transform.localScale = Vector3.one;
                         ((UnityEngine.Component)gameObject.transform.Find("txtName")).GetComponent<Text>().text = Localization.getPhrase(this.chemicalsAvailableForSynthesis[j], string.Empty);
                         gameObject.GetComponent<RawImage>().texture = (Resources.Load("chemicalbranding" + Game.PathDirectorySeparatorChar + string.Empty + this.chemicalsAvailableForSynthesis[j].Split('.')[this.chemicalsAvailableForSynthesis[j].Split('.').Length - 1]) as Texture2D);
+                        ((UnityEngine.Component)gameObject.transform.Find("txtQuantity")).GetComponent<Text>().text = (Mathf.Floor(100f * Inventory.getChemicalCompound(this.chemicalsAvailableForSynthesis[j])) / 100f).ToString();
+                        if (!((UnityEngine.Component)gameObject.transform.Find("txtQuantity")).GetComponent<Text>().text.Contains("."))
+                        {
+                            ((UnityEngine.Component)gameObject.transform.Find("txtQuantity")).GetComponent<Text>().text = ((UnityEngine.Component)gameObject.transform.Find("txtQuantity")).GetComponent<Text>().text + ".0";
+                        }
+                        ((UnityEngine.Component)gameObject.transform.Find("txtQuantityW")).GetComponent<Text>().text = ((UnityEngine.Component)gameObject.transform.Find("txtQuantity")).GetComponent<Text>().text;
                         gameObject.name = this.chemicalsAvailableForSynthesis[j];
                         this.chemicalTiles.Add(gameObject);
                     }
@@ -10004,7 +10192,7 @@ public class Game : MonoBehaviour
     public IEnumerator loadPatreonData(string url)
     {
         WWW www = new WWW(url + "?refresh=" + Guid.NewGuid());
-        yield return (object)www;
+        yield return www;
         if (!string.IsNullOrEmpty(www.error))
         {
             UnityEngine.Debug.Log("Failed to load patrons");
@@ -12491,11 +12679,14 @@ public class Game : MonoBehaviour
             {
                 this.characterRebuildDelay = 2;
             }
-            this.characterRebuildDelay--;
-            if (this.characterRebuildDelay <= 0)
+            if (!Input.GetMouseButton(0))
             {
-                this.PC().rebuildCharacter();
-                this.editingExistingEmbellishment = false;
+                this.characterRebuildDelay--;
+                if (this.characterRebuildDelay <= 0)
+                {
+                    this.PC().rebuildCharacter();
+                    this.editingExistingEmbellishment = false;
+                }
             }
         }
         if (this.customizingCharacter && (this.customizeCharacterPage == 21 || this.customizeCharacterPage == 31 || this.customizeCharacterPage == 51 || this.customizeCharacterPage == 42 || this.customizeCharacterPage == 41))
@@ -13950,6 +14141,10 @@ public class Game : MonoBehaviour
                 for (int l = 0; l < this.PC().preciseMousePickingCollider.Count; l++)
                 {
                     ((UnityEngine.Component)this.PC().preciseMousePickingCollider[l].transform.parent).GetComponent<SkinnedMeshRenderer>().BakeMesh(this.PC().preciseMousePickingCollider[l].GetComponent<MeshCollider>().sharedMesh);
+                    Transform transform = this.PC().preciseMousePickingCollider[l].transform;
+                    Vector3 one = Vector3.one;
+                    Vector3 localScale = this.PC().GO.transform.localScale;
+                    transform.localScale = one / localScale.x;
                     this.PC().preciseMousePickingCollider[l].GetComponent<MeshCollider>().enabled = true;
                     this.PC().preciseMousePickingCollider[l].GetComponent<MeshCollider>().enabled = false;
                 }
@@ -13997,8 +14192,8 @@ public class Game : MonoBehaviour
                 }
                 else
                 {
-                    Transform transform = this.decalBrush.transform;
-                    transform.position += (this.decalHitPoint - this.decalBrush.transform.position) * Game.cap(Time.deltaTime * 10f, 0f, 1f);
+                    Transform transform2 = this.decalBrush.transform;
+                    transform2.position += (this.decalHitPoint - this.decalBrush.transform.position) * Game.cap(Time.deltaTime * 10f, 0f, 1f);
                 }
                 this.decalHitNormal_act += (this.decalHitNormal - this.decalHitNormal_act) * Game.cap(Time.deltaTime * 10f, 0f, 1f);
                 this.decalBrush.transform.rotation = Quaternion.FromToRotation(Vector3.forward, this.decalHitNormal_act);
@@ -15179,23 +15374,13 @@ public class Game : MonoBehaviour
             ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("TailFurEditor").Find("DensitySlider")).GetComponent<Slider>().val = this.PC().data.tailFurDensity;
             ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("TailFurEditor").Find("LengthSlider")).GetComponent<Slider>().val = this.PC().data.tailFurLength;
             ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("TailFurEditor").Find("TipSizeSlider")).GetComponent<Slider>().val = this.PC().data.tailTipSize;
-            List<Dropdown.OptionData> list = new List<Dropdown.OptionData>();
-            for (int j = 0; j < Game.embellishmentBrushMeshes.Length; j++)
-            {
-                if (Game.embellishmentBrushMeshes[j].name.IndexOf("TAILFUR_") != -1)
-                {
-                    list.Add(new Dropdown.OptionData());
-                    list[list.Count - 1].text = Game.embellishmentBrushMeshes[j].name;
-                }
-            }
-            ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("TailFurEditor").Find("ddFurTypes")).GetComponent<Dropdown>().options = list;
             ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("TailFurEditor").Find("ddFurTypes")).GetComponent<Dropdown>().value = this.PC().data.tailFurType;
         }
         else
         {
-            for (int k = 0; k < 5; k++)
+            for (int j = 0; j < 5; j++)
             {
-                this.PC().data.tailFurSizes[k] = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("TailFurEditor").Find("sldTailFur" + k)).GetComponent<UnityEngine.UI.Slider>().value;
+                this.PC().data.tailFurSizes[j] = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("TailFurEditor").Find("sldTailFur" + j)).GetComponent<UnityEngine.UI.Slider>().value;
             }
             this.PC().data.tailFurDensity = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("TailFurEditor").Find("DensitySlider")).GetComponent<Slider>().val;
             this.PC().data.tailFurLength = ((UnityEngine.Component)this.UI.transform.Find("CharacterCustomizationUI").Find("TailFurEditor").Find("LengthSlider")).GetComponent<Slider>().val;
@@ -15214,15 +15399,31 @@ public class Game : MonoBehaviour
         value.g = 0.443f;
         value.b = 0.572f;
         value.a = 0.5f;
-        Game.embellishmentBrushMeshes = this.embellishmentBrush.GetComponentsInChildren<SkinnedMeshRenderer>();
-        for (int i = 0; i < Game.embellishmentBrushMeshes.Length; i++)
+        int num = 0;
+        Game.embellishmentBrushMeshes = new GameObject[this.embellishmentBrush.GetComponentsInChildren<MeshRenderer>().Length + this.embellishmentBrush.GetComponentsInChildren<SkinnedMeshRenderer>().Length];
+        for (int i = 0; i < this.embellishmentBrush.GetComponentsInChildren<MeshRenderer>().Length; i++)
         {
-            Material[] materials = Game.embellishmentBrushMeshes[i].materials;
+            Material[] materials = this.embellishmentBrush.GetComponentsInChildren<MeshRenderer>()[i].materials;
             for (int j = 0; j < materials.Length; j++)
             {
-                Game.embellishmentBrushMeshes[i].materials[j].shader = shader;
-                Game.embellishmentBrushMeshes[i].materials[j].SetColor("_TintColor", value);
+                this.embellishmentBrush.GetComponentsInChildren<MeshRenderer>()[i].materials[j].shader = shader;
+                this.embellishmentBrush.GetComponentsInChildren<MeshRenderer>()[i].materials[j].SetColor("_TintColor", value);
+                this.embellishmentBrush.GetComponentsInChildren<MeshRenderer>()[i].materials[j].mainTexture = null;
             }
+            Game.embellishmentBrushMeshes[num] = this.embellishmentBrush.GetComponentsInChildren<MeshRenderer>()[i].gameObject;
+            num++;
+        }
+        for (int k = 0; k < this.embellishmentBrush.GetComponentsInChildren<SkinnedMeshRenderer>().Length; k++)
+        {
+            Material[] materials2 = this.embellishmentBrush.GetComponentsInChildren<SkinnedMeshRenderer>()[k].materials;
+            for (int l = 0; l < materials2.Length; l++)
+            {
+                this.embellishmentBrush.GetComponentsInChildren<SkinnedMeshRenderer>()[k].materials[l].shader = shader;
+                this.embellishmentBrush.GetComponentsInChildren<SkinnedMeshRenderer>()[k].materials[l].SetColor("_TintColor", value);
+                this.embellishmentBrush.GetComponentsInChildren<SkinnedMeshRenderer>()[k].materials[l].mainTexture = null;
+            }
+            Game.embellishmentBrushMeshes[num] = this.embellishmentBrush.GetComponentsInChildren<SkinnedMeshRenderer>()[k].gameObject;
+            num++;
         }
         this.embellishmentBrush.SetActive(false);
     }
@@ -15481,6 +15682,10 @@ public class Game : MonoBehaviour
                         for (int i = 0; i < this.PC().preciseMousePickingCollider.Count; i++)
                         {
                             ((UnityEngine.Component)this.PC().preciseMousePickingCollider[i].transform.parent).GetComponent<SkinnedMeshRenderer>().BakeMesh(this.PC().preciseMousePickingCollider[i].GetComponent<MeshCollider>().sharedMesh);
+                            Transform transform = this.PC().preciseMousePickingCollider[i].transform;
+                            Vector3 one = Vector3.one;
+                            Vector3 localScale = this.PC().GO.transform.localScale;
+                            transform.localScale = one / localScale.x;
                             this.PC().preciseMousePickingCollider[i].GetComponent<MeshCollider>().enabled = true;
                             this.PC().preciseMousePickingCollider[i].GetComponent<MeshCollider>().enabled = false;
                         }
@@ -15494,7 +15699,7 @@ public class Game : MonoBehaviour
             this.embellishmentBrush.SetActive(true);
             for (int j = 0; j < Game.embellishmentBrushMeshes.Length; j++)
             {
-                Game.embellishmentBrushMeshes[j].gameObject.SetActive(Game.embellishmentBrushMeshes[j].name == this.selectedEmbellishment);
+                Game.embellishmentBrushMeshes[j].SetActive(Game.embellishmentBrushMeshes[j].name == this.selectedEmbellishment);
                 if (Game.embellishmentBrushMeshes[j].name == this.selectedEmbellishment)
                 {
                     Game.curEmbellishmentBrushMesh = j;
@@ -15507,25 +15712,25 @@ public class Game : MonoBehaviour
             }
             if (this.somethingPicked && this.placingEmbellishment)
             {
-                goto IL_030a;
+                goto IL_0347;
             }
             if (this.editingExistingEmbellishment)
             {
-                goto IL_030a;
+                goto IL_0347;
             }
-            goto IL_05d5;
+            goto IL_0613;
         }
         return;
-        IL_030a:
+        IL_0347:
         if ((this.precisePickPoint - this.embellishmentBrush.transform.position).magnitude > 0.5f)
         {
-            Transform transform = this.embellishmentBrush.transform;
-            transform.position += this.precisePickPoint - this.embellishmentBrush.transform.position;
+            Transform transform2 = this.embellishmentBrush.transform;
+            transform2.position += this.precisePickPoint - this.embellishmentBrush.transform.position;
         }
         else
         {
-            Transform transform2 = this.embellishmentBrush.transform;
-            transform2.position += (this.precisePickPoint - this.embellishmentBrush.transform.position) * Time.deltaTime * 8f;
+            Transform transform3 = this.embellishmentBrush.transform;
+            transform3.position += (this.precisePickPoint - this.embellishmentBrush.transform.position) * Time.deltaTime * 8f;
         }
         if (this.editingExistingEmbellishment)
         {
@@ -15546,10 +15751,10 @@ public class Game : MonoBehaviour
         {
             size = data.embellishmentLayers[this.editingEmbellishmentLayer].size;
         }
-        Transform transform3 = this.embellishmentBrush.transform;
-        transform3.localScale += (Vector3.one * this.PC().height_act * size - this.embellishmentBrush.transform.localScale) * Time.deltaTime * 4f;
-        goto IL_05d5;
-        IL_1df3:
+        Transform transform4 = this.embellishmentBrush.transform;
+        transform4.localScale += (Vector3.one * this.PC().height_act * size - this.embellishmentBrush.transform.localScale) * Time.deltaTime * 4f;
+        goto IL_0613;
+        IL_1e8b:
         float num4;
         int num5;
         int index;
@@ -15574,7 +15779,8 @@ public class Game : MonoBehaviour
                 {
                     for (int k = 0; k < this.PC().preciseMousePickingCollider.Count; k++)
                     {
-                        Vector3 b = this.PC().preciseMousePickingCollider[k].transform.InverseTransformPoint(this.precisePickHitInfo.point);
+                        this.v3 = this.precisePickHitInfo.point;
+                        Vector3 b = this.PC().preciseMousePickingCollider[k].transform.InverseTransformPoint(this.v3);
                         int num = 0;
                         int num2 = this.PC().originalVertexCounts[k];
                         int num3 = 1;
@@ -15641,7 +15847,7 @@ public class Game : MonoBehaviour
             this.PC().data.embellishmentLayers.Add(embellishmentLayer);
         }
         return;
-        IL_05d5:
+        IL_0613:
         int num6 = data.embellishmentLayers.Count + 1;
         int index2;
         if (this.embellishmentLayers.Count != num6)
@@ -15729,14 +15935,14 @@ public class Game : MonoBehaviour
         Color color;
         for (int num11 = 0; num11 < num6; num11++)
         {
-            Transform transform4 = this.embellishmentLayers[num11].transform;
-            if ((UnityEngine.Object)transform4.transform.Find("cmdDelete") != (UnityEngine.Object)null)
+            Transform transform5 = this.embellishmentLayers[num11].transform;
+            if ((UnityEngine.Object)transform5.transform.Find("cmdDelete") != (UnityEngine.Object)null)
             {
-                ((UnityEngine.Component)transform4).GetComponent<TextureLayerUI>().cmdDelete = transform4.transform.Find("cmdDelete").gameObject;
+                ((UnityEngine.Component)transform5).GetComponent<TextureLayerUI>().cmdDelete = transform5.transform.Find("cmdDelete").gameObject;
             }
             if (num11 < num6 - 1)
             {
-                ((UnityEngine.Component)transform4.Find("LayerStuff").Find("txtEmbellishment")).GetComponent<Text>().text = data.embellishmentLayers[num11].embellishment.ToUpper();
+                ((UnityEngine.Component)transform5.Find("LayerStuff").Find("txtEmbellishment")).GetComponent<Text>().text = data.embellishmentLayers[num11].embellishment.ToUpper();
                 ((UnityEngine.Component)this.embellishmentLayers[num11].transform.Find("BG")).GetComponent<CanvasRenderer>().SetAlpha(1f);
                 if (data.embellishmentLayers[num11].mirror)
                 {
@@ -15776,7 +15982,7 @@ public class Game : MonoBehaviour
             }
             else
             {
-                ((UnityEngine.Component)transform4.Find("LayerStuff").Find("txtEmbellishment")).GetComponent<Text>().text = this.embellishmentBrushSetting_embellishment;
+                ((UnityEngine.Component)transform5.Find("LayerStuff").Find("txtEmbellishment")).GetComponent<Text>().text = this.embellishmentBrushSetting_embellishment;
                 ((UnityEngine.Component)this.embellishmentLayers[num11].transform.Find("BG")).GetComponent<CanvasRenderer>().SetAlpha(0.2f);
                 if (this.embellishmentBrushSetting_mirror)
                 {
@@ -15977,6 +16183,10 @@ public class Game : MonoBehaviour
                 if (!this.placingEmbellishment)
                 {
                     ((UnityEngine.Component)this.PC().preciseMousePickingCollider[num26].transform.parent).GetComponent<SkinnedMeshRenderer>().BakeMesh(this.PC().preciseMousePickingCollider[num26].GetComponent<MeshCollider>().sharedMesh);
+                    Transform transform6 = this.PC().preciseMousePickingCollider[num26].transform;
+                    Vector3 one2 = Vector3.one;
+                    Vector3 localScale2 = this.PC().GO.transform.localScale;
+                    transform6.localScale = one2 / localScale2.x;
                 }
                 this.PC().preciseMousePickingCollider[num26].GetComponent<MeshCollider>().enabled = true;
                 this.PC().pauseAnimation();
@@ -15988,11 +16198,14 @@ public class Game : MonoBehaviour
         if ((Input.GetMouseButton(0) || Input.GetMouseButtonUp(0)) && this.mX > 0.5f)
         {
             this.placingEmbellishment = true;
-            goto IL_1df3;
+            goto IL_1e8b;
         }
         this.placingEmbellishment = false;
-        this.editingExistingEmbellishment = false;
-        goto IL_1df3;
+        if (!Input.GetMouseButton(0) && !Input.GetMouseButtonUp(0))
+        {
+            this.editingExistingEmbellishment = false;
+        }
+        goto IL_1e8b;
     }
 
     public void addHairPiece()
@@ -16161,12 +16374,12 @@ public class Game : MonoBehaviour
             text = "human" + Game.PathDirectorySeparatorChar + string.Empty;
         }
         new FileInfo(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "hairstyles" + Game.PathDirectorySeparatorChar + string.Empty + text).Directory.Create();
-        string[] files = Directory.GetFiles(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "hairstyles" + Game.PathDirectorySeparatorChar + string.Empty + text);
+        string[] files = Directory.GetFiles(Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "hairstyles" + Game.PathDirectorySeparatorChar + string.Empty + text, "*.dae");
         for (int i = 0; i < files.Length; i++)
         {
             if (File.Exists(files[i]))
             {
-                string text2 = files[i].Split(Game.PathDirectorySeparatorChar)[files[i].Split(Game.PathDirectorySeparatorChar).Length - 1];
+                string text2 = files[i].Split(Game.PathDirectorySeparatorChar)[files[i].Split(Game.PathDirectorySeparatorChar).Length - 1].Split('.')[0];
                 string item = text2.Split('_')[0];
                 int num = int.Parse(text2.Split('_')[1]);
                 if (this.hairstyles.IndexOf(item) == -1)
@@ -16220,10 +16433,14 @@ public class Game : MonoBehaviour
                 this.embellishmentVariantSelected = new List<int>();
                 for (int i = 0; i < Game.allEmbellishments.Length; i++)
                 {
-                    string item = Game.allEmbellishments[i].Split(new string[1]
+                    string text = Game.allEmbellishments[i];
+                    if (text.Contains("_"))
                     {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "_"
-                    }, StringSplitOptions.None)[0];
+                        text = Game.allEmbellishments[i].Split(new string[1]
+                        {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "_"
+                        }, StringSplitOptions.None)[0];
+                    }
                     int num3 = -1;
                     if (Game.allEmbellishments[i].Split(new string[1]
                     {
@@ -16235,15 +16452,15 @@ public class Game : MonoBehaviour
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "_"
                         }, StringSplitOptions.None)[1]);
                     }
-                    if (this.embellishmentNames.IndexOf(item) == -1)
+                    if (this.embellishmentNames.IndexOf(text) == -1)
                     {
-                        this.embellishmentNames.Add(item);
+                        this.embellishmentNames.Add(text);
                         this.embellishmentVariants.Add(1);
                         this.embellishmentVariantSelected.Add(0);
                     }
-                    if (num3 + 1 > this.embellishmentVariants[this.embellishmentNames.IndexOf(item)])
+                    if (num3 + 1 > this.embellishmentVariants[this.embellishmentNames.IndexOf(text)])
                     {
-                        this.embellishmentVariants[this.embellishmentNames.IndexOf(item)] = num3 + 1;
+                        this.embellishmentVariants[this.embellishmentNames.IndexOf(text)] = num3 + 1;
                     }
                 }
                 if ((UnityEngine.Object)this.embellishmentCardTemplate == (UnityEngine.Object)null)
@@ -16264,53 +16481,88 @@ public class Game : MonoBehaviour
                     this.embellishmentOptions[j].transform.localPosition = this.v3;
                     this.embellishmentOptions[j].transform.localScale = Vector3.one;
                     ((UnityEngine.Component)this.embellishmentOptions[j].transform.Find("txtFilename")).GetComponent<Text>().text = this.embellishmentNames[j];
-                    string text = this.embellishmentNames[j];
+                    string text2 = this.embellishmentNames[j];
                     bool activeSelf = this.embellishmentBrush.activeSelf;
                     this.embellishmentBrush.SetActive(true);
                     for (int k = 0; k < Game.embellishmentBrushMeshes.Length; k++)
                     {
-                        Game.embellishmentBrushMeshes[k].gameObject.SetActive(true);
+                        Game.embellishmentBrushMeshes[k].SetActive(true);
                     }
                     GameObject gameObject = UnityEngine.Object.Instantiate(GameObject.Find("paintables"));
                     this.embellishmentBrush.SetActive(activeSelf);
                     gameObject.SetActive(true);
-                    float num6 = 0f;
+                    float num6 = 0.1f;
                     if (this.embellishmentVariants[j] > 1)
                     {
-                        text = text + "_" + (this.embellishmentVariants[j] - 1);
+                        text2 = text2 + "_" + (this.embellishmentVariants[j] - 1);
                     }
-                    for (int num7 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>().Length - 1; num7 >= 0; num7--)
+                    for (int num7 = gameObject.GetComponentsInChildren<MeshRenderer>().Length - 1; num7 >= 0; num7--)
                     {
-                        if (gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7].name == text)
+                        if (gameObject.GetComponentsInChildren<MeshRenderer>()[num7].name == text2)
                         {
-                            for (int l = 0; l < gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7].materials.Length; l++)
+                            for (int l = 0; l < gameObject.GetComponentsInChildren<MeshRenderer>()[num7].materials.Length; l++)
                             {
-                                gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7].materials[l].shader = Shader.Find("Toon/Basic Outline");
-                                gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7].materials[l].SetColor("_Color", Color.white);
-                                gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7].materials[l].SetFloat("_Outline", 0.0007f);
+                                gameObject.GetComponentsInChildren<MeshRenderer>()[num7].materials[l].shader = Shader.Find("Toon/Basic Outline");
+                                gameObject.GetComponentsInChildren<MeshRenderer>()[num7].materials[l].SetColor("_Color", Color.white);
+                                gameObject.GetComponentsInChildren<MeshRenderer>()[num7].materials[l].SetFloat("_Outline", 0.0007f);
                             }
-                            Vector3 size = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7].localBounds.size;
+                            Vector3 size = gameObject.GetComponentsInChildren<MeshRenderer>()[num7].bounds.size;
                             if (size.x > num6)
                             {
-                                Vector3 size2 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7].localBounds.size;
+                                Vector3 size2 = gameObject.GetComponentsInChildren<MeshRenderer>()[num7].bounds.size;
                                 num6 = size2.x;
                             }
-                            Vector3 size3 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7].localBounds.size;
+                            Vector3 size3 = gameObject.GetComponentsInChildren<MeshRenderer>()[num7].bounds.size;
                             if (size3.y > num6)
                             {
-                                Vector3 size4 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7].localBounds.size;
+                                Vector3 size4 = gameObject.GetComponentsInChildren<MeshRenderer>()[num7].bounds.size;
                                 num6 = size4.y;
                             }
-                            Vector3 size5 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7].localBounds.size;
+                            Vector3 size5 = gameObject.GetComponentsInChildren<MeshRenderer>()[num7].bounds.size;
                             if (size5.z > num6)
                             {
-                                Vector3 size6 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7].localBounds.size;
+                                Vector3 size6 = gameObject.GetComponentsInChildren<MeshRenderer>()[num7].bounds.size;
                                 num6 = size6.z;
                             }
                         }
                         else
                         {
-                            UnityEngine.Object.Destroy(gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num7]);
+                            UnityEngine.Object.Destroy(gameObject.GetComponentsInChildren<MeshRenderer>()[num7].gameObject);
+                        }
+                    }
+                    for (int num8 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>().Length - 1; num8 >= 0; num8--)
+                    {
+                        if (gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].name == text2)
+                        {
+                            for (int m = 0; m < gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].materials.Length; m++)
+                            {
+                                gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].materials[m].shader = Shader.Find("Toon/Basic Outline");
+                                gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].materials[m].SetColor("_Color", Color.white);
+                                gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].materials[m].SetFloat("_Outline", 0.0007f);
+                            }
+                            Vector3 size7 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].bounds.size;
+                            if (size7.x > num6)
+                            {
+                                Vector3 size8 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].bounds.size;
+                                num6 = size8.x;
+                            }
+                            Vector3 size9 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].bounds.size;
+                            if (size9.y > num6)
+                            {
+                                Vector3 size10 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].bounds.size;
+                                num6 = size10.y;
+                            }
+                            Vector3 size11 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].bounds.size;
+                            if (size11.z > num6)
+                            {
+                                Vector3 size12 = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].bounds.size;
+                                num6 = size12.z;
+                            }
+                            gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].rootBone = null;
+                        }
+                        else
+                        {
+                            UnityEngine.Object.Destroy(gameObject.GetComponentsInChildren<SkinnedMeshRenderer>()[num8].gameObject);
                         }
                     }
                     gameObject.transform.SetParent(this.embellishmentOptions[j].transform.Find("Model"));
@@ -16325,19 +16577,19 @@ public class Game : MonoBehaviour
                         List<GameObject> list = new List<GameObject>();
                         list.Add(this.embellishmentOptions[j].transform.Find("VariantBar").Find("BG").Find("Divider")
                             .gameObject);
-                        for (int m = 0; m < this.embellishmentVariants[j] - 1; m++)
+                        for (int n = 0; n < this.embellishmentVariants[j] - 1; n++)
                         {
                             list.Add(UnityEngine.Object.Instantiate(list[0]));
                         }
-                        for (int n = 0; n < list.Count; n++)
+                        for (int num9 = 0; num9 < list.Count; num9++)
                         {
-                            list[n].transform.SetParent(this.embellishmentOptions[j].transform.Find("VariantBar").Find("BG"));
-                            list[n].transform.localScale = Vector3.one;
+                            list[num9].transform.SetParent(this.embellishmentOptions[j].transform.Find("VariantBar").Find("BG"));
+                            list[num9].transform.localScale = Vector3.one;
                             this.v3 = Vector3.zero;
                             this.v3.y = -2f;
-                            this.v3.x = (float)(170 / this.embellishmentVariants[j] * (n + 1));
+                            this.v3.x = (float)(170 / this.embellishmentVariants[j] * (num9 + 1));
                             this.v3.z = 0f;
-                            list[n].transform.localPosition = this.v3;
+                            list[num9].transform.localPosition = this.v3;
                         }
                     }
                     else
@@ -16360,39 +16612,39 @@ public class Game : MonoBehaviour
                 this.needEmbellishmentMenuRebuild = false;
             }
             SelectableMenuManager.animate(this.embellishmentOptions, this.embellishmentContainer, (float)(132 / num), 165f, 132f);
-            for (int num8 = 0; num8 < this.embellishmentNames.Count; num8++)
+            for (int num10 = 0; num10 < this.embellishmentNames.Count; num10++)
             {
-                if (this.embellishmentVariants[num8] > 1)
+                if (this.embellishmentVariants[num10] > 1)
                 {
-                    ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("txtVariant")).GetComponent<Text>().text = Localization.getPhrase("VARIANT_NUMBER", string.Empty) + " " + (this.embellishmentVariantSelected[num8] + 1);
-                    ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("txtVariantTotal")).GetComponent<Text>().text = Localization.getPhrase("OUT_OF", string.Empty) + " " + this.embellishmentVariants[num8];
+                    ((UnityEngine.Component)this.embellishmentOptions[num10].transform.Find("txtVariant")).GetComponent<Text>().text = Localization.getPhrase("VARIANT_NUMBER", string.Empty) + " " + (this.embellishmentVariantSelected[num10] + 1);
+                    ((UnityEngine.Component)this.embellishmentOptions[num10].transform.Find("txtVariantTotal")).GetComponent<Text>().text = Localization.getPhrase("OUT_OF", string.Empty) + " " + this.embellishmentVariants[num10];
                     this.v3 = Vector3.zero;
                     this.v3.y = -12f;
-                    this.v3.x = (float)(170 / this.embellishmentVariants[num8]) * ((float)this.embellishmentVariantSelected[num8] + 0.5f);
-                    this.embellishmentOptions[num8].transform.Find("VariantBar").Find("BG").Find("Cursor")
+                    this.v3.x = (float)(170 / this.embellishmentVariants[num10]) * ((float)this.embellishmentVariantSelected[num10] + 0.5f);
+                    this.embellishmentOptions[num10].transform.Find("VariantBar").Find("BG").Find("Cursor")
                         .localPosition = this.v3;
                 }
                 else
                 {
-                    ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("txtVariant")).GetComponent<Text>().text = string.Empty;
-                    ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("txtVariantTotal")).GetComponent<Text>().text = string.Empty;
+                    ((UnityEngine.Component)this.embellishmentOptions[num10].transform.Find("txtVariant")).GetComponent<Text>().text = string.Empty;
+                    ((UnityEngine.Component)this.embellishmentOptions[num10].transform.Find("txtVariantTotal")).GetComponent<Text>().text = string.Empty;
                 }
                 bool flag2 = false;
                 if ((this.PC().data.embellishmentLayers[this.editingEmbellishmentLayer].embellishment.Split(new string[1]
                 {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "_"
-                }, StringSplitOptions.None).Length <= 1) ? (this.PC().data.embellishmentLayers[this.editingEmbellishmentLayer].embellishment == ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("txtFilename")).GetComponent<Text>().text) : (this.PC().data.embellishmentLayers[this.editingEmbellishmentLayer].embellishment.Split(new string[1]
+                }, StringSplitOptions.None).Length <= 1) ? (this.PC().data.embellishmentLayers[this.editingEmbellishmentLayer].embellishment == ((UnityEngine.Component)this.embellishmentOptions[num10].transform.Find("txtFilename")).GetComponent<Text>().text) : (this.PC().data.embellishmentLayers[this.editingEmbellishmentLayer].embellishment.Split(new string[1]
                 {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "_"
-                }, StringSplitOptions.None)[0] == ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("txtFilename")).GetComponent<Text>().text))
+                }, StringSplitOptions.None)[0] == ((UnityEngine.Component)this.embellishmentOptions[num10].transform.Find("txtFilename")).GetComponent<Text>().text))
                 {
-                    ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("BG")).GetComponent<Image>().color = Color.white;
-                    ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("VariantBar").Find("BG")).GetComponent<Image>().color = Color.white;
+                    ((UnityEngine.Component)this.embellishmentOptions[num10].transform.Find("BG")).GetComponent<Image>().color = Color.white;
+                    ((UnityEngine.Component)this.embellishmentOptions[num10].transform.Find("VariantBar").Find("BG")).GetComponent<Image>().color = Color.white;
                 }
                 else
                 {
-                    ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("BG")).GetComponent<Image>().color = Game.fadedCol;
-                    ((UnityEngine.Component)this.embellishmentOptions[num8].transform.Find("VariantBar").Find("BG")).GetComponent<Image>().color = Game.fadedCol;
+                    ((UnityEngine.Component)this.embellishmentOptions[num10].transform.Find("BG")).GetComponent<Image>().color = Game.fadedCol;
+                    ((UnityEngine.Component)this.embellishmentOptions[num10].transform.Find("VariantBar").Find("BG")).GetComponent<Image>().color = Game.fadedCol;
                 }
             }
         }
@@ -17123,6 +17375,7 @@ public class Game : MonoBehaviour
             {
                 this.textureLayers[i].GetComponent<TextureLayerUI>().isLayer = (i >= 1 && i < this.textureLayers.Count - 1);
                 this.textureLayers[i].GetComponent<TextureLayerUI>().id = i;
+                this.textureLayers[i].GetComponent<TextureLayerUI>().beenShown = false;
             }
         }
         this.v3 = this.textureLayerContainer.transform.localPosition;
@@ -17150,6 +17403,24 @@ public class Game : MonoBehaviour
         for (int j = 0; j < num; j++)
         {
             this.layer = this.textureLayers[j].transform;
+            Vector3 localPosition = this.layer.localPosition;
+            float y = localPosition.y;
+            Vector3 localPosition2 = this.textureLayerContainer.transform.localPosition;
+            if (!(y + (localPosition2.y + 325f) < -100f))
+            {
+                Vector3 localPosition3 = this.layer.localPosition;
+                float y2 = localPosition3.y;
+                Vector3 localPosition4 = this.textureLayerContainer.transform.localPosition;
+                if (y2 + (localPosition4.y + 325f) > 400f)
+                {
+                    goto IL_03bf;
+                }
+                goto IL_03ea;
+            }
+            goto IL_03bf;
+            IL_03ea:
+            this.layer.gameObject.SetActive(true);
+            ((UnityEngine.Component)this.layer).GetComponent<TextureLayerUI>().beenShown = true;
             if (j == 0)
             {
                 this.layer.Find("hdBaseColor").gameObject.SetActive(true);
@@ -17236,6 +17507,14 @@ public class Game : MonoBehaviour
                 ((UnityEngine.Component)this.layer.Find("BG")).GetComponent<Image>().color = Color.white;
                 this.layer.Find("cmdColor").gameObject.SetActive(true);
             }
+            continue;
+            IL_03bf:
+            if (((UnityEngine.Component)this.layer).GetComponent<TextureLayerUI>().beenShown)
+            {
+                this.layer.gameObject.SetActive(false);
+                continue;
+            }
+            goto IL_03ea;
         }
         this.originalEditColor = this.colorPicker.GetComponent<ColorPicker>().color;
         this.textureLayerContainer.SetActive(!this.texturePatternMenuOpen);
@@ -19073,39 +19352,6 @@ public class Game : MonoBehaviour
         }
     }
 
-    public void FixedUpdate()
-    {
-        if (this.ADT == 0f)
-        {
-            this.ADT = Time.deltaTime;
-        }
-        this.ADT += (Time.deltaTime - this.ADT) * 0.1f;
-        if (Time.deltaTime / this.ADT > 2f || this.justSkippedALaggyFrame)
-        {
-            if (this.justSkippedALaggyFrame)
-            {
-                this.justSkippedALaggyFrame = false;
-            }
-            else
-            {
-                this.justSkippedALaggyFrame = true;
-            }
-        }
-        else
-        {
-            Cum.process();
-            for (int i = 0; i < this.characters.Count; i++)
-            {
-                this.characters[i].FixedUpdate();
-            }
-            this.processInteractions();
-            this.processRenderCam();
-            this.processCamera();
-            this.mouseChangeSinceLastFixedUpdate = Vector3.zero;
-            Game.thereHasBeenAtLeastOneFixedUpdate = true;
-        }
-    }
-
     public void postRender()
     {
         this.processScreenColor();
@@ -19153,10 +19399,6 @@ public class Game : MonoBehaviour
                 {
                     this.PC().clothingPiecesEquipped[k].GetComponent<SkinnedMeshRenderer>().material = material;
                 }
-                for (int l = 0; l < this.PC().hairAppendages.Count; l++)
-                {
-                    this.PC().hairAppendages[l].appendage.GetComponentInChildren<SkinnedMeshRenderer>().material = material;
-                }
             }
             else
             {
@@ -19168,9 +19410,9 @@ public class Game : MonoBehaviour
                 rackCharacter2.teleport(x2, y2, z2, localEulerAngles2.y, false);
                 Material material2 = new Material(this.shader);
                 material2.CopyPropertiesFromMaterial(this.defaultMaterial);
-                for (int m = 0; m < this.PC().parts.Count; m++)
+                for (int l = 0; l < this.PC().parts.Count; l++)
                 {
-                    this.PC().parts[m].GetComponent<SkinnedMeshRenderer>().material = material2;
+                    this.PC().parts[l].GetComponent<SkinnedMeshRenderer>().material = material2;
                 }
                 this.PC().buildTexture();
                 this.PC().updateClothingBasedOnInventory();
@@ -20025,13 +20267,13 @@ public class Game : MonoBehaviour
                 {
                     if (!this.lightingControlPanelOpen && (Cursor.lockState == CursorLockMode.Locked || Input.GetMouseButton(1)))
                     {
-                        this.camFollowAngle += this.mouseChangeSinceLastFixedUpdate.x * 0.05f * (0.2f + UserSettings.data.lookSensitivity) * Game.cap(Time.deltaTime * 40f, 0f, 1f);
+                        this.camFollowAngle += this.mouseChange.x * 0.05f * (0.2f + UserSettings.data.lookSensitivity) * Game.cap(Time.deltaTime * 40f, 0f, 1f);
                         float num3 = 1f;
                         if (UserSettings.data.invertY)
                         {
                             num3 = -1f;
                         }
-                        this.camFollowElevation += this.mouseChangeSinceLastFixedUpdate.y * 0.05f * (0.2f + UserSettings.data.lookSensitivity) * num3 * Game.cap(Time.deltaTime * 40f, 0f, 1f);
+                        this.camFollowElevation += this.mouseChange.y * 0.05f * (0.2f + UserSettings.data.lookSensitivity) * num3 * Game.cap(Time.deltaTime * 40f, 0f, 1f);
                         if (this.camFollowElevation < 0.4f)
                         {
                             this.camFollowElevation = 0.4f;
@@ -20310,14 +20552,14 @@ public class Game : MonoBehaviour
 
     public GameObject createCharacterSkeleton(RackCharacter character)
     {
-        this.masterSkeleton.SetActive(true);
-        GameObject gameObject = UnityEngine.Object.Instantiate(this.masterSkeleton);
+        Game.masterSkeleton.SetActive(true);
+        GameObject gameObject = UnityEngine.Object.Instantiate(Game.masterSkeleton);
         Collider[] componentsInChildren = gameObject.GetComponentsInChildren<Collider>();
         for (int i = 0; i < componentsInChildren.Length; i++)
         {
             Physics.IgnoreCollision(((UnityEngine.Component)gameObject.transform.Find("MovementTarget")).GetComponent<Collider>(), componentsInChildren[i]);
         }
-        this.masterSkeleton.SetActive(false);
+        Game.masterSkeleton.SetActive(false);
         return gameObject;
     }
 

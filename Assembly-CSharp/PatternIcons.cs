@@ -7,14 +7,14 @@ public class PatternIcons
 {
 	public static patternDefinitionData data;
 
-	public static IEnumerator init()
-	{
-		if (!File.Exists(Application.persistentDataPath + "/characterTextures/_definitions.xml"))
-		{
-			UserSettings.rebuildGameAssets();
-		}
-		WWW www = new WWW("file:///" + Application.persistentDataPath + "/characterTextures/_definitions.xml");
-		yield return (object)www;
+    public static IEnumerator init()
+    {
+        if (!File.Exists(Application.persistentDataPath + "/characterTextures/_definitions.xml"))
+        {
+            UserSettings.rebuildGameAssets();
+        }
+        WWW www = new WWW("file:///" + Application.persistentDataPath + "/characterTextures/_definitions.xml");
+        yield return www;
         if (!string.IsNullOrEmpty(www.error))
         {
             Debug.Log("Error loading pattern definitions!");
@@ -40,7 +40,7 @@ public class PatternIcons
         yield break;
     }
 
-	public static bool isCustom(string patternName)
+    public static bool isCustom(string patternName)
 	{
 		for (int i = 0; i < PatternIcons.data.patterns.Count; i++)
 		{

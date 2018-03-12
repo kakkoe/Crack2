@@ -221,17 +221,17 @@ public class Interaction
 			int num2 = default(int);
 			if (performingNode != null)
 			{
-					Dictionary<string, int> dictionary = new Dictionary<string, int>(10);
-					dictionary.Add("footl", 0);
-					dictionary.Add("footr", 1);
-					dictionary.Add("balls", 2);
-					dictionary.Add("clit", 3);
-					dictionary.Add("penis", 4);
-					dictionary.Add("vagina", 5);
-					dictionary.Add("breastl", 6);
-					dictionary.Add("breastr", 7);
-					dictionary.Add("mouth", 8);
-					dictionary.Add("tailhole", 9);
+				Dictionary<string, int> dictionary = new Dictionary<string, int>(10);
+				dictionary.Add("footl", 0);
+				dictionary.Add("footr", 1);
+				dictionary.Add("balls", 2);
+				dictionary.Add("clit", 3);
+				dictionary.Add("penis", 4);
+				dictionary.Add("vagina", 5);
+				dictionary.Add("breastl", 6);
+				dictionary.Add("breastr", 7);
+				dictionary.Add("mouth", 8);
+				dictionary.Add("tailhole", 9);
 				if (dictionary.TryGetValue(performingNode, out num2))
 				{
 					switch (num2)
@@ -756,39 +756,41 @@ public class Interaction
 		pref4 = string.Empty;
 		if (interaction != null)
 		{
-			Dictionary<string, int> dictionary = new Dictionary<string, int>(32);
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(34);
 			dictionary.Add("rubcocktipwithfingers_performing", 1);
 			dictionary.Add("rubcocktipwithfingers_receiving", 2);
 			dictionary.Add("handjob_performing", 3);
 			dictionary.Add("handjob_receiving", 4);
-			dictionary.Add("polishcock_performing", 5);
-			dictionary.Add("polishcock_receiving", 6);
-			dictionary.Add("clitrub_performing", 7);
-			dictionary.Add("clitrub_receiving", 8);
-			dictionary.Add("fingervagina_performing", 9);
-			dictionary.Add("fingervagina_receiving", 10);
-			dictionary.Add("fingeranus_performing", 11);
-			dictionary.Add("fingeranus_receiving", 12);
-			dictionary.Add("fuckanus_performing", 13);
-			dictionary.Add("fuckanus_receiving", 14);
-			dictionary.Add("analridedick_performing", 15);
-			dictionary.Add("analridedick_receiving", 16);
-			dictionary.Add("fuckvagina_performing", 17);
-			dictionary.Add("fuckvagina_receiving", 18);
-			dictionary.Add("vaginalridedick_performing", 19);
-			dictionary.Add("vaginalridedick_receiving", 20);
-			dictionary.Add("blowjob_performing", 21);
-			dictionary.Add("blowjob_receiving", 22);
-			dictionary.Add("dildoanus_performing", 23);
-			dictionary.Add("dildoanus_receiving", 24);
-			dictionary.Add("chemicalinjection_performing", 25);
-			dictionary.Add("chemicalinjection_receiving", 26);
-			dictionary.Add("cunnilingus_performing", 27);
-			dictionary.Add("cunnilingus_receiving", 28);
-			dictionary.Add("rimming_performing", 29);
-			dictionary.Add("rimming_receiving", 30);
-			dictionary.Add("fuckmouth_performing", 31);
-			dictionary.Add("fuckmouth_receiving", 32);
+			dictionary.Add("ballfondle_performing", 5);
+			dictionary.Add("ballfondle_receiving", 6);
+			dictionary.Add("polishcock_performing", 7);
+			dictionary.Add("polishcock_receiving", 8);
+			dictionary.Add("clitrub_performing", 9);
+			dictionary.Add("clitrub_receiving", 10);
+			dictionary.Add("fingervagina_performing", 11);
+			dictionary.Add("fingervagina_receiving", 12);
+			dictionary.Add("fingeranus_performing", 13);
+			dictionary.Add("fingeranus_receiving", 14);
+			dictionary.Add("fuckanus_performing", 15);
+			dictionary.Add("fuckanus_receiving", 16);
+			dictionary.Add("analridedick_performing", 17);
+			dictionary.Add("analridedick_receiving", 18);
+			dictionary.Add("fuckvagina_performing", 19);
+			dictionary.Add("fuckvagina_receiving", 20);
+			dictionary.Add("vaginalridedick_performing", 21);
+			dictionary.Add("vaginalridedick_receiving", 22);
+			dictionary.Add("blowjob_performing", 23);
+			dictionary.Add("blowjob_receiving", 24);
+			dictionary.Add("dildoanus_performing", 25);
+			dictionary.Add("dildoanus_receiving", 26);
+			dictionary.Add("chemicalinjection_performing", 27);
+			dictionary.Add("chemicalinjection_receiving", 28);
+			dictionary.Add("cunnilingus_performing", 29);
+			dictionary.Add("cunnilingus_receiving", 30);
+			dictionary.Add("rimming_performing", 31);
+			dictionary.Add("rimming_receiving", 32);
+			dictionary.Add("fuckmouth_performing", 33);
+			dictionary.Add("fuckmouth_receiving", 34);
 			int num = default(int);
 			if (dictionary.TryGetValue(interaction, out num))
 			{
@@ -813,82 +815,88 @@ public class Interaction
 					pref1 = "handjob_receiving";
 					return;
 				case 7:
-					pref1 = "clitrub_giving";
+					pref1 = "handjob_giving";
 					return;
 				case 8:
-					pref1 = "clitrub_receiving";
+					pref1 = "handjob_receiving";
 					return;
 				case 9:
-					pref1 = "vaginalfingering_giving";
+					pref1 = "clitrub_giving";
 					return;
 				case 10:
-					pref1 = "vaginalfingering_receiving";
+					pref1 = "clitrub_receiving";
 					return;
 				case 11:
-					pref1 = "analfingering_giving";
+					pref1 = "vaginalfingering_giving";
 					return;
 				case 12:
-					pref1 = "analfingering_receiving";
+					pref1 = "vaginalfingering_receiving";
 					return;
 				case 13:
-					pref1 = "analfucking_giving";
+					pref1 = "analfingering_giving";
 					return;
 				case 14:
-					pref1 = "analfucking_receiving";
+					pref1 = "analfingering_receiving";
 					return;
 				case 15:
-					pref1 = "analfucking_receiving";
-					return;
-				case 16:
 					pref1 = "analfucking_giving";
 					return;
+				case 16:
+					pref1 = "analfucking_receiving";
+					return;
 				case 17:
-					pref1 = "vaginalfucking_giving";
+					pref1 = "analfucking_receiving";
 					return;
 				case 18:
-					pref1 = "vaginalfucking_receiving";
+					pref1 = "analfucking_giving";
 					return;
 				case 19:
-					pref1 = "vaginalfucking_receiving";
-					return;
-				case 20:
 					pref1 = "vaginalfucking_giving";
 					return;
+				case 20:
+					pref1 = "vaginalfucking_receiving";
+					return;
 				case 21:
-					pref1 = "blowjob_giving";
+					pref1 = "vaginalfucking_receiving";
 					return;
 				case 22:
-					pref1 = "blowjob_receiving";
+					pref1 = "vaginalfucking_giving";
 					return;
 				case 23:
-					pref1 = "sextoy_general";
+					pref1 = "blowjob_giving";
 					return;
 				case 24:
+					pref1 = "blowjob_receiving";
+					return;
+				case 25:
+					pref1 = "sextoy_general";
+					return;
+				case 26:
 					pref1 = "sextoy_general";
 					pref2 = "sextoy_anal";
 					return;
-				case 25:
-					pref1 = "mad_science";
-					return;
-				case 26:
-					pref1 = "mad_science";
-					return;
 				case 27:
-					pref1 = "cunnilingus_giving";
+					pref1 = "mad_science";
 					return;
 				case 28:
-					pref1 = "cunnilingus_receiving";
+					pref1 = "mad_science";
 					return;
 				case 29:
-					pref1 = "rimming_giving";
+					pref1 = "cunnilingus_giving";
 					return;
 				case 30:
-					pref1 = "rimming_receiving";
+					pref1 = "cunnilingus_receiving";
 					return;
 				case 31:
-					pref1 = "blowjob_receiving";
+					pref1 = "rimming_giving";
 					return;
 				case 32:
+					pref1 = "rimming_receiving";
+					return;
+				case 33:
+					pref1 = "blowjob_receiving";
+					return;
+				case 34:
 					pref1 = "blowjob_giving";
 					return;
 				}
@@ -906,6 +914,11 @@ public class Interaction
 		Interaction.addCompatiblePose("TableStraps.default", -1);
 		Interaction.addCompatiblePose("UpsideDown.default", -1);
 		Interaction.addToolMode("hand", "penis", "handjob");
+		Interaction.addCompatiblePose("RackChair.lifted", -1);
+		Interaction.addCompatiblePose("Stocks.lifted", -1);
+		Interaction.addCompatiblePose("TableStraps.default", -1);
+		Interaction.addCompatiblePose("UpsideDown.default", -1);
+		Interaction.addToolMode("hand", "balls", "ballfondle");
 		Interaction.addCompatiblePose("RackChair.lifted", -1);
 		Interaction.addCompatiblePose("Stocks.lifted", -1);
 		Interaction.addCompatiblePose("TableStraps.default", -1);
@@ -1144,24 +1157,25 @@ public class Interaction
 			string text = this.type;
 			if (text != null)
 			{
-				Dictionary<string, int> dictionary = new Dictionary<string, int>(17);
+				Dictionary<string, int> dictionary = new Dictionary<string, int>(18);
 				dictionary.Add("rubcocktipwithfingers", 0);
 				dictionary.Add("clitrub", 1);
 				dictionary.Add("handjob", 2);
-				dictionary.Add("polishcock", 3);
-				dictionary.Add("spreadvagina", 4);
-				dictionary.Add("fingeranus", 5);
-				dictionary.Add("fingervagina", 6);
-				dictionary.Add("fuckanus", 7);
-				dictionary.Add("fuckvagina", 8);
-				dictionary.Add("fuckmouth", 9);
-				dictionary.Add("analridedick", 10);
-				dictionary.Add("vaginalridedick", 11);
-				dictionary.Add("blowjob", 12);
-				dictionary.Add("dildoanus", 13);
-				dictionary.Add("chemicalinjection", 14);
-				dictionary.Add("cunnilingus", 15);
-				dictionary.Add("rimming", 16);
+				dictionary.Add("ballfondle", 3);
+				dictionary.Add("polishcock", 4);
+				dictionary.Add("spreadvagina", 5);
+				dictionary.Add("fingeranus", 6);
+				dictionary.Add("fingervagina", 7);
+				dictionary.Add("fuckanus", 8);
+				dictionary.Add("fuckvagina", 9);
+				dictionary.Add("fuckmouth", 10);
+				dictionary.Add("analridedick", 11);
+				dictionary.Add("vaginalridedick", 12);
+				dictionary.Add("blowjob", 13);
+				dictionary.Add("dildoanus", 14);
+				dictionary.Add("chemicalinjection", 15);
+				dictionary.Add("cunnilingus", 16);
+				dictionary.Add("rimming", 17);
 				int num = default(int);
 				if (dictionary.TryGetValue(text, out num))
 				{
@@ -1177,45 +1191,48 @@ public class Interaction
 						this.processHandjob();
 						break;
 					case 3:
-						this.processCockPolishing();
+						this.processBallFondle();
 						break;
 					case 4:
-						this.processVaginaSpread();
+						this.processCockPolishing();
 						break;
 					case 5:
-						this.processAnalFingering();
+						this.processVaginaSpread();
 						break;
 					case 6:
-						this.processVaginalFingering();
+						this.processAnalFingering();
 						break;
 					case 7:
-						this.processFucking(0, this.targetCharacter.tailholeEntranceAfterIK.transform, this.targetCharacter.tailholeEntrance.transform.right, ref this.targetCharacter.currentTailholeTightness, this.targetCharacter.data.tailholeTightness, false);
+						this.processVaginalFingering();
 						break;
 					case 8:
-						this.processFucking(1, this.targetCharacter.vaginalEntranceAfterIK.transform, this.targetCharacter.vaginaEntrance.transform.forward, ref this.targetCharacter.currentVaginalTightness, this.targetCharacter.data.vaginalTightness, false);
+						this.processFucking(0, this.targetCharacter.tailholeEntranceAfterIK.transform, this.targetCharacter.tailholeEntrance.transform.right, ref this.targetCharacter.currentTailholeTightness, this.targetCharacter.data.tailholeTightness, false);
 						break;
 					case 9:
-						this.processFucking(2, this.targetCharacter.throatHoleAfterIK.transform, this.targetCharacter.throatHoleAfterIK.transform.forward, ref this.targetCharacter.currentThroatTightness, 0f, false);
+						this.processFucking(1, this.targetCharacter.vaginalEntranceAfterIK.transform, this.targetCharacter.vaginaEntrance.transform.forward, ref this.targetCharacter.currentVaginalTightness, this.targetCharacter.data.vaginalTightness, false);
 						break;
 					case 10:
-						this.processDickRiding(0, this.performingCharacter.tailholeEntranceAfterIK.transform, ref this.performingCharacter.currentTailholeTightness, this.performingCharacter.data.tailholeTightness);
+						this.processFucking(2, this.targetCharacter.throatHoleAfterIK.transform, this.targetCharacter.throatHoleAfterIK.transform.forward, ref this.targetCharacter.currentThroatTightness, 0f, false);
 						break;
 					case 11:
-						this.processDickRiding(1, this.performingCharacter.vaginalEntranceAfterIK.transform, ref this.performingCharacter.currentVaginalTightness, this.performingCharacter.data.vaginalTightness);
+						this.processDickRiding(0, this.performingCharacter.tailholeEntranceAfterIK.transform, ref this.performingCharacter.currentTailholeTightness, this.performingCharacter.data.tailholeTightness);
 						break;
 					case 12:
-						this.processBlowjob();
+						this.processDickRiding(1, this.performingCharacter.vaginalEntranceAfterIK.transform, ref this.performingCharacter.currentVaginalTightness, this.performingCharacter.data.vaginalTightness);
 						break;
 					case 13:
-						this.processFucking(0, this.targetCharacter.tailholeEntranceAfterIK.transform, this.targetCharacter.tailholeEntrance.transform.right, ref this.targetCharacter.currentTailholeTightness, this.targetCharacter.data.tailholeTightness, true);
+						this.processBlowjob();
 						break;
 					case 14:
-						this.processChemicalInjection();
+						this.processFucking(0, this.targetCharacter.tailholeEntranceAfterIK.transform, this.targetCharacter.tailholeEntrance.transform.right, ref this.targetCharacter.currentTailholeTightness, this.targetCharacter.data.tailholeTightness, true);
 						break;
 					case 15:
-						this.processCunnilingus();
+						this.processChemicalInjection();
 						break;
 					case 16:
+						this.processCunnilingus();
+						break;
+					case 17:
 						this.processRimming();
 						break;
 					}
@@ -2026,6 +2043,81 @@ public class Interaction
 		this.processAudio(this.performingCharacter.interactionVigor, true);
 	}
 
+	public void processBallFondle()
+	{
+		this.checkInvertPositionDelay -= Time.deltaTime;
+		if (this.checkInvertPositionDelay <= 0f)
+		{
+			this.checkInvertPositionDelay += 3f;
+			this.angleBetween = Vector3.Angle(this.performingCharacter.up(), this.targetCharacter.forward());
+			this.invertedHandPosition = (this.angleBetween > 89f);
+		}
+		if (this.selfInteraction)
+		{
+			this.invertedHandPosition = false;
+		}
+		this.inverter = 1f;
+		if (this.invertedHandPosition)
+		{
+			this.inverter = -1f;
+		}
+		this.iMY = this.performingCharacter.interactionMY;
+		if (this.invertedHandPosition)
+		{
+			this.iMY = 1f - this.performingCharacter.interactionMY;
+		}
+		this.v3 = this.targetCharacter.bones.Ballsack1.position;
+		Transform transform = this.gizmo.transform;
+		transform.position += (this.v3 - this.gizmo.transform.position) * Game.cap(Time.deltaTime * 45f + this.firstFrameAccelerator, 0f, 1f);
+		if (this.performingNode == "handL")
+		{
+			this.v32 = this.gizmo.transform.InverseTransformPoint(-this.performingCharacter.right() + (this.v3 + this.performingCharacter.bones.SpineUpper.position * 3f) / 4f + this.v33);
+		}
+		if (this.performingNode == "handR")
+		{
+			this.v32 = this.gizmo.transform.InverseTransformPoint(this.performingCharacter.right() + (this.v3 + this.performingCharacter.bones.SpineUpper.position * 3f) / 4f + this.v33);
+		}
+		this.mountPoint.localPosition = this.v32.normalized * 0.33f * this.performingCharacter.height_act;
+		this.mountPoint.LookAt(this.v3, this.targetCharacter.directionAlongPenetrator(0, this.targetCharacter.bones.Penis0, this.targetCharacter.bones.Penis4, this.gizmoPosition * 0.321f, true, this.targetCharacter.bones.Penis0, this.targetCharacter.bones.Penis1, this.targetCharacter.bones.Penis2, this.targetCharacter.bones.Penis3, this.targetCharacter.bones.Penis4));
+		if (this.invertedHandPosition)
+		{
+			this.mountPoint.Rotate(0f, 0f, 180f);
+		}
+		if (this.performingNode == "handL")
+		{
+			this.mountPoint.Rotate(0f, 0f, 180f);
+		}
+		this.mountPoint.Rotate(79f, 167f, 70f);
+		if (this.performingNode == "handL")
+		{
+			this.performingCharacter.clenchHandL(0.05f, false, 0, 0.1f, -99f);
+			this.performingCharacter.clenchHandL(0.1f, false, 1, 0.5f, -99f);
+			this.performingCharacter.clenchHandL(0.15f, false, 2, 0.5f, -99f);
+			this.performingCharacter.clenchHandL(0.15f, false, 3, 0.5f, -99f);
+			Transform transform2 = this.mountPoint;
+			transform2.position += this.performingCharacter.right() * ((0f - this.performingCharacter.height_act * this.performingCharacter.handSize) * 0.03f + this.performingCharacter.interactionMX * 0.2f);
+		}
+		if (this.performingNode == "handR")
+		{
+			this.performingCharacter.clenchHandR(0.05f, false, 0, 0.1f, -99f);
+			this.performingCharacter.clenchHandR(0.1f, false, 1, 0.5f, -99f);
+			this.performingCharacter.clenchHandR(0.15f, false, 2, 0.5f, -99f);
+			this.performingCharacter.clenchHandR(0.15f, false, 3, 0.5f, -99f);
+			Transform transform3 = this.mountPoint;
+			transform3.position += this.performingCharacter.right() * (this.performingCharacter.height_act * this.performingCharacter.handSize * 0.03f + this.performingCharacter.interactionMX * 0.2f);
+		}
+		Transform transform4 = this.mountPoint;
+		transform4.position += -this.performingCharacter.up() * (this.performingCharacter.interactionMY * 0.2f);
+		this.targetCharacter.nudgeBalls(this.performingCharacter.interactionMX - 0.5f, this.performingCharacter.interactionMY - 0.5f);
+		this.targetCharacter.stimulate(this.performingCharacter.interactionVigor * 0.002f * this.targetCharacter.data.analPleasure);
+		this.targetCharacter.arouse(this.performingCharacter.interactionVigor * 0.003f * this.targetCharacter.data.analPleasure);
+		if (!this.audioInitted)
+		{
+			this.initAudio(string.Empty, string.Empty, "rub_in", 4, "rub_out", 4, 0.25f, 1f, 1f, true, true);
+		}
+		this.processAudio(this.gizmoPositionWithinBounds, true);
+	}
+
 	public void processHandjob()
 	{
 		this.checkInvertPositionDelay -= Time.deltaTime;
@@ -2075,7 +2167,7 @@ public class Interaction
 		}
 		this.mountPoint.localPosition = this.v32.normalized * 0.33f * this.performingCharacter.height_act;
 		this.mountPoint.LookAt(this.v3, this.targetCharacter.directionAlongPenetrator(0, this.targetCharacter.bones.Penis0, this.targetCharacter.bones.Penis4, this.gizmoPosition * 0.321f, true, this.targetCharacter.bones.Penis0, this.targetCharacter.bones.Penis1, this.targetCharacter.bones.Penis2, this.targetCharacter.bones.Penis3, this.targetCharacter.bones.Penis4));
-		this.handScale = this.performingCharacter.height_act / this.targetCharacter.penisLengthInWorldUnits * 0.6f;
+		this.handScale = this.performingCharacter.height_act * this.performingCharacter.handSize / this.targetCharacter.penisLengthInWorldUnits * 0.6f;
 		if (this.invertedHandPosition)
 		{
 			this.minGizmoPosition = 0.15f;

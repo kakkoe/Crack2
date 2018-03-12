@@ -31,7 +31,7 @@ public class ApproachPoint : MonoBehaviour
 		}
 	}
 
-	private void FixedUpdate()
+	private void Update()
 	{
 		if (this.hasLittlePoint)
 		{

@@ -21,7 +21,7 @@ public class HologramMonitor : MonoBehaviour
 		base.GetComponentInChildren<Animator>().speed = 0.9f + Random.value * 0.4f;
 	}
 
-	private void FixedUpdate()
+	private void Update()
 	{
 		this.frameChangeDelay -= Time.deltaTime;
 		if (this.frameChangeDelay <= 0f)

@@ -16,6 +16,8 @@ public class TextureLayerUI : MonoBehaviour
 
 	public GameObject cmdDelete;
 
+	public bool beenShown;
+
 	private Vector3 v3 = default(Vector3);
 
 	private Color fadeColor;

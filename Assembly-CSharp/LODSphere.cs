@@ -13,15 +13,15 @@ public class LODSphere : MonoBehaviour
 
 	private string shaderBase;
 
-	private IEnumerator Start()
-	{
-		this.lodScript = base.GetComponent<ImperialFurLOD>();
-		this.demoScript = GameObject.Find("LODDemo").GetComponent<LODDemo>();
-		this.material = base.gameObject.GetComponent<Renderer>().material;
-		int index = this.material.shader.name.LastIndexOf('/');
-		this.shaderBase = this.material.shader.name.Substring(0, index + 1);
-		Vector3 pointA = base.transform.position;
-		Vector3 pointB = base.transform.position - new Vector3(0f, 0f, 10f);
+    private IEnumerator Start()
+    {
+        this.lodScript = base.GetComponent<ImperialFurLOD>();
+        this.demoScript = GameObject.Find("LODDemo").GetComponent<LODDemo>();
+        this.material = base.gameObject.GetComponent<Renderer>().material;
+        int index = this.material.shader.name.LastIndexOf('/');
+        this.shaderBase = this.material.shader.name.Substring(0, index + 1);
+        Vector3 pointA = base.transform.position;
+        Vector3 pointB = base.transform.position - new Vector3(0f, 0f, 10f);
         for (; ; )
         {
             yield return base.StartCoroutine(this.MoveObject(base.transform, pointA, pointB, 3f));
@@ -30,7 +30,7 @@ public class LODSphere : MonoBehaviour
         yield break;
     }
 
-	private void Update()
+    private void Update()
 	{
 		if (this.demoScript.lodOn && !this.lodEnabled)
 		{

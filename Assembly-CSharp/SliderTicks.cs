@@ -13,7 +13,7 @@ public class SliderTicks : MonoBehaviour
 
 	private void Update()
 	{
-		if (Mathf.Abs(base.GetComponent<UnityEngine.UI.Slider>().value - this.lastVal) > 0.1f)
+		if (Game.initted && Mathf.Abs(base.GetComponent<UnityEngine.UI.Slider>().value - this.lastVal) > 0.1f)
 		{
 			if (SliderTicks.tickDelay <= 0f)
 			{

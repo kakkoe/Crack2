@@ -43,16 +43,6 @@ public class Elevator : MonoBehaviour
 		{
 			this.game.context(Localization.getPhrase("USE_ELEVATOR", string.Empty), this.activateElevator, this.platform.position, false);
 		}
-	}
-
-	private bool activateElevator()
-	{
-		this.elevatorUp = !this.elevatorUp;
-		return true;
-	}
-
-	private void FixedUpdate()
-	{
 		this.elevatorHover = false;
 		if ((Object)this.game == (Object)null)
 		{
@@ -193,5 +183,11 @@ public class Elevator : MonoBehaviour
 		this.v3.x = (this.v3.z = this.fenceScale);
 		this.v3.y = 1f;
 		this.fence.localScale = this.v3;
+	}
+
+	private bool activateElevator()
+	{
+		this.elevatorUp = !this.elevatorUp;
+		return true;
 	}
 }
