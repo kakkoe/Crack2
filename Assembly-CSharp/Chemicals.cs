@@ -10,7 +10,7 @@ public class Chemicals
 		Chemicals.doseDuration = 30f;
 		if (chemical != null)
 		{
-			Dictionary<string, int> dictionary = new Dictionary<string, int>(9);
+			Dictionary<string, int> dictionary = new Dictionary<string, int>(15);
 			dictionary.Add("Chemical.ChemicalNeutralizer", 1);
 			dictionary.Add("Chemical.OrgasmInhibitor", 2);
 			dictionary.Add("Chemical.OrgasmInhibitor!", 3);
@@ -20,6 +20,12 @@ public class Chemicals
 			dictionary.Add("Chemical.ArousalUp!", 7);
 			dictionary.Add("Chemical.SizeIncreaser", 8);
 			dictionary.Add("Chemical.SizeIncreaser!", 9);
+			dictionary.Add("Chemical.FluidOutputIncreaser", 10);
+			dictionary.Add("Chemical.FluidOutputIncreaser!", 11);
+			dictionary.Add("Chemical.DominanceDown", 12);
+			dictionary.Add("Chemical.DominanceDown!", 13);
+			dictionary.Add("Chemical.TightnessReducer", 14);
+			dictionary.Add("Chemical.TightnessReducer!", 15);
 			int num = default(int);
 			if (dictionary.TryGetValue(chemical, out num))
 			{
@@ -59,15 +65,15 @@ public class Chemicals
 					if (character.arousal < 1f)
 					{
 						character.arousal += Time.deltaTime * 0.03f;
-						Chemicals.doseDuration = 120f;
 					}
+					Chemicals.doseDuration = 120f;
 					break;
 				case 7:
 					if (character.arousal > 0f)
 					{
 						character.arousal -= Time.deltaTime * 0.03f;
-						Chemicals.doseDuration = 120f;
 					}
+					Chemicals.doseDuration = 120f;
 					break;
 				case 8:
 					character.artificialBigness = amountInSystem;
@@ -76,6 +82,66 @@ public class Chemicals
 				case 9:
 					character.artificialSmallness = amountInSystem;
 					Chemicals.doseDuration = 10000f;
+					break;
+				case 10:
+					character.artificialFluidOutputIncrease = amountInSystem;
+					Chemicals.doseDuration = 10000f;
+					break;
+				case 11:
+					character.artificialFluidOutputDecrease = amountInSystem;
+					Chemicals.doseDuration = 10000f;
+					break;
+				case 12:
+					Chemicals.doseDuration = 10f;
+					if (character.dominance > -1f)
+					{
+						character.dominance -= Time.deltaTime * 0.05f;
+					}
+					if (character.aggression > -1f)
+					{
+						character.aggression -= Time.deltaTime * 0.03f;
+					}
+					break;
+				case 13:
+					Chemicals.doseDuration = 10f;
+					if (character.dominance < 1f)
+					{
+						character.dominance += Time.deltaTime * 0.05f;
+					}
+					if (character.aggression < 1f)
+					{
+						character.aggression += Time.deltaTime * 0.03f;
+					}
+					break;
+				case 14:
+					Chemicals.doseDuration = 10f;
+					if (character.currentVaginalTightness > 0f)
+					{
+						character.currentVaginalTightness -= Time.deltaTime * 0.1f;
+					}
+					if (character.currentTailholeTightness > 0f)
+					{
+						character.currentTailholeTightness -= Time.deltaTime * 0.1f;
+					}
+					if (character.currentThroatTightness > 0f)
+					{
+						character.currentThroatTightness -= Time.deltaTime * 0.1f;
+					}
+					break;
+				case 15:
+					Chemicals.doseDuration = 10f;
+					if (character.currentVaginalTightness < 1f)
+					{
+						character.currentVaginalTightness += Time.deltaTime * 0.1f;
+					}
+					if (character.currentTailholeTightness < 1f)
+					{
+						character.currentTailholeTightness += Time.deltaTime * 0.1f;
+					}
+					if (character.currentThroatTightness < 1f)
+					{
+						character.currentThroatTightness += Time.deltaTime * 0.1f;
+					}
 					break;
 				}
 			}

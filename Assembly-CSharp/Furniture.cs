@@ -78,10 +78,6 @@ public class Furniture : MonoBehaviour
 				Game.gameInstance.context(Localization.getPhrase(this.unuseString, string.Empty), this.unuseFurniture, base.transform.position, true);
 			}
 		}
-	}
-
-	private void FixedUpdate()
-	{
 		if ((Object)Game.gameInstance != (Object)null)
 		{
 			if (this.occupant != null && (Object)this.occupant.GO == (Object)null)

@@ -13,6 +13,8 @@ public class UserSettings
 
 	public static string saveDataDirectory;
 
+	public static bool rebuilding;
+
     public static bool doesCharacterNeedRedraw(RackCharacter character)
     {
         bool flag = UserSettings.data.cachedTextures.Contains(character.data.uid);
@@ -21,81 +23,81 @@ public class UserSettings
         {
             flag = (flag && File.Exists(string.Concat(new object[]
             {
-                Application.persistentDataPath,
-                string.Empty,
-                Game.PathDirectorySeparatorChar,
-                "characters",
-                Game.PathDirectorySeparatorChar,
-                "texturecache",
-                Game.PathDirectorySeparatorChar,
-                string.Empty,
-                character.data.uid,
-                "-head.png"
+            Application.persistentDataPath,
+            string.Empty,
+            Game.PathDirectorySeparatorChar,
+            "characters",
+            Game.PathDirectorySeparatorChar,
+            "texturecache",
+            Game.PathDirectorySeparatorChar,
+            string.Empty,
+            character.data.uid,
+            "-head.png"
             })));
             flag = (flag && File.Exists(string.Concat(new object[]
             {
-                Application.persistentDataPath,
-                string.Empty,
-                Game.PathDirectorySeparatorChar,
-                "characters",
-                Game.PathDirectorySeparatorChar,
-                "texturecache",
-                Game.PathDirectorySeparatorChar,
-                string.Empty,
-                character.data.uid,
-                "-body.png"
+            Application.persistentDataPath,
+            string.Empty,
+            Game.PathDirectorySeparatorChar,
+            "characters",
+            Game.PathDirectorySeparatorChar,
+            "texturecache",
+            Game.PathDirectorySeparatorChar,
+            string.Empty,
+            character.data.uid,
+            "-body.png"
             })));
             flag = (flag && File.Exists(string.Concat(new object[]
             {
-                Application.persistentDataPath,
-                string.Empty,
-                Game.PathDirectorySeparatorChar,
-                "characters",
-                Game.PathDirectorySeparatorChar,
-                "texturecache",
-                Game.PathDirectorySeparatorChar,
-                string.Empty,
-                character.data.uid,
-                "-wing.png"
+            Application.persistentDataPath,
+            string.Empty,
+            Game.PathDirectorySeparatorChar,
+            "characters",
+            Game.PathDirectorySeparatorChar,
+            "texturecache",
+            Game.PathDirectorySeparatorChar,
+            string.Empty,
+            character.data.uid,
+            "-wing.png"
             })));
             flag = (flag && File.Exists(string.Concat(new object[]
             {
-                Application.persistentDataPath,
-                string.Empty,
-                Game.PathDirectorySeparatorChar,
-                "characters",
-                Game.PathDirectorySeparatorChar,
-                "texturecache",
-                Game.PathDirectorySeparatorChar,
-                string.Empty,
-                character.data.uid,
-                "-headFX.png"
+            Application.persistentDataPath,
+            string.Empty,
+            Game.PathDirectorySeparatorChar,
+            "characters",
+            Game.PathDirectorySeparatorChar,
+            "texturecache",
+            Game.PathDirectorySeparatorChar,
+            string.Empty,
+            character.data.uid,
+            "-headFX.png"
             })));
             flag = (flag && File.Exists(string.Concat(new object[]
             {
-                Application.persistentDataPath,
-                string.Empty,
-                Game.PathDirectorySeparatorChar,
-                "characters",
-                Game.PathDirectorySeparatorChar,
-                "texturecache",
-                Game.PathDirectorySeparatorChar,
-                string.Empty,
-                character.data.uid,
-                "-bodyFX.png"
+            Application.persistentDataPath,
+            string.Empty,
+            Game.PathDirectorySeparatorChar,
+            "characters",
+            Game.PathDirectorySeparatorChar,
+            "texturecache",
+            Game.PathDirectorySeparatorChar,
+            string.Empty,
+            character.data.uid,
+            "-bodyFX.png"
             })));
             flag = (flag && File.Exists(string.Concat(new object[]
             {
-                Application.persistentDataPath,
-                string.Empty,
-                Game.PathDirectorySeparatorChar,
-                "characters",
-                Game.PathDirectorySeparatorChar,
-                "texturecache",
-                Game.PathDirectorySeparatorChar,
-                string.Empty,
-                character.data.uid,
-                "-wingFX.png"
+            Application.persistentDataPath,
+            string.Empty,
+            Game.PathDirectorySeparatorChar,
+            "characters",
+            Game.PathDirectorySeparatorChar,
+            "texturecache",
+            Game.PathDirectorySeparatorChar,
+            string.Empty,
+            character.data.uid,
+            "-wingFX.png"
             })));
             bool flag3 = !flag;
             if (flag3)
@@ -255,6 +257,7 @@ public class UserSettings
 
 	public static void loadSettings()
 	{
+		UserSettings.data = new SettingsData();
 		UserSettings.saveDataDirectory = Application.persistentDataPath + string.Empty + Game.PathDirectorySeparatorChar + "savedata" + Game.PathDirectorySeparatorChar + string.Empty;
 		if (File.Exists(UserSettings.saveDataDirectory + "rackNetCache.rncache"))
 		{
@@ -273,65 +276,66 @@ public class UserSettings
 			FileStream fileStream2 = new FileStream(UserSettings.saveDataDirectory + "user.rackSettings", FileMode.Open);
 			UserSettings.data = (xmlSerializer2.Deserialize(fileStream2) as SettingsData);
 			fileStream2.Close();
-			if (UserSettings.data.gameVersion < Game.wipeVersion)
+			if (UserSettings.data.gameVersion < Game.gameVersion)
 			{
-				try
-				{
-					Directory.Delete(Application.persistentDataPath, true);
-				}
-				catch
-				{
-					Debug.Log("Unable to delete old game files.");
-				}
-				FileInfo fileInfo = new FileInfo(Application.persistentDataPath);
-				while (fileInfo.Exists)
-				{
-					Thread.Sleep(100);
-					fileInfo.Refresh();
-				}
-				Debug.Log("Rebuilding game assets because of a wipe version trigger");
-				UserSettings.rebuildGameAssets();
-				UserSettings.loadSettings();
-				return;
+				Game.readyToProceedToGameInit = false;
 			}
-			UserSettings.saveSettings();
+			else
+			{
+				UserSettings.saveSettings();
+				Game.readyToProceedToGameInit = true;
+			}
 		}
 		else
 		{
 			UserSettings.data = new SettingsData();
+			UserSettings.data.gameVersion = Game.gameVersion;
 			UserSettings.saveSettings();
+			Game.readyToProceedToGameInit = true;
 		}
-		if (UserSettings.data.gameVersion < Game.wipeVersion || UserSettings.data.needDirectoryRebuild)
-		{
-			Debug.Log("Rebuilding game assets because of a new version");
-			Debug.Log(UserSettings.data.gameVersion + " < " + Game.gameVersion + " || " + UserSettings.data.needDirectoryRebuild);
-			UserSettings.rebuildGameAssets();
-		}
-		UserSettings.data.gameVersion = Game.gameVersion;
 	}
 
 	public static void rebuildGameAssets()
 	{
+		UserSettings.rebuilding = true;
 		try
 		{
-			UserSettings.copyDirectory(Application.dataPath + string.Empty + Game.PathDirectorySeparatorChar + "Rack 2_ Furry Science", Application.persistentDataPath);
-			Debug.Log("Successfully rebuild game directory.");
-			if (UserSettings.data != null)
-			{
-				UserSettings.data.needDirectoryRebuild = false;
-			}
-			Game.gameInstance.closePopup(null);
-			UserSettings.saveSettings();
+			Directory.Delete(Application.persistentDataPath, true);
 		}
-		catch (Exception ex)
+		catch
 		{
-			Debug.Log("Failed to copy directory.");
-			Debug.Log("Source: " + Application.dataPath + string.Empty + Game.PathDirectorySeparatorChar + "Rack 2_ Furry Science");
-			Debug.Log("Destination: " + Application.persistentDataPath);
-			Debug.Log(ex.Message);
-			Debug.Log(ex.StackTrace);
-			Game.gameInstance.popup("ASSET_FOLDER_UPDATE_FAILED", false, false);
+			Debug.Log("Unable to delete old game files, possibly because they don't exist.");
 		}
+		try
+		{
+			FileInfo fileInfo = new FileInfo(Application.persistentDataPath);
+			while (fileInfo.Exists)
+			{
+				Thread.Sleep(100);
+				fileInfo.Refresh();
+			}
+			try
+			{
+				UserSettings.copyDirectory(Application.dataPath + string.Empty + Game.PathDirectorySeparatorChar + "Rack 2_ Furry Science", Application.persistentDataPath);
+				Debug.Log("Successfully rebuild game directory.");
+				Game.gameInstance.closePopup(null);
+				UserSettings.loadSettings();
+			}
+			catch (Exception ex)
+			{
+				Debug.Log("Failed to copy directory.");
+				Debug.Log("Source: " + Application.dataPath + string.Empty + Game.PathDirectorySeparatorChar + "Rack 2_ Furry Science");
+				Debug.Log("Destination: " + Application.persistentDataPath);
+				Debug.Log(ex.Message);
+				Debug.Log(ex.StackTrace);
+				Game.gameInstance.popup("ASSET_FOLDER_UPDATE_FAILED", false, false);
+			}
+		}
+		catch
+		{
+			Debug.Log("Unable to create new game files");
+		}
+		UserSettings.rebuilding = false;
 	}
 
 	public static List<SaveFile> getSaveFiles(bool freeplay)
@@ -472,7 +476,7 @@ public class UserSettings
 			FileInfo fileInfo2 = new FileInfo(Path.Combine(strDestination, fileInfo.Name));
 			while (!fileInfo2.Exists)
 			{
-				Thread.Sleep(5);
+				Thread.Sleep(1);
 				fileInfo2.Refresh();
 			}
 		}

@@ -47,4 +47,7 @@ public class EmbellishmentLayer
 
 	[XmlElement("temporaryLayer")]
 	public bool temporaryLayer;
+
+	[XmlElement("genderRequirement")]
+	public int genderRequirement;
 }

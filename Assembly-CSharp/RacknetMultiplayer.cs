@@ -475,7 +475,10 @@ public class RacknetMultiplayer
         }
         RacknetMultiplayer.lobbyConnectionStatus = 0;
         RacknetMultiplayer.dataTransferStatus = 0;
-        RacknetMultiplayer.game.needPauseRebuild = true;
+        if ((UnityEngine.Object)RacknetMultiplayer.game != (UnityEngine.Object)null)
+        {
+            RacknetMultiplayer.game.needPauseRebuild = true;
+        }
     }
 
     public static void connectToLobby()
@@ -846,9 +849,8 @@ public class RacknetMultiplayer
     public static IEnumerator loadTexIntoRawImage(string url, RawImage rawImage)
     {
         WWW texIMG = new WWW(url);
-        yield return (object)texIMG;
-        bool flag = texIMG.error == null || texIMG.error == string.Empty;
-        if (flag)
+        yield return texIMG;
+        if (texIMG.error == null || texIMG.error == string.Empty)
         {
             Texture2D texture = new Texture2D(128, 128);
             texIMG.LoadImageIntoTexture(texture);
@@ -1489,7 +1491,7 @@ public class RacknetMultiplayer
     public static IEnumerator loadPreviewCharacterFromURL(string url)
     {
         WWW www = new WWW(url);
-        yield return (object)www;
+        yield return www;
         RacknetMultiplayer.previewCharacter = new RackCharacter(RacknetMultiplayer.game, CharacterManager.deserializeCharacterData(www.text, url), false, null, 0f, string.Empty);
         RacknetMultiplayer.previewCharacter.isPreviewCharacter = true;
         RacknetMultiplayer.previewCharacter.racknetAccountID = url.Split(new char[]
@@ -1607,42 +1609,45 @@ public class RacknetMultiplayer
                 suffix = "_wingsfx";
                 break;
         }
-        string fileName2 = RacknetMultiplayer.myAccountUID + RacknetMultiplayer.customTexturesUploading[0] + suffix + ".png";
-        fileName2 = fileName2.Replace("decal_cache/", string.Empty);
-        string existingFilename = Application.persistentDataPath + "/characterTextures/" + RacknetMultiplayer.customTexturesUploading[0] + suffix + ".png";
+        string fileName = RacknetMultiplayer.myAccountUID + RacknetMultiplayer.customTexturesUploading[0] + suffix + ".png";
+        fileName = fileName.Replace("decal_cache/", string.Empty);
+        string existingFilename = string.Concat(new string[]
+        {
+        Application.persistentDataPath,
+        "/characterTextures/",
+        RacknetMultiplayer.customTexturesUploading[0],
+        suffix,
+        ".png"
+        });
         if (!File.Exists(existingFilename))
         {
             RacknetMultiplayer.finishedUploadingCustomTexture();
-            yield break;
-        }
-        WWWForm form = new WWWForm();
-        form.AddField("action", "custom texture upload");
-        form.AddField("fullfilename", fileName2);
-        form.AddField("verify", RacknetMultiplayer.MD5Hash(GameID.racknet_upload_salt.ToString() + fileName2.Replace("/", string.Empty).Replace("\\", string.Empty) + GameID.racknet_upload_pepper.ToString()).ToLower());
-        form.AddField("file", "file");
-        form.AddBinaryData("file", File.ReadAllBytes(existingFilename), fileName2, "image/png");
-        UnityWebRequest w = UnityWebRequest.Post("http://fekrack.net/upload_rack2_character_texture.php", form);
-        yield return (object)w.Send();
-        bool isNetworkError = w.isNetworkError;
-        if (isNetworkError)
-        {
-            Debug.Log("Error uploading custom tex '" + existingFilename + "': " + w.error);
-            RacknetMultiplayer.waitingForCustomTexUpload = false;
-            RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
-            RacknetMultiplayer.checkAvatarAndXMLUpload();
         }
         else
         {
-            bool isDone = w.isDone;
-            if (isDone)
+            WWWForm form = new WWWForm();
+            form.AddField("action", "custom texture upload");
+            form.AddField("fullfilename", fileName);
+            form.AddField("verify", RacknetMultiplayer.MD5Hash(GameID.racknet_upload_salt.ToString() + fileName.Replace("/", string.Empty).Replace("\\", string.Empty) + GameID.racknet_upload_pepper.ToString()).ToLower());
+            form.AddField("file", "file");
+            form.AddBinaryData("file", File.ReadAllBytes(existingFilename), fileName, "image/png");
+            UnityWebRequest w = UnityWebRequest.Post("http://fekrack.net/upload_rack2_character_texture.php", form);
+            yield return w.Send();
+            if (w.isNetworkError)
+            {
+                Debug.Log("Error uploading custom tex '" + existingFilename + "': " + w.error);
+                RacknetMultiplayer.waitingForCustomTexUpload = false;
+                RacknetMultiplayer.errorMessage = Localization.getPhrase("ERROR_UPLOADING_YOURSELF", string.Empty);
+                RacknetMultiplayer.checkAvatarAndXMLUpload();
+            }
+            else if (w.isDone)
             {
                 yield return new WaitForSeconds(1f);
-                RacknetMultiplayer.uploadedAvatarFilename = "http://fekrack.net/rack2/characters/customtextures/" + fileName2;
+                RacknetMultiplayer.uploadedAvatarFilename = "http://fekrack.net/rack2/characters/customtextures/" + fileName;
                 RacknetMultiplayer.customTextureURLs.Add(RacknetMultiplayer.uploadedAvatarFilename);
-                WWW w2 = new WWW("http://fekrack.net/rack2/characters/customtextures/" + fileName2);
+                WWW w2 = new WWW("http://fekrack.net/rack2/characters/customtextures/" + fileName);
                 yield return w2;
-                bool flag2 = w2.error != null && w2.error != string.Empty;
-                if (flag2)
+                if (w2.error != null && w2.error != string.Empty)
                 {
                     Debug.Log("Error confirming upload:");
                     Debug.Log(w2.error);
@@ -1654,10 +1659,9 @@ public class RacknetMultiplayer
                 {
                     RacknetMultiplayer.finishedUploadingCustomTexture();
                 }
-                w2 = null;
             }
         }
-        ;
+        yield break;
     }
 
     public static void finishedUploadingCustomTexture()
@@ -1748,9 +1752,8 @@ public class RacknetMultiplayer
         form.AddField("file", "file");
         form.AddBinaryData("file", uploadData, fileName, "text/xml");
         UnityWebRequest w = UnityWebRequest.Post("http://fekrack.net/upload_rack2_character_xml.php", form);
-        yield return (object)w.Send();
-        bool isNetworkError = w.isNetworkError;
-        if (isNetworkError)
+        yield return w.Send();
+        if (w.isNetworkError)
         {
             Debug.Log("Error uploading XML: " + w.error);
             RacknetMultiplayer.waitingForXMLUpload = false;
@@ -1805,6 +1808,7 @@ public class RacknetMultiplayer
                 w2 = null;
             }
         }
+        yield break;
     }
 
     public static IEnumerator UploadAvatar()
@@ -1817,9 +1821,8 @@ public class RacknetMultiplayer
         form.AddField("file", "file");
         form.AddBinaryData("file", RacknetMultiplayer.avatarBytes, fileName, "image/png");
         UnityWebRequest w = UnityWebRequest.Post("http://fekrack.net/upload_rack2_character_avatar.php", form);
-        yield return (object)w.Send();
-        bool isNetworkError = w.isNetworkError;
-        if (isNetworkError)
+        yield return w.Send();
+        if (w.isNetworkError)
         {
             Debug.Log("Error uploading avatar: " + w.error);
             RacknetMultiplayer.waitingForAvatarUpload = false;

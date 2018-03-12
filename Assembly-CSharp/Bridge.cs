@@ -43,7 +43,7 @@ public class Bridge : MonoBehaviour
 		this.updateRailings();
 	}
 
-	private void FixedUpdate()
+	private void Update()
 	{
 		if ((Object)this.game == (Object)null)
 		{

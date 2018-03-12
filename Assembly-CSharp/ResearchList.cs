@@ -15,8 +15,11 @@ public class ResearchList
 		ResearchList.addResearchTaskToList("ChemicalSynthesisBay", "SCIENCE_EQUIPMENT", 0.4f, string.Empty, string.Empty);
 		ResearchList.addResearchTaskToList("Chemical.AutomaticPleasure", "CHEMICALS", 0.2f, string.Empty, "ChemicalSynthesisBay");
 		ResearchList.addResearchTaskToList("Chemical.ChemicalNeutralizer", "CHEMICALS", 0.5f, string.Empty, "Chemical.AutomaticPleasure");
+		ResearchList.addResearchTaskToList("Chemical.TightnessReducer", "CHEMICALS", 0.2f, string.Empty, "Chemical.ChemicalNeutralizer");
+		ResearchList.addResearchTaskToList("Chemical.DominanceDown", "CHEMICALS", 0.8f, string.Empty, "Chemical.TightnessReducer");
 		ResearchList.addResearchTaskToList("Chemical.ArousalUp", "CHEMICALS", 0.1f, string.Empty, "Chemical.AutomaticPleasure");
-		ResearchList.addResearchTaskToList("Chemical.OrgasmInhibitor", "CHEMICALS", 0.4f, string.Empty, "Chemical.ArousalUp");
+		ResearchList.addResearchTaskToList("Chemical.OrgasmInhibitor", "CHEMICALS", 0.3f, string.Empty, "Chemical.ArousalUp");
+		ResearchList.addResearchTaskToList("Chemical.FluidOutputIncreaser", "CHEMICALS", 0.5f, string.Empty, "Chemical.ArousalUp");
 		ResearchList.addResearchTaskToList("Chemical.SizeIncreaser", "CHEMICALS", 0.2f, "Sizeplay", "ChemicalSynthesisBay");
 		ResearchList.addResearchTaskToList("ApparatusManufacturingBay", "SCIENCE_EQUIPMENT", 0.6f, string.Empty, "MaterialSynthesisStation");
 		ResearchList.addResearchTaskToList("Stocks", "BONDAGE_APPARATUS", 0.5f, string.Empty, "ApparatusManufacturingBay");

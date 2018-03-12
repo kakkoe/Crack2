@@ -46,6 +46,7 @@
     <Compile Include="BondageApparatus.cs" />
     <Compile Include="BondagePoint.cs" />
     <Compile Include="Bones.cs" />
+    <Compile Include="BoneState.cs" />
     <Compile Include="Bridge.cs" />
     <Compile Include="ButtBugDetector.cs" />
     <Compile Include="CameraFacingBillboard.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Grass.cs" />
     <Compile Include="HairAddonColorMenu.cs" />
     <Compile Include="HairLayer.cs" />
+    <Compile Include="HairObject.cs" />
     <Compile Include="hexOption.cs" />
     <Compile Include="HexOptionSystem.cs" />
     <Compile Include="HologramMonitor.cs" />
@@ -251,6 +253,7 @@
     <Compile Include="SSAOPro.cs" />
     <Compile Include="StepLift.cs" />
     <Compile Include="TestingRoom.cs" />
+    <Compile Include="TextureDebug.cs" />
     <Compile Include="TextureLayer.cs" />
     <Compile Include="TextureLayerMask.cs" />
     <Compile Include="TextureLayerUI.cs" />
@@ -263,8 +266,49 @@
     <Compile Include="Tooltip.cs" />
     <Compile Include="TooltipButton.cs" />
     <Compile Include="ToyMaterials.cs" />
+    <Compile Include="TransformDeepChildExtension.cs" />
     <Compile Include="TransparencyType.cs" />
     <Compile Include="TriggerListener.cs" />
+    <Compile Include="TriLib.Extras\AvatarLoader.cs" />
+    <Compile Include="TriLib.Extras\AvatarLoaderSample.cs" />
+    <Compile Include="TriLib.Extras\BoneRelationship.cs" />
+    <Compile Include="TriLib.Extras\BoneRelationshipList.cs" />
+    <Compile Include="TriLib.Samples\AnimationText.cs" />
+    <Compile Include="TriLib.Samples\AssetLoaderWindow.cs" />
+    <Compile Include="TriLib.Samples\ErrorDialog.cs" />
+    <Compile Include="TriLib.Samples\FileOpenDialog.cs" />
+    <Compile Include="TriLib.Samples\FileOpenEventHandle.cs" />
+    <Compile Include="TriLib.Samples\FileText.cs" />
+    <Compile Include="TriLib.Samples\ItemType.cs" />
+    <Compile Include="TriLib.Samples\LoadSample.cs" />
+    <Compile Include="TriLib.Samples\ModelDownloader.cs" />
+    <Compile Include="TriLib\AiComponent.cs" />
+    <Compile Include="TriLib\AiPrimitiveType.cs" />
+    <Compile Include="TriLib\AiUVTransform.cs" />
+    <Compile Include="TriLib\AnimationClipCreatedHandle.cs" />
+    <Compile Include="TriLib\AssetAdvancedConfig.cs" />
+    <Compile Include="TriLib\AssetAdvancedConfigType.cs" />
+    <Compile Include="TriLib\AssetAdvancedPropertyClassNames.cs" />
+    <Compile Include="TriLib\AssetAdvancedPropertyMetadata.cs" />
+    <Compile Include="TriLib\AssetLoader.cs" />
+    <Compile Include="TriLib\AssetLoaderOptions.cs" />
+    <Compile Include="TriLib\AssimpInterop.cs" />
+    <Compile Include="TriLib\AssimpPostProcessSteps.cs" />
+    <Compile Include="TriLib\AssimpProcessPreset.cs" />
+    <Compile Include="TriLib\CameraExtensions.cs" />
+    <Compile Include="TriLib\FileUtils.cs" />
+    <Compile Include="TriLib\MaterialCreatedHandle.cs" />
+    <Compile Include="TriLib\MaterialData.cs" />
+    <Compile Include="TriLib\MatrixExtensions.cs" />
+    <Compile Include="TriLib\MeshCreatedHandle.cs" />
+    <Compile Include="TriLib\MeshData.cs" />
+    <Compile Include="TriLib\NodeData.cs" />
+    <Compile Include="TriLib\ObjectLoadedHandle.cs" />
+    <Compile Include="TriLib\StringUtils.cs" />
+    <Compile Include="TriLib\Texture2DUtils.cs" />
+    <Compile Include="TriLib\TextureCompression.cs" />
+    <Compile Include="TriLib\TextureLoadHandle.cs" />
+    <Compile Include="TriLib\TransformExtensions.cs" />
     <Compile Include="Tutorials.cs" />
     <Compile Include="TutorialTooltip.cs" />
     <Compile Include="UIGrid.cs" />
@@ -319,6 +363,9 @@
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>lib\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>lib\UnityEngine.JSONSerializeModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
       <HintPath>lib\UnityEngine.ParticleSystemModule.dll</HintPath>

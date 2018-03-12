@@ -19,7 +19,7 @@ public class IndustrialRailing : MonoBehaviour
 		this.hasBothArms = ((Object)base.transform.Find("Arm0") != (Object)null && (Object)base.transform.Find("Arm1") != (Object)null);
 	}
 
-	private void FixedUpdate()
+	private void Update()
 	{
 		if (this.hasBothArms)
 		{

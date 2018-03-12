@@ -201,7 +201,7 @@ public class RandomCharacterGenerator
 
 	public static CharacterData randomData()
 	{
-		bool hasBoobs = false;
+		bool flag = false;
 		int genitalType = 0;
 		string bodyType = RandomCharacterGenerator.rollWeights("bod");
 		string species = RandomCharacterGenerator.rollWeights("spe");
@@ -228,41 +228,55 @@ public class RandomCharacterGenerator
 				switch (num)
 				{
 				case 0:
-					hasBoobs = false;
+					flag = false;
 					genitalType = 0;
 					identifiesMale = true;
 					break;
 				case 1:
-					hasBoobs = true;
+					flag = true;
 					genitalType = 1;
 					break;
 				case 2:
-					hasBoobs = false;
+					flag = false;
 					genitalType = 1;
 					identifiesMale = true;
 					break;
 				case 3:
-					hasBoobs = true;
+					flag = true;
 					genitalType = 0;
 					break;
 				case 4:
-					hasBoobs = true;
+					flag = true;
 					genitalType = 3;
 					break;
 				case 5:
-					hasBoobs = false;
+					flag = false;
 					genitalType = 3;
 					identifiesMale = true;
 					break;
 				case 6:
-					hasBoobs = false;
+					flag = false;
 					genitalType = 2;
 					break;
 				}
 			}
 		}
-		CharacterData characterData = Game.buildCharacterDataFromParameters(species, hasBoobs, genitalType, bodyType);
+		CharacterData characterData = Game.buildCharacterDataFromParameters(species, flag, genitalType, bodyType);
 		characterData.genResult = text;
+		for (int num2 = characterData.embellishmentLayers.Count - 1; num2 >= 0; num2--)
+		{
+			if (characterData.embellishmentLayers[num2].genderRequirement != 0)
+			{
+				if (characterData.embellishmentLayers[num2].genderRequirement == 1 && flag)
+				{
+					characterData.embellishmentLayers.RemoveAt(num2);
+				}
+				else if (characterData.embellishmentLayers[num2].genderRequirement == -1 && !flag)
+				{
+					characterData.embellishmentLayers.RemoveAt(num2);
+				}
+			}
+		}
 		characterData.identifiesMale = identifiesMale;
 		characterData.aggression = -0.9f + UnityEngine.Random.value * 1.6f;
 		if (UserSettings.needTutorial("NPT_DISMISS_THE_SUBJECT"))

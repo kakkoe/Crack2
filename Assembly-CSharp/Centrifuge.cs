@@ -38,7 +38,10 @@ public class Centrifuge : MonoBehaviour
 	{
 		if ((Object)this.game == (Object)null)
 		{
-			this.game = Game.gameInstance;
+			if (Game.initted)
+			{
+				this.game = Game.gameInstance;
+			}
 		}
 		else
 		{
@@ -81,55 +84,55 @@ public class Centrifuge : MonoBehaviour
 				Inventory.saveInventoryData();
 				this.toggle();
 			}
+			if (this.spinning)
+			{
+				this.vol += (0.12f - this.vol) * Game.cap(Time.deltaTime * 2f, 0f, 1f);
+				if (!this.sfxPlaying)
+				{
+					base.GetComponent<AudioSource>().Play();
+					this.sfxPlaying = true;
+				}
+			}
+			else
+			{
+				if (this.spinSpeed * 0.12f < this.vol)
+				{
+					this.vol = this.spinSpeed * 0.12f;
+				}
+				if (this.vol < 0.03f && this.sfxPlaying)
+				{
+					base.GetComponent<AudioSource>().Stop();
+					this.sfxPlaying = false;
+				}
+			}
+			if (this.sfxPlaying)
+			{
+				base.GetComponent<AudioSource>().volume = this.vol;
+				base.GetComponent<AudioSource>().pitch = this.spinSpeed;
+			}
+			if (this.spinning)
+			{
+				if (this.spinSpeed < 1f)
+				{
+					this.spinSpeed += Time.deltaTime * 0.2f;
+				}
+				if (this.spinSpeed > 1f)
+				{
+					this.spinSpeed = 1f;
+				}
+			}
+			else
+			{
+				if (this.spinSpeed > 0f)
+				{
+					this.spinSpeed -= Time.deltaTime * 0.1f;
+				}
+				if (this.spinSpeed < 0f)
+				{
+					this.spinSpeed = 0f;
+				}
+			}
+			base.GetComponent<Animator>().speed = this.spinSpeed;
 		}
-		if (this.spinning)
-		{
-			this.vol += (0.12f - this.vol) * Game.cap(Time.deltaTime * 2f, 0f, 1f);
-			if (!this.sfxPlaying)
-			{
-				base.GetComponent<AudioSource>().Play();
-				this.sfxPlaying = true;
-			}
-		}
-		else
-		{
-			if (this.spinSpeed * 0.12f < this.vol)
-			{
-				this.vol = this.spinSpeed * 0.12f;
-			}
-			if (this.vol < 0.03f && this.sfxPlaying)
-			{
-				base.GetComponent<AudioSource>().Stop();
-				this.sfxPlaying = false;
-			}
-		}
-		if (this.sfxPlaying)
-		{
-			base.GetComponent<AudioSource>().volume = this.vol;
-			base.GetComponent<AudioSource>().pitch = this.spinSpeed;
-		}
-		if (this.spinning)
-		{
-			if (this.spinSpeed < 1f)
-			{
-				this.spinSpeed += Time.deltaTime * 0.2f;
-			}
-			if (this.spinSpeed > 1f)
-			{
-				this.spinSpeed = 1f;
-			}
-		}
-		else
-		{
-			if (this.spinSpeed > 0f)
-			{
-				this.spinSpeed -= Time.deltaTime * 0.1f;
-			}
-			if (this.spinSpeed < 0f)
-			{
-				this.spinSpeed = 0f;
-			}
-		}
-		base.GetComponent<Animator>().speed = this.spinSpeed;
 	}
 }
